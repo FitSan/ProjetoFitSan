@@ -1,16 +1,4 @@
-ALTER DATABASE FitSan CHARACTER SET utf8 COLLATE utf8_unicode_ci;
-SELECT CONCAT('ALTER TABLE ',  table_name, ' CHARACTER SET utf8 COLLATE utf8_unicode_ci;') FROM information_schema.TABLES WHERE table_schema = 'FitSan';
-
-ALTER TABLE dica CHARACTER SET utf8 COLLATE utf8_unicode_ci;
-ALTER TABLE notificacao CHARACTER SET utf8 COLLATE utf8_unicode_ci;
-ALTER TABLE tipo_usuario CHARACTER SET utf8 COLLATE utf8_unicode_ci;
-ALTER TABLE usuario CHARACTER SET utf8 COLLATE utf8_unicode_ci;
-ALTER TABLE vinculo CHARACTER SET utf8 COLLATE utf8_unicode_ci;
-
-create table tipo_usuario(
- id int primary key auto_increment,
-tipo varchar(100) not null
-);
+create database FitSan;
 
 create table usuario(
  id int primary key auto_increment,
@@ -24,6 +12,57 @@ email varchar(255) not null unique,
 tipo_id integer references tipo_usuario(id)
 );
 
+create table tipo_usuario(
+ id int primary key auto_increment,
+tipo varchar(100) not null
+);
+
+create table vinculo(
+ aluno_id int references usuario(id),
+ profissional_id int references usuario(id),
+ solicitante enum('aluno', 'profissional') not null,
+ status enum('espera', 'aprovado','negado') not null,
+primary key (aluno_id, profissional_id)
+);
+
+create table dica(
+ id int primary key auto_increment,
+texto varchar(255) not null,
+data_envio varchar(20),
+profissional_nome varchar(255),
+profissional_id int references usuario(id)
+);
+
+CREATE TABLE notificacao(
+id INT primary key AUTO_INCREMENT,
+data datetime NOT NULL,
+lido ENUM('N', 'L') NOT NULL,
+status ENUM('OK', 'ERRO', 'INFO') NOT NULL,
+texto TEXT NOT NULL,
+profissional_id int references usuario(id),
+aluno_id int references usuario(id),
+dados TEXT
+);
+
+
+
+ALTER DATABASE FitSan CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+SELECT CONCAT('ALTER TABLE ',  table_name, ' CHARACTER SET utf8 COLLATE utf8_unicode_ci;') FROM information_schema.TABLES WHERE table_schema = 'FitSan';
+
+ALTER TABLE dica CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+ALTER TABLE notificacao CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+ALTER TABLE tipo_usuario CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+ALTER TABLE usuario CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+ALTER TABLE vinculo CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+
+--inserir dados no banco.
+insert into tipo_usuario (tipo) values ('aluno');
+insert into tipo_usuario (tipo) values ('profissional');
+
+
+
+
+--TESTES -----
 
 ALTER TABLE usuario ADD datanasc date;
 ALTER TABLE usuario ADD sexo enum('masculino', 'feminino');
@@ -41,29 +80,15 @@ update usuario set datanasc=now();
 
 drop table usuario;
 
-create table vinculo(
- aluno_id int references usuario(id),
- profissional_id int references usuario(id),
- solicitante enum('aluno', 'profissional') not null,
- status enum('espera', 'aprovado','negado') not null,
-primary key (aluno_id, profissional_id)
-);
+
 ALTER TABLE vinculo DROP COLUMN status;
 ALTER TABLE vinculo ADD status enum('espera', 'aprovado','negado') not null;
 ALTER TABLE vinculo DROP COLUMN solicitante;
 ALTER TABLE vinculo ADD solicitante enum('aluno', 'profissional') not null;
 
-create table dica(
- id int primary key auto_increment,
-texto varchar(255) not null,
-data_envio varchar(20),
-profissional_nome varchar(255),
-profissional_id int references usuario(id)
-);
 
---inserir dados no banco.
-insert into tipo_usuario (tipo) values ('aluno');
-insert into tipo_usuario (tipo) values ('profissional');
+
+
 
 select * from usuario;
 select * from vinculo;
@@ -74,16 +99,7 @@ TRUNCATE TABLE vinculo;
 TRUNCATE TABLE notificacao;
 
 
-CREATE TABLE notificacao(
-id INT primary key AUTO_INCREMENT,
-data datetime NOT NULL,
-lido ENUM('N', 'L') NOT NULL,
-status ENUM('OK', 'ERRO', 'INFO') NOT NULL,
-texto TEXT NOT NULL,
-profissional_id int references usuario(id),
-aluno_id int references usuario(id),
-dados TEXT
-);
+
 
 drop table notificacao;
 truncate table notificacao;
