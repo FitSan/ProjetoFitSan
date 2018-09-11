@@ -1,33 +1,149 @@
+<!DOCTYPE html>
 <?php
-    $pagina = "Cadastro";
-    require_once './template/cabecalho1.php';
+$pagina = "Cadastro";
+include './autenticacao.php';
+ini_set('display_errors', true);
 ?>
-        <h1>Cadastre-se</h1><br>        
-        <form method="post" action="cadastrar.php">
-            Nome: <input type="text" name="nome" required style="text-transform: capitalize" placeholder="Digite seu nome"><br><br>
-            Sobrenome: <input type="text" name="sobrenome" required style="text-transform: capitalize" placeholder="Digite seu sobrenome"><br><br>
-            E-mail: <input type="email" name="email" required placeholder="Digite seu e-mail"><br><br>
-            Senha: <input type="password" name="senha" required placeholder="Digite sua senha"><br><br>
-            Confirmar senha: <input type="password" name="confSenha" required placeholder="Confirme sua senha"><br><br>
-            <?php
-              include './bancodedados/conectar.php';
-              $query = "select * from tipo_usuario";
-              
-              $resultado = mysqli_query($conexao, $query) or die('ERRO: '.mysqli_error($conexao).PHP_EOL.$query.PHP_EOL.print_r(debug_backtrace(), true));
-              ?>
-            Tipo: <select name="tipo_id">
-              <?php
-              while ($linha = mysqli_fetch_array($resultado)){
-                  ?>               
-                <option value="<?=$linha['id']?>"><?= ucfirst($linha['tipo'])?></option>
-                
-            <?php
-              }
-            ?>
-            </select><br><br>
-            <input type="submit" value="Inserir">
-            <a href="form_login.php"><input type="button" value="Cancelar"></a>
-        </form>
-    <?php
-            
-            include './template/rodape.php';
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>FitSan<?= ' - ' . $pagina ?></title>
+        <!-- Tell the browser to be responsive to screen width -->
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+        <!-- Bootstrap 3.3.7 -->
+        <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
+        <!-- Ionicons -->
+        <link rel="stylesheet" href="bower_components/Ionicons/css/ionicons.min.css">
+        <!-- jvectormap -->
+        <link rel="stylesheet" href="bower_components/jvectormap/jquery-jvectormap.css">
+        <!-- Theme style -->
+        <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
+        <!-- AdminLTE Skins. Choose a skin from the css/skins
+             folder instead of downloading all of them to reduce the load. -->
+        <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
+
+        <!-- Google Font -->
+        <link rel="stylesheet"
+              href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+    </head>
+    <body class="hold-transition login-page">
+        <div class="login-box">
+            <div class="login-logo">
+                <a href="form_login.php"><b>Fit</b>San</a>
+            </div>
+            <!-- /.login-logo -->
+            <div class="login-box-body">
+                <p class="login-box-msg">Cadastre-se no FitSan</p>
+
+                <form action="cadastrar.php" method="post">
+
+                    <div class="form-group has-feedback">
+                        <label class="sr-only" for="nome">Nome</label>
+                        <input type="text" name="nome" required style="text-transform: capitalize" class="form-control" placeholder="Nome">
+                        <span class="glyphicon  form-control-feedback"></span>
+                    </div>
+
+                    <div class="form-group has-feedback">
+                        <label class="sr-only" for="sobrenome">Sobrenome</label>
+                        <input type="text" name="sobrenome" required style="text-transform: capitalize" class="form-control" placeholder="Sobrenome">
+                        <span class="glyphicon  form-control-feedback"></span>
+                    </div>
+
+                    <div class="form-group has-feedback">
+                        <label class="sr-only" for="email">Email</label>
+                        <input type="email" name="email" class="form-control" placeholder="Email">
+                        <span class="glyphicon  form-control-feedback"></span>
+                    </div>
+
+                    <?php
+                    if (!empty($_SESSION['erroemail'])) {
+                        ?> <div class="alert alert-danger">
+                            <strong>Esse email já existe no sistema!</strong>.
+                        </div> <?php
+                        unset($_SESSION['erroemail']);
+                    }
+                    ?>       
+
+
+
+                    <div class="form-group has-feedback">
+                        <label class="sr-only" for="senha">Senha</label>
+                        <input type="password" name="senha"  class="form-control" placeholder="Senha">
+                        <span class="glyphicon  form-control-feedback"></span>
+                    </div>
+
+                    <div class="form-group has-feedback">
+                        <label class="sr-only" for="confsenha">Confirme sua Senha</label>
+                        <input type="password" name="confsenha" class="form-control" placeholder="Digite Novamente sua Senha">
+                        <span class="glyphicon  form-control-feedback"></span>
+                    </div>
+
+
+
+                    <?php if (!empty($_SESSION['erroCount'])) {
+                        ?> <div class="alert alert-danger">
+                            <strong>A senha deve conter do mínimo 8 caracteres</strong>.
+                        </div> <?php
+                        unset($_SESSION['erroCount']);
+                    }
+                    ?>
+
+
+
+                    <?php if (!empty($_SESSION['errosenha'])) {
+                        ?> <div class="alert alert-danger">
+                            <strong>Senhas Divergentes</strong>.
+                        </div> <?php
+                        unset($_SESSION['errosenha']);
+                    }
+                    ?>
+
+                    <p class="login-box-msg">Escolha seu tipo de usuário</p>
+
+                    <div class="form-group">
+                        <label class="sr-only" for="tipo">Tipo</label>
+                        <?php
+                        include './bancodedados/conectar.php';
+                        $query = "select * from tipo_usuario";
+                        $resultado = mysqli_query($conexao, $query);
+                        ?>
+                        <select name="tipo_id" class="tipo form-control" id="tipo">
+                            <?php
+                            while ($linha = mysqli_fetch_array($resultado)) {
+                                ?>               
+                                <option value="<?= $linha['id'] ?>"><?= $linha['tipo'] ?></option>
+
+                                <?php
+                            }
+                            ?>
+                        </select>
+                        
+                        <br>
+
+                        <div class="row">
+                            <!-- /.col -->
+                            <div class="col-xs-12">
+                                <button type="submit" class="btn btn-primary btn-block btn-flat">Cadastrar</button>
+                            </div>
+                            <!-- /.col -->
+                        </div>
+                </form>
+
+                <!-- /.social-auth-links -->
+                <br>
+       
+               <p class="login-box-msg">  <a href="form_login.php">Já possuo uma conta</a></p>
+
+
+            </div>
+            <!-- /.login-box-body -->
+        </div>
+
+
+    </script>
+</body>
+</html>

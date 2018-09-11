@@ -35,53 +35,56 @@ require_once './autenticacao.php';
             </div>
             <!-- /.login-logo -->
             <div class="login-box-body">
-                <p class="login-box-msg">LOGIN</p>
+                <p class="login-box-msg">Recuperar Senha</p>
 
-                <form action="logar.php" method="post">
+                <form action="envio_email.php" method="post">
 
                     <div class="form-group has-feedback">
                         <label class="sr-only" for="email">Email</label>
-                        <input type="email" name="e-mail" class="form-control" placeholder="Entre com seu E-mail">
+                        <input type="email" name="e-mail" class="form-control" placeholder=" Insira seu E-mail">
                         <span class="glyphicon  form-control-feedback"></span>
                     </div>
 
-                    <div class="form-group has-feedback">
-                        <label class="sr-only" for="senha">Senha</label>
-                        <input type="password" name="senha" class="form-control" placeholder="Entre com sua Senha">
-                        <span class="glyphicon  form-control-feedback"></span>
-                    </div>
+
                     
-                <?php
-                if(!empty($_SESSION['erro'])) {
+                                 <?php
+                                       if(!empty($_SESSION['erroEmail'])) {
                     
-                  ?> <div class="alert alert-danger">
-                <strong>Dados não Conferem!</strong>.
-                </div> <?php ;
+                                      ?> <div class="alert alert-danger">
+                                      <strong>Email não encontrado no banco de dados do site!</strong>.
+                                            </div> <?php ;
                  
-                    unset($_SESSION['erro']);
-                }
-                ?>
-
+                                        unset($_SESSION['erroEmail']);
+                                            }
+                                       ?>
+                    
+                    
+                                                  <?php  
+                              
+                              
+                              if(!empty($_SESSION['sucesso'])) {
+                                 ?> <div class="alert alert-success">
+                                  <strong>Confira seu email</strong>.
+                                  </div> <?php                
+                                 unset($_SESSION['sucesso']);
+                                    }
+                                ?>
+                    
+                           
                         
                         <br>
 
                         <div class="row">
                             <!-- /.col -->
                             <div class="col-xs-12">
-                                <button type="submit" class="btn btn-primary btn-block btn-flat">Logar</button>
+                                <button type="submit" class="btn btn-primary btn-block btn-flat">Enviar</button>
                             </div>
                             <!-- /.col -->
                         </div>
                         
                         <br>
                        </form> 
-                        <div class="row">
-                            <!-- /.col -->
-                            <div class="col-xs-12">
-                        <a href="form_cadastrar.php"><button class="btn btn-primary btn-block btn-flat">Cadastrar</button></a>
-                            </div>
-                            <!-- /.col -->
-                        </div>
+
                              
                         
                 
@@ -89,7 +92,7 @@ require_once './autenticacao.php';
                 <!-- /.social-auth-links -->
                 <br>
        
-               <p class="login-box-msg">  <a href="form_recEmail.php">Esqueceu a senha?</a></p>
+                <p class="login-box-msg">  <a href="form_cadastrar.php">Não tenho conta</a></p>
 
 
             </div>
@@ -100,9 +103,6 @@ require_once './autenticacao.php';
     </script>
 </body>
 </html>
-
-
-
 
 
 

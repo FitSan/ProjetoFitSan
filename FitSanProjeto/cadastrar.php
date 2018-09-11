@@ -1,13 +1,15 @@
 <?php
 require_once './autenticacao.php';
+include './bancodedados/conectar.php';
 
 $nome = (!empty($_POST['nome']) ? $_POST['nome'] : null);
 $sobrenome = (!empty($_POST['sobrenome']) ? $_POST['sobrenome'] : null);
 $datanasc = (!empty($_POST['dataNasc']) ? $_POST['dataNasc'] : null);
 $sexo = (!empty($_POST['sexo']) ? $_POST['sexo'] : null);
+$foto = (!empty($_POST['foto']) ? $_POST['foto'] : null);
 $email = (!empty($_POST['email']) ? $_POST['email'] : null);
 $senha = (!empty($_POST['senha']) ? $_POST['senha'] : null);
-$confSenha = (!empty($_POST['confSenha']) ? $_POST['confSenha'] : null);
+$confsenha = (!empty($_POST['confsenha']) ? $_POST['confsenha'] : null);
 $tipo_usuario = (!empty($_POST['tipo_id']) ? $_POST['tipo_id'] : null);
 
 
@@ -37,7 +39,8 @@ $sobrenome = tratar_nome($sobrenome);
 $senha_hash = password_hash($senha, PASSWORD_BCRYPT);
 
 $query_usuario = "select email from usuario";
-$resultado_usuario = mysqli_query($conexao, $query_usuario) or die('ERRO: '.mysqli_error($conexao).PHP_EOL.$query_usuario.PHP_EOL.print_r(debug_backtrace(), true));
+
+$resultado_usuario = mysqli_query($conexao, $query_usuario);
 
 while($linha = mysqli_fetch_array($resultado_usuario)){
     if($linha['email']==$email){
@@ -48,30 +51,37 @@ while($linha = mysqli_fetch_array($resultado_usuario)){
     }
 }
 
-if ($senha != $confSenha) {
-           ?>
-        <script>
-            alert('Senhas Divergentes');
-            window.location.href='form_cadastrar.php';
-        </script>
-       <?php
+$conutSenha = strlen($senha);//contando o número de caracteres da senha 
+
+if($conutSenha < 8){
+    
+            $_SESSION['erroCount'] = "Dados nao conferem!";
+            header('Location: form_cadastrar.php');  
     
 } else {
     
 
-    
-if($existe){
-       ?>
-        <script>
-            alert('E-mail ja cadastrado!');
-            window.location.href='form_cadastrar.php';
-        </script>
-       <?php
-    }else{
-        $query = "insert into usuario (id, nome, sobrenome, datanasc, sexo, senha, email, tipo_id) values (default, " . mysqliEscaparTexto($nome) . "," . mysqliEscaparTexto($sobrenome) . "," . mysqliEscaparTexto($datanasc, 'date') . "," . mysqliEscaparTexto($sexo) . "," . mysqliEscaparTexto($senha_hash) . ", " . mysqliEscaparTexto($email) . ", " . mysqliEscaparTexto($tipo_usuario) . ")";
-        mysqli_query($conexao, $query) or die('ERRO: '.mysqli_error($conexao).PHP_EOL.$query.PHP_EOL.print_r(debug_backtrace(), true));
+if($senha != $confsenha){    
+            $_SESSION['errosenha'] = "Dados nao conferem!";
+            header('Location: form_cadastrar.php');  
+} else {
 
-        header('Location: form_login.php');
-    }
+if($existe){
+            $_SESSION['erroemail'] = "Dados nao conferem!";
+            header('Location: form_cadastrar.php');  
+    }else{
+        $query = "insert into usuario values (default, '$nome', '$sobrenome', default, default, default, '$senha_hash', '$email', '$tipo_usuario')";
+
+        
+        //echo $query;
+        
+        mysqli_query($conexao, $query);
+
+   header('Location: form_login.php');
+            }
     
+        
+        }
+
+
     }
