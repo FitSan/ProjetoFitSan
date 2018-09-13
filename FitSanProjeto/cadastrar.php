@@ -1,4 +1,4 @@
-<?php
+<?php 
 require_once './autenticacao.php';
 include './bancodedados/conectar.php';
 
@@ -12,7 +12,9 @@ $senha = (!empty($_POST['senha']) ? $_POST['senha'] : null);
 $confsenha = (!empty($_POST['confsenha']) ? $_POST['confsenha'] : null);
 $tipo_usuario = (!empty($_POST['tipo_id']) ? $_POST['tipo_id'] : null);
 
-
+  
+   
+   
 
 function tratar_nome ($nome) {
     $nome = strtolower($nome); // Converter o nome todo para minúsculo

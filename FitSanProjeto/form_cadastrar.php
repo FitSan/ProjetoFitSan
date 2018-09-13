@@ -2,6 +2,7 @@
 <?php
 $pagina = "Cadastro";
 include './autenticacao.php';
+
 ini_set('display_errors', true);
 ?>
 
@@ -42,9 +43,12 @@ ini_set('display_errors', true);
                 <form action="cadastrar.php" method="post">
 
                     <div class="form-group has-feedback">
+                        
+                        
                         <label class="sr-only" for="nome">Nome</label>
                         <input type="text" name="nome" required style="text-transform: capitalize" class="form-control" placeholder="Nome">
                         <span class="glyphicon  form-control-feedback"></span>
+
                     </div>
 
                     <div class="form-group has-feedback">
@@ -121,7 +125,7 @@ ini_set('display_errors', true);
                             }
                             ?>
                         </select>
-                        
+
                         <br>
 
                         <div class="row">
@@ -135,8 +139,8 @@ ini_set('display_errors', true);
 
                 <!-- /.social-auth-links -->
                 <br>
-       
-               <p class="login-box-msg">  <a href="form_login.php">Já possuo uma conta</a></p>
+
+                <p class="login-box-msg">  <a href="form_login.php">Já possuo uma conta</a></p>
 
 
             </div>

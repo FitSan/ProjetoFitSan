@@ -1,5 +1,6 @@
 <?php
 require_once 'autenticacao.php';
+
 ?>  
 <html lang="pt-br">
     <head>
@@ -83,7 +84,7 @@ require_once 'autenticacao.php';
                                     </a>
                                     <ul class="dropdown-menu">
                                         <li class="header">Você tem  <?= totalNotificacao() ?> notificações</li>
-                                        <!--                                        fazer notificação ficar no plural quando tiver numeros acima de 1-->
+                                        <!--   fazer notificação ficar no plural quando tiver numeros acima de 1-->
                                         <li>
                                             <!-- inner menu: contains the actual data -->
                                             <?php
@@ -170,10 +171,11 @@ require_once 'autenticacao.php';
                                             </div>
                                             <div class="pull-right">
                                                 <button type="button" class="btn btn-default btn-flat" data-toggle="modal" data-target="#modal-default">
-                                                    Sair
-                                                </button>                                                
+                                                    Sair 
+                                                </button>                                             
                                             </div>
                                         </li>
+                                       
                                     </ul>
                                 </li>                              
                             </ul>

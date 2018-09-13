@@ -32,6 +32,35 @@
     <!-- /.modal-dialog -->
 </div>
 
+<!--Modal SALVAR -->
+<div class="modal fade" id="modal-salvar">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header"  >
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" >
+                    <span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Insira sua Senha para Atualizar!</h4>
+            </div>
+            <div class="login-box-body">
+                <label class="sr-only" for="insira_senha">Senha</label>
+                <input type="password" name="insira_senha" class="form-control" placeholder=" Senha">
+                <span class="glyphicon  form-control-feedback"></span>
+            </div>
+
+
+
+
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Não</button>
+                <a type="submit" class="btn btn-primary" href="http://localhost/FitSan/atualizar_conf.php" role="button">Pronto</a>
+
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
 
 
 
@@ -243,7 +272,7 @@
         modal.find('.modal-footer #id').val(id)
     })
 </script>
-<?php//if($erro){?>   
+<?php //if($erro){ ?>   
 <!--<script>
         $(document).ready(function(){
             $("#erro-dica").modal();
@@ -278,7 +307,7 @@
 <script src="bower_components/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
 <script src="bower_components/bootstrap-datepicker/dist/locales/bootstrap-datepicker.pt-BR.min.js"></script>
 
- 
+
 <script type="text/javascript">
     $('#datanasc').datepicker({
         format: "dd/mm/yyyy",
