@@ -159,3 +159,6 @@ delete from usuario where id=10
 select * from usuario where  like '%Diego Pereira%';
 
 SELECT * FROM usuario WHERE nome = '%pereira' and sobrenome = '%pereira';
+
+
+select senha from usuario where id='1'

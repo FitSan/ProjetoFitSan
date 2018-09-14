@@ -41,7 +41,7 @@ require_once './autenticacao.php';
 
                     <div class="form-group has-feedback">
                         <label class="sr-only" for="email">Email</label>
-                        <input type="email" name="e-mail" class="form-control" placeholder=" Insira seu E-mail">
+                        <input type="email" name="email" class="form-control" placeholder=" Insira seu E-mail">
                         <span class="glyphicon  form-control-feedback"></span>
                     </div>
 

@@ -41,12 +41,12 @@ if ($linha = mysqli_fetch_array($resultado)) {
 
                         <div class="form-group">
                             <label for="nova_senha">Nova Senha</label>
-                            <input type="text" class="form-control" id="nova_senha" name="nova_senha" >
+                            <input type="password" class="form-control" id="nova_senha" name="nova_senha" >
                         </div>
 
                         <div class="form-group">
                             <label for="repita_senha">Repita sua Senha</label>
-                            <input type="text" class="form-control" id="repita_senha" name="repita_senha" >
+                            <input type="password" class="form-control" id="repita_senha" name="repita_senha" >
                         </div>
 
                         <?php
@@ -73,11 +73,11 @@ if ($linha = mysqli_fetch_array($resultado)) {
 
 
                     <?php
-                    if (!empty($_SESSION['semsenha'])) {
+                    if (!empty($_SESSION['errosenha'])) {
                         ?> <div class="alert alert-danger">
                             <strong> Senha Incorreta !</strong>.
                         </div> <?php
-                unset($_SESSION['semsenha']);
+                unset($_SESSION['errosenha']);
             }
                     ?>
 

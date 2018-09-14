@@ -23,12 +23,6 @@ $retorno = mysqli_query($conexao, $sql);
 
 $linha = mysqli_fetch_array($retorno);
 
-if (empty($senha)) {
-
-    $_SESSION['semsenha'] = "Dados nao conferem!";    
-    header('Location: rodape_especial.php');
-} else {
-
     if (password_verify($senha, $linha['senha'])) {
 
 
@@ -63,4 +57,3 @@ if (empty($senha)) {
         $_SESSION['errosenha'] = "Dados nao conferem!";
         header('Location:form_conf.php');
     }
-}

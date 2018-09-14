@@ -41,12 +41,14 @@
                     <span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title">Insira sua Senha para Atualizar!</h4>
             </div>
+            <form action="../atualizar_conf.php" method="post" >
+                
             <div class="login-box-body">
                 <label class="sr-only" for="insira_senha">Senha</label>
                 <input type="password" name="insira_senha" class="form-control" placeholder=" Senha">
                 <span class="glyphicon  form-control-feedback"></span>
             </div>
-
+            
 
 
 
@@ -56,6 +58,8 @@
                 <a type="submit" class="btn btn-primary" href="http://localhost/FitSan/atualizar_conf.php" role="button">Pronto</a>
 
             </div>
+            
+            </form>
         </div>
         <!-- /.modal-content -->
     </div>
