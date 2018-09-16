@@ -1,7 +1,11 @@
 <?php
+ob_start(); //gravar todas as saídas de texto em um local temporário antes de jogar para o navegador.
+session_start(); 
 
-session_start(); //habilitar o uso de sessao no meu sistema. 
-//primeira coisa a aparecer aqui não pode ter linha acima!
+error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING & ~E_STRICT & ~E_DEPRECATED);// Definindo para mostrar todos os erros exceto notificações, avisos, interoperabilidade e obsoletos. 
+
+ini_set('default_charset', 'utf-8');
+ini_set('default_mimetype', 'text/html');
 
 require_once './bancodedados/conectar.php';
 
@@ -52,8 +56,12 @@ function autenticar() {
     }
 }
 
-function exibirName() {
-    return $_SESSION['nome'];
+function exibirName($completo = false) {
+    if ($completo){
+        return ($_SESSION['nome'] . ' ' . $_SESSION['sobrenome']);
+    } else {
+        return $_SESSION['nome'];
+    }
 }
 
 function getTipo() {
@@ -93,28 +101,28 @@ function dataParse($data) {
     $data = trim($data);
 
     // Expressão regular para interpretar data e hora no formato DD/MM/YYYY HH:MM:SS (Ex.: 12/12/2018 15:00:00)
-    if (preg_match('{^(?P<d>\d{2})\D+(?P<m>\d{2})\D+(?P<y>\d{4})\D+(?P<h>\d{2})\D+(?P<i>\d{2})\D+(?P<s>\d{2})$}', $data, $match)) $dt = $match;
+    if (preg_match('{^(?P<d>\d{2})\D+(?P<m>\d{2})\D+(?P<y>\d{4})\D+(?P<h>\d{2})\D+(?P<i>\d{2})\D+(?P<s>\d{2}).*$}', $data, $match)) $dt = $match;
 
     // Expressão regular para interpretar data e hora no formato YYYY-MM-DD HH:MM:SS (Ex.: 12/12/2018 15:00:00)
-    elseif (preg_match('{^(?P<y>\d{4})\D+(?P<m>\d{2})\D+(?P<d>\d{2})\D+(?P<h>\d{2})\D+(?P<i>\d{2})\D+(?P<s>\d{2})$}', $data, $match)) $dt = $match;
+    elseif (preg_match('{^(?P<y>\d{4})\D+(?P<m>\d{2})\D+(?P<d>\d{2})\D+(?P<h>\d{2})\D+(?P<i>\d{2})\D+(?P<s>\d{2}).*$}', $data, $match)) $dt = $match;
 
     // Expressão regular para interpretar data e hora no formato DD/MM/YYYY HH:MM (Ex.: 12/12/2018 15:00)
-    elseif (preg_match('{^(?P<d>\d{2})\D+(?P<m>\d{2})\D+(?P<y>\d{4})\D+(?P<h>\d{2})\D+(?P<i>\d{2})$}', $data, $match)) $dt = $match;
+    elseif (preg_match('{^(?P<d>\d{2})\D+(?P<m>\d{2})\D+(?P<y>\d{4})\D+(?P<h>\d{2})\D+(?P<i>\d{2}).*$}', $data, $match)) $dt = $match;
 
     // Expressão regular para interpretar data e hora no formato YYYY-MM-DD HH:MM (Ex.: 12/12/2018 15:00)
-    elseif (preg_match('{^(?P<y>\d{4})\D+(?P<m>\d{2})\D+(?P<d>\d{2})\D+(?P<h>\d{2})\D+(?P<i>\d{2})$}', $data, $match)) $dt = $match;
+    elseif (preg_match('{^(?P<y>\d{4})\D+(?P<m>\d{2})\D+(?P<d>\d{2})\D+(?P<h>\d{2})\D+(?P<i>\d{2}).*$}', $data, $match)) $dt = $match;
 
     // Expressão regular para interpretar data no formato DD/MM/YYYY (Ex.: 12/12/2018)
-    elseif (preg_match('{^(?P<d>\d{2})\D+(?P<m>\d{2})\D+(?P<y>\d{4})$}', $data, $match)) $dt = $match;
+    elseif (preg_match('{^(?P<d>\d{2})\D+(?P<m>\d{2})\D+(?P<y>\d{4}).*$}', $data, $match)) $dt = $match;
 
     // Expressão regular para interpretar data no formato YYYY-MM-DD (Ex.: 12/12/2018)
-    elseif (preg_match('{^(?P<y>\d{4})\D+(?P<m>\d{2})\D+(?P<d>\d{2})$}', $data, $match)) $dt = $match;
+    elseif (preg_match('{^(?P<y>\d{4})\D+(?P<m>\d{2})\D+(?P<d>\d{2}).*$}', $data, $match)) $dt = $match;
 
     // Expressão regular para interpretar hora no formato HH:MM:SS (Ex.: 15:00:00)
-    elseif (preg_match('{^(?P<h>\d{2})\D+(?P<i>\d{2})\D+(?P<s>\d{2})$}', $data, $match)) $dt = $match;
+    elseif (preg_match('{^(?P<h>\d{2})\D+(?P<i>\d{2})\D+(?P<s>\d{2}).*$}', $data, $match)) $dt = $match;
 
     // Expressão regular para interpretar hora no formato HH:MM (Ex.: 15:00)
-    elseif (preg_match('{^(?P<h>\d{2})\D+(?P<i>\d{2})$}', $data, $match)) $dt = $match;
+    elseif (preg_match('{^(?P<h>\d{2})\D+(?P<i>\d{2}).*$}', $data, $match)) $dt = $match;
 
     // Formato não reconhecido
     else $dt = array();

@@ -1,7 +1,7 @@
 <?php
 require_once './autenticacao.php';
 
-$query = "select * from dica order by data_envio desc";
+$query = "select dica.*, usuario.nome, usuario.sobrenome, usuario.foto from dica left join usuario on usuario.id = dica.profissional_id order by data_envio desc";
 $resultado = mysqli_query($conexao, $query);
 ?>
 
@@ -21,9 +21,9 @@ $resultado = mysqli_query($conexao, $query);
                     ?>
                     <div class="post">
                         <div class="user-block">
-                            <img class="img-circle img-bordered-sm" src="dist/img/user1-128x128.jpg" alt="user image">
+                            <img class="img-circle img-bordered-sm" src="<?= htmlspecialchars(!empty($linha['foto']) ? $linha['foto'] : 'img/user-avatar-placeholder.png') ?>" alt="User profile picture">
                             <span class="username">
-                                <a href="#"><?= $linha['profissional_nome'] ?></a> 
+                                <a href="perfil_externo.php?id=<?= $linha['profissional_id'] ?>"><?= $linha['profissional_nome'] ?></a> 
                                 <!--icone de x caso for usar para o profissional excluir a dica pela tela inicial-->
 
                     <!--<a href="#" class="pull-right btn-box-tool"><i class="fa fa-times"></i></a>-->

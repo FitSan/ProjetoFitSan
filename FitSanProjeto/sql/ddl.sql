@@ -1,7 +1,8 @@
 create database FitSan;
 
 create table usuario(
- id int primary key auto_increment,
+id int primary key auto_increment,
+datahora timestamp not null default now(),
 nome varchar(255) not null,
 sobrenome varchar(255) not null,
 datanasc date,
@@ -46,6 +47,29 @@ dados TEXT
 
 
 
+DROP TABLE ativ_extras;
+DROP TABLE ativ_extras_exercicios;
+
+create table ativ_extras(
+id int primary key auto_increment,
+datahora timestamp not null,
+titulo varchar(255) not null,
+texto text not null,
+aluno_id int references usuario(id)
+);
+
+create table ativ_extras_exercicios(
+id int primary key auto_increment,
+ativ_extras_id int references ativ_extra(id),
+exercicio varchar(255) not null
+);
+
+select * from ativ_extras;
+select * from ativ_extras_exercicios;
+
+TRUNCATE TABLE ativ_extras;
+TRUNCATE TABLE ativ_extras_exercicios;
+
 ALTER DATABASE FitSan CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 SELECT CONCAT('ALTER TABLE ',  table_name, ' CHARACTER SET utf8 COLLATE utf8_unicode_ci;') FROM information_schema.TABLES WHERE table_schema = 'FitSan';
 
@@ -59,10 +83,13 @@ ALTER TABLE vinculo CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 insert into tipo_usuario (tipo) values ('aluno');
 insert into tipo_usuario (tipo) values ('profissional');
 
-
-
+update usuario set datahora = now();
 
 --TESTES -----
+
+-- Criando campo na tabela usuario depois do campo id com valor padrao
+ALTER TABLE usuario ADD datahora timestamp not null after id;
+ALTER TABLE usuario CHANGE datahora datahora timestamp not null default now() after id;
 
 ALTER TABLE usuario ADD datanasc date;
 ALTER TABLE usuario ADD sexo enum('masculino', 'feminino');
@@ -111,7 +138,7 @@ ALTER TABLE notificacao CHANGE dados dados TEXT;
 
 insert into vinculo values ('1', '2');
 
-select * from usuario join vinculo on usuario.id=vinculo.aluno_id where profissional_id=2
+select * from usuario join vinculo on usuario.id=vinculo.aluno_id where profissional_id=2;
 
 select * from dica;  
 drop table dica;
