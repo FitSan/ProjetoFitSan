@@ -22,9 +22,10 @@ require_once 'autenticacao.php';
         <!-- AdminLTE Skins. Choose a skin from the css/skins
              folder instead of downloading all of them to reduce the load. -->
         <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
+        <link rel="stylesheet" href="plugins/iCheck/all.css">
         
         <link rel="stylesheet" href="bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.css" >
-        
+        <link rel="stylesheet" type="text/css" href="css/estilo.css">
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -139,8 +140,8 @@ require_once 'autenticacao.php';
                                             <img src="img/user-avatar-placeholder.png" class="img-circle" alt="User Image">
                                             <?php } ?>
                                             <p>
-                                                <?php echo exibirName(); ?>
-                                                <small>Member since Nov. 2012</small>
+                                                <?php echo exibirName(true); ?>
+                                                <small>Membro desde <?= date('d/m/Y', dataParse($_SESSION['datahora'])) ?></small>
                                             </p>
                                         </li>
                                         <!-- Menu Body -->
@@ -228,7 +229,7 @@ require_once 'autenticacao.php';
                                     if (getTipo() == "aluno") {
                                         echo "<li><a href='#'><i class='fa fa-circle-o'></i> Informações Adicionais </a></li>";
                                         echo "<li><a href='#'><i class='fa fa-circle-o'></i> Metas </a></li>";
-                                        echo "<li><a href='#'><i class='fa fa-circle-o'></i> Atividades Extras </a></li>";
+                                        echo "<li><a href='http://localhost/FitSan/atividadesExtras.php'><i class='fa fa-circle-o'></i> Atividades Extras </a></li>";
                                         echo "<li><a href='#'><i class='fa fa-circle-o'></i> Contato </a></li>";
                                     } else {
                                         echo "<li><a href='#'><i class='fa fa-circle-o'></i> Informações Adicionais </a></li>";

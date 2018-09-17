@@ -248,33 +248,6 @@
 
 
 
-<script src="js/personalizado.js"></script>
-<script type="text/javascript">
-    $('#editar-dica').on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget) // Button that triggered the modal
-        var id = button.data('id')
-        var data_envio = button.data('data')
-        var texto = button.data('texto')
-        //// Extract info from data-* attributes
-        // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-        // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-        var modal = $(this)
-        modal.find('.modal-body #id').val(id)
-        modal.find('.modal-body #data_envio').val(data_envio)
-        modal.find('.modal-body textarea').val(texto)
-    })
-</script>
-<script type="text/javascript">
-    $('#excluir-dica').on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget) // Button that triggered the modal
-        var id = button.data('id')
-        //// Extract info from data-* attributes
-        // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-        // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-        var modal = $(this)
-        modal.find('.modal-footer #id').val(id)
-    })
-</script>
 <?php //if($erro){ ?>   
 <!--<script>
         $(document).ready(function(){
@@ -309,6 +282,43 @@
 <script src="dist/js/demo.js"></script>
 <script src="bower_components/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
 <script src="bower_components/bootstrap-datepicker/dist/locales/bootstrap-datepicker.pt-BR.min.js"></script>
+<script src="bower_components/ckeditor/ckeditor.js"></script>
+<script src="plugins/iCheck/icheck.min.js"></script>
+
+
+<script>
+  $(function () {
+    //iCheck for checkbox and radio inputs
+    $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
+      checkboxClass: 'icheckbox_minimal-blue',
+      radioClass   : 'iradio_minimal-blue'
+    })
+    //Red color scheme for iCheck
+    $('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck({
+      checkboxClass: 'icheckbox_minimal-red',
+      radioClass   : 'iradio_minimal-red'
+    })
+    //Flat red color scheme for iCheck
+    $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
+      checkboxClass: 'icheckbox_flat-blue',
+      radioClass   : 'iradio_flat-green'
+    })
+  })
+</script>
+
+
+
+
+<script>
+  $(function () {
+    // Replace the <textarea id="editor1"> with a CKEditor
+    // instance, using default configuration.
+    CKEDITOR.replace('editor1')
+    //bootstrap WYSIHTML5 - text editor
+    $('.textarea').wysihtml5()
+  })
+</script>
+
 
 
 <script type="text/javascript">
@@ -317,6 +327,47 @@
         language: "pt-BR",
         endDate: '-3d'
     });
+</script>
+<script type="text/javascript">
+    $('#editar-dica').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget) // Button that triggered the modal
+        var id = button.data('id')
+        var data_envio = button.data('data')
+        var texto = button.data('texto')
+        //// Extract info from data-* attributes
+        // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+        // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+        var modal = $(this)
+        modal.find('.modal-body #id').val(id)
+        modal.find('.modal-body #data_envio').val(data_envio)
+        modal.find('.modal-body textarea').val(texto)
+    })
+</script>
+<script type="text/javascript">
+    $('#excluir-dica').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget) // Button that triggered the modal
+        var id = button.data('id')
+        //// Extract info from data-* attributes
+        // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+        // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+        var modal = $(this)
+        modal.find('.modal-footer #id').val(id)
+    })
+</script>
+<script>
+    function hideUpload(up, check) {
+        var label = 'label'+up;
+    // Get the checkbox    
+    if (check.checked === true) {
+        document.getElementById(up).style.display = "none";   
+        document.getElementById(label).innerHTML="+";
+//        $(label' b').text('+');
+	}else{
+            document.getElementById(up).style.display = "inline";
+            document.getElementById(label).innerHTML="x";
+//            $(label' b').text('X');
+        }
+  }
 </script>
 
 
