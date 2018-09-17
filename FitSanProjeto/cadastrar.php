@@ -83,7 +83,7 @@ if ($conutSenha < 8) {
 
             header('Location: form_cadastrar.php');
         } else {
-            $query = "insert into usuario values (default, '$nome', '$sobrenome', default, default, default, '$senha_hash', '$email', '$tipo_usuario')";
+            $query = "insert into usuario (nome, sobrenome, senha, email, tipo_id) values ('$nome', '$sobrenome', '$senha_hash', '$email', '$tipo_usuario')";
 
 
             //echo $query;

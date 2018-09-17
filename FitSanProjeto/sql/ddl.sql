@@ -86,15 +86,19 @@ ALTER TABLE notificacao CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 ALTER TABLE tipo_usuario CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 ALTER TABLE usuario CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 ALTER TABLE vinculo CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+ALTER TABLE ativ_extras CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+ALTER TABLE ativ_extras_exercicios CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 ALTER TABLE upload_dica CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 
 --inserir dados no banco.
 insert into tipo_usuario (tipo) values ('aluno');
 insert into tipo_usuario (tipo) values ('profissional');
 
-update usuario set datahora = now();
+
 
 --TESTES -----
+
+update usuario set datahora = now();
 
 -- Criando campo na tabela usuario depois do campo id com valor padrao
 ALTER TABLE usuario ADD datahora timestamp not null after id;

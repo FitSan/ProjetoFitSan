@@ -86,7 +86,8 @@ $resultado = mysqli_query($conexao, $query);
 </div>
 
 
-
+<!--desblooquear dicas-->
+<!--/var/www/html/FitSan/upload$ chmod 777 -R dicas/-->
 
 
 
