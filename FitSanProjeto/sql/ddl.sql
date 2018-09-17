@@ -29,10 +29,18 @@ primary key (aluno_id, profissional_id)
 create table dica(
  id int primary key auto_increment,
 texto varchar(255) not null,
-data_envio varchar(20),
 profissional_nome varchar(255),
-profissional_id int references usuario(id)
+profissional_id int references usuario(id),
+data_envio varchar(20)
 );
+
+create table upload_dica(
+ id int primary key auto_increment,
+nome_arq varchar(40) not null,
+tipo char(3) not null, 
+dica_id int references dica(id)
+);
+
 
 CREATE TABLE notificacao(
 id INT primary key AUTO_INCREMENT,
@@ -78,6 +86,7 @@ ALTER TABLE notificacao CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 ALTER TABLE tipo_usuario CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 ALTER TABLE usuario CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 ALTER TABLE vinculo CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+ALTER TABLE upload_dica CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 
 --inserir dados no banco.
 insert into tipo_usuario (tipo) values ('aluno');

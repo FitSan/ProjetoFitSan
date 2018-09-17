@@ -1,0 +1,12 @@
+#uploads{
+    margin-bottom: 10px;
+    width:100%;
+    overflow-x: auto;
+    white-space: nowrap; 
+}
+#uploads ul li{
+    cursor: pointer;
+    display: inline-block;
+}
+
+

@@ -7,7 +7,7 @@ error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING & ~E_STRICT & ~E_DEPRECATED);// D
 ini_set('default_charset', 'utf-8');
 ini_set('default_mimetype', 'text/html');
 
-require_once './bancodedados/conectar.php';
+require_once './bancodedados/conectar-modelo.php';
 
 /**
  * 

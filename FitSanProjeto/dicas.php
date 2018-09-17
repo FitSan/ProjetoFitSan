@@ -27,12 +27,41 @@ $resultado = mysqli_query($conexao, $query);
                                 <!--icone de x caso for usar para o profissional excluir a dica pela tela inicial-->
 
                     <!--<a href="#" class="pull-right btn-box-tool"><i class="fa fa-times"></i></a>-->
-
+                                <?php
+                                if($linha['profissional_id']==$_SESSION['id']){
+                                ?>
+                                <!--icone de x caso for usar para o profissional excluir a dica pela tela inicial-->
+                                
+                                <button type="button" class="pull-right btn-box-tool" data-toggle="modal" data-target="#excluir-dica" data-id="<?= $linha['id'] ?>"><i class="fa fa-times"></i></button>
+                                <?php
+                                }
+                                ?>
                                 <!--Fim do icone x-->
                             </span>
                             <span class="description"><?= $linha['data_envio'] ?></span>
                         </div>
                         <p> <?= $linha['texto'] ?> </p> 
+                        <div id="uploads"><ul><?php
+                            $query_dica = "select * from upload_dica where dica_id = $linha[id]";
+                            $resultado_upload = mysqli_query($conexao, $query_dica);
+                            while ($linha_upload = mysqli_fetch_array($resultado_upload)) {
+                                if($linha_upload['tipo']!='img'){
+                        ?>                          
+                        <li><video height="380" style="padding: 5px;" controls>
+                                <source src="upload/dica/<?= $linha_upload['nome_arq'] ?>" type="video/mp4">
+                            </video></li>
+                           <?php 
+                                }else{
+                                  ?>  
+                        <li><img src="upload/dica/<?= $linha_upload['nome_arq'] ?>" height="380" style="padding: 5px;"></li>                  
+
+                           <?php   
+                                }
+
+                                }?>
+                            </ul>
+                        </div>
+                        
                         <!--Caso necessario colocar comentário e as opções de compartilhar e gostar -->
 
                         <!--<ul class="list-inline">

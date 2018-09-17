@@ -25,7 +25,7 @@ require_once 'autenticacao.php';
         <link rel="stylesheet" href="plugins/iCheck/all.css">
         
         <link rel="stylesheet" href="bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.css" >
-        
+        <link rel="stylesheet" type="text/css" href="css/estilo.css">
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
