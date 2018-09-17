@@ -3,7 +3,7 @@
 session_start(); //habilitar o uso de sessao no meu sistema. 
 //primeira coisa a aparecer aqui não pode ter linha acima!
 
-require_once './bancodedados/conectar.php';
+require_once './bancodedados/conectar-modelo.php';
 
 /**
  * 

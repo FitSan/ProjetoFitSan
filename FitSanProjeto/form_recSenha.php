@@ -1,7 +1,5 @@
 <?php
-$pagina = "Login";
 require_once './autenticacao.php';
-
 ini_set('display_errors', true);
 ?>
 
@@ -39,35 +37,20 @@ ini_set('display_errors', true);
             <div class="login-box-body">
                 <p class="login-box-msg">Recuperar Senha</p>
 
-                <form action="envio_email.php" method="post">
-
-                    <div class="form-group has-feedback">
-                        <label class="sr-only" for="email">Email</label>
-                        <input type="email" name="email" class="form-control" placeholder=" Insira seu E-mail">
-                        <span class="glyphicon  form-control-feedback"></span>
-                    </div>
+                <form action="recSenha.php" method="post">
 
 
-                    <?php
-                    if (!empty($_SESSION['erroEmail'])) {
-                        ?> <div class="alert alert-danger">
-                            <strong>Email não encontrado no banco de dados do site!</strong>.
-                        </div> <?php
-;
+                        <h4> Trocar Senha</h4>
 
-                    unset($_SESSION['erroEmail']);
-                }
-                    ?>
+                        <div class="form-group">
+                            <label for="nova_senha">Nova Senha</label>
+                            <input type="password" class="form-control" id="nova_senha" name="nova_senha" >
+                        </div>
 
-
-                    <?php
-                    if (!empty($_SESSION['sucesso'])) {
-                        ?> <div class="alert alert-success">
-                            <strong>Confira seu email</strong>.
-                        </div> <?php
-                    unset($_SESSION['sucesso']);
-                }
-                    ?>
+                        <div class="form-group">
+                            <label for="repita_senha">Repita sua Senha</label>
+                            <input type="password" class="form-control" id="repita_senha" name="repita_senha" >
+                        </div>
 
 
 
@@ -102,8 +85,6 @@ ini_set('display_errors', true);
     </script>
 </body>
 </html>
-
-
 
 
 

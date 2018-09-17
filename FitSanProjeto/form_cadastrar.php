@@ -45,21 +45,24 @@ ini_set('display_errors', true);
                     <div class="form-group has-feedback">
                         
                         
+
+           
+                        
                         <label class="sr-only" for="nome">Nome</label>
-                        <input type="text" name="nome" required style="text-transform: capitalize" class="form-control" placeholder="Nome">
+                        <input type="text" name="nome" value="<?php if (!empty($_SESSION['erro_nome'])){ echo $_SESSION['erro_nome'];  unset($_SESSION['erro_nome']);}?>" required style="text-transform: capitalize" class="form-control"  placeholder="Nome">
                         <span class="glyphicon  form-control-feedback"></span>
 
                     </div>
 
                     <div class="form-group has-feedback">
                         <label class="sr-only" for="sobrenome">Sobrenome</label>
-                        <input type="text" name="sobrenome" required style="text-transform: capitalize" class="form-control" placeholder="Sobrenome">
+                        <input type="text" name="sobrenome" value="<?php if (!empty($_SESSION['erro_sobrenome'])){ echo $_SESSION['erro_sobrenome'];  unset($_SESSION['erro_sobrenome']);}?>" required style="text-transform: capitalize" class="form-control" placeholder="Sobrenome">
                         <span class="glyphicon  form-control-feedback"></span>
                     </div>
 
                     <div class="form-group has-feedback">
                         <label class="sr-only" for="email">Email</label>
-                        <input type="email" name="email" class="form-control" placeholder="Email">
+                        <input type="email" name="email" value="<?php if (!empty($_SESSION['erro_email'])){ echo $_SESSION['erro_email'];  unset($_SESSION['erro_email']);}?>" class="form-control" placeholder="Email">
                         <span class="glyphicon  form-control-feedback"></span>
                     </div>
 
@@ -76,13 +79,13 @@ ini_set('display_errors', true);
 
                     <div class="form-group has-feedback">
                         <label class="sr-only" for="senha">Senha</label>
-                        <input type="password" name="senha"  class="form-control" placeholder="Senha">
+                        <input type="password" name="senha"  value="<?php if (!empty($_SESSION['erro_senha'])){ echo $_SESSION['erro_senha'];  unset($_SESSION['erro_senha']);}?>" class="form-control" placeholder="Senha">
                         <span class="glyphicon  form-control-feedback"></span>
                     </div>
 
                     <div class="form-group has-feedback">
                         <label class="sr-only" for="confsenha">Confirme sua Senha</label>
-                        <input type="password" name="confsenha" class="form-control" placeholder="Digite Novamente sua Senha">
+                        <input type="password" name="confsenha" value="<?php if (!empty($_SESSION['erro_confsenha'])){ echo $_SESSION['erro_confsenha'];  unset($_SESSION['erro_confsenha']);}?>" class="form-control" placeholder="Digite Novamente sua Senha">
                         <span class="glyphicon  form-control-feedback"></span>
                     </div>
 
@@ -111,7 +114,7 @@ ini_set('display_errors', true);
                     <div class="form-group">
                         <label class="sr-only" for="tipo">Tipo</label>
                         <?php
-                        include './bancodedados/conectar.php';
+                        include './bancodedados/conectar-modelo.php';
                         $query = "select * from tipo_usuario";
                         $resultado = mysqli_query($conexao, $query);
                         ?>

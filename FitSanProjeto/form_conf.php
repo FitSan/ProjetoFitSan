@@ -1,8 +1,6 @@
 <?php
+require_once './template/cabecalho.php'; 
 $pagina = 'Configurar Perfil';
-require_once './template/cabecalho.php';
-
-$pagina = "Meu Perfil";
 
 require_once './template/cabecalho.php';
 
@@ -30,23 +28,23 @@ if ($linha = mysqli_fetch_array($resultado)) {
                         </div>
                         <div class="form-group">
                             <label for="novo_sobrenome">Sobrenome</label>
-                            <input type="text" class="form-control" id="novo_sobrenome" name="novo_sobrenome" value="<?= htmlspecialchars($linha['sobrenome']) ?>">
+                            <input type="text" class="form-control" name="novo_sobrenome" value="<?= htmlspecialchars($linha['sobrenome']) ?>">
                         </div>
                         <div class="form-group">
                             <label for="novo_email">E-mail</label>
-                            <input type="text" class="form-control" id="novo_email" name="novo_email" value="<?= htmlspecialchars($linha['email']) ?>">
+                            <input type="text" class="form-control"  name="novo_email" value="<?= htmlspecialchars($linha['email']) ?>">
                         </div>
 
                         <h4> Trocar Senha</h4>
 
                         <div class="form-group">
                             <label for="nova_senha">Nova Senha</label>
-                            <input type="password" class="form-control" id="nova_senha" name="nova_senha" >
+                            <input type="password" class="form-control" name="nova_senha" >
                         </div>
 
                         <div class="form-group">
                             <label for="repita_senha">Repita sua Senha</label>
-                            <input type="password" class="form-control" id="repita_senha" name="repita_senha" >
+                            <input type="password" class="form-control"  name="repita_senha" >
                         </div>
 
                         <?php
@@ -80,12 +78,22 @@ if ($linha = mysqli_fetch_array($resultado)) {
                 unset($_SESSION['errosenha']);
             }
                     ?>
+                    
+                                        <?php
+                    if (!empty($_SESSION['diver_senha'])) {
+                        ?> <div class="alert alert-danger">
+                            <strong> Senha Incorreta !</strong>.
+                        </div> <?php
+                unset($_SESSION['diver_senha']);
+            }
+                    ?>
 
 
 
                     <div class="pull-left">
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-salvar">
-                            Salvar
+                      
+                        <button type="button"  class="btn btn-primary" data-toggle="modal" data-target="#modal-salvar">
+                                   Salvar 
                         </button>                                                
                     </div>
 

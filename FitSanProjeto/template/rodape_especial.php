@@ -34,6 +34,7 @@
 
 <!--Modal SALVAR -->
 <div class="modal fade" id="modal-salvar">
+    
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header"  >
@@ -41,22 +42,20 @@
                     <span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title">Insira sua Senha para Atualizar!</h4>
             </div>
-            <form action="../atualizar_conf.php" method="post" >
+            <form action="./atualizar_conf.php" method="post" >
+                
+                <input type="hidden" id="novo_nome" name="novo_nome" >
                 
             <div class="login-box-body">
                 <label class="sr-only" for="insira_senha">Senha</label>
                 <input type="password" name="insira_senha" class="form-control" placeholder=" Senha">
                 <span class="glyphicon  form-control-feedback"></span>
             </div>
-            
-
-
 
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Não</button>
-                <a type="submit" class="btn btn-primary" href="http://localhost/FitSan/atualizar_conf.php" role="button">Pronto</a>
-
+                <button type="submit" class="btn btn-primary">Pronto</button>
             </div>
             
             </form>

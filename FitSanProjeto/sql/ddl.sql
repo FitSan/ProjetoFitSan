@@ -161,4 +161,10 @@ select * from usuario where  like '%Diego Pereira%';
 SELECT * FROM usuario WHERE nome = '%pereira' and sobrenome = '%pereira';
 
 
-select senha from usuario where id='1'
+select senha from usuario where id='1';
+
+select id from usuario where email='g@g';
+
+select senha from usuario where id=$_SESSION[id];
+
+update usuario set nome = 'gabriel' , sobrenome = 'Pessanha', email = 'g@g' where id='1';
