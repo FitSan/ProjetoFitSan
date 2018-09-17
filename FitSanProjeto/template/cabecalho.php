@@ -186,7 +186,7 @@ require_once 'autenticacao.php';
 
                 <aside class="main-sidebar">
                     <section class="sidebar">
-                        <div class="user-panel">
+                        <a href="http://localhost/FitSan/perfil.php"><div class="user-panel">
                             <div class="pull-left image">
                                 <?php if (!empty($_SESSION['foto'])){ ?>
                                 <img src="<?= htmlspecialchars($_SESSION['foto']) ?>" class="img-circle" alt="User Image">
@@ -201,7 +201,7 @@ require_once 'autenticacao.php';
                                 <!--<a href="#"><i class="fa fa-circle text-success"></i> Online</a>-->
                                 
                             </div>
-                        </div>
+                        </div></a>
                         <form action="busca.php" method="post" class="sidebar-form">
                             <div class="input-group">
                                 <input type="text" name="busca" class="form-control" placeholder="Busca...">
@@ -227,12 +227,12 @@ require_once 'autenticacao.php';
                                 <ul class="treeview-menu">
                                     <?php
                                     if (getTipo() == "aluno") {
-                                        echo "<li><a href='#'><i class='fa fa-circle-o'></i> Informações Adicionais </a></li>";
+                                        echo "<li><a href='http://localhost/FitSan/informacoes_adicionais.php'><i class='fa fa-circle-o'></i> Informações Adicionais </a></li>";
                                         echo "<li><a href='#'><i class='fa fa-circle-o'></i> Metas </a></li>";
                                         echo "<li><a href='http://localhost/FitSan/atividadesExtras.php'><i class='fa fa-circle-o'></i> Atividades Extras </a></li>";
                                         echo "<li><a href='#'><i class='fa fa-circle-o'></i> Contato </a></li>";
                                     } else {
-                                        echo "<li><a href='#'><i class='fa fa-circle-o'></i> Informações Adicionais </a></li>";
+                                        echo "<li><a href='http://localhost/FitSan/informacoes_adicionais.php'><i class='fa fa-circle-o'></i> Informações Adicionais </a></li>";
                                         echo "<li><a href='#'><i class='fa fa-circle-o'></i> Contato </a></li>";
                                     }
                                     ?>     
