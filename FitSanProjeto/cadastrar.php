@@ -30,8 +30,8 @@ function tratar_nome($nome) {
 
 $nome = tratar_nome($nome);
 $sobrenome = tratar_nome($sobrenome);
-//$size = strlen($sobrenome);
-//$sobrenome = substr($nome,0, $size-1);
+$size = strlen($nome);
+$nome = substr($nome,0, $size-1);
 $senha_hash = password_hash($senha, PASSWORD_BCRYPT);
 
 $query_usuario = "select email from usuario";

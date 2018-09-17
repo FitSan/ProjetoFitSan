@@ -127,7 +127,7 @@ require_once 'autenticacao.php';
                                         <?php } ?>
                                          <span class="hidden-xs"><?php
                                             if (estaLogado()) {
-                                                echo 'Olá, ' . exibirName() . '.';
+                                                echo 'Olá, ' . exibirName();
                                             }
                                             ?></span>
                                     </a>
@@ -161,7 +161,7 @@ require_once 'autenticacao.php';
                                                     <a href="#">Breve</a>
                                                 </div>
                                                 <div class="col-xs-4 text-center">
-                                                    <a href="http://localhost/FitSan/form_conf.php">Configaração</a>
+                                                    <a href="http://localhost/FitSan/form_conf.php">Configuração</a>
                                                 </div>
                                             </div>
                                         </li>
@@ -195,7 +195,7 @@ require_once 'autenticacao.php';
                                 <?php } ?>
                             </div>
                             <div class="pull-left info">
-                                <p><?php echo exibirName(); ?></p>
+                                <p><?php echo exibirName(true); ?></p>
                                 
                                 <!--caso queira por se o usuario esta online ou nao.-->
                                 <!--<a href="#"><i class="fa fa-circle text-success"></i> Online</a>-->
