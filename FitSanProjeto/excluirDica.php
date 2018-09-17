@@ -18,4 +18,3 @@ $query_up_del = "delete from upload_dica where dica_id = $id_dica";
 mysqli_query($conexao, $query_up_del);
 ?>
 <script>history.go(-1)</script>
-<?php

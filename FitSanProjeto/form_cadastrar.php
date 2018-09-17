@@ -114,7 +114,7 @@ ini_set('display_errors', true);
                     <div class="form-group">
                         <label class="sr-only" for="tipo">Tipo</label>
                         <?php
-                        include './bancodedados/conectar-modelo.php';
+                        include './bancodedados/conectar.php';
                         $query = "select * from tipo_usuario";
                         $resultado = mysqli_query($conexao, $query);
                         ?>
