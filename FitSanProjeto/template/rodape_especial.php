@@ -34,6 +34,7 @@
 
 <!--Modal SALVAR -->
 <div class="modal fade" id="modal-salvar">
+
     
     <div class="modal-dialog">
         <div class="modal-content">
@@ -51,6 +52,7 @@
                 <input type="password" name="insira_senha" class="form-control" placeholder=" Senha">
                 <span class="glyphicon  form-control-feedback"></span>
             </div>
+                
 
 
             <div class="modal-footer">
@@ -369,6 +371,7 @@
         }
   }
 </script>
+
 
 
 </body>

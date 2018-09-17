@@ -46,6 +46,11 @@ if ($linha = mysqli_fetch_array($resultado)) {
                             <label for="repita_senha">Repita sua Senha</label>
                             <input type="password" class="form-control"  name="repita_senha" >
                         </div>
+                        <div class="form-group" style="display: none; border: 5px solid #cb2027; padding: 0 5px 5px 5px; " id="inputSenha" >
+                            <label  for="insira_senha"><h3>Insira sua senha para completar a atualização!</h3></label>
+                            <input type="password" name="insira_senha" class="form-control" placeholder=" Senha">
+                            <span class="glyphicon  form-control-feedback"></span>
+                        </div>
 
                         <?php
                         if (!empty($_SESSION['diver_senha'])) {
@@ -90,9 +95,15 @@ if ($linha = mysqli_fetch_array($resultado)) {
 
 
 
+                    <div class="pull-left" style="display: none;" id="submit">
+                      
+                        <button type="submit" class="btn btn-primary" onclick="showInput()">
+                                   Salvar 
+                        </button>                                                
+                    </div>
                     <div class="pull-left">
                       
-                        <button type="button"  class="btn btn-primary" data-toggle="modal" data-target="#modal-salvar">
+                        <button type="button" class="btn btn-primary" onclick="getElementById('inputSenha').style.display='block'; getElementById('submit').style.display='block'; this.style.display='none'">
                                    Salvar 
                         </button>                                                
                     </div>
