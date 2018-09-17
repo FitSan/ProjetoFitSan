@@ -197,4 +197,9 @@ select * from usuario where  like '%Diego Pereira%';
 SELECT * FROM usuario WHERE nome = '%pereira' and sobrenome = '%pereira';
 
 
-select senha from usuario where id='1'
+select senha from usuario where id='1';
+
+
+
+select usuario.*, tipo_usuario.tipo from usuario join tipo_usuario on tipo_usuario.id=usuario.tipo_id where email = 'diego@diego';
+
