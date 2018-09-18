@@ -5,7 +5,7 @@ require_once './template/cabecalho.php';
 
 
 $query = "select * from usuario where id=" . $_SESSION['id'];
-$resultado = mysqli_query($conexao, $query) or die('ERRO: '.mysqli_error($conexao).PHP_EOL.$query.PHP_EOL.print_r(debug_backtrace(), true));
+$resultado = mysqli_query($conexao, $query) or die('ERRO: ' . mysqli_error($conexao) . PHP_EOL . $query . PHP_EOL . print_r(debug_backtrace(), true));
 if ($linha = mysqli_fetch_array($resultado)) {
     ?>
 
@@ -45,39 +45,56 @@ if ($linha = mysqli_fetch_array($resultado)) {
                             <a href="form_perfil.php" class="btn btn-primary btn-block"><b>Alterar</b></a>
                         </div>
                     </div>
-                    <div class="box box-primary">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">Informações Adicionais</h3>
-                        </div>
-                        <div class="box-body">
-                            <strong><i class="fa fa-book margin-r-5"></i> Educação </strong>
-                            <p class="text-muted">
-                                B.S. in Computer Science from the University of Tennessee at Knoxville
-                            </p>
+                    <?php if (getTipo() == "aluno") { ?>
+                        <div class="box box-primary">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">Informações Adicionais</h3>
+                            </div>
+                            <div class="box-body">
+                                <strong><i class="fa fa-fw fa-medkit margin-r-5"></i>Ficha médica</strong><br><br>
+                                <b>Problemas de saúde:</b> Resposta <br>
+                                <b>Notas médicas:</b> Resposta <br>
+                                <b>Alergias e reações:</b> Resposta <br>
+                                <b>Medicamentos:</b> Resposta <br>
+                                <b>Grupo sanguíneo:</b> Resposta <br>
+                                <i class="fa fa-fw fa-heart-o"></i><b>Doador de Orgão:</b> Resposta <br>
 
-                            <hr>
-                            <strong><i class="fa fa-map-marker margin-r-5"></i> Location</strong>
-                            <p class="text-muted">Malibu, California</p>
+                                <hr>
+                                <strong><i class="fa fa-fw fa-phone"></i> Contato de emergência</strong><br><br>
+                                <b>Mãe:</b> Neide Guzzatti Konig - 4836267585 <br>
+                                <b>Cônjuge:</b> Diego Pereira - 4899999999 <br>
 
-                            <hr>
-                            <strong><i class="fa fa-pencil margin-r-5"></i> Skills</strong>
+                                <hr>
+                                <strong><i class="fa fa-fw fa-male margin-r-5"></i>Medidas</strong><br><br>
 
-                            <p>
-                                <span class="label label-danger">UI Design</span>
-                                <span class="label label-success">Coding</span>
-                                <span class="label label-info">Javascript</span>
-                                <span class="label label-warning">PHP</span>
-                                <span class="label label-primary">Node.js</span>
-                            </p>
+                                <b>Altura:</b>Resposta <br>
+                                <b>Peso:</b>Resposta <br>
+                                <b>Massa magra:</b>Resposta <br>
+                                <b>Gordura corporal:</b>Resposta <br>
+                                <b>IMC:</b>Resposta
 
-                            <hr>
-                            <strong><i class="fa fa-file-text-o margin-r-5"></i> Notes</strong>
+                                <hr>
+                                <strong><i class="fa fa-fw fa-diamond margin-r-5"></i>Academia</strong><br><br>
 
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fermentum enim neque.</p>        
+                                <b>Academias já frequentadas:</b>Resposta <br>
+                                <b>Academia atual:</b>Resposta 
 
-                            <a href="#" class="btn btn-primary btn-block"><b>Alterar</b></a>
-                        </div>                    
-                    </div>               
+                                <hr>
+                                <strong><i class="fa fa-fw fa-bicycle margin-r-5"></i>Esportes Praticados </strong><br><br>
+
+                                <span class="label label-danger">Caminhada</span>
+                                <span class="label label-success">Bicicleta</span>
+                                <span class="label label-info">Ping-Pong</span>
+                                <span class="label label-warning">Futebol</span>
+                                <span class="label label-primary">Volei</span><br><br>
+
+                                <hr>
+
+
+                                <a href="informacoes_adicionais.php" class="btn btn-primary btn-block"><b>Alterar</b></a>
+                            </div>                    
+                        </div> 
+                    <?php } ?>              
                 </div>
                 kkk
             </div>       

@@ -62,39 +62,53 @@ if ($linha = mysqli_fetch_array($resultado)) {
                             ?>
                         </div>
                     </div>
+                    <?php if (!empty($_SESSION['tipo'] == "profissional")) { ?>
                     <div class="box box-primary">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">Informações Adicionais</h3>
-                        </div>
-                        <div class="box-body">
-                            <strong><i class="fa fa-book margin-r-5"></i> Educação </strong>
-                            <p class="text-muted">
-                                B.S. in Computer Science from the University of Tennessee at Knoxville
-                            </p>
+                            <div class="box-header with-border">
+                                <h3 class="box-title">Informações Adicionais</h3>
+                            </div>
+                            <div class="box-body">
+                                <strong><i class="fa fa-fw fa-medkit margin-r-5"></i>Ficha médica</strong><br><br>
+                                <b>Problemas de saúde:</b> Resposta <br>
+                                <b>Notas médicas:</b> Resposta <br>
+                                <b>Alergias e reações:</b> Resposta <br>
+                                <b>Medicamentos:</b> Resposta <br>
+                                <b>Grupo sanguíneo:</b> Resposta <br>
+                                <i class="fa fa-fw fa-heart-o"></i><b>Doador de Orgão:</b> Resposta <br>
 
-                            <hr>
-                            <strong><i class="fa fa-map-marker margin-r-5"></i> Location</strong>
-                            <p class="text-muted">Malibu, California</p>
+                                <hr>
+                                <strong><i class="fa fa-fw fa-phone"></i> Contato de emergência</strong><br><br>
+                                <b>Mãe:</b> Neide Guzzatti Konig - 4836267585 <br>
+                                <b>Cônjuge:</b> Diego Pereira - 4899999999 <br>
 
-                            <hr>
+                                <hr>
+                                <strong><i class="fa fa-fw fa-male margin-r-5"></i>Medidas</strong><br><br>
 
-                            <strong><i class="fa fa-pencil margin-r-5"></i> Skills</strong>
+                                <b>Altura:</b>Resposta <br>
+                                <b>Peso:</b>Resposta <br>
+                                <b>Massa magra:</b>Resposta <br>
+                                <b>Gordura corporal:</b>Resposta <br>
+                                <b>IMC:</b>Resposta
 
-                            <p>
-                                <span class="label label-danger">UI Design</span>
-                                <span class="label label-success">Coding</span>
-                                <span class="label label-info">Javascript</span>
-                                <span class="label label-warning">PHP</span>
-                                <span class="label label-primary">Node.js</span>
-                            </p>
+                                <hr>
+                                <strong><i class="fa fa-fw fa-diamond margin-r-5"></i>Academia</strong><br><br>
 
-                            <hr>
+                                <b>Academias já frequentadas:</b>Resposta <br>
+                                <b>Academia atual:</b>Resposta 
 
-                            <strong><i class="fa fa-file-text-o margin-r-5"></i> Notes</strong>
+                                <hr>
+                                <strong><i class="fa fa-fw fa-bicycle margin-r-5"></i>Esportes Praticados </strong><br><br>
 
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fermentum enim neque.</p>
-                        </div>
-                    </div>
+                                <span class="label label-danger">Caminhada</span>
+                                <span class="label label-success">Bicicleta</span>
+                                <span class="label label-info">Ping-Pong</span>
+                                <span class="label label-warning">Futebol</span>
+                                <span class="label label-primary">Volei</span><br><br>
+
+                                
+                            </div>                    
+                        </div> 
+                    <?php } ?>  
                 </div>
                 kkk
             </div>

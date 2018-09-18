@@ -5,7 +5,7 @@ require_once './template/cabecalho.php';
 
 
 $query = "select * from usuario where id='" . $_SESSION['id'] . "'";
-$resultado = mysqli_query($conexao, $query) or die('ERRO: '.mysqli_error($conexao).PHP_EOL.$query.PHP_EOL.print_r(debug_backtrace(), true));
+$resultado = mysqli_query($conexao, $query) or die('ERRO: ' . mysqli_error($conexao) . PHP_EOL . $query . PHP_EOL . print_r(debug_backtrace(), true));
 if ($linha = mysqli_fetch_array($resultado)) {
     ?>
 
@@ -37,7 +37,7 @@ if ($linha = mysqli_fetch_array($resultado)) {
                             <label>Sexo</label>
                             <select class="form-control select2" name="sexo" style="width: 100%;">                              
                                 <option value="">(Selecione)</option>
-                                <option value="feminino" <?php if ($linha['sexo'] == "feminino") echo  ' selected="selected"'; ?>>Feminino</option>
+                                <option value="feminino" <?php if ($linha['sexo'] == "feminino") echo ' selected="selected"'; ?>>Feminino</option>
                                 <option value="masculino" <?php if ($linha['sexo'] == "masculino") echo ' selected="selected"'; ?>>Masculino</option>
                             </select>
                         </div>
@@ -52,24 +52,25 @@ if ($linha = mysqli_fetch_array($resultado)) {
                         </div>
                         <div class="form-group">
                             <label for="foto">Foto</label>
-<?php if (!empty($linha['foto'])){ ?>
-                            <img class="profile-user-img img-responsive" style="margin: 0;margin-bottom: 2px" src="<?= htmlspecialchars($linha['foto']) ?>" alt="User profile picture">
-<?php } ?>
+                            <?php if (!empty($linha['foto'])) { ?>
+                                <img class="profile-user-img img-responsive" style="margin: 0;margin-bottom: 2px" src="<?= htmlspecialchars($linha['foto']) ?>" alt="User profile picture">
+                            <?php } ?>
                             <input type="file" class="form-control" id="foto" name="foto">
                         </div>
                     </div>
-                    
-                    <button type="submit" class="btn btn-primary">Salvar</button>
-                         
-                    
-                </form>
-        </section>
-        
 
-    </div>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+
+
+                </form>
+            </div>
+        </section>
+<!--    </div>-->
+
+    
     <!--fim content-wrapper-->
     <?php
-}else {
+} else {
 
     echo "Não foi possivel";
 }

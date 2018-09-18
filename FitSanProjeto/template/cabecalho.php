@@ -227,12 +227,10 @@ require_once 'autenticacao.php';
                                 <ul class="treeview-menu">
                                     <?php
                                     if (getTipo() == "aluno") {
-                                        echo "<li><a href='http://localhost/FitSan/informacoes_adicionais.php'><i class='fa fa-circle-o'></i> Informações Adicionais </a></li>";
                                         echo "<li><a href='#'><i class='fa fa-circle-o'></i> Metas </a></li>";
                                         echo "<li><a href='http://localhost/FitSan/atividadesExtras.php'><i class='fa fa-circle-o'></i> Atividades Extras </a></li>";
                                         echo "<li><a href='#'><i class='fa fa-circle-o'></i> Contato </a></li>";
                                     } else {
-                                        echo "<li><a href='http://localhost/FitSan/informacoes_adicionais.php'><i class='fa fa-circle-o'></i> Informações Adicionais </a></li>";
                                         echo "<li><a href='#'><i class='fa fa-circle-o'></i> Contato </a></li>";
                                     }
                                     ?>     
