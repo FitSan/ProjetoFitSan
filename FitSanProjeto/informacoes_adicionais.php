@@ -247,7 +247,7 @@ $resultado = mysqli_query($conexao, $query) or die('ERRO: ' . mysqli_error($cone
             </div>
         </form>
     </section>
-</div>
+<!--</div>-->
 
 <?php
 require_once './template/rodape_especial.php';

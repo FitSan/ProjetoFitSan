@@ -139,10 +139,10 @@ if ($linha = mysqli_fetch_array($resultado)) {
                         </div> 
                     <?php } ?>              
                 </div>
-                kkk
+                Visualizações dos históricos, metas, e avaliações.
             </div>       
         </section>
-    </div>
+    <!--</div>-->
 
     <?php
 } else {
