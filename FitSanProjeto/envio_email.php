@@ -31,16 +31,21 @@ if($existe == FALSE){
     header('Location: form_recEmail.php'); 
     
 } else {
+    
+   $codigo = uniqid();
+    
+   $sql = "UPDATE usuario SET codigo='$codigo' WHERE email = '$email';";
 
-$sql = "select id from usuario where email=$email";
-
-$retorno = mysqli_query($conexao, $sql);
+   $retorno = mysqli_query($conexao, $sql);
 
 
 
-echo $retorno;
+
 
 if (!empty($email)){
+    
+    
+    
        
     $mail = new PHPMailer();
     $mail->isSMTP();
@@ -58,7 +63,7 @@ if (!empty($email)){
     $mail->isHTML();
     $mail->Subject = 'FitSan';
     $mail->Body = 'Recupere sua senha do FitSan!'
-            . '<a href="http://localhost/FitSan/form_recSenha.php?perfil_id=<?php echo $perfil_id;?>"> Link </a>;';
+            . '<a href="http://localhost/FitSan/form_recSenha.php?perfil_codigo=<?php echo $codigo;?>"> Link </a>;';
     if (!$mail->send()){
         echo 'Não foi possível enviar a mensagem';
         echo 'Erro: ' . $mail->ErrorInfo;

@@ -293,5 +293,6 @@ function breadcrumbs($separator = ' &raquo; ', $home = 'Home') {
     return implode($separator, $breadcrumbs);
 }
 
+
 ?>
     

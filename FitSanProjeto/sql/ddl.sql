@@ -13,6 +13,8 @@ email varchar(255) not null unique,
 tipo_id integer references tipo_usuario(id)
 );
 
+ALTER TABLE usuario ADD codigo varchar(255);
+
 create table tipo_usuario(
  id int primary key auto_increment,
 tipo varchar(100) not null
@@ -185,7 +187,6 @@ ALTER TABLE vinculo ADD solicitante enum('aluno', 'profissional') not null;
 
 
 
-
 select * from usuario;
 select * from vinculo;
 select * from tipo_usuario;
@@ -268,3 +269,7 @@ select id from usuario where email='g@g';
 select senha from usuario where id=$_SESSION[id];
 
 update usuario set nome = 'gabriel' , sobrenome = 'Pessanha', email = 'g@g' where id='1';
+
+insert into usuario(codigo) values ('sdbfahsdbfahs'), where email =l@l ;
+
+UPDATE usuario SET codigo='FCHGVKJHKJHVV' WHERE email = 'l@l';

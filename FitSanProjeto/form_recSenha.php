@@ -28,6 +28,9 @@ ini_set('display_errors', true);
         <link rel="stylesheet"
               href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
     </head>
+    
+
+    
     <body class="hold-transition login-page">
         <div class="login-box">
             <div class="login-logo">
@@ -38,9 +41,7 @@ ini_set('display_errors', true);
                 <p class="login-box-msg">Recuperar Senha</p>
 
                 <form action="recSenha.php" method="post">
-
-
-                        <h4> Trocar Senha</h4>
+           <h4> Trocar Senha</h4>
 
                         <div class="form-group">
                             <label for="nova_senha">Nova Senha</label>
