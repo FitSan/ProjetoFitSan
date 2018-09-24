@@ -72,6 +72,58 @@ ativ_extras_id int references ativ_extra(id),
 exercicio varchar(255) not null
 );
 
+create table informacoes_adicionais(
+id int primary key auto_increment,
+saude text,
+medico text,
+alergia text,
+medicamento text,
+gruposangue varchar(3),
+doador ENUM('SIM', 'NAO'),
+academia_frequentada text,
+academia_atual text,
+aluno_id int references usuario(id)
+);
+
+
+create table informacoes_adicionais_contatos(
+id int primary key auto_increment,
+tipo varchar(255),
+nome varchar(255),
+telefone varchar(255),
+informacoes_adicionais_id int references informacoes_adicionais(id)
+);
+
+create table informacoes_adicionais_medidas(
+id int primary key auto_increment,
+altura decimal(5,2),
+peso decimal(5,3),
+massa_magra decimal(5,3),
+gordura_corporal decimal(5,3),
+informacoes_adicionais_id int references informacoes_adicionais(id)
+);
+
+
+
+
+create table informacoes_adicionais_exercicios(
+id int primary key auto_increment,
+exercicios varchar(255),
+informacoes_adicionais_id int references informacoes_adicionais(id)
+);
+
+
+
+select * from informacoes_adicionais;
+select * from informacoes_adicionais_contatos;
+select * from informacoes_adicionais_exercicios;
+select * from informacoes_adicionais_medidas;
+
+TRUNCATE TABLE informacoes_adicionais;
+TRUNCATE TABLE informacoes_adicionais_contatos;
+TRUNCATE TABLE informacoes_adicionais_exercicios;
+TRUNCATE TABLE informacoes_adicionais_medidas;
+
 select * from ativ_extras;
 select * from ativ_extras_exercicios;
 
@@ -89,6 +141,10 @@ ALTER TABLE vinculo CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 ALTER TABLE ativ_extras CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 ALTER TABLE ativ_extras_exercicios CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 ALTER TABLE upload_dica CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+ALTER TABLE informacoes_adicionais CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+ALTER TABLE informacoes_adicionais_contatos CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+ALTER TABLE informacoes_adicionais_exercicios CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+ALTER TABLE informacoes_adicionais_medidas CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 
 --inserir dados no banco.
 insert into tipo_usuario (tipo) values ('aluno');

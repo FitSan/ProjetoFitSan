@@ -139,6 +139,24 @@ function dataParse($data) {
 
 }
 
+function numeroParse($numero){
+    if (is_int($numero)) return $numero; // Se for do tipo inteiro retorna o número
+    if (is_float($numero)) return $numero; // Se for do tipo fracionado retorna o número
+    if (!is_string($numero)) return 0; // Se não for caracter retorna 0
+    if (preg_match('{^\d+(,\d)+\.\d+$}', $numero)) return floatval(strtr($numero, array(',' => ''))); // Se for caracter no formato inglês com separador de milhar, limpa e converte para fracionado
+    if (preg_match('{^\d+(\.\d)+,\d+$}', $numero)) return floatval(strtr($numero, array('.' => '', ',' => '.'))); // Se for caracter no formato brasileiro com separador de milhar, limpa e converte para fracionado
+    if (preg_match('{^\d+,\d+$}', $numero)) return floatval(strtr($numero, array(',' => '.'))); // Se for caracter no formato brasileiro, limpa e converte para fracionado
+    if (preg_match('{^\d+\.\d+$}', $numero)) return floatval($numero); // Se for caracter no formato inglês, limpa e converte para fracionado
+    if (is_numeric($numero)) return floatval ($numero); // Se for caracter que tenha apenas números converte para fracionado
+    return 0; // Se for em um formato inválido retorna 0
+}
+
+function numeroFormatar($number, $decimals = -2, $dec_point = ',', $thousands_sep = '.'){
+    $num = number_format($number, abs($decimals), $dec_point, $thousands_sep);
+    if ($decimals < 0) $num = rtrim(rtrim($num, '0'), $dec_point);
+    return $num;
+}
+
 // Converte um valor em texto para a consulta SQL
 function mysqliEscaparTexto($valor, $tipo = null) {
     if (is_null($valor) || ($tipo == 'null'))
@@ -150,9 +168,9 @@ function mysqliEscaparTexto($valor, $tipo = null) {
     if ($tipo == 'datetime')
         return "'".date('Y-m-d H:i:s', dataParse($valor))."'"; // Formata a data e hora para o SQL
     if (is_int($valor) || ($tipo == 'int'))
-        return number_format($valor, 0, '.', ''); // formata o numero inteiro para o padrao do SQL
+        return number_format(numeroParse($valor), 0, '.', ''); // formata o numero inteiro para o padrao do SQL
     if (is_float($valor) || ($tipo == 'float'))
-        return rtrim(rtrim(number_format($valor, 10, '.', ''), '0'), '.'); // formata o numero real para o SQL
+        return rtrim(rtrim(number_format(numeroParse($valor), 10, '.', ''), '0'), '.'); // formata o numero real para o SQL
     if (is_string($valor) || ($tipo == 'string'))
         return ("'" . addcslashes($valor, "\r\n\t\0\\'") . "'"); // Formata o string para o SQL
     if (is_bool($valor) || ($tipo == 'bool'))

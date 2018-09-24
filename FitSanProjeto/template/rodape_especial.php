@@ -373,6 +373,35 @@
 </script>
 
 
+<script>
+  $(function () {
+    $('.duplicador').each(function(){
+        var box = $(this);
+        var modelo = box.find('.duplicador-item').eq(0).clone(true);
+        function duplicar(){
+            var este = $(this);
+            var novo = modelo.clone(true).appendTo(box);
+            novo.find('.duplicador-mais').on('click', duplicar).find('i').removeClass('fa-minus').addClass('fa-plus');
+            novo.find(':input').val('');
+            este.off('click').on('click', remover).find('i').removeClass('fa-plus').addClass('fa-minus');
+        }
+        function remover(){
+            var este = $(this);
+            este.parents('.duplicador-item').remove();
+        }
+        var botoes = box.find('.duplicador-mais');
+        botoes.each(function(i){
+            var este = $(this);
+            if (i >= (botoes.length - 1)){
+                este.on('click', duplicar).find('i').removeClass('fa-minus').addClass('fa-plus');
+            } else {
+                este.on('click', remover).find('i').removeClass('fa-plus').addClass('fa-minus');
+            }
+        });
+    });
+  });
+</script>
+
 
 </body>
 </html>
