@@ -42,10 +42,9 @@ if($existe == FALSE){
 
 
 
-if (!empty($email)){
+if (!empty($email)){ 
     
-    
-    
+
        
     $mail = new PHPMailer();
     $mail->isSMTP();
@@ -62,8 +61,11 @@ if (!empty($email)){
     $mail->addReplyTo('plataformafitsan@gmail.com');
     $mail->isHTML();
     $mail->Subject = 'FitSan';
-    $mail->Body = 'Recupere sua senha do FitSan!'
-            . '<a href="http://localhost/FitSan/form_recSenha.php?perfil_codigo=<?php echo $codigo;?>"> Link </a>;';
+    $mail->Body = "<a href=\"http://localhost/FitSan/form_recSenha.php?perfil_codigo=$codigo\"> Link </a>;';";
+    ?>
+  
+
+<?php
     if (!$mail->send()){
         echo 'Não foi possível enviar a mensagem';
         echo 'Erro: ' . $mail->ErrorInfo;
@@ -72,7 +74,7 @@ if (!empty($email)){
          $_SESSION['sucesso'] = "Dados conferem!";
       header('Location:http://localhost/FitSan/form_recEmail.php');
     }
-        
+ 
 }
 
 

@@ -273,3 +273,5 @@ update usuario set nome = 'gabriel' , sobrenome = 'Pessanha', email = 'g@g' wher
 insert into usuario(codigo) values ('sdbfahsdbfahs'), where email =l@l ;
 
 UPDATE usuario SET codigo='FCHGVKJHKJHVV' WHERE email = 'l@l';
+
+UPDATE usuario SET senha=2345678 WHERE codigo = '5ba93c45d17e8'

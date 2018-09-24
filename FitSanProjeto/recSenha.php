@@ -6,12 +6,13 @@ ini_set('display_errors', true);
     
 $nova_senha = $_POST['nova_senha'];
 $repita_senha = $_POST['repita_senha'];
+$codigo = $_SESSION['codigo'];
 
-$conutSenha = strlen($nova_senha);//contando os caracteres.
 
-if($nova_senha == $repita_senha && $conutSenha > 8){ 
-    
-    
+$contSenha = strlen($nova_senha);//contando os caracteres.
+
+if($nova_senha == $repita_senha && $contSenha >= 8){ 
+       
 $query = "select codigo from usuario";
 $resultado_email = mysqli_query($conexao, $query);
 
@@ -26,27 +27,33 @@ $resultado_email = mysqli_query($conexao, $query);
 }
 if($existe == true){
 
-$codigo = $_GET['perfil_codigo'];
-  
-  $sql = "UPDATE usuario SET senha=$nova_senha WHERE codigo = '$codigo';";
+  $senha_hash = password_hash($nova_senha, PASSWORD_BCRYPT);
+    
+  $sql = "UPDATE usuario SET senha='$senha_hash' WHERE codigo = '$codigo';";
 
    $retorno = mysqli_query($conexao, $sql);
-  
+   
+    unset($_SESSION['codigo']);
+    
     header('Location: form_login.php');
+    exit();
+       
 } else {
     
      $_SESSION['erroCount'] = "Dados nao conferem!";
      
+      unset($_SESSION['codigo']);
     header('Location: form_recSenha.php');
     
 }
   
-///header('Location: form_recSenha.php');
+header('Location: form_recSenha.php');
 
 
 } else {
     
          $_SESSION['erroCount'] = "Dados nao conferem!";
-     
+
+            unset($_SESSION['codigo']);
     header('Location: form_recSenha.php');
 }
