@@ -9,7 +9,7 @@ if ($_SESSION['tipo'] == 'profissional') {
     $query = "select * from usuario u left join vinculo v on v.profissional_id = u.id and v.aluno_id = $_SESSION[id] where u.id=" . mysqliEscaparTexto($_GET['id']);
     $usuario_busca = 'profissional_id';
 }
-$resultado = mysqli_query($conexao, $query) or die('ERRO: '.mysqli_error($conexao).PHP_EOL.$query.PHP_EOL.print_r(debug_backtrace(), true));
+$resultado = mysqli_query($conexao, $query) or die('ERRO: ' . mysqli_error($conexao) . PHP_EOL . $query . PHP_EOL . print_r(debug_backtrace(), true));
 if ($linha = mysqli_fetch_array($resultado)) {
     ?>
 
@@ -23,7 +23,7 @@ if ($linha = mysqli_fetch_array($resultado)) {
             </ol>
         </section>
 
-        
+
         <section class="content">
             <div class="row">
                 <div class="col-md-3">
@@ -62,55 +62,102 @@ if ($linha = mysqli_fetch_array($resultado)) {
                             ?>
                         </div>
                     </div>
-                    <?php if (!empty($_SESSION['tipo'] == "profissional")) { ?>
-                    <div class="box box-primary">
+                    <?php
+                    if (!empty($_SESSION['tipo'] == "profissional")) {
+
+                        //referente ao formulário
+                        $query_alterar = "select * from informacoes_adicionais where aluno_id = " . mysqliEscaparTexto($_GET['id']);
+                        $resultado_alterar = mysqli_query($conexao, $query_alterar) or die('ERRO: ' . mysqli_error($conexao) . PHP_EOL . $query_alterar . PHP_EOL . print_r(debug_backtrace(), true));
+                        $linha_alterar = ($resultado_alterar ? mysqli_fetch_array($resultado_alterar) : array());
+                        if (!empty($linha_alterar['id'])) {
+                            $query_cont_alterar = "select * from informacoes_adicionais_contatos where informacoes_adicionais_id= " . mysqliEscaparTexto($linha_alterar['id']);
+                            $resultado_cont_alterar = mysqli_query($conexao, $query_cont_alterar) or die('ERRO: ' . mysqli_error($conexao) . PHP_EOL . $query_cont_alterar . PHP_EOL . print_r(debug_backtrace(), true));
+                            $linha_alterar['contatos'] = array();
+                            while ($linha2 = mysqli_fetch_array($resultado_cont_alterar))
+                                $linha_alterar['contatos'][] = $linha2;
+                            $query_exe_alterar = "select * from informacoes_adicionais_exercicios where informacoes_adicionais_id= " . mysqliEscaparTexto($linha_alterar['id']);
+                            $resultado_exe_alterar = mysqli_query($conexao, $query_exe_alterar) or die('ERRO: ' . mysqli_error($conexao) . PHP_EOL . $query_exe_alterar . PHP_EOL . print_r(debug_backtrace(), true));
+                            $linha_alterar['exercicios'] = array();
+                            while ($linha2 = mysqli_fetch_array($resultado_exe_alterar))
+                                $linha_alterar['exercicios'][] = $linha2['exercicios'];
+                            $query_med_alterar = "select * from informacoes_adicionais_medidas where informacoes_adicionais_id= " . mysqliEscaparTexto($linha_alterar['id']);
+                            $resultado_med_alterar = mysqli_query($conexao, $query_med_alterar) or die('ERRO: ' . mysqli_error($conexao) . PHP_EOL . $query_med_alterar . PHP_EOL . print_r(debug_backtrace(), true));
+                            $linha_alterar['medidas'] = array();
+                            while ($linha2 = mysqli_fetch_array($resultado_med_alterar))
+                                $linha_alterar['medidas'][] = $linha2;
+                        }
+                        ?>
+                        <div class="box box-primary">
                             <div class="box-header with-border">
                                 <h3 class="box-title">Informações Adicionais</h3>
                             </div>
                             <div class="box-body">
                                 <strong><i class="fa fa-fw fa-medkit margin-r-5"></i>Ficha médica</strong><br><br>
-                                <b>Problemas de saúde:</b> Resposta <br>
-                                <b>Notas médicas:</b> Resposta <br>
-                                <b>Alergias e reações:</b> Resposta <br>
-                                <b>Medicamentos:</b> Resposta <br>
-                                <b>Grupo sanguíneo:</b> Resposta <br>
-                                <i class="fa fa-fw fa-heart-o"></i><b>Doador de Orgão:</b> Resposta <br>
+                                <b>Problemas de saúde:</b> <?php echo htmlspecialchars(!empty($linha_alterar['saude']) ? $linha_alterar['saude'] : '(Não informado)') ?> <br>
+                                <b>Notas médicas:</b> <?php echo htmlspecialchars(!empty($linha_alterar['medico']) ? ($linha_alterar['medico']) : '(Não informado)') ?> <br>
+                                <b>Alergias e reações:</b> <?php echo htmlspecialchars(!empty($linha_alterar['alergia']) ? ($linha_alterar['alergia']) : '(Não informado)') ?> <br>
+                                <b>Medicamentos:</b> <?php echo htmlspecialchars(!empty($linha_alterar['medicamento']) ? ($linha_alterar['medicamento']) : '(Não informado)') ?> <br>
+                                <b>Grupo sanguíneo:</b> <?php echo htmlspecialchars(!empty($linha_alterar['gruposangue']) ? ($linha_alterar['gruposangue']) : '(Não informado)') ?> <br>
+                                <i class="fa fa-fw fa-heart-o"></i><b>Doador de Orgão:</b> <?php echo htmlspecialchars(!empty($linha_alterar['doador']) ? ($linha_alterar['doador']) : '(Não informado)') ?> <br>
 
                                 <hr>
                                 <strong><i class="fa fa-fw fa-phone"></i> Contato de emergência</strong><br><br>
-                                <b>Mãe:</b> Neide Guzzatti Konig - 4836267585 <br>
-                                <b>Cônjuge:</b> Diego Pereira - 4899999999 <br>
+                                <?php
+                                if (!empty($linha_alterar['contatos'])) {
+                                    foreach ($linha_alterar['contatos'] as $contato) {
+                                        ?>
+                                        <b><?php echo htmlspecialchars($contato['tipo']) ?>:</b> <?php echo htmlspecialchars($contato['nome']) ?> - <?php echo htmlspecialchars($contato['telefone']) ?> <br>
+                                        <?php
+                                    }
+                                } else {
+                                    ?>
+                                    Não informado <br>
+                                    <?php
+                                }
+                                ?>
 
                                 <hr>
                                 <strong><i class="fa fa-fw fa-male margin-r-5"></i>Medidas</strong><br><br>
 
-                                <b>Altura:</b>Resposta <br>
-                                <b>Peso:</b>Resposta <br>
-                                <b>Massa magra:</b>Resposta <br>
-                                <b>Gordura corporal:</b>Resposta <br>
-                                <b>IMC:</b>Resposta
+                                <b>Altura:</b> <?php echo!empty($linha_alterar['medidas'][0]['altura']) ? numeroFormatar($linha_alterar['medidas'][0]['altura'], -2) : '(Não informado)' ?> <br>
+                                <b>Peso:</b> <?php echo!empty($linha_alterar['medidas'][0]['peso']) ? numeroFormatar($linha_alterar['medidas'][0]['peso'], -3) : '(Não informado)' ?> <br>
+                                <b>Massa magra:</b> <?php echo!empty($linha_alterar['medidas'][0]['massa_magra']) ? numeroFormatar($linha_alterar['medidas'][0]['massa_magra'], -3) : '(Não informado)' ?>  <br>
+                                <b>Gordura corporal:</b> <?php echo!empty($linha_alterar['medidas'][0]['gordura_corporal']) ? numeroFormatar($linha_alterar['medidas'][0]['gordura_corporal'], -3) : '(Não informado)' ?> <br>
+                                <b>IMC:</b><?php echo (!empty($linha_alterar['medidas'][0]['peso']) && !empty($linha_alterar['medidas'][0]['altura'])) ? numeroFormatar($linha_alterar['medidas'][0]['peso'] / pow($linha_alterar['medidas'][0]['altura'], 2), -2) : '(Não informado)' ?>
 
                                 <hr>
                                 <strong><i class="fa fa-fw fa-diamond margin-r-5"></i>Academia</strong><br><br>
 
-                                <b>Academias já frequentadas:</b>Resposta <br>
-                                <b>Academia atual:</b>Resposta 
+                                <b>Academias já frequentadas:</b> <?php echo htmlspecialchars(!empty($linha_alterar['academia_frequentada']) ? ($linha_alterar['academia_frequentada']) : '(Não informado)' ) ?> <br>
+                                <b>Academia atual:</b><?php echo htmlspecialchars(!empty($linha_alterar['academia_atual']) ? ($linha_alterar['academia_atual']) : '(Não informado)' ) ?>
 
                                 <hr>
                                 <strong><i class="fa fa-fw fa-bicycle margin-r-5"></i>Esportes Praticados </strong><br><br>
 
-                                <span class="label label-danger">Caminhada</span>
-                                <span class="label label-success">Bicicleta</span>
-                                <span class="label label-info">Ping-Pong</span>
-                                <span class="label label-warning">Futebol</span>
-                                <span class="label label-primary">Volei</span><br><br>
+                                <?php
+                                $classes = array('label-danger', 'label-success', 'label-info', 'label-warning', 'label-primary');
+                                $clsindice = 0;
+                                if (!empty($linha_alterar['exercicios'])) {
+                                    foreach ($linha_alterar['exercicios'] as $exercicio) {
+                                        $classe = $classes[$clsindice++];
+                                        if ($clsindice >= count($classes))
+                                            $clsindice = 0;
+                                        ?>
+                                        <span class="label <?php echo $classe ?>"><?php echo htmlspecialchars($exercicio) ?></span>
+                                    <?php
+                                    }
+                                } else {
+                                    ?>
+                                    Não informado <br>
+            <?php }
+        ?>
 
-                                
+
                             </div>                    
                         </div> 
-                    <?php } ?>  
+    <?php } ?>  
                 </div>
-                kkk
+                Visualizações dos históricos, metas, e avaliações.
             </div>
         </section>
     </div>
