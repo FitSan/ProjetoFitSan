@@ -40,7 +40,11 @@ if ($linha = mysqli_fetch_array($resultado)) {
                                     <b>Data de nascimento:</b><a class="pull-right"><?= (!empty($linha['datanasc']) ? date('d/m/Y', dataParse($linha['datanasc'])) : '(Não definido)') ?></a>
                                 </li>
                             </ul>
-                            <?php if ($linha['status'] === 'aprovado') {
+                            <?php
+                            if (empty($_SESSION['tipo']) || ($_SESSION['tipo'] == "profissional")){
+                            } elseif ($_SESSION['id'] == $linha['id']){
+                                ?><a href="form_perfil.php" class="btn btn-primary btn-block"><b>Alterar</b></a><?php
+                            } elseif ($linha['status'] === 'aprovado') {
                                 ?><a href="desvincular.php?id=<?= $linha['id'] ?>" class="btn btn-info btn-block"><b>Deixar de seguir</b></a><?php
                             } elseif ($linha['status'] === 'espera') {
                                 if ($linha['solicitante'] == $_SESSION['tipo']) {
@@ -63,7 +67,7 @@ if ($linha = mysqli_fetch_array($resultado)) {
                         </div>
                     </div>
                     <?php
-                    if (!empty($_SESSION['tipo'] == "profissional")) {
+                    if (!empty($_SESSION['tipo']) && ($_SESSION['tipo'] != "profissional")) {
 
                         //referente ao formulário
                         $query_alterar = "select * from informacoes_adicionais where aluno_id = " . mysqliEscaparTexto($_GET['id']);

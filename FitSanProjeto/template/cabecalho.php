@@ -23,6 +23,8 @@ require_once 'autenticacao.php';
              folder instead of downloading all of them to reduce the load. -->
         <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
         <link rel="stylesheet" href="plugins/iCheck/all.css">
+        <!-- DataTables -->
+        <link rel="stylesheet" href="bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
         
         <link rel="stylesheet" href="bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.css" >
         <link rel="stylesheet" type="text/css" href="css/estilo.css">
@@ -244,7 +246,7 @@ require_once 'autenticacao.php';
                                     echo "<li><a href='#'><i class='fa fa-history'></i><span>Histórico</span></a></li>";
                                 } else {
                                     echo "<li><a href='http://localhost/FitSan/minhas_dicas.php'><i class='fa fa-heartbeat'></i><span>Minhas Dicas</span></a></li>";
-                                    echo "<li><a href='#'><i class='fa fa-th-list'></i><span>Planilha</span></a></li>";
+                                    echo "<li><a href='http://localhost/FitSan/planilha.php'><i class='fa fa-th-list'></i><span>Planilha</span></a></li>";
                                     echo "<li><a href='#'><i class='fa fa-address-book'></i><span>Evoluções</span></a></li>";
                                 }
                                 ?>
