@@ -105,16 +105,11 @@ gordura_corporal decimal(5,3),
 informacoes_adicionais_id int references informacoes_adicionais(id)
 );
 
-
-
-
 create table informacoes_adicionais_exercicios(
 id int primary key auto_increment,
 exercicios varchar(255),
 informacoes_adicionais_id int references informacoes_adicionais(id)
 );
-
-
 
 select * from informacoes_adicionais;
 select * from informacoes_adicionais_contatos;
