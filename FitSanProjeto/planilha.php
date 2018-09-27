@@ -13,12 +13,13 @@ require_once './template/cabecalho.php';
             <br><br>
             <table>
                 <td class="col-lg-2">
-                    <select class="form-control select2 " name="musculos">
-                        <option value="">Músculos</option>
+                    <select class="form-control select2 " name="areas">
+                        <option value="">Áreas</option>
                         <option value="abdominais">Abdominais</option>
                         <option value="antebracos">Antebraços</option>
                         <option value="anterior">Anterior da coxa</option>  
                         <option value="biceps">Bíceps</option>
+                        <option value="cardio">Cárdio</option>
                         <option value="costas">Costas</option>
                         <option value="coxas">Coxas</option> 
                         <option value="gemeos">Gémeos</option> 
@@ -88,8 +89,8 @@ require_once './template/cabecalho.php';
                         <th>CONJUNTOS</th>
                         <th>REP/TEMPO</th>
                         <th>DESCANSO(S)</th>
-                        <th> </th>
-                        <th> </th>
+                        <th><i class="fa fa-cog"></i></th> 
+                        <th><i class="fa fa-trash-o"></i></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -132,7 +133,7 @@ require_once './template/cabecalho.php';
                     </div>                 
                 </div><br><br><br>
                 <div class="col-sm-1 pull-right">
-                    <a href="novos_exercicios.php" class="btn btn-default">Novos exercícios</a><br><br>
+                    <a href="planilha_dados.php" class="btn btn-info">Dados da Planilha</a><br><br>
 
 
                 </div>

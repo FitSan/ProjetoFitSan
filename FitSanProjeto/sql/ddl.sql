@@ -127,6 +127,20 @@ select * from ativ_extras_exercicios;
 TRUNCATE TABLE ativ_extras;
 TRUNCATE TABLE ativ_extras_exercicios;
 
+--Planilha -----
+
+
+
+
+
+
+
+
+
+
+
+
+
 ALTER DATABASE FitSan CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 SELECT CONCAT('ALTER TABLE ',  table_name, ' CHARACTER SET utf8 COLLATE utf8_unicode_ci;') FROM information_schema.TABLES WHERE table_schema = 'FitSan';
 
@@ -142,6 +156,7 @@ ALTER TABLE informacoes_adicionais CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 ALTER TABLE informacoes_adicionais_contatos CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 ALTER TABLE informacoes_adicionais_exercicios CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 ALTER TABLE informacoes_adicionais_medidas CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+
 
 --inserir dados no banco.
 insert into tipo_usuario (tipo) values ('aluno');

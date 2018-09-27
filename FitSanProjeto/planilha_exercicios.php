@@ -36,9 +36,11 @@ require_once './template/cabecalho.php';
 
                     </div>
 
-                    <div class="box-footer">
-                        <button type="submit" class="btn btn-default">Cancel</button>
-                        <button type="submit" class="btn btn-info pull-right">Salvar</button>
+                    <div class="box-footer">                        
+                        <button type="reset" class="btn btn-default">Limpar</button>                        
+                        <button type="submit" class="btn btn-info">Salvar</button>
+                        <a href="planilha_dados.php" class="btn btn-danger pull-right">Voltar</a><br><br>
+                        
                     </div>
                 </div>
             </form>
