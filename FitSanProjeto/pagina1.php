@@ -101,10 +101,10 @@ $resultado = mysqli_query($conexao, $query);
                 <h1 class="display-3">
                     <?php
         if (estaLogado()) {
-            echo 'Olá ' . exibirName() . ", ";
+            echo 'Olá, ' . exibirName();
         }
         ?> </h1>
-                <p>Estamos felizes de ter você aqui, aproveite nossa plataforma.</p>
+                <p>Estamos felizes por tê-lo aqui, aproveite nossa plataforma.</p>
             </div>
         </div>
      

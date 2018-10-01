@@ -40,7 +40,7 @@ $resultado = mysqli_query($conexao, $query);
                                 ?>
                                 <!--Fim do icone x-->
                             </span>
-                            <span class="description"><?= $linha['data_envio'] ?></span>
+                            <span class="description"><?= date('d/m/Y H:i:s', dataParse($linha['data_envio'])) ?></span>
                         </div>
                         <p> <?= $linha['texto'] ?> </p> 
                         <div id="uploads"><ul><?php

@@ -1,13 +1,14 @@
 <?php
-require_once './template/cabecalho.php';
-
-//$pagina = "Vínculos";
 $tipo = $_GET['tipo'];
 if ($tipo == 'aluno') {
     $pagina = "Profissionais";
 } else {
     $pagina = "Alunos";
 }
+require_once './template/cabecalho.php';
+
+//$pagina = "Vínculos";
+
 
 if ($tipo == 'aluno') {
 //    $pagina = "Profissionais";

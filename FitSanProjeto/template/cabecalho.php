@@ -235,7 +235,7 @@ require_once 'autenticacao.php';
                                 <ul class="treeview-menu">
                                     <?php
                                     if (tipoLogado("aluno")){
-                                        echo "<li><a href='#'><i class='fa fa-circle-o'></i> Metas </a></li>";
+                                        echo "<li><a href='http://localhost/FitSan/metas.php'><i class='fa fa-circle-o'></i> Metas </a></li>";
                                         echo "<li><a href='http://localhost/FitSan/atividadesExtras.php'><i class='fa fa-circle-o'></i> Atividades Extras </a></li>";
                                         echo "<li><a href='#'><i class='fa fa-circle-o'></i> Contato </a></li>";
                                     } elseif (tipoLogado("profissional")){
@@ -248,11 +248,11 @@ require_once 'autenticacao.php';
                             <?php
                             if (tipoLogado("aluno")){
                                 echo "<li><a href='#'><i class='fa fa-th-list'></i><span>Planilha</span></a></li>";
-                                echo "<li><a href='http://localhost/FitSan/form_avaliacao.php'><i class='fa fa-pencil'></i><span>Avaliações</span></a></li>";
-                                echo "<li><a href='#'><i class='fa fa-history'></i><span>Histórico</span></a></li>";
+                                 echo "<li><a href='#'><i class='fa fa-history'></i><span>Histórico</span></a></li>";
                             } elseif (tipoLogado("profissional")){
                                 echo "<li><a href='http://localhost/FitSan/minhas_dicas.php'><i class='fa fa-heartbeat'></i><span>Minhas Dicas</span></a></li>";
                                 echo "<li><a href='http://localhost/FitSan/planilha.php'><i class='fa fa-th-list'></i><span>Planilha</span></a></li>";
+                                echo "<li><a href='http://localhost/FitSan/form_avaliacao.php'><i class='fa fa-pencil'></i><span>Avaliações</span></a></li>";          
                                 echo "<li><a href='#'><i class='fa fa-address-book'></i><span>Evoluções</span></a></li>";
                             } elseif (tipoLogado("admin")){
                                 echo "<li><a href='http://localhost/FitSan/area_admin.php'><i class='fa fa-th-list'></i><span>Área Administrativa</span></a></li>";

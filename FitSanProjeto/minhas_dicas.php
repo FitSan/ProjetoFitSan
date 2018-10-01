@@ -65,7 +65,7 @@ $resultado = mysqli_query($conexao, $query);
                 <div class="user-block">
                     <button type="button" class="pull-right btn-box-tool" data-toggle="modal" data-target="#excluir-dica" data-id="<?= $linha['id'] ?>"><i class="fa fa-times" style="font-size:20px"></i></button>
                     <a href="form_alterarDica.php?id=<?= $linha['id'] ?>"><button type="button" class="pull-right btn-box-tool" ><i class="fa fa-edit" style="font-size:20px"></i></button></a>
-                    <h4><?= $linha['data_envio'] ?></h4>                
+                    <h4><?= date('d/m/Y H:i:s', dataParse($linha['data_envio'])) ?></h4>                
                 </div>
                 <p style="padding: 5px; "><?= $linha['texto'] ?></p>            
 

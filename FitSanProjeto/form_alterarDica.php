@@ -1,7 +1,7 @@
 <?php
 $pagina = "Alterar dica";
 include './template/cabecalho.php';
-if (tipoLogado('profissional')){
+if (!tipoLogado('profissional')){
     header('Location: pagina1.php');
 }
 

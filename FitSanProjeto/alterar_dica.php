@@ -95,7 +95,11 @@ if($_FILES['imagens']['size'][0] != 0&&$_FILES['video']['size']!=0){
         }
     } else{
         if($numArq>$maxNum){
-            $msg = "Dica não alterada! Muitos arquivos selecionados, máximo ".$maxNum.".";            
+            if ($maxNum==0){
+                $msg = "Dica não alterada! Dica já possui a quantidade máxima de imagens.";
+            }else{
+                $msg = "Dica não alterada! Muitos arquivos selecionados, máximo ".$maxNum.".";    
+            }
         }else if(!in_array($arquivo['type'][$iError], $permite)){    
             $msg = "Dica não alterada! Arquivo ".$arquivo['name'][$iError]. " possui tipo de arquivo não permitido.";            
         }else if($quantUploadsVid!=0){
@@ -148,7 +152,7 @@ if($_FILES['imagens']['size'][0] != 0&&$_FILES['video']['size']!=0){
         }else if($quantUploadsVid!=0){
             $msg = "Dica não alterada! Dica já possui upload de vídeo.";
         }else if($quantUploads!=0){
-            $msg = "Dica não alterada! Dica já possui upload de vídeo.";
+            $msg = "Dica não alterada! Dica já possui upload de imagem.";
         }else{
             $msg = "Dica não alterada! Erro no upload do vídeo.";
         }
