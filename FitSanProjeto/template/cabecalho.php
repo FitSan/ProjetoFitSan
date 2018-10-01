@@ -129,7 +129,7 @@ require_once 'autenticacao.php';
                                         <?php } ?>
                                          <span class="hidden-xs"><?php
                                             if (estaLogado()) {
-                                                echo 'Olá, ' . exibirName();
+                                                echo 'Olá ' . exibirName();
                                             }
                                             ?></span>
                                     </a>
@@ -149,20 +149,25 @@ require_once 'autenticacao.php';
                                         <!-- Menu Body -->
                                         <li class="user-body">
                                             <div class="row">
+<?php if (tipoLogado("aluno")) { ?>
                                                 <div class="col-xs-4 text-center">
-                                                    <?php
-                                                    if (getTipo() == "aluno") {
-                                                        echo "<a href='http://localhost/FitSan/vinculos.php?tipo=$_SESSION[tipo]'> Profissionais</a>";
-                                                    } else {
-                                                        echo "<a href='http://localhost/FitSan/vinculos.php?tipo=$_SESSION[tipo]'> Alunos</a>";
-                                                    }
-                                                    ?>
-
+                                                        <a href="http://localhost/FitSan/vinculos.php?tipo=<?php echo $_SESSION['tipo'] ?>"> Profissionais</a>
                                                 </div>
                                                 <div class="col-xs-4 text-center">
-                                                    <a href="#">Breve</a>
+                                                    <span>&nbsp;</span>
                                                 </div>
                                                 <div class="col-xs-4 text-center">
+<?php } elseif (tipoLogado("profissional")) { ?>
+                                                <div class="col-xs-4 text-center">
+                                                        <a href="http://localhost/FitSan/vinculos.php?tipo=<?php echo $_SESSION['tipo'] ?>"> Alunos</a>
+                                                </div>
+                                                <div class="col-xs-4 text-center">
+                                                    <span>&nbsp;</span>
+                                                </div>
+                                                <div class="col-xs-4 text-center">
+<?php } else { ?>
+                                                <div class="col-xs-12 text-center">
+<?php } ?>
                                                     <a href="http://localhost/FitSan/form_conf.php">Configuração</a>
                                                 </div>
                                             </div>
@@ -221,6 +226,7 @@ require_once 'autenticacao.php';
                                     <i class="fa fa-home"></i> <span>Home</span>                                  
                                 </a>
                             </li>
+                            <?php if (tipoLogado("aluno", "profissional")){ ?>
                             <li class="treeview">
                                 <a href="#">
                                     <i class="fa fa-id-badge"></i>
@@ -228,29 +234,30 @@ require_once 'autenticacao.php';
                                 </a>
                                 <ul class="treeview-menu">
                                     <?php
-                                    if (getTipo() == "aluno") {
+                                    if (tipoLogado("aluno")){
                                         echo "<li><a href='#'><i class='fa fa-circle-o'></i> Metas </a></li>";
                                         echo "<li><a href='http://localhost/FitSan/atividadesExtras.php'><i class='fa fa-circle-o'></i> Atividades Extras </a></li>";
                                         echo "<li><a href='#'><i class='fa fa-circle-o'></i> Contato </a></li>";
-                                    } else {
+                                    } elseif (tipoLogado("profissional")){
                                         echo "<li><a href='#'><i class='fa fa-circle-o'></i> Contato </a></li>";
                                     }
                                     ?>     
                                 </ul>
                             </li>
-                            <li>
-                                <?php
-                                if (getTipo() == "aluno") {
-                                    echo "<li><a href='#'><i class='fa fa-th-list'></i><span>Planilha</span></a></li>";
-                                    echo "<li><a href='#'><i class='fa fa-pencil'></i><span>Avaliações</span></a></li>";
-                                    echo "<li><a href='#'><i class='fa fa-history'></i><span>Histórico</span></a></li>";
-                                } else {
-                                    echo "<li><a href='http://localhost/FitSan/minhas_dicas.php'><i class='fa fa-heartbeat'></i><span>Minhas Dicas</span></a></li>";
-                                    echo "<li><a href='http://localhost/FitSan/planilha.php'><i class='fa fa-th-list'></i><span>Planilha</span></a></li>";
-                                    echo "<li><a href='http://localhost/FitSan/form_avaliacao.php'><i class='fa fa-address-book'></i><span>Avaliações</span></a></li>";
-                                }
-                                ?>
-                            </li>
+                            <?php } ?>
+                            <?php
+                            if (tipoLogado("aluno")){
+                                echo "<li><a href='#'><i class='fa fa-th-list'></i><span>Planilha</span></a></li>";
+                                echo "<li><a href='http://localhost/FitSan/form_avaliacao.php'><i class='fa fa-pencil'></i><span>Avaliações</span></a></li>";
+                                echo "<li><a href='#'><i class='fa fa-history'></i><span>Histórico</span></a></li>";
+                            } elseif (tipoLogado("profissional")){
+                                echo "<li><a href='http://localhost/FitSan/minhas_dicas.php'><i class='fa fa-heartbeat'></i><span>Minhas Dicas</span></a></li>";
+                                echo "<li><a href='http://localhost/FitSan/planilha.php'><i class='fa fa-th-list'></i><span>Planilha</span></a></li>";
+                                echo "<li><a href='#'><i class='fa fa-address-book'></i><span>Evoluções</span></a></li>";
+                            } elseif (tipoLogado("admin")){
+                                echo "<li><a href='http://localhost/FitSan/area_admin.php'><i class='fa fa-th-list'></i><span>Área Administrativa</span></a></li>";
+                            }
+                            ?>
                             <!--                            <li>
                                                             <a href="http://localhost/FitSan/busca_usuarios.php">
                                                                 <i class="fa fa-th"></i> <span>Busca</span>
