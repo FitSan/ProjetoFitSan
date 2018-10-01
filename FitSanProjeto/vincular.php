@@ -1,7 +1,7 @@
 <?php
 require_once './autenticacao.php';
 
-if ($_SESSION['tipo']=='aluno'){
+if (tipoLogado('aluno')){
     $aluno_id = $_SESSION['id'];
     $profissional_id = $_GET['id'];
 }else{
@@ -19,8 +19,8 @@ mysqli_query($conexao, $query) or die('ERRO: '.mysqli_error($conexao).PHP_EOL.$q
 
 criarNotificacao('INFO',
     'Você tem uma nova solicitação de '. $linha['nome'] . " " . $linha['sobrenome']  . '<br> O que deseja fazer? <a href="status_vinculo.php?id='.$_SESSION['id'].'&status=aprovado">Aceitar</a> <a href="status_vinculo.php?id='.$_SESSION['id'].'&status=negado">Negar</a>',
-    ($_SESSION['tipo']=='aluno') ? $profissional_id : null,
-    ($_SESSION['tipo']!='aluno') ? $aluno_id : null,
+    tipoLogado('aluno') ? $profissional_id : null,
+    !tipoLogado('aluno') ? $aluno_id : null,
     ['profissional_id' => $profissional_id, 'aluno_id' => $aluno_id, 'table' => 'vinculo']
 );
 /*

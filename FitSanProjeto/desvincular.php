@@ -1,7 +1,7 @@
 <?php
 require_once './autenticacao.php';
 
-if ($_SESSION['tipo']=='aluno'){
+if (tipoLogado('aluno')){
     $aluno_id = $_SESSION['id'];
     $profissional_id = $_GET['id'];
 }else{

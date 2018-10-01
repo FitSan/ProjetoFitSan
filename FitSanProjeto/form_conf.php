@@ -22,18 +22,12 @@ if ($linha = mysqli_fetch_array($resultado)) {
                 </div>
                 <form role="form" method="post" enctype="multipart/form-data" action="atualizar_conf.php">
                     <div class="box-body">
-                        <div class="form-group">
-                            <label for="novo_nome">Nome</label>
-                            <input type="text" class="form-control" id="novo_nome" name="novo_nome" value="<?= htmlspecialchars($linha['nome']) ?>">
-                        </div>
-                        <div class="form-group">
-                            <label for="novo_sobrenome">Sobrenome</label>
-                            <input type="text" class="form-control" name="novo_sobrenome" value="<?= htmlspecialchars($linha['sobrenome']) ?>">
-                        </div>
-                        <div class="form-group">
+<?php if (!tipoLogado("admin")){ ?>
+                         <div class="form-group">
                             <label for="novo_email">E-mail</label>
                             <input type="text" class="form-control"  name="novo_email" value="<?= htmlspecialchars($linha['email']) ?>">
                         </div>
+<?php } ?>
 
                         <h4> Trocar Senha</h4>
 

@@ -2,7 +2,7 @@
        
 require_once './autenticacao.php';
 
-//if ($_SESSION['tipo'] == 'profissional') {
+//if (tipoLogado('profissional')){
 //        criarNotificacao("OK", "Fulano adicionou você.", $_SESSION['id']);  
 //    } else {
 //        criarNotificacao("OK", "Fulano adicionou você.", null, $_SESSION['id']);  

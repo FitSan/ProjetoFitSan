@@ -2,7 +2,7 @@
 $pagina = "Atividades Extras";
 require_once './template/cabecalho.php';
 
-// Iniciando vari[aveis
+// Iniciando variraveis
 $acao = (!empty($_GET['acao']) ? $_GET['acao'] : 'consultar'); //obtendo ação
 $id = (!empty($_GET['id']) ? $_GET['id'] : null); //obtendo id de alteração
 $erros = array();
@@ -38,7 +38,7 @@ if (($acao == 'incluir') || ($acao == 'alterar')){
             $query1 = "insert into ativ_extras_exercicios ( ativ_extras_id, exercicio ) values ( " . mysqliEscaparTexto($id) . ", " . mysqliEscaparTexto($exercicio) . " )";
             mysqli_query($conexao, $query1) or die('ERRO: ' . mysqli_error($conexao) . PHP_EOL . $query1 . PHP_EOL . print_r(debug_backtrace(), true));
         }
-        header('Location: atividadesExtras.php');
+        header('Location: '.basename(__FILE__));
         exit();
     }
 } elseif ($acao == 'excluir') {
@@ -48,7 +48,7 @@ if (($acao == 'incluir') || ($acao == 'alterar')){
         $query = "delete from ativ_extras where id= " . mysqliEscaparTexto($id);
         mysqli_query($conexao, $query) or die('ERRO: ' . mysqli_error($conexao) . PHP_EOL . $query . PHP_EOL . print_r(debug_backtrace(), true));
     }
-    header('Location: atividadesExtras.php');
+    header('Location: '.basename(__FILE__));
     exit();
 }
 
@@ -102,7 +102,7 @@ $resultado = mysqli_query($conexao, $query) or die('ERRO: '.mysqli_error($conexa
 <?php } ?>
 
                     <div class="box-body pad">
-                        <form method="post" action="atividadesExtras.php?acao=<?= !empty($id) ? ('alterar&id='.$id) : 'incluir' ?>">
+                        <form method="post" action="<?php echo basename(__FILE__) ?>?acao=<?= !empty($id) ? ('alterar&id='.$id) : 'incluir' ?>">
                             <div class="row">
                                 <div class="col-md-8">
                                     <label>Título</label>
@@ -199,8 +199,8 @@ while ($linha = mysqli_fetch_array($resultado)) {
                             </div>
 
                             <div class="timeline-footer">
-                                <a class="btn btn-primary btn-xs" href="atividadesExtras.php?acao=alterar&id=<?= htmlentities($linha['id']) ?>">Atualizar</a>
-                                <a class="btn btn-danger btn-xs" href="atividadesExtras.php?acao=excluir&id=<?= htmlentities($linha['id']) ?>">Excluir</a>
+                                <a class="btn btn-primary btn-xs" href="<?php echo basename(__FILE__) ?>?acao=alterar&id=<?= htmlentities($linha['id']) ?>">Atualizar</a>
+                                <a class="btn btn-danger btn-xs" href="<?php echo basename(__FILE__) ?>?acao=excluir&id=<?= htmlentities($linha['id']) ?>">Excluir</a>
                             </div>
                         </div>
                     </li>

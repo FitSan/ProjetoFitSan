@@ -2,7 +2,7 @@
 require_once './autenticacao.php';
 
 $query = "select dica.*, usuario.nome, usuario.sobrenome, usuario.foto from dica join usuario on usuario.id = dica.profissional_id";
-if (!empty($_SESSION['tipo']) && ($_SESSION['tipo'] == "profissional")) $query .= " where dica.profissional_id = ".$_SESSION['id'];
+if (tipoLogado("profissional")) $query .= " where dica.profissional_id = ".$_SESSION['id'];
 $query .= " order by data_envio desc";
 $resultado = mysqli_query($conexao, $query);
 ?>

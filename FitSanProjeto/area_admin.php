@@ -1,26 +1,31 @@
 <?php
-$pagina = "Dados da planilha";
+$pagina = "Area do administrador";
 require_once './template/cabecalho.php';
 
+if (!tipoLogado("admin")){
+    header('Location: perfil.php');
+    exit;
+}
 ?>
 
 <div class="content-wrapper">
     <div class="box-header">
-        <h1>Dados da Planilha</h1>
+        <h1>Area do administrador</h1>
     </div>   
     <div class="box">
         <div class="box-header">
             <h3 class="box-title">Escolha onde deseja ir</h3>
         </div>
         <div class="box-body">
-            <a href="planilha_areas.php" class="btn btn-app">
-                <i class="fa fa-heart"></i> Áreas
+            <a href="#" class="btn btn-app">
+                <i class="fa fa-user"></i> Usuarios
+            </a>
+            
+            <a href="planilha_muscCard.php" class="btn btn-app">
+                <i class="fa fa-heart"></i> Músculos/Cárdio
             </a>
             <a href="planilha_exercicios.php" class="btn btn-app">
               <i class="fa fa-bicycle"></i> Exercícios  
-            </a>
-            <a href="planilha.php" class="btn btn-app">
-              <i class="fa fa-table"></i> Planilha  
             </a>
         </div>
         <div class="box-footer">        

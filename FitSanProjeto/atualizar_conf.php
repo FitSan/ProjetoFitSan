@@ -5,9 +5,9 @@ include './autenticacao.php';
 
 ini_set('display_errors', true);
 
-$atu_nome = (!empty($_POST['novo_nome']) ? $_POST['novo_nome'] : null);
-$atu_sobnome = (!empty($_POST['novo_sobrenome']) ? $_POST['novo_sobrenome'] : null);
+if (!tipoLogado("admin")){
 $atu_email = (!empty($_POST['novo_email']) ? $_POST['novo_email'] : null);
+}
 
 $senha = (!empty($_POST['insira_senha']) ? $_POST['insira_senha'] : null);
 $repita_senha = (!empty($_POST['repita_senha']) ? $_POST['repita_senha'] : null);
@@ -23,10 +23,10 @@ $linha = mysqli_fetch_array($retorno);
    if (password_verify($senha, $linha['senha'])) {
 
 
+    if (!tipoLogado("admin")){
         $query = "update usuario set nome = '$atu_nome' , sobrenome = '$atu_sobnome', email = '$atu_email' where id=$_SESSION[id]";
-
-       mysqli_query($conexao, $query);
-
+      mysqli_query($conexao, $query);
+    }
 
 
   logar($atu_email, $_SESSION['tipo'] , $atu_nome, $_SESSION['id']) ;

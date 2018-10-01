@@ -12,7 +12,7 @@ if (isset($_POST['busca'])){
 if (!empty($busca) && (strlen($busca) > 3)) {
     $busca = preg_replace('{[^\\w\\d]+}', '%', $busca); //expressão regular
     $busca = ('%' . $busca . '%');
-    if ($_SESSION['tipo'] == 'profissional') {
+    if (tipoLogado('profissional')) {
         $query = "select * from usuario u left join vinculo v on v.aluno_id = u.id and v.profissional_id = $_SESSION[id] where u.tipo_id=1 and concat(u.nome, ' ' , u.sobrenome) like '$busca'";
         $usuario_busca = 'aluno_id';
     } else {
@@ -68,7 +68,7 @@ if (!empty($busca) && (strlen($busca) > 3)) {
                                         <td><a href="desvincular.php?id=<?= $linha['id'] ?>"><span class="label label-danger">Deixar de seguir</span></a></td>                
                                         <?php
                                     } elseif ($linha['status'] === 'espera') {
-                                        if ($linha['solicitante'] == $_SESSION['tipo']) {
+                                        if (tipoLogado($linha['solicitante'])) {
                                             ?>
                                             <td><span class="label label-warning">Aguardando...</span></td>                
                                             <?php

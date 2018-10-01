@@ -29,10 +29,10 @@ if ($linha = mysqli_fetch_array($resultado)) {
                             <label for="sobrenome">Sobrenome</label>
                             <input type="text" class="form-control" id="sobrenome" name="sobrenome" value="<?= htmlspecialchars($linha['sobrenome']) ?>">
                         </div>
-                        <div class="form-group">
+<!--                        <div class="form-group">
                             <label for="email">E-mail</label>
                             <input type="text" class="form-control" id="email" name="email" value="<?= htmlspecialchars($linha['email']) ?>">
-                        </div>
+                        </div>-->
                         <div class="form-group">
                             <label>Sexo</label>
                             <select class="form-control select2" name="sexo" style="width: 100%;">                              

@@ -57,7 +57,7 @@ $resultados = mysqli_num_rows($resultado);
                                     <td><a href="desvincular.php?id=<?= $linha['id'] ?>"><span class="label label-danger">Deixar de seguir</span></a></td>                
                                     <?php
                                 } elseif ($linha['status'] === 'espera') {
-                                    if ($linha['solicitante'] == $_SESSION['tipo']) {
+                                    if (tipoLogado($linha['solicitante'])) {
                                         ?>
                                         <td><span class="label label-warning">Aguardando...</span></td>                
                                         <?php
@@ -80,7 +80,7 @@ $resultados = mysqli_num_rows($resultado);
                 </table>
                 <?php
                 if ($resultados == 0) {
-                    if ($_SESSION['tipo'] == 'aluno') {
+                    if (tipoLogado('aluno')){
                         echo '<h3 class="text-center">Seus profissionais aparecerão aqui!</h3>';
                     } else {
                         echo '<h3 class="text-center">Seus alunos aparecerão aqui!</h3>';
