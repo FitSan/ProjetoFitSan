@@ -94,7 +94,7 @@ $pagina['offset'] = (($pagina['pagina'] - 1) * $pagina['quantidade']);
 $pagina['paginas'] = ceil($pagina['total'] / $pagina['quantidade']);
 
 //referente à consulta
-$query = "select e.*, m.nome from planilha_exercicio e left join planilha_grupoMuscuCardio m on m.id=e.musculo_cardio_id order by e.nome limit " . $pagina['quantidade'] . " offset " . $pagina['offset'];
+$query = "select e.*, m.nome as musculo_nome from planilha_exercicio e left join planilha_grupoMuscuCardio m on m.id=e.musculo_cardio_id order by e.nome limit " . $pagina['quantidade'] . " offset " . $pagina['offset'];
 $resultado = mysqli_query($conexao, $query) or die('ERRO: '.mysqli_error($conexao).PHP_EOL.$query.PHP_EOL.print_r(debug_backtrace(), true));
 ?>
 
@@ -176,8 +176,9 @@ if ($resultado2 = mysqli_query($conexao, $query2)) {
                 <th style="width: 10px"><input type="checkbox"></th>
                 <th style="width: 40px"><i class="fa fa-image"></i></th>
                 <th>Nome</th>
+                <th>Área</th>
                 <th>Descrição</th>
-                <th style="width: 40px"><i class="fa fa-arrow-up"></i></th>
+                <th style="width: 40px"><i class="fa fa-edit"></i></th>
                 <th style="width: 40px"><i class="fa fa-trash-o"></i></th>
             </tr>
 <?php
@@ -192,10 +193,11 @@ while ($linha = mysqli_fetch_array($resultado)) {
                     <img class="profile-user-img img-responsive" style="margin: 0;margin-bottom: 2px" src="img/user-avatar-placeholder.png" alt="User profile picture">
 <?php } ?>
                 </td>
-                <td><?= htmlentities($linha['nome']) ?></td>
+                 <td><?= htmlentities($linha['nome']) ?></td>
+                <td><?= htmlentities($linha['musculo_nome']) ?></td>
                 <td><p><?= nl2br(htmlentities($linha['descricao'])) ?></p></td>
-                <td><a class="btn btn-primary btn-xs" href="<?php echo basename(__FILE__) ?>?acao=alterar&id=<?= htmlentities($linha['id']) ?>" title="Atualizar"><i class="fa fa-arrow-up"></i></a></td>
-                <td><a class="btn btn-danger btn-xs" href="<?php echo basename(__FILE__) ?>?acao=excluir&id=<?= htmlentities($linha['id']) ?>" title="Excluir"><i class="fa fa-trash-o"></i></a></td>
+                <td><a class=" " href="<?php echo basename(__FILE__) ?>?acao=alterar&id=<?= htmlentities($linha['id']) ?>" title="Atualizar"><i class="fa fa-edit"></i></a></td>
+                <td><a class=" " href="<?php echo basename(__FILE__) ?>?acao=excluir&id=<?= htmlentities($linha['id']) ?>" title="Excluir"><i class="fa fa-trash-o"></i></a></td>
             </tr>
 <?php
 }
