@@ -47,9 +47,11 @@ while ($linha = mysqli_fetch_array($resultado_usuario)) {
     }
 }
 
-$conutSenha = strlen($senha); //contando o número de caracteres da senha 
+$contEmail = strlen($email); //contando o número de caracteres da email 
+$contSenha = strlen($senha); //contando o número de caracteres da senha 
 
-if ($conutSenha < 8) {
+
+if ($contSenha < 8) {
 
     $_SESSION['erroCount'] = "Dados nao conferem!";
     $_SESSION['erro_nome'] = "$nome";
@@ -71,7 +73,7 @@ if ($conutSenha < 8) {
         header('Location: form_cadastrar.php');
     } else {
 
-        if ($existe) {
+        if ($existe || $contEmail == null) {
             $_SESSION['erroemail'] = "Dados nao conferem!";
             $_SESSION['erro_nome'] = "$nome ";
             $_SESSION['erro_sobrenome'] = "$sobrenome ";

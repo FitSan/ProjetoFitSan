@@ -44,10 +44,6 @@ ini_set('display_errors', true);
 
                     <div class="form-group has-feedback">
                         
-                        
-
-           
-                        
                         <label class="sr-only" for="nome">Nome</label>
                         <input type="text" name="nome" value="<?php if (!empty($_SESSION['erro_nome'])){ echo $_SESSION['erro_nome'];  unset($_SESSION['erro_nome']);}?>" required style="text-transform: capitalize" class="form-control"  placeholder="Nome">
                         <span class="glyphicon  form-control-feedback"></span>
