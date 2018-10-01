@@ -127,19 +127,54 @@ select * from ativ_extras_exercicios;
 TRUNCATE TABLE ativ_extras;
 TRUNCATE TABLE ativ_extras_exercicios;
 
+----------------------------------------------------------------
+
 --Planilha -----
+drop table planilha;
+create table planilha(
+id int not null primary key auto_increment,
+grupo varchar(255) not null,
+musculo_cardio_id int not null references planilha_grupoMuscuCardio(id),
+exercicio_id int not null references Planilha_exercicio(id),
+repeticoes varchar(255),
+carga varchar(255),
+intervalo varchar(255),
+tempo int,
+profissional_id int not null references usuario(id)
+);
+
+ALTER TABLE planilha CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+select * from planilha;
+
+---Grupos Musculares/Cárdio---
+
+create table planilha_grupoMuscuCardio(
+id int primary key auto_increment,
+nome varchar(255) not null
+);
+
+ALTER TABLE planilha_grupoMuscuCardio CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+select * from planilha_grupoMuscuCardio;
+
+---Grupos Exercicios---
+
+create table planilha_exercicio(
+id int primary key auto_increment,
+musculo_cardio_id int references planilha_grupoMuscuCardio(id),
+nome varchar(255) not null,
+descricao text not null,
+foto varchar(255)
+);
+
+ALTER TABLE planilha_exercicio ADD musculo_cardio_id int references planilha_grupoMuscuCardio(id) after id;
+ALTER TABLE planilha_exercicio CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+select * from planilha_exercicio;
 
 
 
+-------Fim Planilha-----
 
-
-
-
-
-
-
-
-
+----------------------------------------------------------------
 
 ALTER DATABASE FitSan CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 SELECT CONCAT('ALTER TABLE ',  table_name, ' CHARACTER SET utf8 COLLATE utf8_unicode_ci;') FROM information_schema.TABLES WHERE table_schema = 'FitSan';
@@ -243,10 +278,12 @@ s.id, u.nome as aluno, s.nome as profissional
 
 
 
+
 insert into usuario values (default, concat(Upper(substr('mathias', 1, 1)), lower(substr('mathias', 2, length('mathias')))), '123', 'm@m', '1')
 
-
 insert into usuario (id, nome, sobrenome, datanasc, sexo, foto, senha, email, tipo_id) values (default, 'Charles ','Konig ','','','', '$2y$10$DTZydgfgwrk70b4u2.RTtuWE9GF1o1vda1vxDY15Q6Sn6L/tWX5XC', 'charles@charles', '2');
+
+replace into usuario (nome, sobrenome, senha, email, tipo_id) values ('Administrador','Geral','$2y$10$1Hv5TSETg2DMCtJuOSves.NclePxal7x4FN/KVOk.n1g9O400zqsW', 'admin@admin', null);
 
 
 

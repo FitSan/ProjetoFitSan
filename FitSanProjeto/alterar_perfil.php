@@ -6,7 +6,7 @@ require_once './autenticacao.php';
 $id = (!empty($_POST['id']) ? $_POST['id'] : null);
 $nome = (!empty($_POST['nome']) ? $_POST['nome'] : null);
 $sobrenome = (!empty($_POST['sobrenome']) ? $_POST['sobrenome'] : null);
-$email = (!empty($_POST['email']) ? $_POST['email'] : null);
+//$email = (!empty($_POST['email']) ? $_POST['email'] : null);
 $sexo = (!empty($_POST['sexo']) ? $_POST['sexo'] : null);
 $datanasc = (!empty($_POST['datanasc']) ? $_POST['datanasc'] : null);
 
@@ -32,7 +32,7 @@ if (!empty($_FILES['foto']['name'])){
     $foto = null;
 }
 
-$query_perfil = "update usuario set nome = ".mysqliEscaparTexto($nome).", sobrenome = ".mysqliEscaparTexto($sobrenome).", email= ".mysqliEscaparTexto($email).", sexo = ".mysqliEscaparTexto($sexo).", datanasc = ".mysqliEscaparTexto($datanasc, 'date');
+$query_perfil = "update usuario set nome = ".mysqliEscaparTexto($nome).", sobrenome = ".mysqliEscaparTexto($sobrenome).", sexo = ".mysqliEscaparTexto($sexo).", datanasc = ".mysqliEscaparTexto($datanasc, 'date');
 if ($foto) $query_perfil .= ", foto = ".mysqliEscaparTexto($foto);
 $query_perfil .= " where id = $_SESSION[id]";
 mysqli_query($conexao, $query_perfil) or die('ERRO: '.mysqli_error($conexao).PHP_EOL.$query_perfil.PHP_EOL.print_r(debug_backtrace(), true));

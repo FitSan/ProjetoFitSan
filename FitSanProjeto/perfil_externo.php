@@ -2,7 +2,7 @@
 $pagina = "Meu Perfil";
 require_once './template/cabecalho.php';
 
-if ($_SESSION['tipo'] == 'profissional') {
+if (tipoLogado('profissional')){
     $query = "select * from usuario u left join vinculo v on v.aluno_id = u.id and v.profissional_id = $_SESSION[id] where u.id=" . mysqliEscaparTexto($_GET['id']);
     $usuario_busca = 'aluno_id';
 } else {
@@ -41,13 +41,13 @@ if ($linha = mysqli_fetch_array($resultado)) {
                                 </li>
                             </ul>
                             <?php
-                            if (empty($_SESSION['tipo']) || ($_SESSION['tipo'] == "profissional")){
+                            if (tipoLogado("profissional")){
                             } elseif ($_SESSION['id'] == $linha['id']){
                                 ?><a href="form_perfil.php" class="btn btn-primary btn-block"><b>Alterar</b></a><?php
                             } elseif ($linha['status'] === 'aprovado') {
                                 ?><a href="desvincular.php?id=<?= $linha['id'] ?>" class="btn btn-info btn-block"><b>Deixar de seguir</b></a><?php
                             } elseif ($linha['status'] === 'espera') {
-                                if ($linha['solicitante'] == $_SESSION['tipo']) {
+                                if (tipoLogado($linha['solicitante'])) {
                                     ?>   
                                     <button type="button" class="btn btn-block btn-warning">Aguardando</button>
                                     <?php
@@ -67,7 +67,7 @@ if ($linha = mysqli_fetch_array($resultado)) {
                         </div>
                     </div>
                     <?php
-                    if (!empty($_SESSION['tipo']) && ($_SESSION['tipo'] != "profissional")) {
+                    if (!tipoLogado("profissional")) {
 
                         //referente ao formulário
                         $query_alterar = "select * from informacoes_adicionais where aluno_id = " . mysqliEscaparTexto($_GET['id']);

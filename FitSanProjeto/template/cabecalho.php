@@ -247,7 +247,7 @@ require_once 'autenticacao.php';
                                 } else {
                                     echo "<li><a href='http://localhost/FitSan/minhas_dicas.php'><i class='fa fa-heartbeat'></i><span>Minhas Dicas</span></a></li>";
                                     echo "<li><a href='http://localhost/FitSan/planilha.php'><i class='fa fa-th-list'></i><span>Planilha</span></a></li>";
-                                    echo "<li><a href='http://localhost/FitSan/form_avaliacao.php'><i class='fa fa-address-book'></i><span>Avaliações</span></a></li>";;
+                                    echo "<li><a href='http://localhost/FitSan/form_avaliacao.php'><i class='fa fa-address-book'></i><span>Avaliações</span></a></li>";
                                 }
                                 ?>
                             </li>

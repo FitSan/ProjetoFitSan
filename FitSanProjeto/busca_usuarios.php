@@ -2,7 +2,7 @@
 $pagina = "Busca";
 require_once './template/cabecalho.php';
 
-if($_SESSION['tipo']=='profissional'){
+if(tipoLogado('profissional')){
     $query = "select * from usuario u left join vinculo v on v.aluno_id = u.id and v.profissional_id = $_SESSION[id] where u.tipo_id=1";
     //$sql = "select * from vinculo where profissional_id=$_SESSION[id]";
     $usuario_busca = 'aluno_id'; 
@@ -49,7 +49,7 @@ $resultado = mysqli_query($conexao, $query);
                 <th><a href="desvincular.php?id=<?= $linha['id'] ?>"><img src="img/desconvite.png" height="40"></a></th>                
                 <?php
             } elseif ($vinculado === 'espera') {
-                if ($linha['solicitante'] == $_SESSION['tipo']){
+                if (tipoLogado($linha['solicitante'])){
                 ?>
                 <th>Aguardando</th>                
                 <?php

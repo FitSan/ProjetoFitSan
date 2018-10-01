@@ -42,10 +42,12 @@ if ($linha = mysqli_fetch_array($resultado)) {
                                 </li>
                             </ul>
 
+                            <?php if (!tipoLogado("admin")){ ?>
                             <a href="form_perfil.php" class="btn btn-primary btn-block"><b>Alterar</b></a>
+                            <?php } ?>
                         </div>
                     </div>
-                    <?php if (getTipo() == "aluno") {
+                    <?php if (tipoLogado("aluno")){
 
                         //referente ao formulário
                         $query_alterar = "select * from informacoes_adicionais where aluno_id = " . mysqliEscaparTexto($_SESSION['id']);
@@ -133,8 +135,9 @@ if ($linha = mysqli_fetch_array($resultado)) {
 
                                  <hr>
 
-
+                                <?php if (!tipoLogado("admin")){ ?>
                                 <a href="informacoes_adicionais.php" class="btn btn-primary btn-block"><b>Alterar</b></a>
+                                <?php } ?>
                             </div>                    
                         </div> 
                     <?php } ?>              

@@ -36,6 +36,21 @@ function estaLogado() {
     return isset($_SESSION['email']);
 }
 
+function getTipo() {
+    if (empty($_SESSION['tipo'])) return 'admin';
+    return $_SESSION['tipo'];
+}
+
+function tipoLogado() {
+    $tipos = func_get_args();
+    if (is_array($tipos[0])) $tipos = $tipos[0];
+    $logado = getTipo();
+    foreach ($tipos as $tipo) {
+        if ($logado == $tipo) return true;
+    }
+    return false;
+}
+
 function sessaoExpirada() {
     if ($_SESSION['tempo'] < time()) {
         //esta dentro do tempo da sessao
@@ -62,10 +77,6 @@ function exibirName($completo = false) {
     } else {
         return $_SESSION['nome'];
     }
-}
-
-function getTipo() {
-    return $_SESSION['tipo'];
 }
 
 function iniciarTempoSessao() {
@@ -197,7 +208,7 @@ function consultarNotificacao($lido = null) {
         $sql .= "lido = '" . mysqliEscaparTexto($lido) . "' and (";
     else
         $sql .= "lido = 'N' and (";
-    if ($_SESSION['tipo'] == 'profissional') {
+    if (tipoLogado('profissional')) {
         $sql .= "profissional_id = " . mysqliEscaparTexto($_SESSION['id']);
     } else {
         $sql .= "aluno_id = " . mysqliEscaparTexto($_SESSION['id']);
@@ -225,7 +236,7 @@ function totalNotificacao($lido = null) {
         $sql .= "lido = '" . mysqliEscaparTexto($lido) . "' and (";
     else
         $sql .= "lido = 'N' and (";
-    if ($_SESSION['tipo'] == 'profissional') {
+    if (tipoLogado('profissional')){
         $sql .= "profissional_id = " . mysqliEscaparTexto($_SESSION['id']);
     } else {
         $sql .= "aluno_id = " . mysqliEscaparTexto($_SESSION['id']);
