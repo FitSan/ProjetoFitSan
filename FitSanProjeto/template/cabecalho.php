@@ -151,7 +151,7 @@ require_once 'autenticacao.php';
                                             <div class="row">
 <?php if (tipoLogado("aluno")) { ?>
                                                 <div class="col-xs-4 text-center">
-                                                        <a href="http://localhost/FitSan/vinculos.php?tipo=<?php echo $_SESSION['tipo'] ?>"> Profissionais</a>";
+                                                        <a href="http://localhost/FitSan/vinculos.php?tipo=<?php echo $_SESSION['tipo'] ?>"> Profissionais</a>
                                                 </div>
                                                 <div class="col-xs-4 text-center">
                                                     <span>&nbsp;</span>
