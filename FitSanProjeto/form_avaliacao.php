@@ -12,10 +12,21 @@ require_once './template/cabecalho.php';
             <div class="box box-primary">
 
 
-                            <div class="col-lg-6">
+                <div class="col-lg-6">
                     <br><strong>SELECIONE O ALUNO PARA SER AVALIADO</strong><select class="form-control select2" name="alunoavaliado" style="width: 100%;" >                                  
                         <option value="">(Selecione)</option>
 
+
+
+
+                            <?php
+                            foreach ($usuarios as $usuario) {
+                                ?>
+                                <option value=<?= $usuario['id'] ?>><?= $usuario['nome'] ?></option>
+                            <?php }
+                            ?>
+
+                       
 
                     </select> </div>
                 <div class="box-body">           
@@ -81,6 +92,5 @@ require_once './template/cabecalho.php';
     </section>
     <!--</div>-->
 
-    <?php
-    require_once './template/rodape_especial.php';
-    
+<?php
+require_once './template/rodape_especial.php';
