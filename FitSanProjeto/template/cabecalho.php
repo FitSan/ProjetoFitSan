@@ -248,7 +248,7 @@ require_once 'autenticacao.php';
                             <?php } ?>
                             <?php
                             if (tipoLogado("aluno")){
-                                echo "<li><a href='#'><i class='fa fa-th-list'></i><span>Planilha</span></a></li>";
+                                echo "<li><a href='http://localhost/FitSan/planilha_aluno.php'><i class='fa fa-th-list'></i><span>Planilha</span></a></li>";
                                  echo "<li><a href='#'><i class='fa fa-history'></i><span>Histórico</span></a></li>";
                             } elseif (tipoLogado("profissional")){
                                 echo "<li><a href='http://localhost/FitSan/minhas_dicas.php'><i class='fa fa-heartbeat'></i><span>Minhas Dicas</span></a></li>";

@@ -2,6 +2,11 @@
 $pagina = "Atividades Extras";
 require_once './template/cabecalho.php';
 
+if (!tipoLogado("aluno")){
+    header('Location: pagina1.php');
+    exit;
+}
+
 // Iniciando variraveis
 $acao = (!empty($_GET['acao']) ? $_GET['acao'] : 'consultar'); //obtendo ação
 $id = (!empty($_GET['id']) ? $_GET['id'] : null); //obtendo id de alteração

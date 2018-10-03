@@ -2,6 +2,11 @@
 $pagina = "Novos Exercícios";
 require_once './template/cabecalho.php';
 
+if (!tipoLogado("admin")){
+    header('Location: pagina1.php');
+    exit;
+}
+
 
 // Iniciando variaveis
 $acao = (!empty($_GET['acao']) ? $_GET['acao'] : 'consultar'); //obtendo ação
@@ -41,7 +46,7 @@ if (($acao == 'incluir') || ($acao == 'alterar')){
         if (empty($descricao)) $erros[] = "Preencha a descrição do exercício.";
         if (empty($musculo_cardio_id)) $erros[] = "Preencha a descrição do músculo.";
         if (!tipoLogado("admin")){
-            if (($id !== null) && ($id <= 10)) $erros[] = "Não é possível alterar os exercícios padrões.";
+            if (($id !== null) && ($id <= 86)) $erros[] = "Não é possível alterar os exercícios padrões.";
         } // TODO: mudar quando colocar todos os exercicios.
     }
     if (empty($erros) && !empty($nome) && !empty($descricao) && !empty($musculo_cardio_id)) {
@@ -62,7 +67,7 @@ if (($acao == 'incluir') || ($acao == 'alterar')){
     }
 } elseif ($acao == 'excluir') {
     if (!tipoLogado("admin")){
-        if (($id !== null) && ($id <= 10)) $erros[] = "Não é possível excluir os exercícios padrões.";
+        if (($id !== null) && ($id <= 86)) $erros[] = "Não é possível excluir os exercícios padrões.";
         // TODO: mudar quando colocar todos os exercicios.
     }
     if (empty($erros) && ($id !== null)) {
@@ -173,6 +178,7 @@ if ($resultado2 = mysqli_query($conexao, $query2)) {
         </div>
         <br><br>
         <table class="table table-bordered">
+           
             <tr>
                 <th style="width: 10px"><input type="checkbox"></th>
                 <th style="width: 40px"><i class="fa fa-image"></i></th>

@@ -3,7 +3,7 @@ $pagina = "Musculos/Cárdio";
 require_once './template/cabecalho.php';
 
 if (!tipoLogado("admin")){
-    header('Location: perfil.php');
+    header('Location: pagina1.php');
     exit;
 }
 
