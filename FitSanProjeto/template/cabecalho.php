@@ -22,6 +22,8 @@ require_once 'autenticacao.php';
         <!-- AdminLTE Skins. Choose a skin from the css/skins
              folder instead of downloading all of them to reduce the load. -->
         <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
+        <!-- iCheck -->
+        <link rel="stylesheet" href="plugins/iCheck/flat/blue.css">
         <link rel="stylesheet" href="plugins/iCheck/all.css">
         <!-- DataTables -->
         <link rel="stylesheet" href="bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
