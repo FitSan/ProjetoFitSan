@@ -83,35 +83,44 @@ $resultado = mysqli_query($conexao, $query) or die('ERRO: '.mysqli_error($conexa
                  <input type="text" class="form-control" name= "grupo" placeholder="Grupo">   
                 </div>
                 <div class="col-lg-2">
-                    <select class="form-control select2 " name="areas">
-                            <option value="">Grupo Muscular/Cár</option>
 <?php
-$query2 = "select * from planilha_grupoMuscuCardio";
+$grupos = array();
+$query2 = "select * from planilha_grupoMuscuCardio order by nome";
 if ($resultado2 = mysqli_query($conexao, $query2)) {
     while ($linha2 = mysqli_fetch_array($resultado2)) {
-?>
-                            <option value="<?= htmlspecialchars($linha2['id']) ?>"><?= htmlspecialchars($linha2['nome']) ?></option>
-<?php
+        foreach ($linha2 as $key => $val){
+            if (is_numeric($key)) unset($linha2[$key]);
+        }
+        $linha2['exercicios'] = array();
+        $query3 = ("select * from planilha_exercicio where musculo_cardio_id = " . $linha2['id'] . " order by nome");
+        if ($resultado3 = mysqli_query($conexao, $query3)) {
+            while ($linha3 = mysqli_fetch_array($resultado3)){
+                foreach ($linha3 as $key => $val){
+                    if (is_numeric($key)) unset($linha3[$key]);
+                }
+                $linha2['exercicios'][$linha3['id']] = $linha3;
+            }
+        }
+        $grupos[$linha2['id']] = $linha2;
+        mysqli_free_result($resultado3);
     }
     mysqli_free_result($resultado2);
 }
+if ($grupos){
 ?>
+                    <script>
+                        var grupomusccard = <?php echo json_encode($grupos) ?>;
+                    </script>
+<?php
+}
+?>
+                    <select class="form-control select2 " name="areas">
+                            <option value="">Grupo Muscular/Cár</option>
                     </select>
                 </div>
                 <div class="col-lg-3">
                     <select class="form-control select2" name="exercicios">
                         <option value="">Exercícios</option>
-<?php
-$query2 = "select * from planilha_exercicio";
-if ($resultado2 = mysqli_query($conexao, $query2)) {
-    while ($linha2 = mysqli_fetch_array($resultado2)) {
-?>
-                            <option value="<?= htmlspecialchars($linha2['id']) ?>" data-id="<?= htmlspecialchars($linha2['musculo_cardio_id']) ?>"><?= htmlspecialchars($linha2['nome']) ?></option>
-<?php
-    }
-    mysqli_free_result($resultado2);
-}
-?>
                     </select>
                 </div> 
                 <div class="col-lg-1">
@@ -134,19 +143,7 @@ if ($resultado2 = mysqli_query($conexao, $query2)) {
                 </div>
             </div><br> 
         </div> 
-        
-        <script>
-            $(function(){
-                var grupo = $(['#adicionar_novo [name="areas"]']);
-                var exercicios = $(['#adicionar_novo [name="exercicios"]']);
-                var lista = exercicios.find('options');
-                grupo.on('change keyup', function(){
-                    exercicios.find('option[data-id]').remove();
-                    exercicios.append(lista.filter('[data-id="' + $(this).val() + '"]'));
-                });
-            })
-        </script>
-
+       
         <!--        final do box header-->
         <div class="box-body">
             <table class="table table-bordered table-striped planilha">

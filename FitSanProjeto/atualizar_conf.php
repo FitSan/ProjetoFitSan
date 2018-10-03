@@ -24,7 +24,7 @@ $linha = mysqli_fetch_array($retorno);
 
 
     if (!tipoLogado("admin")){
-        $query = "update usuario set nome = '$atu_nome' , sobrenome = '$atu_sobnome', email = '$atu_email' where id=$_SESSION[id]";
+        $query = "update usuario set email = '$atu_email' where id=$_SESSION[id]";
       mysqli_query($conexao, $query);
     }
 

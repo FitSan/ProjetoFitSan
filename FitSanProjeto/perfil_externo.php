@@ -3,12 +3,13 @@ $pagina = "Meu Perfil";
 require_once './template/cabecalho.php';
 
 if (tipoLogado('profissional')){
-    $query = "select * from usuario u left join vinculo v on v.aluno_id = u.id and v.profissional_id = $_SESSION[id] where u.id=" . mysqliEscaparTexto($_GET['id']);
     $usuario_busca = 'aluno_id';
+    $usuario_busca2 = 'profissional_id';
 } else {
-    $query = "select * from usuario u left join vinculo v on v.profissional_id = u.id and v.aluno_id = $_SESSION[id] where u.id=" . mysqliEscaparTexto($_GET['id']);
     $usuario_busca = 'profissional_id';
+    $usuario_busca2 = 'aluno_id';
 }
+$query = "select u.*, v.*, t.tipo from usuario u join tipo_usuario t on t.id = u.tipo_id left join vinculo v on v.{$usuario_busca} = u.id and v.{$usuario_busca2} = $_SESSION[id] where u.id=" . mysqliEscaparTexto($_GET['id']);
 $resultado = mysqli_query($conexao, $query) or die('ERRO: ' . mysqli_error($conexao) . PHP_EOL . $query . PHP_EOL . print_r(debug_backtrace(), true));
 if ($linha = mysqli_fetch_array($resultado)) {
     ?>
@@ -67,7 +68,7 @@ if ($linha = mysqli_fetch_array($resultado)) {
                         </div>
                     </div>
                     <?php
-                    if (!tipoLogado("profissional")) {
+                    if (tipoLogado("profissional", "admin") && ($linha['tipo'] == 'aluno')) {
 
                         //referente ao formulário
                         $query_alterar = "select * from informacoes_adicionais where aluno_id = " . mysqliEscaparTexto($_GET['id']);
@@ -91,6 +92,7 @@ if ($linha = mysqli_fetch_array($resultado)) {
                                 $linha_alterar['medidas'][] = $linha2;
                         }
                         ?>
+                    
                         <div class="box box-primary">
                             <div class="box-header with-border">
                                 <h3 class="box-title">Informações Adicionais</h3>

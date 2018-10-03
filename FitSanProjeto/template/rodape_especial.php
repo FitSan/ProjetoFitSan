@@ -420,6 +420,24 @@
   });
 </script>
 
+<script>
+    $(function(){
+        if (typeof(grupomusccard) == 'undefined') return;
+        var grupo = $('#adicionar_novo select[name="areas"]');
+        var exercicios = $('#adicionar_novo select[name="exercicios"]');
+        $.each(grupomusccard, function(key, val){
+            $('<option/>').val(val.id).text(val.nome).appendTo(grupo);
+        });
+        grupo.on('change keyup', function(){
+            var id = $(this).val();
+            exercicios.find('option').not('[value=""]').remove();
+            if (id == '') return;
+            $.each(grupomusccard[id].exercicios, function(key, val){
+                $('<option/>').val(val.id).text(val.nome).appendTo(exercicios);
+            });
+        }).change();
+    })
+</script>
 
 </body>
 </html>

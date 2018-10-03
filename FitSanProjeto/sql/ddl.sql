@@ -29,12 +29,14 @@ primary key (aluno_id, profissional_id)
 );
 
 create table dica(
- id int primary key auto_increment,
-texto varchar(255) not null,
+id int primary key auto_increment,
+texto TEXT not null,
 profissional_nome varchar(255),
 profissional_id int references usuario(id),
 data_envio varchar(20)
 );
+
+select * from dica;
 
 create table upload_dica(
  id int primary key auto_increment,
@@ -165,6 +167,8 @@ nome varchar(255) not null,
 descricao text not null,
 foto varchar(255)
 );
+
+
 
 ALTER TABLE planilha_exercicio ADD musculo_cardio_id int references planilha_grupoMuscuCardio(id) after id;
 ALTER TABLE planilha_exercicio CHARACTER SET utf8 COLLATE utf8_unicode_ci;

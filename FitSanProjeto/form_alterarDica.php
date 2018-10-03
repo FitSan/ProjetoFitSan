@@ -39,7 +39,7 @@ $linha_dica = mysqli_fetch_array($resultado_dica);
                     </div>
                     <div class="form-group">
                         <input name="id" value="<?= $linha_dica['id'] ?>" hidden>           
-                        <textarea class="form-control" rows="5" maxlength="255" name="dica" ><?= $linha_dica['texto'] ?></textarea>
+                        <textarea class="form-control" rows="14" cols="80"  name="dica" ><?= htmlspecialchars($linha_dica['texto']) ?></textarea>
                     </div>    
                     <div class="form_group" id="uploads" style="padding: 5px;">
                         <ul>

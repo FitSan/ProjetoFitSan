@@ -12,8 +12,8 @@ $resultado = mysqli_query($conexao, $query);
     <div class="nav-tabs-custom">
         <ul class="nav nav-tabs">
             <li class="active"><a href="#activity" data-toggle="tab"> Dicas </a></li>
-            <li><a href="#breve" data-toggle="tab"> Breve </a></li>
-            <li><a href="#settings" data-toggle="tab"> Breve </a></li> 
+<!-- <li><a href="#breve" data-toggle="tab"> Breve </a></li>
+     <li><a href="#settings" data-toggle="tab"> Breve </a></li> -->
         </ul>
         <div class="tab-content">
             <div class="active tab-pane" id="activity">
@@ -26,9 +26,9 @@ $resultado = mysqli_query($conexao, $query);
                             <img class="img-circle img-bordered-sm" src="<?= htmlspecialchars(!empty($linha['foto']) ? $linha['foto'] : 'img/user-avatar-placeholder.png') ?>" alt="User profile picture">
                             <span class="username">
                                 <a href="perfil_externo.php?id=<?= $linha['profissional_id'] ?>"><?= $linha['profissional_nome'] ?></a> 
-                                <!--icone de x caso for usar para o profissional excluir a dica pela tela inicial-->
+<!--icone de x caso for usar para o profissional excluir a dica pela tela inicial-->
 
-                    <!--<a href="#" class="pull-right btn-box-tool"><i class="fa fa-times"></i></a>-->
+<!--<a href="#" class="pull-right btn-box-tool"><i class="fa fa-times"></i></a>-->
                                 <?php
                                 if($linha['profissional_id']==$_SESSION['id']){
                                 ?>
@@ -42,7 +42,7 @@ $resultado = mysqli_query($conexao, $query);
                             </span>
                             <span class="description"><?= date('d/m/Y H:i:s', dataParse($linha['data_envio'])) ?></span>
                         </div>
-                        <p> <?= $linha['texto'] ?> </p> 
+                        <p> <?= nl2br(htmlentities($linha['texto'])) ?> </p> 
                         <div id="uploads"><ul><?php
                             $query_dica = "select * from upload_dica where dica_id = $linha[id]";
                             $resultado_upload = mysqli_query($conexao, $query_dica);
@@ -89,7 +89,7 @@ $resultado = mysqli_query($conexao, $query);
 
 
 <!--desblooquear dicas-->
-<!--/var/www/html/FitSan/upload$ chmod 777 -R dicas/-->
+ <!--  /var/www/html/FitSan/upload$ chmod 777 -R dicas/  -->
 
 
 

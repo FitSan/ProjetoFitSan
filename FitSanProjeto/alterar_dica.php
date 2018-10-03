@@ -2,7 +2,7 @@
 date_default_timezone_set('America/Sao_Paulo');
 require_once 'autenticacao.php';
 
-$id = mysqli_escape_string($conexao, $_POST['id']); //escape de caracteres estranhos dentro do id mudar todos que tenham post ou get.
+$id = mysqli_escape_string($conexao, $_POST['id']); // TODO: escape de caracteres estranhos dentro do id mudar todos que tenham post ou get.
 $dica = $_POST['dica'];
 //$data_envio = $_POST['data_envio'];
 $now = new DateTime();
@@ -51,8 +51,8 @@ if($_FILES['imagens']['size'][0] != 0&&$_FILES['video']['size']!=0){
     $type = 'img';
 
     $permite = array('image/jpeg', 'image/png');
-    $maxSize = 1024 * 1024 * 2; //2 megabytes
-    $maxNum = 6 - $quantUploads; //6 imagens permitidas OPINIÕES
+    $maxSize = 1024 * 1024 * 2; // TODO: 2 megabytes
+    $maxNum = 6 - $quantUploads; // TODO: 6 imagens permitidas OPINIÕES
     
     $arqSize = $maxSize * $numArq;
     
@@ -115,8 +115,8 @@ if($_FILES['imagens']['size'][0] != 0&&$_FILES['video']['size']!=0){
 } else if ($_FILES['video']['size']!=0) {
     $arquivo = $_FILES['video'];
     $type = 'vid';
-    $permite = array('video/mp4', 'video/avi'); //MAIS ALGUM
-    $maxSize = 1024 * 1024 * 15; //15 megabytes
+    $permite = array('video/mp4', 'video/avi'); // TODO: MAIS ALGUM
+    $maxSize = 1024 * 1024 * 15; // TODO: 15 megabytes
 
     if ($arquivo['error'] == 0 && in_array($arquivo['type'], $permite) && $arquivo['size'] <= $maxSize && $quantUploadsVid==0 && $quantUploads==0) {       
         if(isset($_POST[id_upload])){

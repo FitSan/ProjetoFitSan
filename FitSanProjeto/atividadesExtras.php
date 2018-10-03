@@ -65,8 +65,20 @@ if (!empty($id)) {
     $linha_alterar = array();
 }
 
+//referente à paginação
+$query_pagina = "select count(id) as total from ativ_extras";
+$resultado_pagina = mysqli_query($conexao, $query_pagina) or die('ERRO: '.mysqli_error($conexao).PHP_EOL.$query_pagina.PHP_EOL.print_r(debug_backtrace(), true));
+$pagina = ($resultado_pagina?mysqli_fetch_array($resultado_pagina):array());
+$pagina = array_merge(array(
+    'total' => 0,
+    'quantidade' => (!empty($_GET['quantidade']) ? $_GET['quantidade'] : 10),
+    'pagina' => (!empty($_GET['pagina']) ? $_GET['pagina'] : 1),
+), array_map('intval', (array)$pagina));
+$pagina['offset'] = (($pagina['pagina'] - 1) * $pagina['quantidade']);
+$pagina['paginas'] = ceil($pagina['total'] / $pagina['quantidade']);
+
 //referente à consulta
-$query = "select ativ_extras.*, usuario.nome, usuario.sobrenome, usuario.foto from ativ_extras join usuario on usuario.id=ativ_extras.aluno_id where usuario.id= " . mysqliEscaparTexto($_SESSION['id']) . " order by ativ_extras.datahora desc";
+$query = "select ativ_extras.*, usuario.nome, usuario.sobrenome, usuario.foto from ativ_extras join usuario on usuario.id=ativ_extras.aluno_id where usuario.id= " . mysqliEscaparTexto($_SESSION['id']) . " order by ativ_extras.datahora desc limit " . $pagina['quantidade'] . " offset " . $pagina['offset'];
 $resultado = mysqli_query($conexao, $query) or die('ERRO: '.mysqli_error($conexao).PHP_EOL.$query.PHP_EOL.print_r(debug_backtrace(), true));
 ?>
 
@@ -110,7 +122,7 @@ $resultado = mysqli_query($conexao, $query) or die('ERRO: '.mysqli_error($conexa
                                 </div>
                                 <!--começo da caixa de texto-->
                                 <div class="col-md-8">
-                                    <textarea class="form-control" name="texto" rows="14" cols="80"><?= htmlentities($linha_alterar['texto']) ?></textarea>                                    <!--<textarea id="editor1" name="texto" rows="10" cols="80"></textarea>-->
+                                    <textarea class="form-control" name="texto" rows="14" cols="80"><?= htmlentities($linha_alterar['texto']) ?></textarea>                                    
                                 </div>
                                 <!--fim da caixa de texto-->
                                 
@@ -212,6 +224,17 @@ while ($linha = mysqli_fetch_array($resultado)) {
                 </ul>
 
               <!-- /.tab-pane -->
+<?php if ($pagina['paginas'] > 1){ ?>
+        <div class="box-footer clearfix">
+            <ul class="pagination pagination-sm no-margin">
+                <li class="<?php echo (($pagina['pagina'] == 1) ? 'disabled' : '') ?>"><a href="<?php echo basename(__FILE__) ?>">&laquo;</a></li>
+<?php for ($pag = 1; $pag <= $pagina['paginas']; $pag++){ ?>
+                <li class="<?php echo (($pagina['pagina'] == $pag) ? 'active' : '') ?>"><a href="<?php echo basename(__FILE__) ?>?pagina=<?php echo $pag ?>"><?php echo $pag ?></a></li>
+<?php } ?>
+                <li class="<?php echo (($pagina['pagina'] == $pagina['paginas']) ? 'disabled' : '') ?>"><a href="<?php echo basename(__FILE__) ?>?pagina=<?php echo $pagina['paginas'] ?>">&raquo;</a></li>
+            </ul>
+        </div>
+<?php } ?>
                 
             </div>
         </div>

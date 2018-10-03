@@ -42,7 +42,7 @@ if (($acao == 'incluir') || ($acao == 'alterar')){
         if (empty($musculo_cardio_id)) $erros[] = "Preencha a descrição do músculo.";
         if (!tipoLogado("admin")){
             if (($id !== null) && ($id <= 10)) $erros[] = "Não é possível alterar os exercícios padrões.";
-        }
+        } // TODO: mudar quando colocar todos os exercicios.
     }
     if (empty($erros) && !empty($nome) && !empty($descricao) && !empty($musculo_cardio_id)) {
         if ($id === null) {
@@ -63,6 +63,7 @@ if (($acao == 'incluir') || ($acao == 'alterar')){
 } elseif ($acao == 'excluir') {
     if (!tipoLogado("admin")){
         if (($id !== null) && ($id <= 10)) $erros[] = "Não é possível excluir os exercícios padrões.";
+        // TODO: mudar quando colocar todos os exercicios.
     }
     if (empty($erros) && ($id !== null)) {
         $query = "delete from planilha_exercicio where id= " . mysqliEscaparTexto($id);

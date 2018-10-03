@@ -35,7 +35,7 @@ $resultado = mysqli_query($conexao, $query);
                         <input name="nome" class="form-control" id="nome" type="text" value="<?= $_SESSION['nome'] ?>" readonly>
                     </div>
                     <div class="form-group">          
-                        <textarea class="form-control" rows="5" maxlength="255" name="dica" ></textarea>
+                        <textarea class="form-control" rows="14" cols="80"  name="dica" ></textarea>
                     </div>
                     <div class="form-group">
 <!--                        <input type="file" name="imagens[]" multiple="multiple" hidden accept="image/png, image/jpeg">
@@ -67,7 +67,7 @@ $resultado = mysqli_query($conexao, $query);
                     <a href="form_alterarDica.php?id=<?= $linha['id'] ?>"><button type="button" class="pull-right btn-box-tool" ><i class="fa fa-edit" style="font-size:20px"></i></button></a>
                     <h4><?= date('d/m/Y H:i:s', dataParse($linha['data_envio'])) ?></h4>                
                 </div>
-                <p style="padding: 5px; "><?= $linha['texto'] ?></p>            
+                <p style="padding: 5px; "><?= nl2br(htmlentities($linha['texto'])) ?></p>            
 
                 <div id="uploads"><ul><?php
                         $query_dica = "select * from upload_dica where dica_id = $linha[id]";
