@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Máquina: localhost
--- Data de Criação: 01-Out-2018 às 03:03
+-- Data de Criação: 03-Out-2018 às 20:00
 -- Versão do servidor: 5.5.61-0ubuntu0.14.04.1
 -- versão do PHP: 5.5.9-1ubuntu4.26
 
@@ -22,7 +22,7 @@ SET time_zone = "+00:00";
 
 -- --------------------------------------------------------
 
---oi
+--
 -- Estrutura da tabela `ativ_extras`
 --
 
@@ -33,14 +33,27 @@ CREATE TABLE IF NOT EXISTS `ativ_extras` (
   `texto` text COLLATE utf8_unicode_ci NOT NULL,
   `aluno_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=15 ;
 
 --
 -- Extraindo dados da tabela `ativ_extras`
 --
 
 INSERT INTO `ativ_extras` (`id`, `datahora`, `titulo`, `texto`, `aluno_id`) VALUES
-(1, '2018-09-17 23:23:41', 'Caminhada na praia', 'caminhei', 2);
+(1, '2018-10-02 02:59:03', 'Futebol com a galera', 'Joguei uma hora de futebol com  a galera. OBS: sou goleiro.', 6),
+(2, '2018-10-02 03:13:45', 'Joguei bola no colégio', 'Hoje joguei volei na escola.', 10),
+(3, '2018-10-02 03:14:23', 'Caminhada', 'Caminhei da escola até em casa, e minha casa é longe.', 10),
+(4, '2018-10-02 03:14:47', 'Brinquei de pega- pega', 'Brinquei com minhas amigas de pega-pega', 10),
+(5, '2018-10-02 03:15:21', 'Dancei na aula de dança', 'Fui para minha aula de dança e dancei por uma hora.', 10),
+(6, '2018-10-02 03:16:01', 'Corri até o mercado', 'Hoje corri de casa até o mercado.', 10),
+(7, '2018-10-02 03:19:06', 'Festa do pijama', 'Dançamos muito. Umas duas horas direto', 10),
+(8, '2018-10-02 03:25:46', 'Fui com a minha mãe até no centro', 'Hoje fomos comprar meu material escolar, fomos caminhando e voltamos com meu pai de carro.', 10),
+(9, '2018-10-02 03:26:25', 'Caminhada na praia ', 'Caminhei com minhas amiguinhas pela praia ..', 10),
+(10, '2018-10-02 03:26:48', 'Corri na praia ', 'Corri com minhas amiguinhas pela praia...', 10),
+(11, '2018-10-02 03:27:44', 'Ping-Pong no colégio ', 'Na educação física fizemos um campeonato. Fiquei em segundo lugar! ', 10),
+(12, '2018-10-02 03:58:36', 'Andei de skate ', 'Andei com o \r\nskate do meu irmão', 10),
+(13, '2018-10-02 04:35:09', 'Caminhada na praia', 'Caminhei com minhas irmãs na praia', 9),
+(14, '2018-10-02 04:35:54', 'Treinei ', 'Treinei basquete na escola.', 9);
 
 -- --------------------------------------------------------
 
@@ -53,14 +66,27 @@ CREATE TABLE IF NOT EXISTS `ativ_extras_exercicios` (
   `ativ_extras_id` int(11) DEFAULT NULL,
   `exercicio` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=16 ;
 
 --
 -- Extraindo dados da tabela `ativ_extras_exercicios`
 --
 
 INSERT INTO `ativ_extras_exercicios` (`id`, `ativ_extras_id`, `exercicio`) VALUES
-(1, 1, 'Caminhada');
+(1, 1, 'Futebol'),
+(2, 2, 'Outros'),
+(3, 3, 'Caminhada'),
+(4, 4, 'Outros'),
+(5, 5, 'Outros'),
+(6, 6, 'Corrida'),
+(7, 7, 'Outros'),
+(8, 8, 'Caminhada'),
+(9, 9, 'Caminhada'),
+(10, 10, 'Corrida'),
+(11, 11, 'Ping-Pong'),
+(13, 12, 'Skate'),
+(14, 13, 'Caminhada'),
+(15, 14, 'Basquete');
 
 -- --------------------------------------------------------
 
@@ -70,21 +96,22 @@ INSERT INTO `ativ_extras_exercicios` (`id`, `ativ_extras_id`, `exercicio`) VALUE
 
 CREATE TABLE IF NOT EXISTS `dica` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `texto` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `texto` text COLLATE utf8_unicode_ci NOT NULL,
   `profissional_nome` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `profissional_id` int(11) DEFAULT NULL,
   `data_envio` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=10 ;
 
 --
 -- Extraindo dados da tabela `dica`
 --
 
 INSERT INTO `dica` (`id`, `texto`, `profissional_nome`, `profissional_id`, `data_envio`) VALUES
-(1, 'Minha Cara de linda!', 'Karen', 1, '2018-09-17 19:18:33'),
-(2, 'Caminhe sempre que puder. ', 'Karen', 1, '2018-09-30 18:41:26'),
-(4, 'foto', 'Charles', 4, '2018-09-24 22:11:36');
+(6, '• Rotina de exercícios\r\n\r\nA dica aqui é encarar a prática de exercícios como um compromisso. \r\nSe você tem dificuldade de seguir uma rotina, lembre-se que é tudo questão de prática: \r\numa maneira de encarar o treino com mais vontade é escolher uma modalidade que gosta.', 'Karen', 2, '2018-10-02 01:21:12'),
+(7, '• Alimentação equilibrada\r\n\r\nÉ preciso organização para evitar possíveis escorregões na dieta, principalmente com tantas tentações culinária por perto. Sempre dê preferência aos lanches caseiros e evite comida industrializada.\r\n\r\nO maior segredo de comer bem é saber dosar as quantidades e equilibrar as escolhas. Não se prive das delícias culinárias em ocasiões especiais.', 'Karen', 2, '2018-10-02 01:20:26'),
+(8, 'CONHEÇA OS BENEFÍCIOS DA BATATA DOCE\r\nParece até mentira que um alimento que leva “batata” e “doce” no nome possa ser saudável. \r\nMas sim, ele é. A batata doce já conquistou espaço na dieta dos marombeiros, das blogueiras e de todos que buscam uma alimentação balanceada. \r\nQuer motivos para entrar nessa onda? Confira:\r\n\r\n– a batata doce é um dos alimentos mais nutritivos do mundo;\r\n– é um carboidrato complexo de baixo índice glicêmico. Por isso, a absorção é mais lenta, aumentando a sensação de saciedade;\r\n– é rica em antioxidantes e excelente fonte das vitaminas A e C;\r\n– tem poder anti-inflamatório, graças à vitamina C, vitamina B6, betacaroteno e manganês;\r\n– é bem menos calórica que a batata normal e o arroz;\r\n– por liberar energia lentamente, é uma ótima opção para antes do treino. Assim, além de manter o estômago forrado, dá aquele gás pra queimar calorias;\r\n– versátil: pode ser assada, cozida e utilizada em pratos doces ou salgados;\r\n– fica gostosa tanto fria quanto quente.\r\n\r\nViu só como a batata doce é o alimento que não pode faltar na sua lista de compras? \r\n\r\nAposte em uma variação no cardápio e delicie-se!', 'Luana ', 3, '2018-10-02 01:30:38'),
+(9, 'VAMOS TREINAR EM UM LUGAR MAIS VERDE?\r\n\r\nAcordar cedo e ir treinar dá a maior preguiça, não dá? Quem não pensa em trocar o treino por mais 15 minutinhos de sono de beleza? \r\nPor isso, o treino da manhã tem que ser algo leve, gostoso e muito, muito verde!\r\nTem um parque perto da sua casa? Uma praça? Você tem uma bicicleta? Um tênis de corrida?\r\nEntão, que tal treinar em um ambiente que te coloque em contato com a natureza e relaxe a sua mente enquanto você trabalha o corpo?\r\nO treino ao ar livre é uma maneira mais orgânica de praticar exercícios que te darão mais disposição para o decorrer do dia. Além de entrar em contato com a natureza, \r\nrespirar ar puro e evitar o tumulto da academia, você pode realizar atividades ótimas para o seu bem-estar, e o principal aparelho é o seu próprio corpo!\r\n\r\nAqui está uma lista com alguns dos exercícios que você pode fazer em um treino ao ar livre:\r\n\r\n– correr;\r\n– andar de bicicleta;\r\n– pular corda;\r\n– burpees;\r\n– polichinelos;\r\n– subir e descer escadas;\r\n– variações na barra fixa;\r\n– flexão de braço;\r\n– tríceps nas barras paralelas e no banco;\r\n– agachamento livre;\r\n– step com elevação das pernas;\r\n– variações de abdominal;\r\n– prancha.\r\n\r\nComece os exercícios aquecendo o corpo. Aposte numa corridinha no parque ou em volta de uma praça. Por que não ir até lá de bike?\r\nÉ importante ativar o corpo antes de começar as atividades.\r\nTambém não se esqueça de se manter hidratado durante toda a prática!\r\n\r\nE aí, bora treinar ao ar livre amanhã de manhã?\r\n\r\nLembre-se de fazer os exercícios devagar, com segurança e, se possível, estar acompanhado de um profissional que \r\nprepare um treino específico para você e que fiscalize a execução. Bom treino!', 'Luana ', 3, '2018-10-02 01:30:03');
 
 -- --------------------------------------------------------
 
@@ -104,15 +131,16 @@ CREATE TABLE IF NOT EXISTS `informacoes_adicionais` (
   `academia_atual` text COLLATE utf8_unicode_ci,
   `aluno_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4 ;
 
 --
 -- Extraindo dados da tabela `informacoes_adicionais`
 --
 
 INSERT INTO `informacoes_adicionais` (`id`, `saude`, `medico`, `alergia`, `medicamento`, `gruposangue`, `doador`, `academia_frequentada`, `academia_atual`, `aluno_id`) VALUES
-(1, 'Gastrite', 'Gastrite por stress', 'Alergia a Camarão', 'Droxane', 'A+', 'SIM', 'Atletic', 'Podium', 2),
-(2, 'Pressão Arterial', 'Retirada de um câncer de pele na orelha, rompimento de tendão do pé.', 'Sulfa', 'Vários', '0+', 'SIM', 'Nunca frequentou', 'Nenhuma.', 3);
+(1, 'Gastrite nervosa', 'nenhuma...', 'Camarão', 'nenhum...', 'B-', 'SIM', 'Atletic', 'nenhuma', 6),
+(2, 'Tireoide', 'Cirurgia de retirada de amígdala e adenoide.', 'nenhuma...', 'Purant', 'B-', 'NAO', 'nenhuma', 'nenhuma', 10),
+(3, 'Nenhum', 'Nenhum', 'Nenhum', 'Nenhum', 'B+', 'SIM', 'Nenhuma', 'Nenhuma', 9);
 
 -- --------------------------------------------------------
 
@@ -127,17 +155,19 @@ CREATE TABLE IF NOT EXISTS `informacoes_adicionais_contatos` (
   `telefone` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `informacoes_adicionais_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=37 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=8 ;
 
 --
 -- Extraindo dados da tabela `informacoes_adicionais_contatos`
 --
 
 INSERT INTO `informacoes_adicionais_contatos` (`id`, `tipo`, `nome`, `telefone`, `informacoes_adicionais_id`) VALUES
-(27, 'Cônjuge', 'Neide Guzzatti Konig', '(48)3626-7585', 2),
-(28, 'Filho(a)', 'Karen Guzzatti Konig', '(48)991705657', 2),
-(35, 'Cônjuge', 'Karen Guzzatti Konig', '(48)3626-7585', 1),
-(36, 'Mãe', 'Elizete Pereira', '(48)0000-0000', 1);
+(1, 'Cônjuge', 'Karen Guzzatti Konig', '(48)9917-05657', 1),
+(2, 'Irmã', 'Daiane Pereira', '(48)9999-0000', 1),
+(3, 'Mãe', 'Daiane Pereira', '(48)9947-05454', 2),
+(4, 'Pai', 'Mauro Ponciano', '(48)9833-05354', 2),
+(6, 'Mãe', 'Daiane Pereira', '(48)991705657', 3),
+(7, 'Pai', 'Mauro Ponciano', '(48)0000-0000', 3);
 
 -- --------------------------------------------------------
 
@@ -150,15 +180,19 @@ CREATE TABLE IF NOT EXISTS `informacoes_adicionais_exercicios` (
   `exercicios` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `informacoes_adicionais_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=125 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=9 ;
 
 --
 -- Extraindo dados da tabela `informacoes_adicionais_exercicios`
 --
 
 INSERT INTO `informacoes_adicionais_exercicios` (`id`, `exercicios`, `informacoes_adicionais_id`) VALUES
-(106, 'Natação', 2),
-(124, 'Futebol', 1);
+(1, 'Futebol', 1),
+(2, 'Ping-Pong', 2),
+(3, 'Dança', 2),
+(4, 'Volei', 2),
+(7, 'Basquete', 3),
+(8, 'Skate', 3);
 
 -- --------------------------------------------------------
 
@@ -174,15 +208,16 @@ CREATE TABLE IF NOT EXISTS `informacoes_adicionais_medidas` (
   `gordura_corporal` decimal(5,3) DEFAULT NULL,
   `informacoes_adicionais_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=19 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=5 ;
 
 --
 -- Extraindo dados da tabela `informacoes_adicionais_medidas`
 --
 
 INSERT INTO `informacoes_adicionais_medidas` (`id`, `altura`, `peso`, `massa_magra`, `gordura_corporal`, `informacoes_adicionais_id`) VALUES
-(14, 1.73, 90.000, 50.000, 40.000, 2),
-(18, 1.73, 76.500, 30.400, 40.900, 1);
+(1, 1.73, 78.000, 30.000, 20.000, 1),
+(2, 1.45, 32.000, 10.000, 12.000, 2),
+(4, 1.62, 42.000, 17.000, 10.000, 3);
 
 -- --------------------------------------------------------
 
@@ -200,17 +235,21 @@ CREATE TABLE IF NOT EXISTS `notificacao` (
   `aluno_id` int(11) DEFAULT NULL,
   `dados` text COLLATE utf8_unicode_ci,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=9 ;
 
 --
 -- Extraindo dados da tabela `notificacao`
 --
 
 INSERT INTO `notificacao` (`id`, `data`, `lido`, `status`, `texto`, `profissional_id`, `aluno_id`, `dados`) VALUES
-(1, '2018-09-17 21:42:04', 'L', 'INFO', 'Você tem uma nova solicitação de Diego  Pereira <br> O que deseja fazer? <a href="status_vinculo.php?id=2&status=aprovado">Aceitar</a> <a href="status_vinculo.php?id=2&status=negado">Negar</a>', 1, NULL, 'a:3:{s:15:"profissional_id";s:1:"1";s:8:"aluno_id";s:1:"2";s:5:"table";s:7:"vinculo";}'),
-(2, '2018-09-23 22:09:44', 'N', 'INFO', 'Você tem uma nova solicitação de Karen Guzzatti Konig <br> O que deseja fazer? <a href="status_vinculo.php?id=1&status=aprovado">Aceitar</a> <a href="status_vinculo.php?id=1&status=negado">Negar</a>', NULL, 3, 'a:3:{s:15:"profissional_id";s:1:"1";s:8:"aluno_id";s:1:"3";s:5:"table";s:7:"vinculo";}'),
-(3, '2018-09-24 21:45:22', 'N', 'INFO', 'Você tem uma nova solicitação de Charles Konig <br> O que deseja fazer? <a href="status_vinculo.php?id=4&status=aprovado">Aceitar</a> <a href="status_vinculo.php?id=4&status=negado">Negar</a>', NULL, 4, 'a:3:{s:15:"profissional_id";s:1:"4";s:8:"aluno_id";s:1:"4";s:5:"table";s:7:"vinculo";}'),
-(4, '2018-09-24 21:54:33', 'N', 'INFO', 'Você tem uma nova solicitação de Charles Konig <br> O que deseja fazer? <a href="status_vinculo.php?id=4&status=aprovado">Aceitar</a> <a href="status_vinculo.php?id=4&status=negado">Negar</a>', NULL, 1, 'a:3:{s:15:"profissional_id";s:1:"4";s:8:"aluno_id";s:1:"1";s:5:"table";s:7:"vinculo";}');
+(1, '2018-10-01 23:52:53', 'L', 'INFO', 'Você tem uma nova solicitação de Karen Guzzatti Konig <br> O que deseja fazer? <a href="status_vinculo.php?id=2&status=aprovado">Aceitar</a> <a href="status_vinculo.php?id=2&status=negado">Negar</a>', NULL, 6, 'a:3:{s:15:"profissional_id";s:1:"2";s:8:"aluno_id";s:1:"6";s:5:"table";s:7:"vinculo";}'),
+(2, '2018-10-01 23:53:04', 'N', 'INFO', 'Você tem uma nova solicitação de Karen Guzzatti Konig <br> O que deseja fazer? <a href="status_vinculo.php?id=2&status=aprovado">Aceitar</a> <a href="status_vinculo.php?id=2&status=negado">Negar</a>', NULL, 7, 'a:3:{s:15:"profissional_id";s:1:"2";s:8:"aluno_id";s:1:"7";s:5:"table";s:7:"vinculo";}'),
+(3, '2018-10-01 23:53:06', 'N', 'INFO', 'Você tem uma nova solicitação de Karen Guzzatti Konig <br> O que deseja fazer? <a href="status_vinculo.php?id=2&status=aprovado">Aceitar</a> <a href="status_vinculo.php?id=2&status=negado">Negar</a>', NULL, 13, 'a:3:{s:15:"profissional_id";s:1:"2";s:8:"aluno_id";s:2:"13";s:5:"table";s:7:"vinculo";}'),
+(4, '2018-10-01 23:53:15', 'N', 'INFO', 'Você tem uma nova solicitação de Karen Guzzatti Konig <br> O que deseja fazer? <a href="status_vinculo.php?id=2&status=aprovado">Aceitar</a> <a href="status_vinculo.php?id=2&status=negado">Negar</a>', NULL, 12, 'a:3:{s:15:"profissional_id";s:1:"2";s:8:"aluno_id";s:2:"12";s:5:"table";s:7:"vinculo";}'),
+(5, '2018-10-02 00:10:06', 'L', 'INFO', 'Você tem uma nova solicitação de Adryene Pereira Ponciano <br> O que deseja fazer? <a href="status_vinculo.php?id=10&status=aprovado">Aceitar</a> <a href="status_vinculo.php?id=10&status=negado">Negar</a>', 2, NULL, 'a:3:{s:15:"profissional_id";s:1:"2";s:8:"aluno_id";s:2:"10";s:5:"table";s:7:"vinculo";}'),
+(6, '2018-10-02 01:23:45', 'L', 'INFO', 'Você tem uma nova solicitação de Luana  Gabriely Spricigo <br> O que deseja fazer? <a href="status_vinculo.php?id=3&status=aprovado">Aceitar</a> <a href="status_vinculo.php?id=3&status=negado">Negar</a>', NULL, 9, 'a:3:{s:15:"profissional_id";s:1:"3";s:8:"aluno_id";s:1:"9";s:5:"table";s:7:"vinculo";}'),
+(7, '2018-10-02 01:23:58', 'N', 'INFO', 'Você tem uma nova solicitação de Luana  Gabriely Spricigo <br> O que deseja fazer? <a href="status_vinculo.php?id=3&status=aprovado">Aceitar</a> <a href="status_vinculo.php?id=3&status=negado">Negar</a>', NULL, 11, 'a:3:{s:15:"profissional_id";s:1:"3";s:8:"aluno_id";s:2:"11";s:5:"table";s:7:"vinculo";}'),
+(8, '2018-10-02 01:24:01', 'N', 'INFO', 'Você tem uma nova solicitação de Luana  Gabriely Spricigo <br> O que deseja fazer? <a href="status_vinculo.php?id=3&status=aprovado">Aceitar</a> <a href="status_vinculo.php?id=3&status=negado">Negar</a>', NULL, 10, 'a:3:{s:15:"profissional_id";s:1:"3";s:8:"aluno_id";s:2:"10";s:5:"table";s:7:"vinculo";}');
 
 -- --------------------------------------------------------
 
@@ -244,15 +283,98 @@ CREATE TABLE IF NOT EXISTS `planilha_exercicio` (
   `descricao` text COLLATE utf8_unicode_ci NOT NULL,
   `foto` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=87 ;
 
 --
 -- Extraindo dados da tabela `planilha_exercicio`
 --
 
 INSERT INTO `planilha_exercicio` (`id`, `musculo_cardio_id`, `nome`, `descricao`, `foto`) VALUES
-(1, 1, 'Rosca Alternada', 'Fique em pé, com os pés ligeiramente afastados, joelhos levemente flexionados, e abdominal contraído. Segure um halter em cada mão, mantendo a palma da mão para frente. Fixe a posição dos cotovelos na lateral de seu tronco e mantenha os pesos em frente à sua coxa.', NULL),
-(2, 10, 'Glúteo em pé', 'Vou procurar', 'http://localhost/FitSan/uploads/exercicios/42639533_1863429377075184_3921901450212409344_o.jpg');
+(1, 18, 'Remada Baixa Sentado', 'Segure os pegadores presos aos cabos com os braços estendidos à frente.\r\nTracione os pegadores superiormente, na direção do peito, mantendo a coluna vertebral reta.\r\nRetorne os pegadores à posição inicial.', NULL),
+(2, 19, 'Remada Alta com barra', 'Segure a barra com afastamento igual à distância entre os ombros; use uma pegada com o dorso das mãos voltado para cima.\r\nTracione a barra verticalmente para cima até chegar ao queixo; eleve o máximo possível os cotovelos.\r\nAbaixe a barra lentamente, até que os braços fiquem na posição estendida.', NULL),
+(3, 19, 'Encolhimento com Halter', 'Em pé, em uma posição ereta com um halter em cada mão, mãos pendentes aos lados do corpo.\r\nMantendo os braços estendidos, encolha os ombros para cima – até o ponho mais alto possível.\r\nAbaixe os halteres de volta para a posição inicial.\r\n', NULL),
+(4, 19, 'Encolhimento com Barra', 'Segure uma barra com os braços estendidos à frente das coxas, utilizando pegada com distância igual à largura dos ombros e com o dorso das mãos voltado para cima.\r\nMantendo os braços contraídos, encolha os ombros até o ponto mais alto possível, tracionando a barra com um movimento vertical para cima.\r\nAbaixe lentamente a barra até a posição inicial, alongando o trapézio.', NULL),
+(5, 18, 'Ramada Serrador', 'Segure um halter fixo com a palma voltada para dentro. Repouse a outra mão e o joelho sobre um banco, mantendo a coluna vertebral reta e praticamente paralela ao chão.\r\nMovimente o halter verticalmente para cima ao longo do torso, levantando o cotovelo até o nível mais alto possível.\r\nAbaixe o halter até a posição inicial.', NULL),
+(6, 18, 'Remada Curvada', 'Fazendo uma pegada na barra com espaçamento igual à largura dos ombros e com o dorso das mãos voltado para cima, incline o torso para a frente em um ângulo de 45 graus com o chão.\r\nTracione a barra verticalmente para cima, até que ela toque a parte inferior do peito, mantendo a coluna vertebral reta e os joelhos ligeiramente dobrados.\r\nAbaixe a barra até a posição de braços estendidos.', NULL),
+(7, 18, 'Remada Articulada', 'Segure os pegadores com os braços estendidos à frente, apoiando o torso contra a almofada peitoral.\r\nTracione os pegadores na direção da parte superior do abdome, mantendo a coluna vertebral reta.\r\nRetorne o peso à posição inicial.', NULL),
+(8, 18, 'Puxador Frontal Fechado', 'Para executar o Puxador Frontal Fechado:\r\nFaça uma pegada na barra com o dorso das mãos voltado para frente (invertido) com as mãos espaçadas em 15 a 30cm.\r\nTracione a barra para baixo até a parte superior do peito, tensionando os latíssimos.\r\n\r\n', NULL),
+(9, 18, 'Puxador Frontal Aberto', 'Para executar o Puxador Frontal Aberto:\r\nFaça uma pegada na barra com o dorso das mãos voltado para cima; as mãos devem ficar a uma distância 15cm maior que a largura dos ombros.\r\nTracione a barra para baixo, até a parte superior do peito, contraindo os latíssimos.', NULL),
+(10, 18, 'Barra', 'Essas flexões com barras são parecidas com as de puxador.', NULL),
+(11, 17, 'Levantamento Terra', 'Faça uma pegada com afastamento igual à largura dos ombros e com o dorso das mãos voltado para cima; braços estendidos e na posição agachada, dobrando joelhos e quadris.\r\nMantendo a coluna vertebral reta e os cotovelos bloqueados, fique de pé, ereto, levantando a barra até o nível dos quadris.\r\nLentamente, abaixe a barra até o chão.', NULL),
+(12, 17, 'Levantamento Bom Dia', 'Fique em pé em uma posição ereta com uma barra sob os ombros.\r\nMantendo a coluna vertebral reta e os joelhos rígidos (estendidos ou ligeiramente dobrados), incline-se para a frente (use a cintura) até que o torso esteja um pouco acima da posição paralela com relação ao chão.\r\nLevante o torso de volta à posição ereta.', NULL),
+(13, 17, 'Extensão Lombar', 'Fique deitado com o rosto voltado para o chão, com os quadris apoiados no banco e tornozelos fixados sob as almofadas.\r\nComece com o torso pendendo para baixo, com flexão de 90 graus na cintura.\r\nEleve o corpo até que o torso esteja um pouco acima da posição de paralelismo com o chão.', NULL),
+(14, 20, 'Leg Press', 'Sente-se no aparelho de leg press e coloque os pés com afastamento na plataforma igual à largura dos ombros.\r\nLentamente, abaixe o peso até que os joelhos estejam com 90 graus de flexão.', 'http://localhost/FitSan/uploads/exercicios/legpress.png'),
+(15, 20, 'Extensão de Perna ', 'Sente-se no aparelho e coloque os pés por baixo dos rolos.\r\nLevante as pernas para cima, até que os joelhos estejam estendidos.\r\nAbaixe as pernas de volta à posição inicial, com os joelhos dobrados em 90 graus.', 'http://localhost/FitSan/uploads/exercicios/extdaspernas.png'),
+(16, 20, 'Agachamento Hack', 'Posicione as costas contra o encosto e os ombros por baixo dos rolos almofadados e fique em pé com os pés afastados na largura dos ombros sobre a plataforma, com os dedos apontando para frente.\r\nAbaixe lentamente o peso, flexionando os joelhos até 90 graus.\r\n\r\n', 'http://localhost/FitSan/uploads/exercicios/agachamentoh.png'),
+(17, 20, 'Agachamento Livre', 'Em pé com a barra apoiada nos ombros e os pés afastados em distância igual à largura dos ombros.\r\nFlexione lentamente os joelhos até que as coxas fiquem paralelas ao chão.\r\nEstenda as pernas para retornar à posição inicial (em pé).', NULL),
+(18, 20, 'Afundo', 'Em pé com os pés afastados na largura dos ombros; segure dois halteres fixos com os braços estendidos ao lado do corpo.\r\nDê um passo para frente e flexione o joelho até que a coxa da perna que avançou esteja paralela com o chão.\r\n\r\n', 'http://localhost/FitSan/uploads/exercicios/afundo.png'),
+(19, 21, 'Panturrilha em Pé', 'Para executar o Panturrilha em pé:\r\nFique em pé com os dedos dos pés sobre a plataforma e os ombros por baixo das almofadas; abaixe os calcanhares o máximo possível, para obtenção de um alongamento completo.\r\nLevante o peso elevando os calcanhares até onde for possível, mantendo as pernas estendidas.', NULL),
+(20, 21, 'Panturrilha Sentado', 'Coloque as bolas dos pés na plataforma, posicione as almofadas transversalmente à parte inferior das coxas e abaixe os calcanhares o máximo possível.\r\nLevante o peso elevando os calcanhares até o ponto mais elevado possível\r\nAbaixe lentamente os calcanhares até a posição inicial.', NULL),
+(21, 21, 'Panturrilha no Leg Press', 'Para executar o Panturrilha no leg press:\r\nColoque as bolas dos pés sobre a borda da plataforma (como em um aparelho de leg press) e abaixe o peso o máximo possível.\r\nEmpurre o peso para cima até onde puder, contraindo os músculos da panturrilha.\r\nAbaixe lentamente o peso até a posição inicial.', NULL),
+(22, 21, 'Elevação na ponta dos pés', 'Coloque os dedos dos pés sobre um bloco, incline-se para a frente e apoie o torso no banco; abaixe os calcanhares o máximo possível.\r\nLevante o peso pela elevação dos calcanhares o máximo possível, mantendo as pernas estendidas.\r\nAbaixe lentamente os calcanhares até a posição inicial.', NULL),
+(23, 22, 'Levantamento Stiff', 'Fique em pé e mantenha o corpo ereto, com os pés diretamente abaixo dos quadris, segurando uma barra com os braços estendidos.\r\nIncline-se para a frente (use a cintura) abaixando o peso, mas mantendo as pernas estendidas.\r\nPare antes que o peso toque o chão e volte a levantá-lo.', NULL),
+(24, 22, 'Flexão de Pernas em Pé', 'Para executar o Flexão de pernas em pé:\r\nColoque um calcanhar por baixo do rolo almofadado e apoie o peso com a outra perna.\r\nLevante o peso dobrando o joelho e elevando o calcanhar na direção da nádega.\r\nAbaixe o peso de volta a posição inicial.', NULL),
+(25, 22, 'Flexão de Pernas Deitado', 'Deite-se de bruços sobre o aparelho e enganche os calcanhares por baixo dos rolos almofadados.\r\nLevante o peso dobrando os joelhos e eleve os calcanhares na direção das nádegas.\r\nAbaixe o peso de volta à posição inicial.', NULL),
+(26, 23, 'Supino inclinado com halter', 'Na posição sentada em um banco inclinado, comece com os halteres fixos no nível do tórax, \r\ncom as palmas das mãos voltadas para a frente.\r\nImpulsione os halteres verticalmente, até que ocorra bloqueio dos cotovelos.', NULL),
+(27, 23, 'Supino inclinado', 'Na posição sentada em um banco inclinado, faça uma pegada na barra com as palmas das \r\nmãos voltadas para cima e com afastamento na mesma distância dos ombros.\r\nAbaixe lentamente o peso, até que a barra toque a parte superior do tórax.\r\nEmpurre a barra diretamente para cima, até que os cotovelos fiquem estendidos.\r\n', NULL),
+(28, 23, 'Crucifixo inclinado', 'Sentado em um banco inclinado, comece com os halteres diretamente acima do tórax, com as palmas das mãos voltadas para dentro.\r\nAbaixe os halteres para fora, dobrando ligeiramente os cotovelos enquanto os pesos descem até o nível do tórax.\r\nLevante os halteres de volta, unindo-os na parte superior do exercício.', NULL),
+(29, 23, 'Crucifixo com cabo', 'Em cada mão, segure o pegador preso a polias baixas, fique em pé, em posição ereta.\r\nLevante as mãos em um arco para frente até que os pegadores se encontrem na altura da cabeça.', NULL),
+(30, 24, 'Supino reto com halter', 'Deitado em um banco horizontal, comece com os halteres no nível do tórax, palmas das mãos voltadas para a frente.\r\nImpulsione verticalmente os halteres, até que ocorra a extensão total dos cotovelos.', NULL),
+(31, 24, 'Supino reto com halter', 'Deitado em um banco horizontal, comece com os halteres no nível do tórax, palmas das mãos voltadas para a frente.\r\nImpulsione verticalmente os halteres, até que ocorra a extensão total dos cotovelos.', NULL),
+(32, 24, 'Supino reto com barra', 'Na posição deitada em um banco plano, faça uma pegada na barra com o dorso das mãos voltado para cima e o afastamento entre elas igual à distância entre os ombros.\r\nAbaixe lentamente o peso até tocar a parte média do tórax.\r\nEmpurre a barra diretamente para cima, até que ocorra bloqueio dos cotovelos.', NULL),
+(33, 24, 'Crucifixo reto', 'Deitado em um banco horizontal, comece com os halteres diretamente acima do tórax médio, com as palmas das mãos voltadas para dentro.\r\nAbaixe os halteres com um amplo movimento de abertura (para fora), dobrando ligeiramente os cotovelos durante a descida dos pesos até o nível do tórax.\r\nLevante os halteres em um movimento simultâneo, fazendo arco ascendente, em retorno à posição vertical.', NULL),
+(34, 24, 'Voador', 'Segure os pegadores verticais, com os cotovelos ligeiramente dobrados.\r\nTracione simultaneamente os pegadores até que se toquem à frente de seu tórax.', NULL),
+(35, 25, 'Supino declinado', 'Deite-se em um banco declinado e faça uma pegada na barra com o dorso das mãos voltado para cima e com afastamento igual à distância entre os ombros.\r\nAbaixe lentamente o peso até tocar a parte inferior do tórax.\r\nEmpurre a barra diretamente para cima, até que ocorra extensão total dos cotovelos.', NULL),
+(36, 25, 'Paralela', 'Agarre as barras paralelas, sustentando o corpo com os cotovelos estendidos e bloqueados.\r\nDobre os cotovelos, baixando o torso até que os braços fiquem paralelos ao chão.\r\nEmpurre o corpo de volta a posição inicial, isto é, até que seus cotovelos fiquem novamente estendidos.\r\n', NULL),
+(37, 25, 'Crossover', 'Na posição em pé, segure os pegadores presos às polias altas de um aparelho de cabos.\r\nTracione simultaneamente para baixo os pegadores, até que as mãos se toquem a frente da cintura; mantenha os cotovelos ligeiramente dobrados.\r\nLentamente, retorne à posição inicial com as mãos no nível dos ombros.\r\n', NULL),
+(38, 25, 'Crucifixo declinado', 'Deitado em um banco declinado, comece com os halteres diretamente acima de seu tórax, com as palmas das mãos voltadas para dentro.\r\nAbaixe os halteres com um movimento de abertura (para fora), dobrando ligeiramente os cotovelos durante a descida dos pesos até o nível do tórax.\r\nLeva simultaneamente os halteres de volta à posição inicial, até se tocarem.', NULL),
+(39, 26, 'Abdominal', 'Coloque os pés embaixo da almofada e sente no banco declinado com o torso ereto.\r\nAbaixe o torso para trás até que fique praticamente paralelo ao chão.\r\nRetorna a posição vertical, dobrando na cintura.', ''),
+(40, 26, 'Abdominal grupado', 'Deite-se de costas no chão, com os quadris dobrados a 90 graus e as mãos atrás da cabeça.\r\nEleve os ombros do chão, comprimindo o peito para frente e mantendo a região lombar em contato com o chão.\r\nAbaixe os ombros de volta à posição inicial.\r\n', NULL),
+(41, 26, 'Abdominal grupado com corda', 'Ajoelhe no chão embaixo de uma polia alta e segure a corda com as duas mãos, atrás da cabeça.\r\nPuxe o peso para baixo, encurvando o torso e inclinando a cintura.\r\nRetorne a posição inicial.', NULL),
+(42, 26, 'Abdominal grupado com aparelho', 'Para realizar o Abdominal grupado com aparelho:\r\nSente-se no assento, segure os pegadores e coloque os pés sob os rolos de tornozelo.\r\nFaça o abdominal inclinando o torso na direção dos joelhos.\r\nRetorne a posição vertical.', NULL),
+(43, 27, 'Pullover', 'Deite-se com a parte superior das costas repousando transversalmente em um banco horizontal; segure um halter fixo diretamente acima de seu tórax.\r\nMovimente o halter para baixo e para trás, até atingir o nível do banco, inspirando profundamente e alongando o gradil costal.', NULL),
+(44, 27, 'Inclinação Lateral com halter', 'Fique em pé, segurando um halter na mão esquerda; coloque a mão direita atrás da cabeça.\r\nDobre o torso para o lado esquerdo, abaixando o halter na direção do joelho.\r\nFaça com que o torso fique novamente ereto, contraindo os músculos oblíquos direitos.', NULL),
+(45, 27, 'Abdominal grupado oblíquo', 'Deite-se sobre o lado esquerdo, joelhos dobrados e juntos, mão direita atrás da cabeça.\r\nLevante lentamente o torso, contraindo os oblíquos do lado direito.\r\nAbaixe o torso até a posição inicial.', NULL),
+(46, 27, 'Abdominal grupado oblíquo com cabo ', 'Segure um pegador preso à polia alta de um aparelho de cabo.\r\nFaça o abdominal para baixo, direcionando o cotovelo para o joelho oposto.\r\nRetorne lentamente à posição inicial.', NULL),
+(47, 27, 'Abdominal com giro', 'Para fazer o abdominal com giro, sente-se no banco inclinado, enganche os pés por baixo da almofada, incline-se para trás e posicione as mãos atrás da cabeça.\r\nAo fazer o abdominal, torça seu torso, direcionando o cotovelo direito ao joelho esquerdo.\r\nAbaixe de volta para a posição inicial\r\nDurante a próxima repetição, direcione o cotovelo esquerdo para o joelho direito.', NULL),
+(48, 28, 'Elevação de pernas corpo inclinado', 'Deite-se de costas em um banco abdominal inclinado, com as pernas para baixo.\r\nLevante as pernas (nos quadris) e impulsione as coxas na direção do peito, mantendo os joelhos ligeiramente dobrados.\r\nAbaixe lentamente as pernas de volta à posição inicial.', NULL),
+(49, 28, 'Elevação de pernas na barra', 'Pendure-se com as mãos em uma barra, ou coloque os cotovelos em um par de AB Slings (protetores que se prendem à barra para sustentar o peso do corpo); as pernas ficam livremente pendentes.\r\nLevante simultaneamente os joelhos, ligeiramente dobrados, na direção do peito.\r\nAbaixe lentamente as pernas de volta à posição inicial, sem balançar.\r\n', NULL),
+(50, 28, 'Elevação de joelhos', 'Sente-se na extremidade de um banco horizontal, com as pernas pendendo e os joelhos ligeiramente dobrados, e agarre o banco atrás de você.\r\nLevante os joelhos na direção do peito, mantendo as pernas juntas.\r\nAbaixe as pernas, até que os calcanhares praticamente toquem o chão.', NULL),
+(51, 28, 'Abdominal grupado invertido', 'Para executar o Abdominal grupado invertido, deite-se em um banco horizontal, posicione os pés de modo a fazer 90 graus com os joelhos e quadris e agarre o banco atrás da cabeça para apoio.\r\nLevante a pelve (afastando-a do banco) até que os pés apontem para o teto.\r\nAbaixe as pernas de volta para posição inicial.', NULL),
+(52, 8, 'Rosca martelo', 'Segure um halter fixo em cada mão com as palmas voltadas para dentro (polegares apontando para frente).\r\nLevante um halter de cada vez até o ombro, mantendo as palmas das mãos voltadas para dentro.\r\nAbaixe o halter de volta à posição de braço estendido e repita com o outro braço.\r\n', NULL),
+(53, 8, 'Rosca invertida', 'Segure a barra do halter com os braços estendidos; use uma pegada com o dorso das mãos voltados para cima e com afastamento igual à distância entre os ombros.\r\nEleve a barra até o nível dos ombros, rosqueando os punhos para cima e para trás enquanto flexiona os cotovelos.\r\nAbaixe a barra até a posição de braços estendidos, deixando que os punhos “caiam”.', NULL),
+(54, 8, 'Rosca punho', 'Sentado na extremidade do banco, faça a pegada na barra com o dorso das mãos voltado para baixo, mãos afastadas na distância entre os ombros e repouse a parte dorsal dos antebraços nas coxas.\r\nAbaixe a barra dobrando os punhos para baixo, na direção do chão.\r\nFaça a rosca (peso para cima) utilizando o movimento dos punhos.\r\n', NULL),
+(55, 8, 'Rosca punho invertida', 'Pegue a barra usando pegada com o dorso das mãos voltado para cima e repouse os antebraços no alto das coxas ou na borda do banco.\r\nAbaixe a barra dobrando os punhos na direção do chão.\r\nLevante o peso utilizando o movimento dos punhos.', NULL),
+(56, 6, 'Rosca Scott', 'Sente-se com os braços repousando no banco de Scott e faça a pegada na barra com o dorso das mãos voltado para baixo e na mesma distancia dos ombros; braços retos, voltados para fora.\r\nFlexionando os cotovelos, movimente a barra na direção dos ombros.\r\nAbaixe o peso de volta à posição com os braços estendidos.', NULL),
+(57, 6, 'Rosca no aparelho', 'Segure a barra usando uma pegada com o dorso das mãos voltado para baixo e na largura dos ombros, com os cotovelos repousando na almofada e braços retos, voltados para fora.\r\nTracione a barra na direção dos ombros, flexionando os cotovelos\r\nRetorne a barra à posição de braços estendidos', NULL),
+(58, 6, 'Rosca direta com halter', 'Segure um par de halteres à distancia do braços estendido, um de cada lado do corpo, com os polegares apontando para frente.\r\nMovimentando um braço de cada vez, movimente o halter para cima, na direção do ombro, girando a mão de modo que a palma fique voltada para cima.\r\nAbaixe o halter e repita com o outro braço.', NULL),
+(59, 6, 'Rosca direta com barra', 'Segure a barra com os braços estendidos; pegada com afastamento igual à distancia entre os ombros e com o dorso das mãos voltado para baixo.\r\nLeve a barra até o nível dos ombros; para tanto, flexione os cotovelos.\r\nAbaixe a barra de volta à posição inicial, com os braços na posição estendida.', NULL),
+(60, 6, 'Rosca concentrada', 'Posição sentada na extremidade do banco. Segure o halter fixo com o braço estendido; apoie o braço contra a parte interna da coxa.\r\nFaça o exercício de rosca com halter na direção do ombro, flexionando o cotovelo.\r\nAbaixe o halter de volta a posição inicial.\r\n', NULL),
+(61, 6, 'Rosca com cabo', 'Segure a barra curta presa a uma polia baixa, utilizando uma pegada com o dorso das mãos voltado para baixo e com os braços estendidos.\r\nLevante a barra na direção dos ombros, flexionando os cotovelos.\r\nAbaixe o peso de volta à posição inicial, braços na posição estendida.', NULL),
+(63, 7, 'Tríceps puxador', 'Faça a pegada com o dorso das mãos voltado para cima e na largura dos ombros em uma barra curta presa a uma polia alta.\r\nComece com a barra no nível do peito, cotovelos dobrados um pouco mais do que 90 graus.\r\nMantendo os braços estendidos, tracione a barra para baixo até que os cotovelos fiquem bloqueados. \r\n', NULL),
+(64, 7, 'Tríceps francês', 'Sente-se com o torso ereto, segurando uma barra nas duas mãos com os braços estendidos acima da cabeça; use uma pegada fechada com o dorso das mãos voltado para cima.\r\nFlexione os cotovelos e abaixe a barra por trás da cabeça.\r\nImpulsione a barra para cima até que ocorra extensão total dos cotovelos.\r\n', NULL),
+(65, 7, 'Tríceps testa', 'Deitado em um banco horizontal, segure uma barra com os braços estendidos acima de seu peito; use pegada fechada, com o dorso das mãos voltado para cima, e com as mãos afastadas em aproximadamente 15 cm.\r\nFlexione os cotovelos e abaixe a barra até tocar a testa.\r\nImpulsione a barra para cima, até que ocorra extensão total dos cotovelos.', NULL),
+(66, 7, 'Tríceps coice', 'Pegue o halter com uma mão, encurve-se para frente (use a cintura), e sustente o torso pousando a mão livre em um banco, ou no joelho.\r\nComece com o braço paralelo ao chão e com o cotovelo dobrado em 90 graus.\r\nMovimente para cima o halter, estendendo o braço até que ocorra total extensão do cotovelo. \r\n', NULL),
+(67, 7, 'Tríceps supinado', 'Para executar o Tríceps Supinado:\r\nUse pegada fechada (cerca de 15 cm) na barra, com o dorso das mãos voltado para cima.\r\nAbaixe o peso lentamente, até tocar na parte media do peito.', NULL),
+(68, 29, 'Levantamento frontal com cabo ', 'Com uma das mãos, segure o pegador preso a uma polia baixa, utilizando uma pegada pronada (palma das mãos para baixo).\r\nVirado de costas para a pilha de pesos, levante o cabo em um arco ascendente até o nível do ombro, mantendo o cotovelo rígido.\r\nAbaixe o cabo de volta até o nível da cintura.', 'http://localhost/FitSan/uploads/exercicios/frontl.png'),
+(69, 29, 'Levantamento frontal com barra', 'Utilizando uma pegada com o dorso das mãos voltado para cima e na largura dos ombros, segure um halter de barra á frente das coxas com os braços estendidos.\r\nLevante o halter para a frente e para cima até o nível dos olhos, mantendo os cotovelos rígidos.\r\nAbaixe o halter de volta às coxas.', 'http://localhost/FitSan/uploads/exercicios/lev.png'),
+(70, 29, 'Elevação frontal com halter', 'Sentado com as costas eretas na extremidade de um banco de exercício, segure um par de halteres fixos aos lados do corpo com os braços estendidos; os polegares devem estar apontando para a frente.\r\nLevante um haltere para a frente até o nível do ombro, mantendo o cotovelo rígido.\r\nAbaixe o peso de volta para a posição inicial e repita com o outro halter.', 'http://localhost/FitSan/uploads/exercicios/front.png'),
+(71, 29, 'Desenvolvimento com barra', 'Sentado num banco, faça a pegada na barra com afastamento das mãos igual à largura dos ombros; palmas das mãos voltadas para frente.\r\nAbaixe lentamente o peso (à frente), até que toque a parte superior do tórax.\r\nImpulsione verticalmente para cima até que ocorra bloqueio dos cotovelos. \r\n', 'http://localhost/FitSan/uploads/exercicios/senvolvibarra.png'),
+(72, 29, 'Desenvolvimento Harnold', 'Sentado em um banco, comece com os halteres fixos no nível do ombro, palmas das mãos voltadas para frente.\r\nImpulsione verticalmente para cima os halteres, até que ocorra bloqueio dos cotovelos.\r\n\r\n', 'http://localhost/FitSan/uploads/exercicios/ombro.png'),
+(73, 30, 'Remada Alta', 'Segure o halter comi os braços estendidos; use uma pegada com o dorso das mãos voltado para cima, braços afastados na largura dos ombros.\r\nTracione a barra do haltere verticalmente para cima, levantando os cotovelos até a altura do ombro.', 'http://localhost/FitSan/uploads/exercicios/remalt.png'),
+(74, 30, 'Elevação lateral Halter', 'Na posição em pé ereta, segure os halters com os braços estendidos.\r\nLevante os braços para fora e para os lados do corpo, até que os halteres atinjam o nível dos ombros.\r\nAbaixe os halteres de volta para os quadris.', 'http://localhost/FitSan/uploads/exercicios/elehalt.png'),
+(75, 30, 'Elevação lateral com cabo', 'Com uma das mãos, agarre o pegador preso a uma polia baixa.\r\nLevante a mão para fora, fazendo um arco amplo, até o nível do ombro, mantendo o cotovelo rígido.\r\nAbaixe o cabo de volta no nível da cintura', 'http://localhost/FitSan/uploads/exercicios/cavb.png'),
+(76, 30, 'Elevação lateral no aparelho', 'Para executar a elevação lateral aparelho:\r\nSente-se no aparelho com os cotovelos contra as almofadas protetoras e agarre os pegadores.\r\nLevante os cotovelos até o nível do ombro, braços paralelos ao chão.\r\nAbaixe os cotovelos de volta aos lados do corpo.', 'http://localhost/FitSan/uploads/exercicios/apah.png'),
+(77, 31, 'Elevação lateral com halter inclinado', 'Segurando dois halteres com os braços estendidos, incline o corpo para a frente usando a cintura, mantendo as costas retas e a cabeça levantada.\r\nCom as palmas das mãos voltadas para dentro, levante os halteres para cima até o nível das orelhas, mantendo os cotovelos ligeiramente dobrados.\r\nAbaixe os halteres de volta à posição inicial.', 'http://localhost/FitSan/uploads/exercicios/hatkfix.png'),
+(78, 31, 'Elevação lateral com cabo  -  inclinado', 'Com o pegador esquerdo na mão direita, e o direito na mão esquerda, fique em pé no meio, e em seguida, incline o corpo para a frente usando a cintura, com as costas retas e paralelas ao chão.\r\nLevante as mãos para cima em um arco até o nível dos ombros, de tal modelo que os cabos se cruzem.', NULL),
+(79, 31, 'Crossover invertido', 'Utilizando uma pegada com os polegares apontando para cima, segure os pegadores presos a duas polias altas (pegador esquerdo na mão direita, pegador direito na mão esquerda), fique de pé em posição central, com as polias à sua frente. (Atenção: durante o cruzamento dos cabos para o tórax, as polias ficam atrás de seu corpo.)\r\nImpulsione as mãos para trás (e ligeiramente para baixo) em um arco, com os braços praticamente paralelos ao chão até que as mãos estejam alinhadas com os ombros (formando um T).\r\nRetorne os pegadores de volta à posição inicial, de modo que a mão direita fique diretamente à frente do ombro esquerdo, e a mão esquerda diretamente à frente do ombro direito.', NULL),
+(80, 31, 'Crucifixo invertido no aparelho', 'Para executar o Crucifixo invertido aparelho:\r\nSente-se de frente para o aparelho com o peito contra o encosto do banco e pegue os pegadores com o braço estendido ao nível do ombro.\r\nPuxe os pegadores para trás no arco mais distante possível, mantendo os cotovelos elevados e braços paralelos ao chão.', 'http://localhost/FitSan/uploads/exercicios/ccccc.png'),
+(81, 32, 'Rotação interna ', 'Fique de pé, posicionado de lado com relação a uma polia de cabo ajustada à altura da cintura; agarre o pegador com a mão “de dentro” e com o polegar apontando para cima.\r\nCom o cotovelo mantido firmemente contra a cintura, puxe o pegador para dentro, passando à frente do seu corpo e mantendo o antebraço paralelo ao chão.\r\nRetorne lentamente o pegador de volta a posição inicial.', NULL),
+(82, 32, 'Rotação externa ', 'Fique de pé, posicionado de lado com relação a uma polia de cabo ajustada à altura da cintura; agarre o pegador com a mão “de fora” e com o polegar apontando para cima.\r\nCom o cotovelo mantido firmemente contra a cintura, movimente o pegador em um arco para fora, afastando-o do corpo e mantendo o antebraço paralelo ao chão.\r\nRetorne lentamente o pegador à posição inicial, em frente ao umbigo\r\n', NULL),
+(83, 32, 'Elevação lateral apoiado', 'Para executar a Elevação lateral apoiado:\r\nDeite-se de lado sobre um banco com o torso inclinado em 45 graus, apoiado pelo braço que está abaixo do corpo.\r\nUsando uma pegada com o dorso da mão voltado para cima, levante o halter até a altura da cabeça, mantendo o cotovelo bloqueado.', NULL),
+(84, 16, 'Esteira', 'Saber como pisar na esteira é fundamental, pois o movimento começa pelo calcanhar, passando pela sola até atingir os pés. O calcanhar tem a função de amortecer o impacto da atividade aeróbica. Ao pisar corretamente, você garante o desempenho do exercício e protege os músculos que serão movimentados.', NULL),
+(85, 16, 'Bicicleta ergométrica', 'Uma bicicleta ergométrica lhe permite realizar um exercício cardiovascular simulando um passeio de bicicleta.', NULL),
+(86, 16, 'Eliptico', 'Suba no aparelho, virado para o monitor.\r\nComece a pedalar para ativar o aparelho. \r\nComece a pedalar em um ritmo estável. \r\nNão trave os joelhos. \r\nAumente a resistência. \r\nMude a direção dos pedais. \r\nUse os braços do aparelho. \r\nAumente a inclinação e a resistência enquanto treina.', NULL);
 
 -- --------------------------------------------------------
 
@@ -264,29 +386,33 @@ CREATE TABLE IF NOT EXISTS `planilha_grupoMuscuCardio` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=25 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=33 ;
 
 --
 -- Extraindo dados da tabela `planilha_grupoMuscuCardio`
 --
 
 INSERT INTO `planilha_grupoMuscuCardio` (`id`, `nome`) VALUES
-(1, 'Trapézio'),
-(3, 'Ombro(esp)'),
-(4, 'Ombro(clá/Acr)'),
-(5, 'Costa'),
-(6, 'Peito'),
-(7, 'Biceps'),
-(8, 'Tríceps'),
-(9, 'AnteBraço'),
-(10, 'Glúteo'),
-(11, 'Abdutor'),
-(12, 'Adutor'),
-(16, 'Coxa(Ant)'),
-(17, 'Coxa(Pos)'),
-(18, 'Perna'),
-(20, 'Abdominal'),
-(21, 'Cárdio');
+(6, 'Biceps'),
+(7, 'Tríceps'),
+(8, 'AnteBraço'),
+(16, 'Cárdio'),
+(17, 'Costa(Lombar)'),
+(18, 'Costa(Dorsal)'),
+(19, 'Costa(Trapézio)'),
+(20, 'Perna(Quadriceps)'),
+(21, 'Perna(Panturrilha)'),
+(22, 'Perna(Posterior da Coxa)'),
+(23, 'Peitoral Superior '),
+(24, 'Peitoral Médio'),
+(25, 'Peitoral Inferior'),
+(26, 'Superior '),
+(27, 'Oblíquo'),
+(28, 'Inferior'),
+(29, 'Deltoide Superior'),
+(30, 'Deltoide Lateral'),
+(31, 'Deltoide Posterior'),
+(32, 'Manguito Rotador');
 
 -- --------------------------------------------------------
 
@@ -320,20 +446,17 @@ CREATE TABLE IF NOT EXISTS `upload_dica` (
   `tipo` char(3) COLLATE utf8_unicode_ci NOT NULL,
   `dica_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=10 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=9 ;
 
 --
 -- Extraindo dados da tabela `upload_dica`
 --
 
 INSERT INTO `upload_dica` (`id`, `nome_arq`, `tipo`, `dica_id`) VALUES
-(1, '3f38eb5de08a8a719188f96440c34bcdjpg', 'img', 0),
-(2, '13f7a1d4f98c71d968f851ad951b51bbjpg', 'img', 1),
-(5, 'cc925c40d0a019d4fda488d9482fdaa6jpg', 'img', 4),
-(6, '71ade5c75f9c34a1edb65eee9ec0c274jpg', 'img', 4),
-(7, '813005f63811db1a4a1b5eb323be7e4djpg', 'img', 4),
-(8, 'e23dfc0011dd0399adecdfcff1f6886fjpeg', 'img', 4),
-(9, '99f83255e9397060b65c2bf1e9436036jpg', 'img', 4);
+(5, 'f8270e3ed74d515e11bd14b0634aaf1fjpg', 'img', 7),
+(6, '1639ca5e138e8cfd792b4526978c7f39jpg', 'img', 6),
+(7, '443f060686448ffcfa472b42d805d848jpg', 'img', 8),
+(8, '0a96e048f66f5fa6cd6d33817c8e8b97jpg', 'img', 9);
 
 -- --------------------------------------------------------
 
@@ -355,18 +478,28 @@ CREATE TABLE IF NOT EXISTS `usuario` (
   `codigo` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=8 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=16 ;
 
 --
 -- Extraindo dados da tabela `usuario`
 --
 
 INSERT INTO `usuario` (`id`, `datahora`, `nome`, `sobrenome`, `datanasc`, `sexo`, `foto`, `senha`, `email`, `tipo_id`, `codigo`) VALUES
-(1, '2018-09-17 21:32:36', 'Karen', 'Guzzatti Konig ', '1988-08-14', 'feminino', 'http://localhost/FitSan/uploads/img_5113.jpg', '$2y$10$1Hv5TSETg2DMCtJuOSves.NclePxal7x4FN/KVOk.n1g9O400zqsW', 'karen.gk@aluno.ifsc.edu.br', 2, '5ba962d109181'),
-(2, '2018-09-17 23:23:20', 'Diego ', 'Pereira ', '1986-08-06', 'masculino', 'http://localhost/FitSan/uploads/image.jpeg', '$2y$10$R/vz5peVnbm5wwovBdKX1O5lJzhccG67c4N/.IsXKNWlhjjRAjR7G', 'diego@diego', 1, NULL),
-(3, '2018-09-24 00:37:33', 'Gerson', 'Konig ', '1960-11-17', 'masculino', 'http://localhost/FitSan/uploads/image.jpeg', '$2y$10$kbMNd26jK3YNYeWVamEu5u5if0ZEnDwuwdVR4LF0iUo92GELfBFNG', 'gerson@gerson', 1, NULL),
-(4, '2018-09-25 00:39:56', 'Charles', 'Konig ', '1998-09-07', 'masculino', 'http://localhost/FitSan/uploads/21231596_1989303684692687_3895177490879221215_n.jpg', '$2y$10$fl9hOBi92HpH8NLSy8DVk.KANG9vtykzLCBNYcEDjYawL2RLq2uWK', 'charles@charles', 2, NULL),
-(7, '2018-10-01 02:52:56', 'Administrador', 'Geral', NULL, NULL, NULL, '$2y$10$Vc2glFBT3NkkWRnvJepJEu54mBlSpS3JKPK4MMP83gUSJYoBCkWOC', 'admin@admin', NULL, NULL);
+(1, '2018-10-02 02:05:07', 'Administrador', 'Geral', NULL, NULL, NULL, '$2y$10$v2UXi34ZLW0BCwunjyc6TORT9XAr2wM303D5at6t/405Z3QhpNI9e', 'admin@admin', NULL, NULL),
+(2, '2018-10-02 02:07:01', 'Karen', 'Guzzatti Konig', '1988-08-14', 'feminino', 'http://localhost/FitSan/uploads/img_5113.jpg', '$2y$10$R/CXtAoYykcwHSO4poq3/uIK7P0e/nCtTHixz6aKVN7q/P5j1nkWi', 'karen.gk@aluno.ifsc.edu.br', 2, NULL),
+(3, '2018-10-02 02:09:43', 'Luana ', 'Gabriely Spricigo ', NULL, 'feminino', 'http://localhost/FitSan/uploads/image-1.jpg', '$2y$10$D2XMip1qrwDv8bc8YhriTeZQS1PbrNA4ZUDGoq4V0eKj8hqOtP6XK', 'luana@luana', 2, NULL),
+(4, '2018-10-02 02:10:31', 'Gabriel', 'Henrique Pessanha  ', NULL, NULL, NULL, '$2y$10$o5JrL22SL9Fs/c35rmJlqOYBK7agg5L0GI0ihfQh4QniNAep.HNny', 'gabriel@gabriel', 2, NULL),
+(5, '2018-10-02 02:10:58', 'Sandro ', 'Matias Cunha ', NULL, NULL, NULL, '$2y$10$HTtTkFOIK7g/dfOO6oBZ0.RPAFlxp85UVY7cvB9FIT3YZaQd6X3Ey', 'sandro@sandro', 1, NULL),
+(6, '2018-10-02 02:11:21', 'Diego', 'Pereira ', '1986-08-06', 'masculino', 'http://localhost/FitSan/uploads/image.jpeg', '$2y$10$i29vOQLqCrFdjsAo5NhhS.PgKTLhrKR64ThtUQGvf0yHuavxGmVkG', 'diego@diego', 1, NULL),
+(7, '2018-10-02 02:11:47', 'Neide', 'Guzzatti Konig ', NULL, NULL, NULL, '$2y$10$ifxnyqyle5wztgKX2tikCexQx22VbPqmG2YFURBUfa3cVhjMBls..', 'neide@neide', 1, NULL),
+(8, '2018-10-02 02:12:17', 'Nicoly', 'Pereira Ponciano ', NULL, NULL, NULL, '$2y$10$Y3ORaqNLGpyaA4B1Se3BZu0Z226W18/S5SdGEm4YJG7Y9Iv8LMi6u', 'ni@ni', 1, NULL),
+(9, '2018-10-02 02:12:43', 'Nathaly', 'Pereira Ponciano ', '2004-06-22', 'feminino', 'http://localhost/FitSan/uploads/images.jpeg', '$2y$10$fyFDUU6to3i5iMemsyEXV.30C.QseDiRKwNH5z6Q8S6qKoO1hyr56', 'tata@tata', 1, NULL),
+(10, '2018-10-02 02:13:05', 'Adryene', 'Pereira Ponciano ', '2008-05-16', 'feminino', 'http://localhost/FitSan/uploads/image_1_.jpeg', '$2y$10$ayWs3oAexRTDvmpYJ.AdyuTWRbv.Y5QHskbwNXjb6rMMhDOj22z2C', 'dy@dy', 1, NULL),
+(11, '2018-10-02 02:13:25', 'Adryan', 'Pereira Ponciano ', NULL, NULL, NULL, '$2y$10$u6ThhEyMoPiTV2m0g0mGcObq2hZ9y2OuWA/YGv.optidG1XedDf46', 'ady@ady', 1, NULL),
+(12, '2018-10-02 02:14:42', 'Gerson', 'Konig ', NULL, NULL, NULL, '$2y$10$zhLkyra0AmyXcWYUSjNgmOggJ0lVgMOnIemsx2o.wzoNnV0YNCr3S', 'gerson@gerson', 1, NULL),
+(13, '2018-10-02 02:15:12', 'Angelina', 'Guzzatti ', NULL, NULL, NULL, '$2y$10$qRxoYvURV75ckP7MpoH8EOcAY1N58bPPk8k67ajA7Rm7pEdQecvf6', 'angelina@angelina', 1, NULL),
+(14, '2018-10-02 02:15:45', 'Charles', 'Konig ', NULL, NULL, NULL, '$2y$10$1nKoC.5VYFm5dO6MGLR7PurkIriasL1mczbhcBeGHhR/9wj6dH2FS', 'charles@charles', 1, NULL),
+(15, '2018-10-02 02:17:50', 'Isadora', 'Cachoeira ', NULL, NULL, NULL, '$2y$10$4nYTOxaMpzj9/PteNbXVW.XLnwPeKIPwgeitKpUl5eb2tm4tw8XvC', 'isa@isa', 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -387,16 +520,13 @@ CREATE TABLE IF NOT EXISTS `vinculo` (
 --
 
 INSERT INTO `vinculo` (`aluno_id`, `profissional_id`, `solicitante`, `status`) VALUES
-(1, 4, 'profissional', 'espera'),
-(2, 1, 'aluno', 'aprovado'),
-(3, 1, 'profissional', 'espera'),
-(4, 4, 'profissional', 'espera');
+(7, 2, 'profissional', 'espera'),
+(9, 3, 'profissional', 'aprovado'),
+(10, 3, 'profissional', 'espera'),
+(11, 3, 'profissional', 'espera'),
+(12, 2, 'profissional', 'espera'),
+(13, 2, 'profissional', 'espera');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-
-
-/*select * from `usuario` where id ='9';*/;
-
-/*select * from usuario join vinculo on usuario.id=vinculo.aluno_id where profissional_id=8;*/;
