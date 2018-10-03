@@ -397,6 +397,6 @@ INSERT INTO `vinculo` (`aluno_id`, `profissional_id`, `solicitante`, `status`) V
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 
 
-select * from `usuario` where id ='8';
+/*select * from `usuario` where id ='9';*/;
 
-select * from usuario join vinculo on usuario.id=vinculo.aluno_id where profissional_id=8;
+/*select * from usuario join vinculo on usuario.id=vinculo.aluno_id where profissional_id=8;*/;

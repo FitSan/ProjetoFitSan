@@ -303,15 +303,15 @@ function breadcrumbs($separator = ' &raquo; ', $home = 'Home') {
     // Build our temporary array (pieces of bread) into one big string :)
     return implode($separator, $breadcrumbs);
 }
-    function listar_usuario_para_avaliacao() {
-        $usuarios = array();
-        $query = "select * from usuario join vinculo on usuario.id=vinculo.aluno_id where profissional_id=$_SESSION[id]";
-        $retorno = mysqli_query($conexao, $query);
-        while ($linha = mysqli_fetch_array($retorno)) {
-            array_push($usuarios, $linha);
-        }
-        return $usuarios;
-    }
+//    function listar_usuario_para_avaliacao() {
+//        $usuarios = array();
+//        $query = "select * from usuario join vinculo on usuario.id=vinculo.aluno_id where profissional_id=$_SESSION[id]";
+//        $retorno = mysqli_query($conexao, $query);
+//        while ($linha = mysqli_fetch_array($retorno)) {
+//            array_push($usuarios, $linha);
+//        }
+//        return $usuarios;
+//    }
 
 
 
