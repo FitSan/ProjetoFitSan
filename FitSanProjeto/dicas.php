@@ -11,7 +11,7 @@ $resultado = mysqli_query($conexao, $query);
 <div class="col-md-12">
     <div class="nav-tabs-custom">
         <ul class="nav nav-tabs">
-            <li class="active"><a href="#activity" data-toggle="tab"> Dicas </a></li>
+            <li class="active"><a href="#activity" data-toggle="tab"> Dicas de Profissionais </a></li>
 <!-- <li><a href="#breve" data-toggle="tab"> Breve </a></li>
      <li><a href="#settings" data-toggle="tab"> Breve </a></li> -->
         </ul>
