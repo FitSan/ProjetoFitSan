@@ -144,7 +144,7 @@ if ($linha = mysqli_fetch_array($resultado)) {
                 </div>
                 <!-- Inicio do histórico publico-->
                 
-                <?php if (!tipoLogado("profissional")){ ?>
+                <?php if (tipoLogado("aluno")){ ?>
                                 
                                 
                 
@@ -176,7 +176,38 @@ if ($linha = mysqli_fetch_array($resultado)) {
                         </div>
                     </div>
                 </div>
+                <?php } 
+                
+                 if (tipoLogado("profissional")){ ?>
+                <div class="col-md-9">
+                    <div class="nav-tabs-custom">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a href="#timeline" data-toggle="tab">Linha do tempo</a></li>                    
+                            <li><a href="#dicas" data-toggle="tab">Dicas</a></li>
+                             
+                        </ul>
+                        <div class="tab-content">
+                            <div class="active tab-pane" id="timeline">
+                               <!-- Post -->
+                               Discutir o que colocar aqui!
+                               <!-- /.post -->
+                            </div>
+                            <div class="tab-pane" id="dicas">
+                                <!-- Post -->
+                                Postar dicas
+                                <!-- /.post -->
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+                
+                
+                
                 <?php } ?>
+              
+                
+                
                
             </div>       
         </section>

@@ -18,60 +18,78 @@ if (($acao == 'incluir') || ($acao == 'alterar')){
         $grupo = (!empty($_POST['grupo']) ? $_POST['grupo'] : null);
         $grupo_muscular = (!empty($_POST['grupo_muscular']) ? $_POST['grupo_muscular'] : null);
         $exercicio = (!empty($_POST['exercicio']) ? $_POST['exercicio'] : null);
+        $series = (!empty($_POST['series']) ? $_POST['series'] : null);
         $repeticoes = (!empty($_POST['repeticoes']) ? $_POST['repeticoes'] : null);
         $carga = (!empty($_POST['carga']) ? $_POST['carga'] : null);
-        $intervalos = (!empty($_POST['intervalos']) ? $_POST['intervalos'] : null);
+        $intervalo = (!empty($_POST['intervalo']) ? $_POST['intervalo'] : null);
+        $tempo = (!empty($_POST['tempo']) ? $_POST['tempo'] : null);
         if (empty($grupo)) $erros[] = "Preencha o grupo.";
         if (empty($grupo_muscular)) $erros[] = "Preencha o grupo muscular.";
         if (empty($exercicio)) $erros[] = "Preencha o exercicio.";
-        if (empty($repeticoes)) $erros[] = "Preencha as repetições.";
-        if (empty($carga)) $erros[] = "Preencha a carga em Kg.";
-        if (empty($intervalos)) $erros[] = "Preencha o intervalo de cada exercício.";
+        //if (empty($series)) $erros[] = "Preencha as séries.";
+        //if (empty($repeticoes)) $erros[] = "Preencha as repetições.";
+        //if (empty($carga)) $erros[] = "Preencha a carga em Kg.";
+        //if (empty($intervalo)) $erros[] = "Preencha o intervalo de cada exercício.";
+        //if (empty($tempo)) $erros[] = "Preencha o tempo de cada exercício.";
     }
     if (empty($erros) && !empty($grupo)) {
         if ($id === null) {
-            $query = "insert into planilha ( datahora, titulo , texto, aluno_id) values ( now(), " . mysqliEscaparTexto($titulo) . ", " . mysqliEscaparTexto($texto) . ", " . mysqliEscaparTexto($_SESSION['id']) . " )";
+            $query = "insert into planilha ( grupo, musculo_cardio_id , exercicio_id, series, repeticoes, carga, intervalo, tempo, profissional_id) values (" . mysqliEscaparTexto($grupo) . ", " . mysqliEscaparTexto($grupo_muscular) . ", " . mysqliEscaparTexto($exercicio) . ", " . mysqliEscaparTexto($series) . ", " . mysqliEscaparTexto($repeticoes) . ", " . mysqliEscaparTexto($carga) . ", " . mysqliEscaparTexto($intervalo) . ", " . mysqliEscaparTexto($tempo) . ", " . mysqliEscaparTexto($_SESSION['id']) . " )";
             mysqli_query($conexao, $query) or die('ERRO: ' . mysqli_error($conexao) . PHP_EOL . $query . PHP_EOL . print_r(debug_backtrace(), true));
             $id = mysqli_insert_id($conexao);
         } else {
-            $query = "update ativ_extras set titulo=" . mysqliEscaparTexto($titulo) . ",  texto= " . mysqliEscaparTexto($texto) . " where id= " . mysqliEscaparTexto($id);
-            mysqli_query($conexao, $query) or die('ERRO: ' . mysqli_error($conexao) . PHP_EOL . $query . PHP_EOL . print_r(debug_backtrace(), true));
-            $query = "delete from ativ_extras_exercicios where ativ_extras_id= " . mysqliEscaparTexto($id);
+            $query = "update planilha set grupo = " . mysqliEscaparTexto($grupo) . ", musculo_cardio_id = " . mysqliEscaparTexto($grupo_muscular) . ", exercicio_id = " . mysqliEscaparTexto($exercicio) . ", series = " . mysqliEscaparTexto($series) . ", repeticoes = " . mysqliEscaparTexto($repeticoes) . ", carga = " . mysqliEscaparTexto($carga) . ", intervalo = " . mysqliEscaparTexto($intervalo) . ", tempo = " . mysqliEscaparTexto($tempo) . " where id = " . mysqliEscaparTexto($id) . " and profissional_id = " . mysqliEscaparTexto($_SESSION['id']);
             mysqli_query($conexao, $query) or die('ERRO: ' . mysqli_error($conexao) . PHP_EOL . $query . PHP_EOL . print_r(debug_backtrace(), true));
         }
-        foreach ($exercicios as $exercicio) {
-            $query1 = "insert into ativ_extras_exercicios ( ativ_extras_id, exercicio ) values ( " . mysqliEscaparTexto($id) . ", " . mysqliEscaparTexto($exercicio) . " )";
-            mysqli_query($conexao, $query1) or die('ERRO: ' . mysqli_error($conexao) . PHP_EOL . $query1 . PHP_EOL . print_r(debug_backtrace(), true));
-        }
-        header('Location: atividadesExtras.php');
+        header('Location: ' . basename(__FILE__));
         exit();
     }
 } elseif ($acao == 'excluir') {
     if ($id !== null) {
-        $query = "delete from ativ_extras_exercicios where ativ_extras_id= " . mysqliEscaparTexto($id);
-        mysqli_query($conexao, $query) or die('ERRO: ' . mysqli_error($conexao) . PHP_EOL . $query . PHP_EOL . print_r(debug_backtrace(), true));
-        $query = "delete from ativ_extras where id= " . mysqliEscaparTexto($id);
+        $query = "delete from planilha where id= " . mysqliEscaparTexto($id) . " and profissional_id = " . mysqliEscaparTexto($_SESSION['id']);
         mysqli_query($conexao, $query) or die('ERRO: ' . mysqli_error($conexao) . PHP_EOL . $query . PHP_EOL . print_r(debug_backtrace(), true));
     }
-    header('Location: atividadesExtras.php');
+    header('Location: ' . basename(__FILE__));
     exit();
 }
 
 //referente ao formulário
 if (!empty($id)) {
-    $query_alterar = "select * from ativ_extras where aluno_id = " . mysqliEscaparTexto($_SESSION['id']) . " and id= " . mysqliEscaparTexto($id);
+    $query_alterar = "select * from planilha where profissional_id = " . mysqliEscaparTexto($_SESSION['id']) . " and id= " . mysqliEscaparTexto($id);
     $resultado_alterar = mysqli_query($conexao, $query_alterar) or die('ERRO: '.mysqli_error($conexao).PHP_EOL.$query_alterar.PHP_EOL.print_r(debug_backtrace(), true));
     $linha_alterar = ($resultado_alterar?mysqli_fetch_array($resultado_alterar):array());
-    $query_exe_alterar = "select * from ativ_extras_exercicios where ativ_extras_id= " . mysqliEscaparTexto($id);
-    $resultado_exe_alterar = mysqli_query($conexao, $query_exe_alterar) or die('ERRO: '.mysqli_error($conexao).PHP_EOL.$query_exe_alterar.PHP_EOL.print_r(debug_backtrace(), true));
-    $linha_alterar['exercicios'] = array();
-    while ($linha2 = mysqli_fetch_array($resultado_exe_alterar)) $linha_alterar['exercicios'][] = $linha2['exercicio'];
 } else {
     $linha_alterar = array();
 }
 
+//referente aos grupos
+$query_grupos = "select distinct grupo from planilha where profissional_id = " . mysqliEscaparTexto($_SESSION['id']) . " order by grupo";
+$resultado_grupos = mysqli_query($conexao, $query_grupos) or die('ERRO: '.mysqli_error($conexao).PHP_EOL.$query_grupos.PHP_EOL.print_r(debug_backtrace(), true));
+$grupos = array();
+while ($linha_grupo = mysqli_fetch_array($resultado_grupos)) $grupos[] = $linha_grupo['grupo'];
+mysqli_free_result($resultado_grupos);
+
 //referente à consulta
-$query = "select ativ_extras.*, usuario.nome, usuario.sobrenome, usuario.foto from ativ_extras join usuario on usuario.id=ativ_extras.aluno_id where usuario.id= " . mysqliEscaparTexto($_SESSION['id']) . " order by ativ_extras.datahora desc";
+$query = "select
+    p.*,
+    g.nome grupomusc,
+    e.nome exercicio,
+    e.descricao exercicio_desc,
+    e.foto exercicio_foto,
+    u.nome,
+    u.sobrenome,
+    u.foto
+from
+    planilha p join
+    planilha_grupoMuscuCardio g on g.id = p.musculo_cardio_id join
+    planilha_exercicio e on e.id = p.exercicio_id and e.musculo_cardio_id = g.id join
+    usuario u on u.id=p.profissional_id
+where
+    u.id= " . mysqliEscaparTexto($_SESSION['id']) . "
+order by
+    p.grupo,
+    u.nome
+";
 $resultado = mysqli_query($conexao, $query) or die('ERRO: '.mysqli_error($conexao).PHP_EOL.$query.PHP_EOL.print_r(debug_backtrace(), true));
 ?>
 
@@ -83,13 +101,23 @@ $resultado = mysqli_query($conexao, $query) or die('ERRO: '.mysqli_error($conexa
         <div class="box-header">
             <h3 class="box-title">Prescrição de treino</h3>
             <br><br>
+<?php if (!empty($erros)) { ?>
+                <div class="alert alert-danger">
+                    <ul>
+    <?php foreach ($erros as $erro) { ?>
+                            <li><?php echo htmlentities($erro); ?></li>
+    <?php } ?>
+                    </ul>
+                </div>
+<?php } ?>
+            <form class="form-horizontal" action="<?php echo basename(__FILE__) ?>?acao=<?= !empty($id) ? ('alterar&id=' . $id) : 'incluir' ?>" method="POST" enctype="multipart/form-data">
             <div class="table" id="adicionar_novo">
                 <div class="col-lg-1">
-                 <input type="text" class="form-control" name= "grupo" placeholder="Grupo">   
+                 <input type="text" class="form-control" name= "grupo" placeholder="Grupo" value="<?php echo htmlentities($linha_alterar['grupo'])?>">   
                 </div>
                 <div class="col-lg-2">
 <?php
-$grupos = array();
+$grupoMuscuCardio = array();
 $query2 = "select * from planilha_grupoMuscuCardio order by nome";
 if ($resultado2 = mysqli_query($conexao, $query2)) {
     while ($linha2 = mysqli_fetch_array($resultado2)) {
@@ -106,95 +134,112 @@ if ($resultado2 = mysqli_query($conexao, $query2)) {
                 $linha2['exercicios'][$linha3['id']] = $linha3;
             }
         }
-        $grupos[$linha2['id']] = $linha2;
+        $grupoMuscuCardio[$linha2['id']] = $linha2;
         mysqli_free_result($resultado3);
     }
     mysqli_free_result($resultado2);
 }
-if ($grupos){
+if ($grupoMuscuCardio){
 ?>
                     <script>
-                        var grupomusccard = <?php echo json_encode($grupos) ?>;
+                        var grupomusccard = <?php echo json_encode($grupoMuscuCardio) ?>;
                     </script>
 <?php
 }
 ?>
-                    <select class="form-control select2 " name="areas">
+                    <select class="form-control select2 " name="grupo_muscular" data-selected="<?php echo htmlentities($linha_alterar['musculo_cardio_id'])?>">
                             <option value="">Grupo Muscular/Cár</option>
                     </select>
                 </div>
                 <div class="col-lg-3">
-                    <select class="form-control select2" name="exercicios">
-                        <option value="">Exercícios</option>
+                    <select class="form-control select2" name="exercicio" data-selected="<?php echo htmlentities($linha_alterar['exercicio_id'])?>">
+                        <option value="">Exercício</option>
                     </select>
                 </div> 
                 <div class="col-lg-1">
-                    <input type="text" class="form-control" name= "series" placeholder="Séries">
+                    <input type="text" class="form-control" name= "series" placeholder="Séries" value="<?php echo htmlentities($linha_alterar['series'])?>">
                 </div>
                 <div class="col-lg-1">
-                    <input type="text" class="form-control" name= "repeticoes" placeholder="Repetições">
+                    <input type="text" class="form-control" name= "repeticoes" placeholder="Repetições" value="<?php echo htmlentities($linha_alterar['repeticoes'])?>">
                 </div>
                 <div class="col-lg-1">
-                    <input type="text" class="form-control" name= "carga" placeholder="Carga(Kg)">
+                    <input type="text" class="form-control" name= "carga" placeholder="Carga(Kg)" value="<?php echo htmlentities($linha_alterar['carga'])?>">
                 </div>
                  <div class="col-lg-1">
-                    <input type="text" class="form-control" name= "intervalo" placeholder="Intervalo">
+                    <input type="text" class="form-control" name= "intervalo" placeholder="Intervalo" value="<?php echo htmlentities($linha_alterar['intervalo'])?>">
                 </div>
                 <div class="col-lg-1">
-                    <input type="text" class="form-control" name= "tempo" placeholder="Tempo(Min)">
+                    <input type="text" class="form-control" name= "tempo" placeholder="Tempo(Min)" value="<?php echo htmlentities($linha_alterar['tempo'])?>">
                 </div>
                 <div class="col-lg-1">
-                    <button type="button" class="btn btn-info btn-flat duplicador-mais"><i class="fa fa-fw fa-plus"></i></button>
+                    <button type="submit" class="btn btn-info btn-flat duplicador-mais"><i class="fa fa-fw fa-plus"></i></button>
                 </div>
             </div><br> 
+            </form>
         </div> 
        
         <!--        final do box header-->
         <div class="box-body">
-            <table class="table table-bordered table-striped planilha">
-
-                <ul class="nav nav-tabs">
-                    <li class="active"><a href="#activity" data-toggle="tab"> Grupo A </a></li>
-                    <li><a href="#breve" data-toggle="tab"> Grupo B </a></li>
-                    <li><a href="#settings" data-toggle="tab"> <i class="fa fa-fw fa-plus"></i> </a></li> 
-                </ul>
-                <thead>
-
-                    <tr>
-                        <th>Exercício</th>
-                        <th>Séries</th>
-                        <th>Repetições</th>                      
-                        <th>Carga(Kg)</th>
-                        <th>Intervalo</th>
-                        <th>Tempo</th>
-                        <th><i class="fa fa-cog"></i></th> 
-                        <th><i class="fa fa-trash-o"></i></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Supino enclinado com barra <b class="label label-danger"> Peito</b></td>
-                        <td>3x</td>
-                        <td>12, 10, 9</td>
-                        <td>30, 40, 60</td>
-                        <td>15 seg</td>
-                        <td>  - </td>
-                        <td><i class="fa fa-cog"></i></td>
-                        <td><i class="fa fa-trash-o"></i></td>
-                    </tr>
-                    <tr>
-                        <td>Esteira <b class="label label-danger"> Cárdio</b></td>
-                        <td> - </td>
-                        <td> - </td>
-                        <td> - </td>
-                        <td> - </td>
-                        <td>  30 min </td>
-                        <td><i class="fa fa-cog"></i></td>
-                        <td><i class="fa fa-trash-o"></i></td>
-                    </tr>
-                </tbody>              
-            </table><br>
-
+            <ul class="nav nav-tabs">
+<?php foreach ($grupos as $i => $grupo){ ?>
+                <li class="<?php if (!$i) echo 'active'; ?>"><a href="#grupo<?php echo ($i + 1); ?>" data-toggle="tab"><?php echo htmlspecialchars($grupo); ?></a></li>
+<?php } ?>
+            </ul>
+            <div class="tab-content">
+<?php
+$grupo_atual = ''; $grupo_id = 0;
+while ($linha = mysqli_fetch_array($resultado)) {
+    if ($grupo_atual != $linha['grupo']){
+        if ($grupo_id){
+?>
+                        </tbody>              
+                    </table><br>
+                </div>
+<?php
+        }
+        $class = array('tab-pane');
+        if (!$grupo_id) $class[] = 'active';
+        $grupo_id++; $grupo_atual = $linha['grupo'];
+?>
+                <div class="<?php echo implode(' ', $class) ?>" id="grupo<?php echo $grupo_id; ?>">
+                    <table class="table table-bordered table-striped planilha">
+                        <thead>
+                            <tr>
+                                <th>Exercício</th>
+                                <th>Séries</th>
+                                <th>Repetições</th>                      
+                                <th>Carga(Kg)</th>
+                                <th>Intervalo</th>
+                                <th>Tempo</th>
+                                <th><i class="fa fa-cog"></i></th> 
+                                <th><i class="fa fa-trash-o"></i></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+<?php
+    }
+?>
+                            <tr>
+                                <td><?php echo htmlentities($linha['exercicio']) ?> <b class="label label-danger"><?php echo htmlentities($linha['grupomusc']) ?></b></td>
+                                <td><?php echo htmlentities($linha['series']) ?></td>
+                                <td><?php echo htmlentities($linha['repeticoes']) ?></td>
+                                <td><?php echo htmlentities($linha['carga']) ?></td>
+                                <td><?php echo htmlentities($linha['intervalo']) ?></td>
+                                <td><?php echo htmlentities($linha['tempo']) ?></td>
+                                <td><a class=" " href="<?php echo basename(__FILE__) ?>?acao=alterar&id=<?= htmlentities($linha['id']) ?>" title="Atualizar"><i class="fa fa-edit"></i></a></td>
+                                <td><a class=" " href="<?php echo basename(__FILE__) ?>?acao=excluir&id=<?= htmlentities($linha['id']) ?>" title="Excluir"><i class="fa fa-trash-o"></i></a></td>
+                            </tr>
+<?php
+}
+if ($grupo_id){
+?>
+                        </tbody>              
+                    </table><br>
+                </div>
+<?php
+}
+?>
+            </div>
         </div>
         <div class="box-footer">
             <div class="form-group">

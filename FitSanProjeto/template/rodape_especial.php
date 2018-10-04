@@ -472,17 +472,21 @@
 <script>
     $(function(){
         if (typeof(grupomusccard) == 'undefined') return;
-        var grupo = $('#adicionar_novo select[name="areas"]');
-        var exercicios = $('#adicionar_novo select[name="exercicios"]');
+        var grupo = $('#adicionar_novo select[name="grupo_muscular"]');
+        var exercicios = $('#adicionar_novo select[name="exercicio"]');
         $.each(grupomusccard, function(key, val){
-            $('<option/>').val(val.id).text(val.nome).appendTo(grupo);
+            var opt = $('<option/>').val(val.id).text(val.nome).appendTo(grupo);
+            var sel = grupo.data('selected');
+            if (sel && (val.id == sel)) opt.prop('selected', true);
         });
         grupo.on('change keyup', function(){
             var id = $(this).val();
             exercicios.find('option').not('[value=""]').remove();
             if (id == '') return;
             $.each(grupomusccard[id].exercicios, function(key, val){
-                $('<option/>').val(val.id).text(val.nome).appendTo(exercicios);
+                var opt = $('<option/>').val(val.id).text(val.nome).appendTo(exercicios);
+                var sel = exercicios.data('selected');
+                if (sel && (val.id == sel)) opt.prop('selected', true);
             });
         }).change();
     })

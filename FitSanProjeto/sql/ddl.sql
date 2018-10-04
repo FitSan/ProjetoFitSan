@@ -138,12 +138,15 @@ id int not null primary key auto_increment,
 grupo varchar(255) not null,
 musculo_cardio_id int not null references planilha_grupoMuscuCardio(id),
 exercicio_id int not null references Planilha_exercicio(id),
+series varchar(255),
 repeticoes varchar(255),
 carga varchar(255),
 intervalo varchar(255),
 tempo int,
 profissional_id int not null references usuario(id)
 );
+
+ALTER TABLE planilha ADD series varchar(255) after exercicio_id;
 
 ALTER TABLE planilha CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 select * from planilha;
