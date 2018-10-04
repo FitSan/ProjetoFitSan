@@ -2,7 +2,7 @@
 $pagina = "Novos Exercícios";
 require_once './template/cabecalho.php';
 
-if (!tipoLogado("admin")) {
+if (tipoLogado("aluno")) {
     header('Location: pagina1.php');
     exit;
 }

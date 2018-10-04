@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Máquina: localhost
--- Data de Criação: 03-Out-2018 às 20:00
+-- Data de Criação: 04-Out-2018 às 01:05
 -- Versão do servidor: 5.5.61-0ubuntu0.14.04.1
 -- versão do PHP: 5.5.9-1ubuntu4.26
 
@@ -262,13 +262,36 @@ CREATE TABLE IF NOT EXISTS `planilha` (
   `grupo` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `musculo_cardio_id` int(11) NOT NULL,
   `exercicio_id` int(11) NOT NULL,
+  `series` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `repeticoes` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `carga` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `intervalo` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `tempo` int(11) DEFAULT NULL,
   `profissional_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=26 ;
+
+--
+-- Extraindo dados da tabela `planilha`
+--
+
+INSERT INTO `planilha` (`id`, `grupo`, `musculo_cardio_id`, `exercicio_id`, `series`, `repeticoes`, `carga`, `intervalo`, `tempo`, `profissional_id`) VALUES
+(10, 'Ciclo #1', 20, 17, '3X', '12 - 15', NULL, 'Sem Intervalo', NULL, 2),
+(11, 'Ciclo #1', 8, 87, '3X', '12 - 15', NULL, 'Sem Intervalo', NULL, 2),
+(12, 'Ciclo #1', 26, 40, '3X', '20', NULL, 'Sem Intervalo', NULL, 2),
+(13, 'Ciclo #1', 7, 65, '3X', '12 - 15', NULL, 'Sem Intervalo', NULL, 2),
+(14, 'Ciclo #2', 17, 11, '3X', '12 - 15', NULL, 'Sem Intervalo', NULL, 2),
+(15, 'Ciclo #2', 18, 9, '3X', '12 - 15', NULL, 'Sem Intervalo', NULL, 2),
+(16, 'Ciclo #2', 22, 25, '3X', '12 - 15', NULL, 'Sem Intervalo', NULL, 2),
+(17, 'Ciclo #2', 6, 58, '3X', '12 - 15', NULL, 'Sem Intervalo', NULL, 2),
+(18, 'Ciclo #3', 20, 14, '3X', '12 - 15', '45 graus', 'Sem Intervalo', NULL, 2),
+(19, 'Ciclo #3', 24, 31, '3X', '12 - 15', NULL, 'Sem Intervalo', NULL, 2),
+(20, 'Ciclo #3', 28, 51, '3X', '20', NULL, 'Sem Intervalo', NULL, 2),
+(21, 'Ciclo #3', 7, 88, '3X', '12 - 15', NULL, 'Sem Intervalo', NULL, 2),
+(22, 'Ciclo #4', 22, 23, '3X', '12 - 15', NULL, 'Sem Intervalo', NULL, 2),
+(23, 'Ciclo #4', 18, 6, '3X', '12 - 15', NULL, 'Sem Intervalo', NULL, 2),
+(24, 'Ciclo #4', 21, 19, '3X', '12 - 15', NULL, 'Sem Intervalo', NULL, 2),
+(25, 'Ciclo #4', 8, 52, '3X', '12 - 15', NULL, 'Sem Intervalo', NULL, 2);
 
 -- --------------------------------------------------------
 
@@ -283,7 +306,7 @@ CREATE TABLE IF NOT EXISTS `planilha_exercicio` (
   `descricao` text COLLATE utf8_unicode_ci NOT NULL,
   `foto` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=87 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=89 ;
 
 --
 -- Extraindo dados da tabela `planilha_exercicio`
@@ -319,7 +342,6 @@ INSERT INTO `planilha_exercicio` (`id`, `musculo_cardio_id`, `nome`, `descricao`
 (27, 23, 'Supino inclinado', 'Na posição sentada em um banco inclinado, faça uma pegada na barra com as palmas das \r\nmãos voltadas para cima e com afastamento na mesma distância dos ombros.\r\nAbaixe lentamente o peso, até que a barra toque a parte superior do tórax.\r\nEmpurre a barra diretamente para cima, até que os cotovelos fiquem estendidos.\r\n', NULL),
 (28, 23, 'Crucifixo inclinado', 'Sentado em um banco inclinado, comece com os halteres diretamente acima do tórax, com as palmas das mãos voltadas para dentro.\r\nAbaixe os halteres para fora, dobrando ligeiramente os cotovelos enquanto os pesos descem até o nível do tórax.\r\nLevante os halteres de volta, unindo-os na parte superior do exercício.', NULL),
 (29, 23, 'Crucifixo com cabo', 'Em cada mão, segure o pegador preso a polias baixas, fique em pé, em posição ereta.\r\nLevante as mãos em um arco para frente até que os pegadores se encontrem na altura da cabeça.', NULL),
-(30, 24, 'Supino reto com halter', 'Deitado em um banco horizontal, comece com os halteres no nível do tórax, palmas das mãos voltadas para a frente.\r\nImpulsione verticalmente os halteres, até que ocorra a extensão total dos cotovelos.', NULL),
 (31, 24, 'Supino reto com halter', 'Deitado em um banco horizontal, comece com os halteres no nível do tórax, palmas das mãos voltadas para a frente.\r\nImpulsione verticalmente os halteres, até que ocorra a extensão total dos cotovelos.', NULL),
 (32, 24, 'Supino reto com barra', 'Na posição deitada em um banco plano, faça uma pegada na barra com o dorso das mãos voltado para cima e o afastamento entre elas igual à distância entre os ombros.\r\nAbaixe lentamente o peso até tocar a parte média do tórax.\r\nEmpurre a barra diretamente para cima, até que ocorra bloqueio dos cotovelos.', NULL),
 (33, 24, 'Crucifixo reto', 'Deitado em um banco horizontal, comece com os halteres diretamente acima do tórax médio, com as palmas das mãos voltadas para dentro.\r\nAbaixe os halteres com um amplo movimento de abertura (para fora), dobrando ligeiramente os cotovelos durante a descida dos pesos até o nível do tórax.\r\nLevante os halteres em um movimento simultâneo, fazendo arco ascendente, em retorno à posição vertical.', NULL),
@@ -374,7 +396,9 @@ INSERT INTO `planilha_exercicio` (`id`, `musculo_cardio_id`, `nome`, `descricao`
 (83, 32, 'Elevação lateral apoiado', 'Para executar a Elevação lateral apoiado:\r\nDeite-se de lado sobre um banco com o torso inclinado em 45 graus, apoiado pelo braço que está abaixo do corpo.\r\nUsando uma pegada com o dorso da mão voltado para cima, levante o halter até a altura da cabeça, mantendo o cotovelo bloqueado.', NULL),
 (84, 16, 'Esteira', 'Saber como pisar na esteira é fundamental, pois o movimento começa pelo calcanhar, passando pela sola até atingir os pés. O calcanhar tem a função de amortecer o impacto da atividade aeróbica. Ao pisar corretamente, você garante o desempenho do exercício e protege os músculos que serão movimentados.', NULL),
 (85, 16, 'Bicicleta ergométrica', 'Uma bicicleta ergométrica lhe permite realizar um exercício cardiovascular simulando um passeio de bicicleta.', NULL),
-(86, 16, 'Eliptico', 'Suba no aparelho, virado para o monitor.\r\nComece a pedalar para ativar o aparelho. \r\nComece a pedalar em um ritmo estável. \r\nNão trave os joelhos. \r\nAumente a resistência. \r\nMude a direção dos pedais. \r\nUse os braços do aparelho. \r\nAumente a inclinação e a resistência enquanto treina.', NULL);
+(86, 16, 'Eliptico', 'Suba no aparelho, virado para o monitor.\r\nComece a pedalar para ativar o aparelho. \r\nComece a pedalar em um ritmo estável. \r\nNão trave os joelhos. \r\nAumente a resistência. \r\nMude a direção dos pedais. \r\nUse os braços do aparelho. \r\nAumente a inclinação e a resistência enquanto treina.', NULL),
+(87, 8, 'Flexão de braço (apoio)', 'O primeiro passo é ficar de joelhos; \r\naí você apoia as mãos logo abaixo do ombro, levemente mais abertas; \r\ncoloca os pés juntos para trás, ficando na ponta dos dedos; \r\ne estica o corpo, deixando as costas retas.\r\nContraindo o abdômen, você desce com o tronco até o peitoral encostar no chão ou ficar próximo dele;\r\ne volta para a posição inicial. ', NULL),
+(88, 7, 'Tríceps no banco', 'Nesse exercício de musculação para o tríceps você vai precisar para colocar um banco atrás das costas.\r\nCom o banco perpendicular ao seu corpo, apoie suas mãos em sua borda com as mãos totalmente estendidos, separados na largura dos ombros.\r\nAs pernas serão estendidas para frente, dobrada na cintura e perpendicular ao seu tronco. \r\nAbaixe lentamente o seu corpo como dobrando os cotovelos até que eles fiquem em um ângulo ligeiramente menor do que 90 graus entre o braço e o antebraço.\r\n', NULL);
 
 -- --------------------------------------------------------
 
