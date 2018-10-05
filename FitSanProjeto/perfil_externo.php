@@ -163,7 +163,73 @@ if ($linha = mysqli_fetch_array($resultado)) {
                         </div> 
     <?php } ?>  
                 </div>
-                Visualizações dos históricos, metas, e avaliações.
+                <!-- Inicio do histórico publico-->
+                
+                <?php if (tipoLogado("profissional")){ ?>
+                                
+                                
+                
+                <div class="col-md-9">
+                    <div class="nav-tabs-custom">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a href="#timeline" data-toggle="tab">Linha do tempo</a></li>                    
+                            <li><a href="#treinos_realizados" data-toggle="tab">Treinos realizados</a></li>
+                             <li><a href="#avaliacoes" data-toggle="tab">Avaliações</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="active tab-pane" id="timeline">
+                               <!-- Post -->
+                               Postar Grafico de metas, Atividades realizadas
+                               <!-- /.post -->
+                            </div>
+                            <div class="tab-pane" id="treinos_realizados">
+                                <!-- Post -->
+                                Postar os ultimos treinos salvos da planilha
+                                <!-- /.post -->
+                            </div>
+                            <div class="tab-pane" id="avaliacoes">
+                                <!-- Post -->
+                                Postar as ultimas avaliações
+                                <!-- /.post -->
+                            </div>
+                            
+                            
+                        </div>
+                    </div>
+                </div>
+                <?php } 
+                
+                 if (tipoLogado("aluno")){ ?>
+                <div class="col-md-9">
+                    <div class="nav-tabs-custom">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a href="#timeline" data-toggle="tab">Linha do tempo</a></li>                    
+                            <li><a href="#dicas" data-toggle="tab">Dicas</a></li>
+                             
+                        </ul>
+                        <div class="tab-content">
+                            <div class="active tab-pane" id="timeline">
+                               <!-- Post -->
+                               Discutir o que colocar aqui!
+                               <!-- /.post -->
+                            </div>
+                            <div class="tab-pane" id="dicas">
+                                
+                                <!-- Post -->
+                                Postar dicas
+                                <!-- /.post -->
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+                
+                
+                
+                <?php } ?>
+              
+                
+ 
             </div>
         </section>
     </div>

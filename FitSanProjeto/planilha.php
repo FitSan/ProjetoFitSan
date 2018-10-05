@@ -118,14 +118,17 @@ $resultado = mysqli_query($conexao, $query) or die('ERRO: '.mysqli_error($conexa
                 <div class="col-lg-2">
 <?php
 $grupoMuscuCardio = array();
-$query2 = "select * from planilha_grupoMuscuCardio order by nome";
+$query2 = "select * from planilha_grupoMuscuCardio";
+$query2 .= " order by nome";
 if ($resultado2 = mysqli_query($conexao, $query2)) {
     while ($linha2 = mysqli_fetch_array($resultado2)) {
         foreach ($linha2 as $key => $val){
             if (is_numeric($key)) unset($linha2[$key]);
         }
         $linha2['exercicios'] = array();
-        $query3 = ("select * from planilha_exercicio where musculo_cardio_id = " . $linha2['id'] . " order by nome");
+        $query3 = ("select * from planilha_exercicio where musculo_cardio_id = " . $linha2['id']);
+        if (tipoLogado("profissional")) $query3 .= " and profissional_id is null or profissional_id = ".mysqliEscaparTexto($_SESSION['id']);
+        $query3 .= (" order by nome");
         if ($resultado3 = mysqli_query($conexao, $query3)) {
             while ($linha3 = mysqli_fetch_array($resultado3)){
                 foreach ($linha3 as $key => $val){
@@ -236,6 +239,10 @@ if ($grupo_id){
                         </tbody>              
                     </table><br>
                 </div>
+<?php
+} else {
+?>
+                <div>Nakkkkkkkk</div>
 <?php
 }
 ?>

@@ -12,10 +12,10 @@ require_once './template/cabecalho.php';
 
 if ($tipo == 'aluno') {
 //    $pagina = "Profissionais";
-    $query = "select * from usuario join vinculo on usuario.id=vinculo.profissional_id where vinculo.aluno_id=$_SESSION[id]";
+    $query = "select * from usuario join vinculo on usuario.id=vinculo.profissional_id where vinculo.status = 'aprovado' and vinculo.aluno_id=$_SESSION[id]";
 } else {
 //    $pagina = "Alunos";
-    $query = "select * from usuario join vinculo on usuario.id=vinculo.aluno_id where profissional_id=$_SESSION[id]";
+    $query = "select * from usuario join vinculo on usuario.id=vinculo.aluno_id where vinculo.status = 'aprovado' and profissional_id=$_SESSION[id]";
 }
 
 $resultado = mysqli_query($conexao, $query);

@@ -9,6 +9,9 @@
 </footer>
 
 
+
+
+
 <!--Modal sair-->
 <div class="modal fade" id="modal-default">
     <div class="modal-dialog">
@@ -67,14 +70,7 @@
     <!-- /.modal-dialog -->
 </div>
 
-
-
-
-
-
-
-
-
+<!--Modal desativar perfil-->
 
 <div class="modal" id="modalDesativarP" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
@@ -140,6 +136,9 @@
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 
 
+<!--Modal alterar senha-->
+
+
 <div class="modal" id="modalAltSenha" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -171,6 +170,8 @@
     </div>  
 </div>
 
+<!--Modal Editar dicas-->
+
 
 <div class="modal fade" id="editar-dica" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -201,6 +202,8 @@
         </div>
     </div>
 </div>
+
+<!--Modal excluir dicas-->
 
 
 <div class="modal" id="excluir-dica" tabindex="-1" role="dialog">

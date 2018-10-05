@@ -168,9 +168,11 @@ id int primary key auto_increment,
 musculo_cardio_id int references planilha_grupoMuscuCardio(id),
 nome varchar(255) not null,
 descricao text not null,
-foto varchar(255)
+foto varchar(255),
+profissional_id int references usuario(id)
 );
 
+ALTER TABLE planilha_exercicio ADD profissional_id int references usuario(id);
 
 
 ALTER TABLE planilha_exercicio ADD musculo_cardio_id int references planilha_grupoMuscuCardio(id) after id;

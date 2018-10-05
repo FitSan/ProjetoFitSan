@@ -59,7 +59,7 @@ if (($acao == 'incluir') || ($acao == 'alterar')) {
     }
     if (empty($erros) && !empty($nome) && !empty($descricao) && !empty($musculo_cardio_id)) {
         if ($id === null) {
-            $query = "insert into planilha_exercicio ( nome, descricao , musculo_cardio_id, foto) values ( " . mysqliEscaparTexto($nome) . ", " . mysqliEscaparTexto($descricao) . ", " . mysqliEscaparTexto($musculo_cardio_id) . ", " . mysqliEscaparTexto($foto) . " )";
+            $query = "insert into planilha_exercicio ( nome, descricao , musculo_cardio_id, foto, profissional_id) values ( " . mysqliEscaparTexto($nome) . ", " . mysqliEscaparTexto($descricao) . ", " . mysqliEscaparTexto($musculo_cardio_id) . ", " . mysqliEscaparTexto($foto) . ", " . mysqliEscaparTexto(tipoLogado("admin") ? null : $_SESSION['id']) . " )";
             mysqli_query($conexao, $query) or die('ERRO: ' . mysqli_error($conexao) . PHP_EOL . $query . PHP_EOL . print_r(debug_backtrace(), true));
             $id = mysqli_insert_id($conexao);
         } else {
@@ -97,7 +97,10 @@ if (!empty($id)) {
 }
 
 //referente à paginação
-$query_pagina = "select count(id) as total from planilha_exercicio";
+$query_pagina = "select count(e.id) as total from planilha_exercicio e";
+if (tipoLogado("admin")) $query_pagina .= " where e.profissional_id is null";
+elseif (tipoLogado("profissional")) $query_pagina .= " where e.profissional_id = ".mysqliEscaparTexto($_SESSION['id']);
+//elseif (tipoLogado("profissional")) $query_pagina .= " where e.profissional_id is null or e.profissional_id = ".mysqliEscaparTexto($_SESSION['id']);
 $resultado_pagina = mysqli_query($conexao, $query_pagina) or die('ERRO: ' . mysqli_error($conexao) . PHP_EOL . $query_pagina . PHP_EOL . print_r(debug_backtrace(), true));
 $pagina = ($resultado_pagina ? mysqli_fetch_array($resultado_pagina) : array());
 $pagina = array_merge(array(
@@ -109,7 +112,11 @@ $pagina['offset'] = (($pagina['pagina'] - 1) * $pagina['quantidade']);
 $pagina['paginas'] = ceil($pagina['total'] / $pagina['quantidade']);
 
 //referente à consulta
-$query = "select e.*, m.nome as musculo_nome from planilha_exercicio e left join planilha_grupoMuscuCardio m on m.id=e.musculo_cardio_id order by e.nome limit " . $pagina['quantidade'] . " offset " . $pagina['offset'];
+$query = "select e.*, m.nome as musculo_nome from planilha_exercicio e left join planilha_grupoMuscuCardio m on m.id=e.musculo_cardio_id";
+if (tipoLogado("admin")) $query .= " where e.profissional_id is null";
+elseif (tipoLogado("profissional")) $query .= " where e.profissional_id = ".mysqliEscaparTexto($_SESSION['id']);
+//elseif (tipoLogado("profissional")) $query .= " where e.profissional_id is null or e.profissional_id = ".mysqliEscaparTexto($_SESSION['id']);
+$query .= " order by e.nome limit " . $pagina['quantidade'] . " offset " . $pagina['offset'];
 $resultado = mysqli_query($conexao, $query) or die('ERRO: ' . mysqli_error($conexao) . PHP_EOL . $query . PHP_EOL . print_r(debug_backtrace(), true));
 ?>
 
@@ -153,7 +160,7 @@ $resultado = mysqli_query($conexao, $query) or die('ERRO: ' . mysqli_error($cone
                             <select class="form-control select2 " name="musculo_cardio_id">
                                 <option value="">(Selecione)</option>
                                 <?php
-                                $query2 = "select * from planilha_grupoMuscuCardio";
+                                $query2 = "select * from planilha_grupoMuscuCardio order by nome";
                                 if ($resultado2 = mysqli_query($conexao, $query2)) {
                                     while ($linha2 = mysqli_fetch_array($resultado2)) {
                                         ?>
@@ -204,9 +211,9 @@ $resultado = mysqli_query($conexao, $query) or die('ERRO: ' . mysqli_error($cone
                         <th style="width: 40px"><i class="fa fa-edit"></i></th>
                         <th style="width: 40px"><i class="fa fa-trash-o"></i></th>
                     </tr>
-                            <?php
-                            while ($linha = mysqli_fetch_array($resultado)) {
-                                ?>
+<?php
+while ($linha = mysqli_fetch_array($resultado)) {
+?>
                         <tr>
                             <td><input type="checkbox"></td>
                             <td>
@@ -219,12 +226,27 @@ $resultado = mysqli_query($conexao, $query) or die('ERRO: ' . mysqli_error($cone
                             <td><?= htmlentities($linha['nome']) ?></td>
                             <td><?= htmlentities($linha['musculo_nome']) ?></td>
                             <td><p><?= nl2br(htmlentities($linha['descricao'])) ?></p></td>
-                            <td><a class=" " href="<?php echo basename(__FILE__) ?>?acao=alterar&id=<?= htmlentities($linha['id']) ?>" title="Atualizar"><i class="fa fa-edit"></i></a></td>
-                            <td><a class=" " href="<?php echo basename(__FILE__) ?>?acao=excluir&id=<?= htmlentities($linha['id']) ?>" title="Excluir"><i class="fa fa-trash-o"></i></a></td>
+                            <td><?php
+                            if (tipoLogado("admin") || (tipoLogado("profissional") && ($linha['profissional_id'] == $_SESSION['id']))){
+                                ?><a class=" " href="<?php echo basename(__FILE__) ?>?acao=alterar&id=<?= htmlentities($linha['id']) ?>" title="Atualizar"><i class="fa fa-edit"></i></a><?php
+                            } else {
+                                ?><span title="Atualizar"><i class="fa fa-edit"></i></span><?php
+                            } ?></td>
+                            <td><?php
+                            if (tipoLogado("admin") || (tipoLogado("profissional") && ($linha['profissional_id'] == $_SESSION['id']))){
+                                ?><a class=" " href="<?php echo basename(__FILE__) ?>?acao=excluir&id=<?= htmlentities($linha['id']) ?>" title="Excluir"><i class="fa fa-trash-o"></i></a><?php
+                            } else {
+                                ?><span title="Excluir"><i class="fa fa-trash-o"></i></span><?php
+                            } ?></td>
                         </tr>
-                    <?php
-                }
-                ?>
+<?php
+}
+if ($pagina['total'] > 1) {
+?>
+                <div>Nakkkkkkkk</div>
+<?php
+}
+?>
                 </tbody>
             </table>
         </div>
