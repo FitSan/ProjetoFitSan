@@ -31,7 +31,7 @@ if (estaLogado()) {
                                 Postar o histórico de avaliações realizadas
                                 <!-- /.post -->
                             </div>
-                            <div class="tab-pane" id="pesoMedidas">
+                            <div class="tab-pane" id="pesosMedidas">
                                 <!-- Post -->
                                Postar o historico de dados retirado de Metas
                                 <!-- /.post -->

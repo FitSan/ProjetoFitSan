@@ -106,18 +106,24 @@ $resultado = mysqli_query($conexao, $query);
         ?> </h1>
                 <p>Estamos felizes por tê-lo aqui, aproveite nossa plataforma.</p>
             </div>
-        </div>
+        
      
         
         
 
+<!--Dicas-->
+
+
+<div class="col-md-12">
     <div class="nav-tabs-custom">
-        <div class="row">
-            <?php include 'dicas.php'; ?>               
-        </div>
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#dicas" data-toggle="tab"> Dicas de Profissionais </a></li>
+        </ul>
+        <?php include 'dicas.php'; ?>  
     </div>
-         
-         </div>
+</div>  
+   </div> 
+    </div>
 
 
 

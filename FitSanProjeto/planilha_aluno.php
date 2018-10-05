@@ -24,7 +24,7 @@ if (!tipoLogado("aluno")) {
                         <ul class="nav nav-tabs">
                             <li class="active"><a href="#activity" data-toggle="tab"> Grupo A </a></li>
                             <li><a href="#breve" data-toggle="tab"> Grupo B </a></li>
-                            <li><a href="#settings" data-toggle="tab"> <i class="fa fa-fw fa-plus"></i> </a></li>
+                            
                         </ul>
                         <thead>
                             <tr>

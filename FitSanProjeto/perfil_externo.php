@@ -42,7 +42,7 @@ if ($linha = mysqli_fetch_array($resultado)) {
                                 </li>
                             </ul>
                             <?php
-                            if (tipoLogado("profissional")){
+                            if (tipoLogado("admin")){
                             } elseif ($_SESSION['id'] == $linha['id']){
                                 ?><a href="form_perfil.php" class="btn btn-primary btn-block"><b>Alterar</b></a><?php
                             } elseif ($linha['status'] === 'aprovado') {
@@ -163,6 +163,7 @@ if ($linha = mysqli_fetch_array($resultado)) {
                         </div> 
     <?php } ?>  
                 </div>
+                
                 <!-- Inicio do histórico publico-->
                 
                 <?php if (tipoLogado("profissional")){ ?>
@@ -216,7 +217,7 @@ if ($linha = mysqli_fetch_array($resultado)) {
                             <div class="tab-pane" id="dicas">
                                 
                                 <!-- Post -->
-                                Postar dicas
+                                <?php include 'dicas.php'; ?>
                                 <!-- /.post -->
                             </div>
                             

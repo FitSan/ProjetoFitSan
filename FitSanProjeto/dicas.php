@@ -2,21 +2,14 @@
 require_once './autenticacao.php';
 
 $query = "select dica.*, usuario.nome, usuario.sobrenome, usuario.foto from dica join usuario on usuario.id = dica.profissional_id";
-if (tipoLogado("profissional")) $query .= " where dica.profissional_id = ".$_SESSION['id'];
+if (tipoLogado("profissional")) 
+$query .= " where dica.profissional_id = ".$_SESSION['id'];
 $query .= " order by data_envio desc";
 $resultado = mysqli_query($conexao, $query);
 ?>
 
-
-<div class="col-md-12">
-    <div class="nav-tabs-custom">
-        <ul class="nav nav-tabs">
-            <li class="active"><a href="#activity" data-toggle="tab"> Dicas de Profissionais </a></li>
-<!-- <li><a href="#breve" data-toggle="tab"> Breve </a></li>
-     <li><a href="#settings" data-toggle="tab"> Breve </a></li> -->
-        </ul>
         <div class="tab-content">
-            <div class="active tab-pane" id="activity">
+            <div class="active tab-pane" id="dicas">
                 <!-- Post -->
                 <?php
                 while ($linha = mysqli_fetch_array($resultado)) {
@@ -26,13 +19,10 @@ $resultado = mysqli_query($conexao, $query);
                             <img class="img-circle img-bordered-sm" src="<?= htmlspecialchars(!empty($linha['foto']) ? $linha['foto'] : 'img/user-avatar-placeholder.png') ?>" alt="User profile picture">
                             <span class="username">
                                 <a href="perfil_externo.php?id=<?= $linha['profissional_id'] ?>"><?= $linha['profissional_nome'] ?></a> 
-<!--icone de x caso for usar para o profissional excluir a dica pela tela inicial-->
-
-<!--<a href="#" class="pull-right btn-box-tool"><i class="fa fa-times"></i></a>-->
                                 <?php
                                 if($linha['profissional_id']==$_SESSION['id']){
                                 ?>
-                                <!--icone de x caso for usar para o profissional excluir a dica pela tela inicial-->
+                               
                                 
                                 <button type="button" class="pull-right btn-box-tool" data-toggle="modal" data-target="#excluir-dica" data-id="<?= $linha['id'] ?>"><i class="fa fa-times"></i></button>
                                 <?php
@@ -84,8 +74,7 @@ $resultado = mysqli_query($conexao, $query);
                 ?>
             </div>           
         </div>
-    </div>
-</div>
+
 
 
 <!--desblooquear dicas-->
