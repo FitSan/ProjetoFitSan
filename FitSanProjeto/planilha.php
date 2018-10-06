@@ -248,29 +248,18 @@ if ($grupo_id){
 ?>
             </div>
         </div>
-        <div class="box-footer">
-            <div class="form-group">
-                <div class="col-sm-3">
-                    <br><span><label>Enviar para:</label></span>
-                    <div class="input-group">                        
-                        <span class="input-group-addon">@</span>
-                        <input type="text" class="form-control" placeholder="nome...">
-                        <span class="input-group-addon"><a href="#" data-toggle="tab"><i class="fa fa-search"></i></a></span>
-                    </div>                 
-                </div><br><br><br>
-                <div class="col-sm-1 pull-right">
-                    <a href="planilha_exercicios.php" class="btn btn-info">Novos Exercicios</a><br><br>
-
-
-                </div>
-                <div class="col-sm-1 pull-right">
-                    <button type="button" class="btn btn-default " data-toggle="modal" data-target="#modal-lista" id="modal-lista-button">Lista</button>
-                </div>
+    <div class="box-footer">
+        <div class="form-group col-lg-12">
+            <div class="pull-left">
+                <button type="button" class="btn btn-info " data-toggle="modal" data-target="#modal-lista" id="modal-lista-button">Enviar para</button>
             </div>
-
-
+            <div class="pull-right">
+                <a href="planilha_exercicios.php" class="btn btn-warning">Novos Exercicios</a>
+            </div>
         </div>
     </div>
+    
+<!--    </div>-->
 </div>
 
 <?php
