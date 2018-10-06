@@ -13,7 +13,7 @@ $resultado = mysqli_query($conexao, $query);
 
         <div class="tab-content">
             <div class="active tab-pane" id="dicas">
-                <!-- Post -->
+                <!-- Post -->               
                 <?php
                 while ($linha = mysqli_fetch_array($resultado)) {
                     ?>

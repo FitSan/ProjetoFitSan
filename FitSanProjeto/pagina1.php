@@ -121,9 +121,10 @@ $resultado = mysqli_query($conexao, $query);
         </ul>
         <?php include 'dicas.php'; ?>  
     </div>
-</div>  
-   </div> 
-    </div>
+</div> 
+
+        </div> 
+     </div>
 
 
 
