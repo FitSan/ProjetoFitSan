@@ -8,12 +8,33 @@
     <strong>Copyright &copy; <?php echo date("Y"); ?> <a href="">FitSan</a>.</strong> Todos os direitos reservados.
 </footer>
 
+<!--Modal lista planilha-->
+<div class="modal fade" id="modal-lista">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Escolha os alunos</h4>
+            </div>
+            <div class="modal-body">
+                <p>Selecione os alunos</p>
+                <div id="lista-alunos"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Cancelar</button>
+                <a class="btn btn-primary" href="#" role="button">Enviar</a>
 
-
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
 
 
 <!--Modal sair-->
-<div class="modal fade" id="modal-default">
+<div class="modal fade" id="modal-sair">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -493,6 +514,38 @@
             });
         }).change();
     })
+</script>
+
+<script>
+    $(function(){
+        var lista = $('#modal-lista');
+        lista.on('shown.bs.modal', function(){
+            $.ajax({
+                url: 'ajax.php',
+                method: 'POST',
+                data: { acao : 'lista' },
+                dataType: 'json',
+                success: function(result){
+                    if (result.status != 'ok'){
+                        alert(result.mensagem ? result.mensagem : 'Erro');
+                        return;
+                    }
+                    var corpo = lista.find('#lista-alunos'), ul = $('<ul class="list-group">');
+                    corpo.empty();
+                    $.each(result.dados, function (k, v){
+                        var inp = $('<input type="checkbox" id="lista-aluno' + k + '" name="lista-aluno" />').val(v.id);
+                        var lab = $('<label for="lista-aluno' + k + '" />').append(inp, ' ' + v.nome);
+                        $('<li class="list-group-item"/>').append(lab).appendTo(ul);
+                    });
+                    corpo.append(ul);
+                    corpo.find('input[type="checkbox"]').iCheck({
+                      checkboxClass: 'icheckbox_flat-blue',
+                      radioClass: 'iradio_flat-blue'
+                    });
+                }
+            });
+        });
+    });
 </script>
 
 </body>

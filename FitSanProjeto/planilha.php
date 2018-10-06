@@ -242,7 +242,7 @@ if ($grupo_id){
 <?php
 } else {
 ?>
-                <div>Nakkkkkkkk</div>
+            <div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12" align="center"><h3><label>Sua planilha esta vazia</label></h3></div>
 <?php
 }
 ?>
@@ -264,7 +264,7 @@ if ($grupo_id){
 
                 </div>
                 <div class="col-sm-1 pull-right">
-                    <button type="submit" class="btn btn-default ">Lista</button>
+                    <button type="button" class="btn btn-default " data-toggle="modal" data-target="#modal-lista" id="modal-lista-button">Lista</button>
                 </div>
             </div>
 

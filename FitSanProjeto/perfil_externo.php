@@ -217,7 +217,10 @@ if ($linha = mysqli_fetch_array($resultado)) {
                             <div class="tab-pane" id="dicas">
                                 
                                 <!-- Post -->
-                                <?php include 'dicas.php'; ?>
+                                <?php
+                                $aluno_profissional = (($linha['tipo'] == 'profissional') ? $linha['id'] : false);
+                                include 'dicas.php';
+                                ?>
                                 <!-- /.post -->
                             </div>
                             

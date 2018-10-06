@@ -9,4 +9,12 @@
     display: inline-block;
 }
 
+#fundologin{
+    background-image:url("../img/background-degrade.jpg"); 
+    background-repeat:no-repeat; 
+    background-position:center; 
+    background-size:cover; 
+    padding:10px;
+}
+
 
