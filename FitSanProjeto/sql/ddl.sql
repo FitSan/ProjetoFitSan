@@ -180,8 +180,22 @@ ALTER TABLE planilha_exercicio CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 select * from planilha_exercicio;
 
 
-
 -------Fim Planilha-----
+
+CREATE TABLE IF NOT EXISTS `avaliacao` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `data` datetime NOT NULL,
+  `desempenho` text COLLATE utf8_unicode_ci NOT NULL,
+  `frequencia` text COLLATE utf8_unicode_ci NOT NULL,
+  `grupo_cumpriu` text COLLATE utf8_unicode_ci NOT NULL,
+  `grupo_duvida` text COLLATE utf8_unicode_ci NOT NULL,
+  `grupo_dificuldade` text COLLATE utf8_unicode_ci NOT NULL,
+  `caso_sim` text COLLATE utf8_unicode_ci NOT NULL,
+  `consideracoes` text COLLATE utf8_unicode_ci NOT NULL,
+  `profissional_id` int(11) DEFAULT NULL,
+  `aluno_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=29 ;
 
 ----------------------------------------------------------------
 
@@ -331,3 +345,14 @@ insert into usuario(codigo) values ('sdbfahsdbfahs'), where email =l@l ;
 UPDATE usuario SET codigo='FCHGVKJHKJHVV' WHERE email = 'l@l';
 
 UPDATE usuario SET senha=2345678 WHERE codigo = '5ba93c45d17e8'
+
+
+
+
+INSERT INTO `avaliacao` (`id`, `data`, `desempenho`, `frequencia`, `grupo_cumpriu`, `grupo_duvida`, `grupo_dificuldade`, `caso_sim`, `consideracoes`, `profissional_id`, `aluno_id`) VALUES (1, '2018-10-01 23:52:53', 'bom', 'boa', 'sim', 'não', 'não','sim', 'não', 1, 2 );
+
+select * from `avaliacao`;
+
+select * from `avaliacao` where aluno_id = 17;
+
+select * from `usuario` where id=17;

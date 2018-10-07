@@ -252,6 +252,7 @@ require_once 'autenticacao.php';
                                 
                                <li><a href="http://localhost/FitSan/planilha_aluno.php"><i class="fa fa-th-list"></i><span>Planilha</span></a></li>
                                <li><a href="http://localhost/FitSan/historico.php"><i class="fa fa-history"></i><span>Histórico</span></a></li>
+                               <li><a href="http://localhost/FitSan/form_receber_avaliacao.php"><i class="fa fa-pencil"></i><span>Avaliação</span></a></li>
                            <?php } elseif (tipoLogado("profissional")){ ?>
                                 <li><a href="http://localhost/FitSan/minhas_dicas.php"><i class="fa fa-heartbeat"></i><span>Minhas Dicas</span></a></li>
                                 <li><a href="http://localhost/FitSan/planilha.php"><i class="fa fa-th-list"></i><span>Planilha</span></a></li>
