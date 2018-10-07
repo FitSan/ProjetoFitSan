@@ -9,6 +9,7 @@ $sobrenome = (!empty($_POST['sobrenome']) ? $_POST['sobrenome'] : null);
 //$email = (!empty($_POST['email']) ? $_POST['email'] : null);
 $sexo = (!empty($_POST['sexo']) ? $_POST['sexo'] : null);
 $datanasc = (!empty($_POST['datanasc']) ? $_POST['datanasc'] : null);
+$fotoremover = (!empty($_POST['fotoremover']) ? !empty($_POST['fotoremover']) : false);
 
 if (!empty($_FILES['foto']['name'])){
     $uploaddir = '/uploads/';
@@ -28,16 +29,41 @@ if (!empty($_FILES['foto']['name'])){
     if (empty($_FILES['foto']['tmp_name'])) die('Upload não enviado'); // Para se não foi encontrado o arquivo temporário
     if (!@is_readable($_FILES['foto']['tmp_name'])) die('Upload não encontrado'); // Para se não foi encontrado o arquivo temporário
     move_uploaded_file($_FILES['foto']['tmp_name'], $caminho) or die('Upload não copiado'); // Move o arquivo enviado para a pasta de uploads
+} elseif ($fotoremover){
+    $foto = null;
+    $sql = "select usuario.* from usuario where id = '$_SESSION[id]'";
+    if ($retorno = mysqli_query($conexao, $sql)){
+        if ($resultado = mysqli_fetch_array($retorno)){
+            if ($url = $resultado['foto']){
+                $file = (rtrim(dirname(__FILE__), '\\/') . '/uploads/' . basename($url));
+                if (!@file_exists($file)){
+                    $foto = false;
+                } elseif (@unlink($file)){
+                    $foto = false;
+                }
+            }
+        }
+    }
 } else {
     $foto = null;
 }
 
 $query_perfil = "update usuario set nome = ".mysqliEscaparTexto($nome).", sobrenome = ".mysqliEscaparTexto($sobrenome).", sexo = ".mysqliEscaparTexto($sexo).", datanasc = ".mysqliEscaparTexto($datanasc, 'date');
-if ($foto) $query_perfil .= ", foto = ".mysqliEscaparTexto($foto);
+if ($foto !== null){
+    if ($foto) $query_perfil .= ", foto = ".mysqliEscaparTexto($foto);
+    else $query_perfil .= ", foto = NULL";
+}
 $query_perfil .= " where id = $_SESSION[id]";
 mysqli_query($conexao, $query_perfil) or die('ERRO: '.mysqli_error($conexao).PHP_EOL.$query_perfil.PHP_EOL.print_r(debug_backtrace(), true));
 
-if ($foto) $_SESSION['foto'] = $foto;
+$logar = array(
+    'nome' => $nome,
+    'sobrenome' => $sobrenome,
+    'sexo' => $sexo,
+    'datanasc' => $datanasc,
+);
+if ($foto !== null) $logar['foto'] = $foto;
+logar($logar);
 
 header('Location: perfil.php');
 

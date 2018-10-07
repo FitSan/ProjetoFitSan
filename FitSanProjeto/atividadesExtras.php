@@ -71,7 +71,7 @@ if (!empty($id)) {
 }
 
 //referente à paginação
-$query_pagina = "select count(id) as total from ativ_extras";
+$query_pagina = "select count(ativ_extras.id) as total from ativ_extras join usuario on usuario.id=ativ_extras.aluno_id where usuario.id= " . mysqliEscaparTexto($_SESSION['id']);
 $resultado_pagina = mysqli_query($conexao, $query_pagina) or die('ERRO: '.mysqli_error($conexao).PHP_EOL.$query_pagina.PHP_EOL.print_r(debug_backtrace(), true));
 $pagina = ($resultado_pagina?mysqli_fetch_array($resultado_pagina):array());
 $pagina = array_merge(array(

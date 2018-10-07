@@ -54,6 +54,7 @@ if ($linha = mysqli_fetch_array($resultado)) {
                             <label for="foto">Foto</label>
                             <?php if (!empty($linha['foto'])) { ?>
                                 <img class="profile-user-img img-responsive" style="margin: 0;margin-bottom: 2px" src="<?= htmlspecialchars($linha['foto']) ?>" alt="User profile picture">
+                                <label for="fotoremover"><input type="checkbox" class="flat-red" id="fotoremover" name="fotoremover" value="1"> Remover foto atual</label>
                             <?php } ?>
                             <input type="file" class="form-control" id="foto" name="foto">
                         </div>
