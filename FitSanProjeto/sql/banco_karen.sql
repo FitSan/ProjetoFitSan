@@ -587,19 +587,5 @@ INSERT INTO `vinculo` (`aluno_id`, `profissional_id`, `solicitante`, `status`) V
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 
-CREATE TABLE IF NOT EXISTS `avaliacao` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `data` datetime NOT NULL,
-  `desempenho` text COLLATE utf8_unicode_ci NOT NULL,
-  `frequencia` text COLLATE utf8_unicode_ci NOT NULL,
-  `grupo_cumpriu` text COLLATE utf8_unicode_ci NOT NULL,
-  `grupo_duvida` text COLLATE utf8_unicode_ci NOT NULL,
-  `grupo_dificuldade` text COLLATE utf8_unicode_ci NOT NULL,
-  `caso_sim` text COLLATE utf8_unicode_ci NOT NULL,
-  `consideracoes` text COLLATE utf8_unicode_ci NOT NULL,
-  `profissional_id` int(11) DEFAULT NULL,
-  `aluno_id` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=29 ;
 
 
