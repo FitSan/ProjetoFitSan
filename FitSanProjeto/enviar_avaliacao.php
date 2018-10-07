@@ -1,6 +1,10 @@
 <?php
+date_default_timezone_set('America/Sao_Paulo');
 
 require_once './autenticacao.php';
+
+$now = new DateTime();
+$data_envio = $now->format('Y-m-d H:i:s');
 
   $aluno = (!empty($_POST['aluno']) ? $_POST['aluno'] : null);
   $frequencia = (!empty($_POST['frequencia']) ? $_POST['frequencia'] : null);
@@ -11,4 +15,12 @@ require_once './autenticacao.php';
   $caso_sim = (!empty($_POST['caso_sim']) ? $_POST['caso_sim'] : null);
    $consideracoes = (!empty($_POST['consideracoes']) ? $_POST['consideracoes'] : null);
 
-          
+   $query = "insert into `avaliacao` (`data`, `desempenho`, `frequencia`, `grupo_cumpriu`, `grupo_duvida`, `grupo_dificuldade`, `caso_sim`, `consideracoes`, `profissional_id`, `aluno_id`) values "
+           . "('$data_envio', '$desempenho', '$frequencia', '$cumpriu', '$duvida', '$dificuldade', '$caso_sim', '$consideracoes', '$_SESSION[id]', '$aluno')";
+
+
+            //echo $query;
+
+            mysqli_query($conexao, $query);
+
+            header('Location: pagina1.php');        
