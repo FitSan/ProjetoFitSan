@@ -165,81 +165,119 @@ if ($linha = mysqli_fetch_array($resultado)) {
                 </div>
                 
                 <!-- Inicio do histórico publico-->
-                
-                <?php if (tipoLogado("profissional")){ ?>
-                                
-                                
-                
-                <div class="col-md-9">
-                    <div class="nav-tabs-custom">
-                        <ul class="nav nav-tabs">
-                            <li class="active"><a href="#timeline" data-toggle="tab">Linha do tempo</a></li>                    
-                            <li><a href="#treinos_realizados" data-toggle="tab">Treinos realizados</a></li>
-                             <li><a href="#avaliacoes" data-toggle="tab">Avaliações</a></li>
-                        </ul>
-                        <div class="tab-content">
-                            <div class="active tab-pane" id="timeline">
-                               <!-- Post -->
-                               Postar Grafico de metas, Atividades realizadas
-                               <!-- /.post -->
-                            </div>
-                            <div class="tab-pane" id="treinos_realizados">
-                                <!-- Post -->
-                                Postar os ultimos treinos salvos da planilha
-                                <!-- /.post -->
-                            </div>
-                            <div class="tab-pane" id="avaliacoes">
-                                <!-- Post -->
-                                Postar as ultimas avaliações
-                                <!-- /.post -->
-                            </div>
-                            
-                            
-                        </div>
-                    </div>
-                </div>
-                <?php } 
-                
-                 if (tipoLogado("aluno")){ ?>
-                <div class="col-md-9">
-                    <div class="nav-tabs-custom">
-                        <ul class="nav nav-tabs">
-                            <li class="active"><a href="#timeline" data-toggle="tab">Linha do tempo</a></li>                    
-                            <li><a href="#dicas" data-toggle="tab">Dicas</a></li>
-                             
-                        </ul>
-                        <div class="tab-content">
-                            <div class="active tab-pane" id="timeline">
-                               <!-- Post -->
-                               Discutir o que colocar aqui!
-                               <!-- /.post -->
-                            </div>
-                            <div class="tab-pane" id="dicas">
-                                
-                                <!-- Post -->
-                                <?php
-                                $aluno_profissional = (($linha['tipo'] == 'profissional') ? $linha['id'] : false);
-                                include 'dicas.php';
-                                ?>
-                                <!-- /.post -->
-                            </div>
-                            
-                        </div>
-                    </div>
-                </div>
-                
-                
-                
-                <?php } ?>
-              
-                
- 
-            </div>
-        </section>
-    </div>
-    <?php
-} else {
 
-    echo "Não Foi possivel obter a informação deste usuário.";
-}
-include './template/rodape_especial.php';
+                    
+<?php     
+           
+           if (tipoLogado("profissional") && ($linha['tipo'] == 'aluno')) {
+               ?>
+
+
+                        <div class="col-md-9">
+                            <div class="nav-tabs-custom">
+                                <ul class="nav nav-tabs">
+                                    <li class="active"><a href="#timeline" data-toggle="tab">Linha do tempo</a></li>                    
+                                    <li><a href="#treinos_realizados" data-toggle="tab">Treinos realizados</a></li>
+                                    <li><a href="#avaliacoes" data-toggle="tab">Avaliações</a></li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="active tab-pane" id="timeline">
+                                        <!-- Post -->
+                                        Postar Grafico de metas, Atividades realizadas
+                                        <!-- /.post -->
+                                    </div>
+                                    <div class="tab-pane" id="treinos_realizados">
+                                        <!-- Post -->
+                                        Postar os ultimos treinos salvos da planilha
+                                        <!-- /.post -->
+                                    </div>
+                                    <div class="tab-pane" id="avaliacoes">
+                                        <!-- Post -->
+                                        Postar as ultimas avaliações
+                                        <!-- /.post -->
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    
+                
+           <?php  }    
+           
+           if (tipoLogado("aluno") && ($linha['tipo'] == 'profissional')) {
+               ?>
+                        <div class="col-md-9">
+                            <div class="nav-tabs-custom">
+                                <ul class="nav nav-tabs">
+                                    <li class="active"><a href="#timeline" data-toggle="tab">Linha do tempo</a></li>                    
+                                    <li><a href="#dicas" data-toggle="tab">Dicas</a></li>
+
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="active tab-pane" id="timeline">
+                                        <!-- Post -->
+                                        Discutir o que colocar aqui!
+                                        <!-- /.post -->
+                                    </div>
+                                    <div class="tab-pane" id="dicas">
+
+                                        <!-- Post -->
+                                        <?php
+                                        $aluno_profissional = (($linha['tipo'] == 'profissional') ? $linha['id'] : false);
+                                        include 'dicas.php';
+                                        ?>
+                                        <!-- /.post -->
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+               
+    
+                
+<?php }    
+           
+           if (tipoLogado("profissional") && ($linha['tipo'] == 'profissional')) {
+               ?>
+                <div class="col-md-9">
+                            <div class="nav-tabs-custom">
+                                <ul class="nav nav-tabs">
+                                    <li class="active"><a href="#timeline" data-toggle="tab">Linha do tempo</a></li>                    
+                                    <li><a href="#dicas" data-toggle="tab">Dicas</a></li>
+
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="active tab-pane" id="timeline">
+                                        <!-- Post -->
+                                        Discutir o que colocar aqui!
+                                        <!-- /.post -->
+                                    </div>
+                                    <div class="tab-pane" id="dicas">
+
+                                        <!-- Post -->
+                                        <?php
+                                        $aluno_profissional = (($linha['tipo'] == 'profissional') ? $linha['id'] : false);
+                                        include 'dicas.php';
+                                        ?>
+                                        <!-- /.post -->
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+               
+    <?php } ?>
+
+
+
+                </div>
+            </section>
+<!--        </div>-->
+        <?php
+    } else {
+
+        echo "Não Foi possivel obter a informação deste usuário.";
+    }
+    include './template/rodape_especial.php';
+    
