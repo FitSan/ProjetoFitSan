@@ -119,7 +119,7 @@ $resultado = mysqli_query($conexao, $query);
         <ul class="nav nav-tabs">
             <li class="active"><a href="#dicas" data-toggle="tab"> Dicas de Profissionais </a></li>
         </ul>
-        <?php include 'dicas.php'; ?>  
+        <?php include 'dicas_all.php'; ?>  
     </div>
 </div> 
 

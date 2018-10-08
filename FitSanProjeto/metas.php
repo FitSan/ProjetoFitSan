@@ -124,7 +124,7 @@ if (mysqli_num_rows($resultado_all) === 0) {
                                 <div class="input-group-addon">
                                     <i class="fa fa-calendar"></i>                                    
                                 </div>
-                                <input type="text" class="form-control pull-right data_meta" id="data_final" name="data_final" value="<?= ($novaMeta) ? '' : date('d/m/Y', dataParse($linha['data_inicial'])) ?>" <?= $novaMeta ? '' : 'disabled' ?>>
+                                <input type="text" class="form-control pull-right data_meta" id="data_final" name="data_final" value="<?= ($novaMeta) ? '' : date('d/m/Y', dataParse($linha['data_final'])) ?>" <?= $novaMeta ? '' : 'disabled' ?>>
                                 <?php
                                 if (!empty($_SESSION['erro_dataF'])) {
                                     ?>
