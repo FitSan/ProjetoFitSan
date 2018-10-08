@@ -14,5 +14,13 @@ $query = "delete from vinculo where profissional_id=$profissional_id and aluno_i
 mysqli_query($conexao, $query);
 
 ?>
-<script>history.go(-1)</script>
+<!--<script>history.go(-1)</script>-->
+
+
 <?php
+
+if (isset($_SERVER['HTTP_REFERER'])){
+    header('Location: ' . $_SERVER['HTTP_REFERER']);
+} else {
+    header('Location: buscar.php');
+}
