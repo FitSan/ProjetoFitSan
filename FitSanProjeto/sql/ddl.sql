@@ -197,6 +197,32 @@ CREATE TABLE IF NOT EXISTS `avaliacao` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=29 ;
 
+
+-------META------
+create table meta(
+ id int primary key auto_increment,
+tipo ENUM ('PERDER', 'GANHAR') not null,
+data_inicial date not null,
+data_final date not null,
+peso_inicial decimal(5,3) not null,
+peso_final decimal(5,3) not null,
+status ENUM ('ativa', 'finalizada', 'cancelada') not null default 'ativa',
+usuario_id int references usuario(id)
+); 
+
+select dados_meta.*, meta.* from dados_meta join meta on dados_meta.meta_id = meta.id where meta.usuario_id = 1 and meta.status='ativa'
+select meta.*, dados_meta.count(id) from dados_meta join meta on meta.id=dados_meta.meta_id where meta.usuario_id = 1 and meta.status = 'ativa'
+
+insert into meta (tipo, data_inicial, data_final, peso_inicial, peso_final, usuario_id) values ('PERDER', '2018-09-20', '2018-09-21', '50', '20', '1')
+
+create table dados_meta(
+ id int primary key auto_increment,
+data_add date not null,
+peso_add decimal(5,3) not null,
+meta_id int references meta(id)
+);
+
+
 ----------------------------------------------------------------
 
 ALTER DATABASE FitSan CHARACTER SET utf8 COLLATE utf8_unicode_ci;
@@ -214,6 +240,8 @@ ALTER TABLE informacoes_adicionais CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 ALTER TABLE informacoes_adicionais_contatos CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 ALTER TABLE informacoes_adicionais_exercicios CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 ALTER TABLE informacoes_adicionais_medidas CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+ALTER TABLE meta CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+ALTER TABLE dados_meta CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 
 
 --inserir dados no banco.

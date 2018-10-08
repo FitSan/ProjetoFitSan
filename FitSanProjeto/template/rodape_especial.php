@@ -421,6 +421,15 @@
         endDate: '-3d'
     });
 </script>
+
+<script type="text/javascript">
+    $('.data_meta').datepicker({
+        format: "dd/mm/yyyy",
+        language: "pt-BR",
+        endDate: '-3d'
+    });
+</script>
+
 <script type="text/javascript">
     $('#editar-dica').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget) // Button that triggered the modal
