@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Máquina: localhost
--- Data de Criação: 06-Out-2018 às 18:21
+-- Data de Criação: 08-Out-2018 às 01:07
 -- Versão do servidor: 5.5.61-0ubuntu0.14.04.1
 -- versão do PHP: 5.5.9-1ubuntu4.26
 
@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `ativ_extras` (
   `texto` text COLLATE utf8_unicode_ci NOT NULL,
   `aluno_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=15 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=16 ;
 
 --
 -- Extraindo dados da tabela `ativ_extras`
@@ -53,7 +53,8 @@ INSERT INTO `ativ_extras` (`id`, `datahora`, `titulo`, `texto`, `aluno_id`) VALU
 (11, '2018-10-02 03:27:44', 'Ping-Pong no colégio ', 'Na educação física fizemos um campeonato. Fiquei em segundo lugar! ', 10),
 (12, '2018-10-02 03:58:36', 'Andei de skate ', 'Andei com o \r\nskate do meu irmão', 10),
 (13, '2018-10-02 04:35:09', 'Caminhada na praia', 'Caminhei com minhas irmãs na praia', 9),
-(14, '2018-10-02 04:35:54', 'Treinei ', 'Treinei basquete na escola.', 9);
+(14, '2018-10-02 04:35:54', 'Treinei ', 'Treinei basquete na escola.', 9),
+(15, '2018-10-08 02:21:12', 'Andando até a escola.', 'Caminhei até a escola onde fui votar ', 6);
 
 -- --------------------------------------------------------
 
@@ -66,7 +67,7 @@ CREATE TABLE IF NOT EXISTS `ativ_extras_exercicios` (
   `ativ_extras_id` int(11) DEFAULT NULL,
   `exercicio` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=16 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=17 ;
 
 --
 -- Extraindo dados da tabela `ativ_extras_exercicios`
@@ -86,7 +87,32 @@ INSERT INTO `ativ_extras_exercicios` (`id`, `ativ_extras_id`, `exercicio`) VALUE
 (11, 11, 'Ping-Pong'),
 (13, 12, 'Skate'),
 (14, 13, 'Caminhada'),
-(15, 14, 'Basquete');
+(15, 14, 'Basquete'),
+(16, 15, 'Caminhada');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `dados_meta`
+--
+
+CREATE TABLE IF NOT EXISTS `dados_meta` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `data_add` date NOT NULL,
+  `peso_add` decimal(5,3) NOT NULL,
+  `meta_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=5 ;
+
+--
+-- Extraindo dados da tabela `dados_meta`
+--
+
+INSERT INTO `dados_meta` (`id`, `data_add`, `peso_add`, `meta_id`) VALUES
+(1, '2018-10-02', 77.800, 1),
+(2, '2018-10-03', 77.300, 1),
+(3, '2018-10-04', 77.000, 1),
+(4, '2018-10-05', 76.000, 1);
 
 -- --------------------------------------------------------
 
@@ -222,6 +248,31 @@ INSERT INTO `informacoes_adicionais_medidas` (`id`, `altura`, `peso`, `massa_mag
 -- --------------------------------------------------------
 
 --
+-- Estrutura da tabela `meta`
+--
+
+CREATE TABLE IF NOT EXISTS `meta` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `tipo` enum('PERDER','GANHAR') COLLATE utf8_unicode_ci NOT NULL,
+  `data_inicial` date NOT NULL,
+  `data_final` date NOT NULL,
+  `peso_inicial` decimal(5,3) NOT NULL,
+  `peso_final` decimal(5,3) NOT NULL,
+  `status` enum('ativa','finalizada','cancelada') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'ativa',
+  `usuario_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+
+--
+-- Extraindo dados da tabela `meta`
+--
+
+INSERT INTO `meta` (`id`, `tipo`, `data_inicial`, `data_final`, `peso_inicial`, `peso_final`, `status`, `usuario_id`) VALUES
+(1, 'PERDER', '2018-10-01', '2018-10-05', 78.000, 76.000, 'ativa', 6);
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura da tabela `notificacao`
 --
 
@@ -289,7 +340,7 @@ CREATE TABLE IF NOT EXISTS `planilha` (
   `tempo` int(11) DEFAULT NULL,
   `profissional_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=27 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=26 ;
 
 --
 -- Extraindo dados da tabela `planilha`
@@ -568,7 +619,6 @@ CREATE TABLE IF NOT EXISTS `vinculo` (
 
 INSERT INTO `vinculo` (`aluno_id`, `profissional_id`, `solicitante`, `status`) VALUES
 (6, 2, 'profissional', 'aprovado'),
-(6, 3, 'aluno', 'aprovado'),
 (6, 4, 'aluno', 'espera'),
 (6, 14, 'profissional', 'aprovado'),
 (7, 2, 'profissional', 'espera'),
@@ -586,6 +636,3 @@ INSERT INTO `vinculo` (`aluno_id`, `profissional_id`, `solicitante`, `status`) V
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-
-
-
