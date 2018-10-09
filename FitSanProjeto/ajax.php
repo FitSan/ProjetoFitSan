@@ -14,12 +14,30 @@ function pegarLista(){
     return array('status' => 'ok', 'dados' => $dados);
 }
 
+function enviarPlanilha(){
+    global $conexao;
+    if (!tipoLogado("profissional")) return array('status' => 'error', 'mensagem' => 'Apenas para profissionais');
+    $titulo = (!empty($_REQUEST['titulo']) ? $_REQUEST['titulo'] : '');
+    $alunos = (array)(!empty($_REQUEST['lista-aluno']) ? $_REQUEST['lista-aluno'] : '');
+    $query = "insert into planilha ( titulo ) values (" . mysqliEscaparTexto($titulo) . " )";
+    if (!mysqli_query($conexao, $query)) return array('status' => 'error', 'mensagem' => ('ERRO: '.mysqli_error($conexao).PHP_EOL.$query.PHP_EOL.print_r(debug_backtrace(), true)));
+    $id = mysqli_insert_id($conexao);
+    foreach ($alunos as $aluno){
+        $query2 = "update planilha_tabela set planilha_id = " . mysqliEscaparTexto($id) . " where id = " . mysqliEscaparTexto($aluno);
+        if (!mysqli_query($conexao, $query2)) return array('status' => 'error', 'mensagem' => ('ERRO: '.mysqli_error($conexao).PHP_EOL.$query.PHP_EOL.print_r(debug_backtrace(), true)));
+        criarNotificacao("OK", "Uma planilha foi enviada à você.".PHP_EOL.'Acesse <a href="planilha_aluno.php?id='.$id.'">sua planilha</a>', $aluno);
+    }
+    return array('status' => 'ok');
+}
+
 header('Content-Type: text/javascript; charset=utf-8');   
 
 $acao = (!empty($_REQUEST['acao']) ? $_REQUEST['acao'] : '');
 
 if ($acao == 'lista'){
     $ret = pegarLista();
+} elseif ($acao == 'enviar_planilha'){
+    $ret = enviarPlanilha();
 } else {
     $ret = array('status' => 'error', 'mensagem' => 'Comando inválido');
 }

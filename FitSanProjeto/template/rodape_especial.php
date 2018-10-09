@@ -18,6 +18,7 @@
                 <h4 class="modal-title">Escolha os alunos</h4>
             </div>
             <div class="modal-body">
+                <p><label for="titulo">Título:</label><input type="text" name="titulo" id="titulo"></p>
                 <p>Selecione os alunos</p>
                 <div id="lista-alunos"></div>
             </div>
@@ -426,7 +427,7 @@
     $('.data_meta').datepicker({
         format: "dd/mm/yyyy",
         language: "pt-BR",
-        endDate: '-3d'
+        startDate: '-3d'
     });
 </script>
 
@@ -542,7 +543,7 @@
                     var corpo = lista.find('#lista-alunos'), ul = $('<ul class="list-group">');
                     corpo.empty();
                     $.each(result.dados, function (k, v){
-                        var inp = $('<input type="checkbox" id="lista-aluno' + k + '" name="lista-aluno" />').val(v.id);
+                        var inp = $('<input type="checkbox" id="lista-aluno' + k + '" name="lista-aluno[]" />').val(v.id);
                         var lab = $('<label for="lista-aluno' + k + '" />').append(inp, ' ' + v.nome);
                         $('<li class="list-group-item"/>').append(lab).appendTo(ul);
                     });
@@ -553,6 +554,28 @@
                     });
                 }
             });
+        });
+        $('#modal-lista .btn-primary').click(function (e){
+            e.preventDefault();
+            var dt = { acao : 'enviar_planilha' };
+            $.each(lista.find(':input').serializeArray(), function(i, field){
+                dt[field.name] = field.value;
+            });
+            $.ajax({
+                url: 'ajax.php',
+                method: 'POST',
+                data: dt,
+                dataType: 'json',
+                success: function(result){
+                    if (result.status != 'ok'){
+                        alert(result.mensagem ? result.mensagem : 'Erro');
+                        return;
+                    }
+                    alert('A planilha foi enviada com êxito');
+                    window.location.reload();
+                }
+            });
+            return false;
         });
     });
 </script>

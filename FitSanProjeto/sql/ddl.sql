@@ -132,8 +132,15 @@ TRUNCATE TABLE ativ_extras_exercicios;
 ----------------------------------------------------------------
 
 --Planilha -----
-drop table planilha;
+
 create table planilha(
+id int not null primary key auto_increment,
+titulo varchar(255) not null
+);
+
+--Planilha Tabela -----
+
+create table planilha_tabela(
 id int not null primary key auto_increment,
 grupo varchar(255) not null,
 musculo_cardio_id int not null references planilha_grupoMuscuCardio(id),
@@ -143,13 +150,19 @@ repeticoes varchar(255),
 carga varchar(255),
 intervalo varchar(255),
 tempo int,
-profissional_id int not null references usuario(id)
+profissional_id int not null references usuario(id),
+planilha_id int references planilha(id)
 );
 
-ALTER TABLE planilha ADD series varchar(255) after exercicio_id;
+rename table planilha to planilha_tabela;
 
-ALTER TABLE planilha CHARACTER SET utf8 COLLATE utf8_unicode_ci;
-select * from planilha;
+drop table planilha_tabela;
+
+ALTER TABLE planilha_tabela ADD series varchar(255) after exercicio_id;
+ALTER TABLE planilha_tabela ADD planilha_id int references planilha(id) after profissional_id;
+
+ALTER TABLE planilha_tabela CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+select * from planilha_tabela;
 
 ---Grupos Musculares/Cárdio---
 
@@ -179,6 +192,22 @@ ALTER TABLE planilha_exercicio ADD musculo_cardio_id int references planilha_gru
 ALTER TABLE planilha_exercicio CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 select * from planilha_exercicio;
 
+-------Aluno Planilha-----
+create table planilha_aluno(
+id int primary key auto_increment,
+aluno_id int references usuario(id),
+planilha_id int references planilha(id)
+);
+
+create table planilha_aluno_exercicio(
+planilha_aluno_id int references planilha_aluno(id),
+datahora datetime not null,
+exercicio int references planilha_exercicio (id)
+);
+
+
+
+
 
 -------Fim Planilha-----
 
@@ -198,6 +227,9 @@ CREATE TABLE IF NOT EXISTS `avaliacao` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=29 ;
 
 
+
+
+
 -------META------
 create table meta(
  id int primary key auto_increment,
@@ -210,6 +242,8 @@ status ENUM ('ativa', 'finalizada', 'cancelada') not null default 'ativa',
 usuario_id int references usuario(id)
 ); 
 
+select * from meta;
+
 select dados_meta.*, meta.* from dados_meta join meta on dados_meta.meta_id = meta.id where meta.usuario_id = 1 and meta.status='ativa'
 select meta.*, dados_meta.count(id) from dados_meta join meta on meta.id=dados_meta.meta_id where meta.usuario_id = 1 and meta.status = 'ativa'
 
@@ -221,6 +255,8 @@ data_add date not null,
 peso_add decimal(5,3) not null,
 meta_id int references meta(id)
 );
+
+select * from dados_meta;
 
 
 ----------------------------------------------------------------
@@ -286,7 +322,9 @@ ALTER TABLE vinculo ADD solicitante enum('aluno', 'profissional') not null;
 select * from usuario;
 select * from vinculo;
 select * from tipo_usuario;
-select * from notificacao;
+select * from dados_metas;
+select * from metas;
+
 
 TRUNCATE TABLE vinculo;
 TRUNCATE TABLE notificacao;

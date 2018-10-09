@@ -22,6 +22,8 @@ leituraNotificacao(
     null,
     ['profissional_id' => $profissional_id, 'aluno_id' => $aluno_id, 'table' => 'vinculo']
 );
-?>
-<script>history.go(-1)</script>
-<?php
+if (isset($_SERVER['HTTP_REFERER'])){
+    header('Location: ' . $_SERVER['HTTP_REFERER']);
+} else {
+    header('Location: vinculos.php');
+}

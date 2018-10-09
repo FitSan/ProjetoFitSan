@@ -94,7 +94,7 @@ if (!tipoLogado("profissional")){
 
 
                         <div class="col-lg-6">
-                            <br> <strong>Considerações gerais</strong> <textarea name="consideracoes" class="form-control" rows="5" placeholder="NEscreva aqui"></textarea> 
+                            <br> <strong>Considerações gerais</strong> <textarea name="consideracoes" class="form-control" rows="5" placeholder="Escreva aqui"></textarea> 
 
                         </div>
 
