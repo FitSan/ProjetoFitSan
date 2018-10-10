@@ -22,15 +22,21 @@ function enviarPlanilha(){
     $query = "insert into planilha ( titulo ) values (" . mysqliEscaparTexto($titulo) . " )";
     if (!mysqli_query($conexao, $query)) return array('status' => 'error', 'mensagem' => ('ERRO: '.mysqli_error($conexao).PHP_EOL.$query.PHP_EOL.print_r(debug_backtrace(), true)));
     $id = mysqli_insert_id($conexao);
+    $query2 = "update planilha_tabela set planilha_id = " . mysqliEscaparTexto($id) . " where planilha_id is null";
+    if (!mysqli_query($conexao, $query2)) ;//return array('status' => 'error', 'mensagem' => ('ERRO: '.mysqli_error($conexao).PHP_EOL.$query.PHP_EOL.print_r(debug_backtrace(), true)));
     foreach ($alunos as $aluno){
-        $query2 = "update planilha_tabela set planilha_id = " . mysqliEscaparTexto($id) . " where id = " . mysqliEscaparTexto($aluno);
-        if (!mysqli_query($conexao, $query2)) return array('status' => 'error', 'mensagem' => ('ERRO: '.mysqli_error($conexao).PHP_EOL.$query.PHP_EOL.print_r(debug_backtrace(), true)));
+        $query3 = "insert into planilha_aluno (planilha_id, aluno_id) values (" . mysqliEscaparTexto($id) . ", " . mysqliEscaparTexto($aluno) . ")";
+        if (!mysqli_query($conexao, $query3)) ;//return array('status' => 'error', 'mensagem' => ('ERRO: '.mysqli_error($conexao).PHP_EOL.$query.PHP_EOL.print_r(debug_backtrace(), true)));
         criarNotificacao("OK", "Uma planilha foi enviada à você.".PHP_EOL.'Acesse <a href="planilha_aluno.php?id='.$id.'">sua planilha</a>', $aluno);
     }
     return array('status' => 'ok');
 }
 
 header('Content-Type: text/javascript; charset=utf-8');   
+header("Expires: " . gmdate("D, d M Y H:i:s") . " GMT");
+header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
+header("Pragma: no-cache");
+header("Cache-Control: no-cache, must-revalidate");
 
 $acao = (!empty($_REQUEST['acao']) ? $_REQUEST['acao'] : '');
 

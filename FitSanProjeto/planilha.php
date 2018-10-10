@@ -63,7 +63,7 @@ if (!empty($id)) {
 }
 
 //referente aos grupos
-$query_grupos = "select distinct grupo from planilha_tabela where profissional_id = " . mysqliEscaparTexto($_SESSION['id']) . " order by grupo";
+$query_grupos = "select distinct grupo from planilha_tabela where planilha_id is null and profissional_id = " . mysqliEscaparTexto($_SESSION['id']) . " order by grupo";
 $resultado_grupos = mysqli_query($conexao, $query_grupos) or die('ERRO: '.mysqli_error($conexao).PHP_EOL.$query_grupos.PHP_EOL.print_r(debug_backtrace(), true));
 $grupos = array();
 while ($linha_grupo = mysqli_fetch_array($resultado_grupos)) $grupos[] = $linha_grupo['grupo'];
@@ -206,7 +206,7 @@ while ($linha = mysqli_fetch_array($resultado)) {
 ?>            
                 <div class="<?php echo implode(' ', $class) ?>" id="grupo<?php echo $grupo_id; ?>">                                   
                     <div class="table-responsive">
-                    <table class="table table-striped planilha">
+                    <table class="table table-striped planilha dataTable">
                             <tr>
                                 <th>Exercício</th>
                                 <th>Séries</th>

@@ -163,6 +163,7 @@ ALTER TABLE planilha_tabela ADD planilha_id int references planilha(id) after pr
 
 ALTER TABLE planilha_tabela CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 select * from planilha_tabela;
+update planilha_tabela set planilha_id = null;
 
 ---Grupos Musculares/Cárdio---
 
@@ -186,6 +187,7 @@ profissional_id int references usuario(id)
 );
 
 ALTER TABLE planilha_exercicio ADD profissional_id int references usuario(id);
+UPDATE planilha_exercicio SET profissional_id = 2 WHERE profissional_id is null;
 
 
 ALTER TABLE planilha_exercicio ADD musculo_cardio_id int references planilha_grupoMuscuCardio(id) after id;
@@ -198,6 +200,7 @@ id int primary key auto_increment,
 aluno_id int references usuario(id),
 planilha_id int references planilha(id)
 );
+select * from planilha_aluno;
 
 create table planilha_aluno_exercicio(
 planilha_aluno_id int references planilha_aluno(id),
@@ -205,8 +208,21 @@ datahora datetime not null,
 exercicio int references planilha_exercicio (id)
 );
 
+select * from planilha_aluno_exercicio;
 
-
+select
+    a.*,
+    p.*,
+    g.nome grupomusc,
+    e.nome exercicio,
+    e.descricao exercicio_desc,
+    e.foto exercicio_foto
+from
+    planilha_aluno a join
+    planilha_tabela p on p.planilha_id = a.planilha_id join
+    planilha_grupoMuscuCardio g on g.id = p.musculo_cardio_id join
+    planilha_exercicio e on e.id = p.exercicio_id and e.musculo_cardio_id = g.id
+;
 
 
 -------Fim Planilha-----
