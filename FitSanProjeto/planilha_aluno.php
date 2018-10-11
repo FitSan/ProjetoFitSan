@@ -12,34 +12,35 @@ $acao = (!empty($_GET['acao']) ? $_GET['acao'] : 'consultar'); //obtendo ação
 $id = (!empty($_GET['id']) ? $_GET['id'] : null); //obtendo id de alteração
 $erros = array();
 
-//referente aos grupos
-$query_grupos = "select distinct grupo from planilha_tabela where planilha_id is null and profissional_id = " . mysqliEscaparTexto($_SESSION['id']) . " order by grupo";
-$resultado_grupos = mysqli_query($conexao, $query_grupos) or die('ERRO: '.mysqli_error($conexao).PHP_EOL.$query_grupos.PHP_EOL.print_r(debug_backtrace(), true));
-$grupos = array();
-while ($linha_grupo = mysqli_fetch_array($resultado_grupos)) $grupos[] = $linha_grupo['grupo'];
-mysqli_free_result($resultado_grupos);
-
-
-//referente à consulta
-$query = "select
-    p.*,
-    g.nome grupomusc,
-    e.nome exercicio,
-    e.descricao exercicio_desc,
-    e.foto exercicio_foto
-from
+$query = array();
+$query['select'] = array(
+    'p.*',
+    'g.nome grupomusc',
+    'e.nome exercicio',
+    'e.descricao exercicio_desc',
+    'e.foto exercicio_foto'
+);
+$query['from'] = "
     planilha_aluno a join
     planilha_tabela p on p.planilha_id = a.planilha_id join
     planilha_grupoMuscuCardio g on g.id = p.musculo_cardio_id join
     planilha_exercicio e on e.id = p.exercicio_id and e.musculo_cardio_id = g.id
-where
-    a.aluno_id = " . mysqliEscaparTexto($_SESSION['id']) . "
-order by
+";
+$query['where'] = array(
+    "a.aluno_id = " . mysqliEscaparTexto($_SESSION['id'])
+);
+$query['order'] = "
     p.grupo
 ";
-$resultado = mysqli_query($conexao, $query) or die('ERRO: '.mysqli_error($conexao).PHP_EOL.$query.PHP_EOL.print_r(debug_backtrace(), true));
 
+//referente aos grupos
+$query_grupos = array_merge($query, array('select' => "distinct grupo", 'order' => "grupo"));
+$resultado_grupos = dbquery($query_grupos);
+$grupos = array();
+foreach ($resultado_grupos as $linha_grupo) $grupos[] = $linha_grupo['grupo'];
 
+//referente à consulta
+$resultado = dbquery($query);
 ?>
 
 
@@ -61,7 +62,7 @@ $resultado = mysqli_query($conexao, $query) or die('ERRO: '.mysqli_error($conexa
             <div class="tab-content">            
 <?php
 $grupo_atual = ''; $grupo_id = 0;
-while ($linha = mysqli_fetch_array($resultado)) {
+foreach ($resultado as $linha) {
     if ($grupo_atual != $linha['grupo']){
         if ($grupo_id){
 ?>                               

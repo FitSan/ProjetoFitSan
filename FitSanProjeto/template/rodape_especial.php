@@ -543,7 +543,7 @@
                     var corpo = lista.find('#lista-alunos'), ul = $('<ul class="list-group">');
                     corpo.empty();
                     $.each(result.dados, function (k, v){
-                        var inp = $('<input type="checkbox" id="lista-aluno' + k + '" name="lista-aluno[]" />').val(v.id);
+                        var inp = $('<input type="checkbox" id="lista-aluno' + k + '" name="lista-aluno[' + k + ']" />').val(v.id);
                         var lab = $('<label for="lista-aluno' + k + '" />').append(inp, ' ' + v.nome);
                         $('<li class="list-group-item"/>').append(lab).appendTo(ul);
                     });

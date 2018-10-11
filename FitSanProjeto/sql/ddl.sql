@@ -163,6 +163,10 @@ ALTER TABLE planilha_tabela ADD planilha_id int references planilha(id) after pr
 
 ALTER TABLE planilha_tabela CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 select * from planilha_tabela;
+
+truncate table planilha_aluno_exercicio;
+truncate table planilha_aluno;
+truncate table planilha;
 update planilha_tabela set planilha_id = null;
 
 ---Grupos Musculares/Cárdio---

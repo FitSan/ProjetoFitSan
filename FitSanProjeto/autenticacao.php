@@ -314,6 +314,59 @@ function breadcrumbs($separator = ' &raquo; ', $home = 'Home') {
 //}
 
 
+// Faz uma consula ao bancon usando um array com os parâmetros
+// 
+//    Parâmetros:
+//       $query => a query que será executada
+//       $saida => se deve retornar um array com o conteúdo ou apenas a saida da consulta
+// 
+//    Ex. 1: select campo_da_tabela1, campo_da_tabela_2 from tabela where campo_da_tabela_3 = valor;
+//       array(
+//          'select' => 'campo_da_tabela1, campo_da_tabela_2',
+//          'from' => 'tabela',
+//          'where' => 'campo_da_tabela_3 = valor',
+//       )
+//    
+//    Ex. 2: select a.campo_da_tabela1, b.campo_da_tabela_2 from tabela1 a, tabela2 b where b.campo_fk = a.campo_id and a.campo_da_tabela_3 = valor;
+//    array(
+//       'select' => array(
+//          'a.campo_da_tabela1',
+//          'b.campo_da_tabela_2'
+//       ),
+//       'from' => array(
+//          'tabela1 a',
+//          'tabela2 b'
+//       ),
+//       'where' => array(
+//          'b.campo_fk = a.campo_id',
+//          'a.campo_da_tabela_3 = valor',
+//       )
+//    )
+// 
+function dbquery($query, $saida = true){
+    global $conexao;
+    if (is_array($query)){
+        $sql = ("select " . trim(is_array($query['select']) ? implode(', ', $query['select']) : $query['select']) . " ");
+        if (isset($query['from'])) $sql .= ("from " . trim(is_array($query['from']) ? implode(', ', $query['from']) : $query['from']) . " ");
+        if (isset($query['where'])) $sql .= ("where " . trim(is_array($query['where']) ? implode(' and ', $query['where']) : $query['where']) . " ");
+        if (isset($query['group'])) $sql .= ("group by " . trim(is_array($query['group']) ? implode(', ', $query['group']) : $query['group']) . " ");
+        if (isset($query['order'])) $sql .= ("order by " . trim(is_array($query['order']) ? implode(', ', $query['order']) : $query['order']) . " ");
+        if (isset($query['having'])) $sql .= ("having " . trim(is_array($query['having']) ? implode(' and ', $query['having']) : $query['having']) . " ");
+        if (isset($query['outro'])) $sql .= trim(is_array($query['outro']) ? implode(' ', $query['outro']) : $query['outro']);
+    } else {
+        $sql = $query;
+    }
+    $res = mysqli_query($conexao, $sql) or die('ERRO: '.mysqli_error($conexao).PHP_EOL.$sql.PHP_EOL.print_r(debug_backtrace(), true));
+    if ($saida){
+        $ret = array();
+        while ($row = mysqli_fetch_array($res)) $ret[] = $row;
+    } else {
+        $ret = $res;
+    }
+    mysqli_free_result($res);
+    return $ret;
+}
+
 
 ?>
     
