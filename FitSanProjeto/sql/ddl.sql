@@ -15,6 +15,8 @@ tipo_id integer references tipo_usuario(id)
 
 ALTER TABLE usuario ADD codigo varchar(255);
 
+
+
 create table tipo_usuario(
  id int primary key auto_increment,
 tipo varchar(100) not null
@@ -231,6 +233,8 @@ from
 
 -------Fim Planilha-----
 
+
+------Avaliação-----
 CREATE TABLE IF NOT EXISTS `avaliacao` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `data` datetime NOT NULL,
