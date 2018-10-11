@@ -21,6 +21,26 @@ if (!tipoLogado("profissional")){
     </section>
     <section class="content">
         <form method="post" action="enviar_avaliacao.php">
+            
+             <?php
+                        include 'grafico_meta.php';
+                     
+                        ?>
+                <div class="box box-primary">
+                    
+                    <div class="nav-tabs-custom" style="cursor: move;">
+                        <ul class="nav nav-tabs pull-right ui-sortable-handle">
+                            <li class="active"><a href="#mensal_chart" data-toggle="tab">Mensal</a></li>
+                            <li class=""><a href="#anual_chart" data-toggle="tab">Anual</a></li>
+                            <li class="pull-left header"><i class="fa fa-inbox"></i>Gráfico Meta Atual</li>
+                        </ul>
+                        <div class="tab-content no-padding">          
+                            <div class="tab-pane active" id="mensal_chart" style="height: 250px"></div>
+                            <div class="tab-pane " id="anual_chart" style="height: 250px"></div>
+                        </div>
+                        
+                    </div>
+                </div>
 
             <div class="box box-primary">
 
