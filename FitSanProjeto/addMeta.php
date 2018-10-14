@@ -72,7 +72,8 @@ if ($erro) {
     $resultado = mysqli_query($conexao, $verificar_metas);
     if (mysqli_fetch_array($resultado) == null) {
         $query = "insert into meta (tipo, data_inicial, data_final, peso_inicial, peso_final, usuario_id) values ('$tipo', '$data_inicial', '$data_final', '$peso_inicial', '$peso_final', '$_SESSION[id]')";
-        if (!mysqli_query($conexao, $query)) {
+        $resultado = mysqli_query($conexao, $query) or die('ERRO: '.mysqli_error($conexao).PHP_EOL.$sql.PHP_EOL.print_r(debug_backtrace(), true));
+        if (!$resultado) {
             $_SESSION['erro'] = "Meta não iniciada! Falha na conexão.";
             header('Location: metas.php');
         } else {

@@ -63,11 +63,31 @@ INSERT INTO `ativ_extras_exercicios` (`id`, `ativ_extras_id`, `exercicio`) VALUE
 (17,	16,	'Corrida'),
 (18,	17,	'Skate');
 
+DROP TABLE IF EXISTS `avaliacao`;
+CREATE TABLE `avaliacao` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `data` datetime NOT NULL,
+  `desempenho` text COLLATE utf8_unicode_ci NOT NULL,
+  `frequencia` text COLLATE utf8_unicode_ci NOT NULL,
+  `grupo_cumpriu` text COLLATE utf8_unicode_ci NOT NULL,
+  `grupo_duvida` text COLLATE utf8_unicode_ci NOT NULL,
+  `grupo_dificuldade` text COLLATE utf8_unicode_ci NOT NULL,
+  `caso_sim` text COLLATE utf8_unicode_ci NOT NULL,
+  `consideracoes` text COLLATE utf8_unicode_ci NOT NULL,
+  `profissional_id` int(11) DEFAULT NULL,
+  `aluno_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+TRUNCATE `avaliacao`;
+INSERT INTO `avaliacao` (`id`, `data`, `desempenho`, `frequencia`, `grupo_cumpriu`, `grupo_duvida`, `grupo_dificuldade`, `caso_sim`, `consideracoes`, `profissional_id`, `aluno_id`) VALUES
+(29,	'2018-10-14 04:04:00',	'bom',	'boa',	'sim',	'sim',	'sim',	'oi',	'oi',	2,	13);
+
 DROP TABLE IF EXISTS `dados_meta`;
 CREATE TABLE `dados_meta` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `data_add` date NOT NULL,
-  `peso_add` decimal(5,3) NOT NULL,
+  `peso_add` decimal(7,3) NOT NULL,
   `meta_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -77,7 +97,10 @@ INSERT INTO `dados_meta` (`id`, `data_add`, `peso_add`, `meta_id`) VALUES
 (1,	'2018-10-02',	77.800,	1),
 (2,	'2018-10-03',	77.300,	1),
 (3,	'2018-10-04',	77.000,	1),
-(4,	'2018-10-05',	76.000,	1);
+(4,	'2018-10-05',	76.000,	1),
+(5,	'2018-10-16',	98.000,	2),
+(6,	'2018-10-20',	80.000,	2),
+(7,	'2018-10-14',	50.000,	3);
 
 DROP TABLE IF EXISTS `dica`;
 CREATE TABLE `dica` (
@@ -197,8 +220,8 @@ CREATE TABLE `meta` (
   `tipo` enum('PERDER','GANHAR') COLLATE utf8_unicode_ci NOT NULL,
   `data_inicial` date NOT NULL,
   `data_final` date NOT NULL,
-  `peso_inicial` decimal(5,3) NOT NULL,
-  `peso_final` decimal(5,3) NOT NULL,
+  `peso_inicial` decimal(7,3) NOT NULL,
+  `peso_final` decimal(7,3) NOT NULL,
   `status` enum('ativa','finalizada','cancelada') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'ativa',
   `usuario_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -206,7 +229,9 @@ CREATE TABLE `meta` (
 
 TRUNCATE `meta`;
 INSERT INTO `meta` (`id`, `tipo`, `data_inicial`, `data_final`, `peso_inicial`, `peso_final`, `status`, `usuario_id`) VALUES
-(1,	'PERDER',	'2018-10-01',	'2018-10-05',	78.000,	76.000,	'ativa',	6);
+(1,	'PERDER',	'2018-10-01',	'2018-10-05',	78.000,	76.000,	'ativa',	6),
+(2,	'PERDER',	'2018-10-11',	'2018-10-31',	100.000,	80.000,	'cancelada',	13),
+(3,	'GANHAR',	'2018-10-11',	'2018-10-31',	45.000,	70.000,	'ativa',	13);
 
 DROP TABLE IF EXISTS `notificacao`;
 CREATE TABLE `notificacao` (
@@ -590,4 +615,4 @@ INSERT INTO `vinculo` (`aluno_id`, `profissional_id`, `solicitante`, `status`) V
 (12,	2,	'profissional',	'espera'),
 (13,	2,	'aluno',	'aprovado');
 
--- 2018-10-14 06:49:09
+-- 2018-10-14 07:23:14
