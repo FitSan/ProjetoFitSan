@@ -192,12 +192,7 @@ $resultado = mysqli_query($conexao, $query) or die('ERRO: ' . mysqli_error($cone
                 </div>
             </form>
         </div>
-        <div class="box-tools pull-right">
-                <div class="has-feedback">
-                  <input type="text" class="form-control input-sm" placeholder="Pesquisar exercicios">
-                  <span class="glyphicon glyphicon-search form-control-feedback"></span>
-                </div>
-              </div>
+        
         <br><br>
         <div class="table-responsive table-box">
             <table class="table table-hover table-striped">
@@ -243,7 +238,7 @@ while ($linha = mysqli_fetch_array($resultado)) {
 }
 if ($pagina['total'] > 1) {
 ?>
-                <div>Nakkkkkkkk</div>
+                
 <?php
 }
 ?>

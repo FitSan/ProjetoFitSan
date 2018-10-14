@@ -10,17 +10,45 @@ sexo enum('masculino', 'feminino'),
 foto varchar(255),
 senha varchar(255) not null,
 email varchar(255) not null unique,
-tipo_id integer references tipo_usuario(id)
+tipo_id integer references tipo_usuario(id),
+status enum('ativado', 'desativado', 'excluido')
 );
 
 ALTER TABLE usuario ADD codigo varchar(255);
+ALTER TABLE usuario ADD status enum('ativado', 'desativado', 'excluido');
 
+
+-- Criando campo na tabela usuario depois do campo id com valor padrao
+ALTER TABLE usuario ADD datahora timestamp not null after id;
+ALTER TABLE usuario CHANGE datahora datahora timestamp not null default now() after id;
+
+ALTER TABLE usuario ADD datanasc date;
+ALTER TABLE usuario ADD sexo enum('masculino', 'feminino');
+ALTER TABLE usuario ADD foto varchar(255);
+
+ALTER TABLE usuario DROP COLUMN datanasc;
+ALTER TABLE usuario DROP COLUMN sexo;
+ALTER TABLE usuario DROP COLUMN foto;
+
+ALTER TABLE usuario CHANGE datanasc datanasc date;
+ALTER TABLE usuario CHANGE sexo sexo enum('masculino', 'feminino');
+ALTER TABLE usuario CHANGE foto foto varchar(255);
+
+update usuario set status='ativado'; 
+update usuario set datanasc=now(); 
+update usuario set datahora=now();
+
+drop table usuario;
+
+select * from usuario;
 
 
 create table tipo_usuario(
  id int primary key auto_increment,
 tipo varchar(100) not null
 );
+
+select * from tipo_usuario;
 
 create table vinculo(
  aluno_id int references usuario(id),
@@ -59,7 +87,9 @@ aluno_id int references usuario(id),
 dados TEXT
 );
 
-
+SELECT * FROM notificacao;
+drop table notificacao;
+truncate table notificacao;
 
 DROP TABLE ativ_extras;
 DROP TABLE ativ_extras_exercicios;
@@ -102,12 +132,18 @@ informacoes_adicionais_id int references informacoes_adicionais(id)
 
 create table informacoes_adicionais_medidas(
 id int primary key auto_increment,
-altura decimal(5,2),
-peso decimal(5,3),
-massa_magra decimal(5,3),
-gordura_corporal decimal(5,3),
+altura decimal(7,2),
+peso decimal(7,3),
+massa_magra decimal(7,3),
+gordura_corporal decimal(7,3),
 informacoes_adicionais_id int references informacoes_adicionais(id)
 );
+
+alter table informacoes_adicionais_medidas
+change column altura altura decimal(7,2),
+change column peso peso decimal(7,3),
+change column massa_magra massa_magra decimal(7,3),
+change column gordura_corporal gordura_corporal decimal(7,3);
 
 create table informacoes_adicionais_exercicios(
 id int primary key auto_increment,
@@ -208,27 +244,23 @@ planilha_id int references planilha(id)
 );
 select * from planilha_aluno;
 
-create table planilha_aluno_exercicio(
+create table planilha_aluno_feito (
+id int primary key auto_increment,
 planilha_aluno_id int references planilha_aluno(id),
-datahora datetime not null,
-exercicio int references planilha_exercicio (id)
+datahora datetime not null
 );
 
+create table planilha_aluno_exercicio(
+planilha_feito_id int references planilha_aluno_feito(id),
+exercicio int references planilha_exercicio (id),
+primary key (planilha_feito_id, exercicio)
+);
+
+select * from planilha_aluno_feito;
 select * from planilha_aluno_exercicio;
 
-select
-    a.*,
-    p.*,
-    g.nome grupomusc,
-    e.nome exercicio,
-    e.descricao exercicio_desc,
-    e.foto exercicio_foto
-from
-    planilha_aluno a join
-    planilha_tabela p on p.planilha_id = a.planilha_id join
-    planilha_grupoMuscuCardio g on g.id = p.musculo_cardio_id join
-    planilha_exercicio e on e.id = p.exercicio_id and e.musculo_cardio_id = g.id
-;
+truncate table planilha_aluno_feito;
+truncate table planilha_aluno_exercicio;
 
 
 -------Fim Planilha-----
@@ -327,31 +359,6 @@ insert into tipo_usuario (tipo) values ('profissional');
 
 
 
---TESTES -----
-
-update usuario set datahora = now();
-
--- Criando campo na tabela usuario depois do campo id com valor padrao
-ALTER TABLE usuario ADD datahora timestamp not null after id;
-ALTER TABLE usuario CHANGE datahora datahora timestamp not null default now() after id;
-
-ALTER TABLE usuario ADD datanasc date;
-ALTER TABLE usuario ADD sexo enum('masculino', 'feminino');
-ALTER TABLE usuario ADD foto varchar(255);
-
-ALTER TABLE usuario DROP COLUMN datanasc;
-ALTER TABLE usuario DROP COLUMN sexo;
-ALTER TABLE usuario DROP COLUMN foto;
-
-ALTER TABLE usuario CHANGE datanasc datanasc date;
-ALTER TABLE usuario CHANGE sexo sexo enum('masculino', 'feminino');
-ALTER TABLE usuario CHANGE foto foto varchar(255);
-
-update usuario set datanasc=now(); 
-
-drop table usuario;
-
-
 ALTER TABLE vinculo DROP COLUMN status;
 ALTER TABLE vinculo ADD status enum('espera', 'aprovado','negado') not null;
 ALTER TABLE vinculo DROP COLUMN solicitante;
@@ -360,21 +367,15 @@ ALTER TABLE vinculo ADD solicitante enum('aluno', 'profissional') not null;
 
 
 
-select * from usuario;
 select * from vinculo;
-select * from tipo_usuario;
 select * from dados_metas;
 select * from metas;
 
 
 TRUNCATE TABLE vinculo;
-TRUNCATE TABLE notificacao;
 
 
 
-
-drop table notificacao;
-truncate table notificacao;
 
 ALTER TABLE notificacao DROP COLUMN dados;
 ALTER TABLE notificacao ADD dados TEXT;

@@ -31,7 +31,9 @@ INSERT INTO `ativ_extras` (`id`, `datahora`, `titulo`, `texto`, `aluno_id`) VALU
 (12,	'2018-10-02 03:58:36',	'Andei de skate ',	'Andei com o \r\nskate do meu irmão',	10),
 (13,	'2018-10-02 04:35:09',	'Caminhada na praia',	'Caminhei com minhas irmãs na praia',	9),
 (14,	'2018-10-02 04:35:54',	'Treinei ',	'Treinei basquete na escola.',	9),
-(15,	'2018-10-08 02:21:12',	'Andando até a escola.',	'Caminhei até a escola onde fui votar ',	6);
+(15,	'2018-10-08 02:21:12',	'Andando até a escola.',	'Caminhei até a escola onde fui votar ',	6),
+(16,	'2018-10-14 05:47:42',	'fui correr no bosque',	'Corri 5 horas da policia ',	6),
+(17,	'2018-10-14 06:03:22',	'asdf',	'asddgg',	13);
 
 DROP TABLE IF EXISTS `ativ_extras_exercicios`;
 CREATE TABLE `ativ_extras_exercicios` (
@@ -57,7 +59,9 @@ INSERT INTO `ativ_extras_exercicios` (`id`, `ativ_extras_id`, `exercicio`) VALUE
 (13,	12,	'Skate'),
 (14,	13,	'Caminhada'),
 (15,	14,	'Basquete'),
-(16,	15,	'Caminhada');
+(16,	15,	'Caminhada'),
+(17,	16,	'Corrida'),
+(18,	17,	'Skate');
 
 DROP TABLE IF EXISTS `dados_meta`;
 CREATE TABLE `dados_meta` (
@@ -90,7 +94,9 @@ INSERT INTO `dica` (`id`, `texto`, `profissional_nome`, `profissional_id`, `data
 (6,	'• Rotina de exercícios\r\n\r\nA dica aqui é encarar a prática de exercícios como um compromisso. \r\nSe você tem dificuldade de seguir uma rotina, lembre-se que é tudo questão de prática: \r\numa maneira de encarar o treino com mais vontade é escolher uma modalidade que gosta.',	'Karen',	2,	'2018-10-02 01:21:12'),
 (7,	'• Alimentação equilibrada\r\n\r\nÉ preciso organização para evitar possíveis escorregões na dieta, principalmente com tantas tentações culinária por perto. Sempre dê preferência aos lanches caseiros e evite comida industrializada.\r\n\r\nO maior segredo de comer bem é saber dosar as quantidades e equilibrar as escolhas. Não se prive das delícias culinárias em ocasiões especiais.',	'Karen',	2,	'2018-10-02 01:20:26'),
 (8,	'CONHEÇA OS BENEFÍCIOS DA BATATA DOCE\r\nParece até mentira que um alimento que leva “batata” e “doce” no nome possa ser saudável. \r\nMas sim, ele é. A batata doce já conquistou espaço na dieta dos marombeiros, das blogueiras e de todos que buscam uma alimentação balanceada. \r\nQuer motivos para entrar nessa onda? Confira:\r\n\r\n– a batata doce é um dos alimentos mais nutritivos do mundo;\r\n– é um carboidrato complexo de baixo índice glicêmico. Por isso, a absorção é mais lenta, aumentando a sensação de saciedade;\r\n– é rica em antioxidantes e excelente fonte das vitaminas A e C;\r\n– tem poder anti-inflamatório, graças à vitamina C, vitamina B6, betacaroteno e manganês;\r\n– é bem menos calórica que a batata normal e o arroz;\r\n– por liberar energia lentamente, é uma ótima opção para antes do treino. Assim, além de manter o estômago forrado, dá aquele gás pra queimar calorias;\r\n– versátil: pode ser assada, cozida e utilizada em pratos doces ou salgados;\r\n– fica gostosa tanto fria quanto quente.\r\n\r\nViu só como a batata doce é o alimento que não pode faltar na sua lista de compras? \r\n\r\nAposte em uma variação no cardápio e delicie-se!',	'Luana ',	3,	'2018-10-02 01:30:38'),
-(9,	'VAMOS TREINAR EM UM LUGAR MAIS VERDE?\r\n\r\nAcordar cedo e ir treinar dá a maior preguiça, não dá? Quem não pensa em trocar o treino por mais 15 minutinhos de sono de beleza? \r\nPor isso, o treino da manhã tem que ser algo leve, gostoso e muito, muito verde!\r\nTem um parque perto da sua casa? Uma praça? Você tem uma bicicleta? Um tênis de corrida?\r\nEntão, que tal treinar em um ambiente que te coloque em contato com a natureza e relaxe a sua mente enquanto você trabalha o corpo?\r\nO treino ao ar livre é uma maneira mais orgânica de praticar exercícios que te darão mais disposição para o decorrer do dia. Além de entrar em contato com a natureza, \r\nrespirar ar puro e evitar o tumulto da academia, você pode realizar atividades ótimas para o seu bem-estar, e o principal aparelho é o seu próprio corpo!\r\n\r\nAqui está uma lista com alguns dos exercícios que você pode fazer em um treino ao ar livre:\r\n\r\n– correr;\r\n– andar de bicicleta;\r\n– pular corda;\r\n– burpees;\r\n– polichinelos;\r\n– subir e descer escadas;\r\n– variações na barra fixa;\r\n– flexão de braço;\r\n– tríceps nas barras paralelas e no banco;\r\n– agachamento livre;\r\n– step com elevação das pernas;\r\n– variações de abdominal;\r\n– prancha.\r\n\r\nComece os exercícios aquecendo o corpo. Aposte numa corridinha no parque ou em volta de uma praça. Por que não ir até lá de bike?\r\nÉ importante ativar o corpo antes de começar as atividades.\r\nTambém não se esqueça de se manter hidratado durante toda a prática!\r\n\r\nE aí, bora treinar ao ar livre amanhã de manhã?\r\n\r\nLembre-se de fazer os exercícios devagar, com segurança e, se possível, estar acompanhado de um profissional que \r\nprepare um treino específico para você e que fiscalize a execução. Bom treino!',	'Luana ',	3,	'2018-10-02 01:30:03');
+(9,	'VAMOS TREINAR EM UM LUGAR MAIS VERDE?\r\n\r\nAcordar cedo e ir treinar dá a maior preguiça, não dá? Quem não pensa em trocar o treino por mais 15 minutinhos de sono de beleza? \r\nPor isso, o treino da manhã tem que ser algo leve, gostoso e muito, muito verde!\r\nTem um parque perto da sua casa? Uma praça? Você tem uma bicicleta? Um tênis de corrida?\r\nEntão, que tal treinar em um ambiente que te coloque em contato com a natureza e relaxe a sua mente enquanto você trabalha o corpo?\r\nO treino ao ar livre é uma maneira mais orgânica de praticar exercícios que te darão mais disposição para o decorrer do dia. Além de entrar em contato com a natureza, \r\nrespirar ar puro e evitar o tumulto da academia, você pode realizar atividades ótimas para o seu bem-estar, e o principal aparelho é o seu próprio corpo!\r\n\r\nAqui está uma lista com alguns dos exercícios que você pode fazer em um treino ao ar livre:\r\n\r\n– correr;\r\n– andar de bicicleta;\r\n– pular corda;\r\n– burpees;\r\n– polichinelos;\r\n– subir e descer escadas;\r\n– variações na barra fixa;\r\n– flexão de braço;\r\n– tríceps nas barras paralelas e no banco;\r\n– agachamento livre;\r\n– step com elevação das pernas;\r\n– variações de abdominal;\r\n– prancha.\r\n\r\nComece os exercícios aquecendo o corpo. Aposte numa corridinha no parque ou em volta de uma praça. Por que não ir até lá de bike?\r\nÉ importante ativar o corpo antes de começar as atividades.\r\nTambém não se esqueça de se manter hidratado durante toda a prática!\r\n\r\nE aí, bora treinar ao ar livre amanhã de manhã?\r\n\r\nLembre-se de fazer os exercícios devagar, com segurança e, se possível, estar acompanhado de um profissional que \r\nprepare um treino específico para você e que fiscalize a execução. Bom treino!',	'Luana ',	3,	'2018-10-02 01:30:03'),
+(10,	'oi',	'Karen',	2,	'2018-10-14 02:59:06'),
+(11,	'Aprenda a usar a informática para emagrecer.\r\nCom o FitSan você pode acompanhar  o progresso de seus exercícios \r\nalém de poder ter um acompanhamento profissional de vários especialistas,\r\nentre treinadores, nutricionistas e muitos outros profissionais.\r\nFaça  hoje mesmo um teste inteiramente grátis e veja o que podemos fazer por você.',	'Charles',	14,	'2018-10-14 03:35:25');
 
 DROP TABLE IF EXISTS `informacoes_adicionais`;
 CREATE TABLE `informacoes_adicionais` (
@@ -111,7 +117,8 @@ TRUNCATE `informacoes_adicionais`;
 INSERT INTO `informacoes_adicionais` (`id`, `saude`, `medico`, `alergia`, `medicamento`, `gruposangue`, `doador`, `academia_frequentada`, `academia_atual`, `aluno_id`) VALUES
 (1,	'Gastrite nervosa',	'nenhuma...',	'Camarão',	'nenhum...',	'B-',	'SIM',	'Atletic',	'nenhuma',	6),
 (2,	'Tireoide',	'Cirurgia de retirada de amígdala e adenoide.',	'nenhuma...',	'Purant',	'B-',	'NAO',	'nenhuma',	'nenhuma',	10),
-(3,	'Nenhum',	'Nenhum',	'Nenhum',	'Nenhum',	'B+',	'SIM',	'Nenhuma',	'Nenhuma',	9);
+(3,	'Nenhum',	'Nenhum',	'Nenhum',	'Nenhum',	'B+',	'SIM',	'Nenhuma',	'Nenhuma',	9),
+(4,	'asdfg',	'dfgh',	'sdfggh',	'sdffg',	'B-',	'SIM',	'ssdff',	'asdfg',	13);
 
 DROP TABLE IF EXISTS `informacoes_adicionais_contatos`;
 CREATE TABLE `informacoes_adicionais_contatos` (
@@ -130,7 +137,9 @@ INSERT INTO `informacoes_adicionais_contatos` (`id`, `tipo`, `nome`, `telefone`,
 (3,	'Mãe',	'Daiane Pereira',	'(48)9947-05454',	2),
 (4,	'Pai',	'Mauro Ponciano',	'(48)9833-05354',	2),
 (6,	'Mãe',	'Daiane Pereira',	'(48)991705657',	3),
-(7,	'Pai',	'Mauro Ponciano',	'(48)0000-0000',	3);
+(7,	'Pai',	'Mauro Ponciano',	'(48)0000-0000',	3),
+(10,	'Pai',	'kakakakka',	'12345667',	4),
+(11,	'Irmão',	'kakakaka',	'54322113',	4);
 
 DROP TABLE IF EXISTS `informacoes_adicionais_exercicios`;
 CREATE TABLE `informacoes_adicionais_exercicios` (
@@ -147,15 +156,30 @@ INSERT INTO `informacoes_adicionais_exercicios` (`id`, `exercicios`, `informacoe
 (3,	'Dança',	2),
 (4,	'Volei',	2),
 (7,	'Basquete',	3),
-(8,	'Skate',	3);
+(8,	'Skate',	3),
+(24,	'Futebol',	4),
+(25,	'Karatê',	4),
+(26,	'Basquete',	4),
+(27,	'Balé',	4),
+(28,	'Jiu-jitsu',	4),
+(29,	'Corrida',	4),
+(30,	'Caminhada',	4),
+(31,	'Ping-Pong',	4),
+(32,	'Skate',	4),
+(33,	'Natação',	4),
+(34,	'Bicicleta',	4),
+(35,	'qwer',	4),
+(36,	'1233',	4),
+(37,	'awert',	4),
+(38,	'asdsdf',	4);
 
 DROP TABLE IF EXISTS `informacoes_adicionais_medidas`;
 CREATE TABLE `informacoes_adicionais_medidas` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `altura` decimal(5,2) DEFAULT NULL,
-  `peso` decimal(5,3) DEFAULT NULL,
-  `massa_magra` decimal(5,3) DEFAULT NULL,
-  `gordura_corporal` decimal(5,3) DEFAULT NULL,
+  `altura` decimal(7,2) DEFAULT NULL,
+  `peso` decimal(7,3) DEFAULT NULL,
+  `massa_magra` decimal(7,3) DEFAULT NULL,
+  `gordura_corporal` decimal(7,3) DEFAULT NULL,
   `informacoes_adicionais_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -164,7 +188,8 @@ TRUNCATE `informacoes_adicionais_medidas`;
 INSERT INTO `informacoes_adicionais_medidas` (`id`, `altura`, `peso`, `massa_magra`, `gordura_corporal`, `informacoes_adicionais_id`) VALUES
 (1,	1.73,	78.000,	30.000,	20.000,	1),
 (2,	1.45,	32.000,	10.000,	12.000,	2),
-(4,	1.62,	42.000,	17.000,	10.000,	3);
+(4,	1.62,	42.000,	17.000,	10.000,	3),
+(5,	123.00,	123.000,	123.000,	123.000,	4);
 
 DROP TABLE IF EXISTS `meta`;
 CREATE TABLE `meta` (
@@ -204,13 +229,13 @@ INSERT INTO `notificacao` (`id`, `data`, `lido`, `status`, `texto`, `profissiona
 (4,	'2018-10-01 23:53:15',	'N',	'INFO',	'Você tem uma nova solicitação de Karen Guzzatti Konig <br> O que deseja fazer? <a href=\"status_vinculo.php?id=2&status=aprovado\">Aceitar</a> <a href=\"status_vinculo.php?id=2&status=negado\">Negar</a>',	NULL,	12,	'a:3:{s:15:\"profissional_id\";s:1:\"2\";s:8:\"aluno_id\";s:2:\"12\";s:5:\"table\";s:7:\"vinculo\";}'),
 (5,	'2018-10-02 00:10:06',	'L',	'INFO',	'Você tem uma nova solicitação de Adryene Pereira Ponciano <br> O que deseja fazer? <a href=\"status_vinculo.php?id=10&status=aprovado\">Aceitar</a> <a href=\"status_vinculo.php?id=10&status=negado\">Negar</a>',	2,	NULL,	'a:3:{s:15:\"profissional_id\";s:1:\"2\";s:8:\"aluno_id\";s:2:\"10\";s:5:\"table\";s:7:\"vinculo\";}'),
 (6,	'2018-10-02 01:23:45',	'L',	'INFO',	'Você tem uma nova solicitação de Luana  Gabriely Spricigo <br> O que deseja fazer? <a href=\"status_vinculo.php?id=3&status=aprovado\">Aceitar</a> <a href=\"status_vinculo.php?id=3&status=negado\">Negar</a>',	NULL,	9,	'a:3:{s:15:\"profissional_id\";s:1:\"3\";s:8:\"aluno_id\";s:1:\"9\";s:5:\"table\";s:7:\"vinculo\";}'),
-(7,	'2018-10-02 01:23:58',	'N',	'INFO',	'Você tem uma nova solicitação de Luana  Gabriely Spricigo <br> O que deseja fazer? <a href=\"status_vinculo.php?id=3&status=aprovado\">Aceitar</a> <a href=\"status_vinculo.php?id=3&status=negado\">Negar</a>',	NULL,	11,	'a:3:{s:15:\"profissional_id\";s:1:\"3\";s:8:\"aluno_id\";s:2:\"11\";s:5:\"table\";s:7:\"vinculo\";}'),
-(8,	'2018-10-02 01:24:01',	'N',	'INFO',	'Você tem uma nova solicitação de Luana  Gabriely Spricigo <br> O que deseja fazer? <a href=\"status_vinculo.php?id=3&status=aprovado\">Aceitar</a> <a href=\"status_vinculo.php?id=3&status=negado\">Negar</a>',	NULL,	10,	'a:3:{s:15:\"profissional_id\";s:1:\"3\";s:8:\"aluno_id\";s:2:\"10\";s:5:\"table\";s:7:\"vinculo\";}'),
+(7,	'2018-10-02 01:23:58',	'L',	'INFO',	'Você tem uma nova solicitação de Luana  Gabriely Spricigo <br> O que deseja fazer? <a href=\"status_vinculo.php?id=3&status=aprovado\">Aceitar</a> <a href=\"status_vinculo.php?id=3&status=negado\">Negar</a>',	NULL,	11,	'a:3:{s:15:\"profissional_id\";s:1:\"3\";s:8:\"aluno_id\";s:2:\"11\";s:5:\"table\";s:7:\"vinculo\";}'),
+(8,	'2018-10-02 01:24:01',	'L',	'INFO',	'Você tem uma nova solicitação de Luana  Gabriely Spricigo <br> O que deseja fazer? <a href=\"status_vinculo.php?id=3&status=aprovado\">Aceitar</a> <a href=\"status_vinculo.php?id=3&status=negado\">Negar</a>',	NULL,	10,	'a:3:{s:15:\"profissional_id\";s:1:\"3\";s:8:\"aluno_id\";s:2:\"10\";s:5:\"table\";s:7:\"vinculo\";}'),
 (9,	'2018-10-04 23:35:31',	'L',	'INFO',	'Você tem uma nova solicitação de Charles Konig <br> O que deseja fazer? <a href=\"status_vinculo.php?id=14&status=aprovado\">Aceitar</a> <a href=\"status_vinculo.php?id=14&status=negado\">Negar</a>',	NULL,	6,	'a:3:{s:15:\"profissional_id\";s:2:\"14\";s:8:\"aluno_id\";s:1:\"6\";s:5:\"table\";s:7:\"vinculo\";}'),
-(10,	'2018-10-04 23:39:04',	'N',	'INFO',	'Você tem uma nova solicitação de Charles Konig <br> O que deseja fazer? <a href=\"status_vinculo.php?id=14&status=aprovado\">Aceitar</a> <a href=\"status_vinculo.php?id=14&status=negado\">Negar</a>',	NULL,	8,	'a:3:{s:15:\"profissional_id\";s:2:\"14\";s:8:\"aluno_id\";s:1:\"8\";s:5:\"table\";s:7:\"vinculo\";}'),
+(10,	'2018-10-04 23:39:04',	'L',	'INFO',	'Você tem uma nova solicitação de Charles Konig <br> O que deseja fazer? <a href=\"status_vinculo.php?id=14&status=aprovado\">Aceitar</a> <a href=\"status_vinculo.php?id=14&status=negado\">Negar</a>',	NULL,	8,	'a:3:{s:15:\"profissional_id\";s:2:\"14\";s:8:\"aluno_id\";s:1:\"8\";s:5:\"table\";s:7:\"vinculo\";}'),
 (11,	'2018-10-04 23:39:06',	'L',	'INFO',	'Você tem uma nova solicitação de Charles Konig <br> O que deseja fazer? <a href=\"status_vinculo.php?id=14&status=aprovado\">Aceitar</a> <a href=\"status_vinculo.php?id=14&status=negado\">Negar</a>',	NULL,	9,	'a:3:{s:15:\"profissional_id\";s:2:\"14\";s:8:\"aluno_id\";s:1:\"9\";s:5:\"table\";s:7:\"vinculo\";}'),
-(12,	'2018-10-04 23:39:08',	'N',	'INFO',	'Você tem uma nova solicitação de Charles Konig <br> O que deseja fazer? <a href=\"status_vinculo.php?id=14&status=aprovado\">Aceitar</a> <a href=\"status_vinculo.php?id=14&status=negado\">Negar</a>',	NULL,	10,	'a:3:{s:15:\"profissional_id\";s:2:\"14\";s:8:\"aluno_id\";s:2:\"10\";s:5:\"table\";s:7:\"vinculo\";}'),
-(13,	'2018-10-04 23:39:08',	'N',	'INFO',	'Você tem uma nova solicitação de Charles Konig <br> O que deseja fazer? <a href=\"status_vinculo.php?id=14&status=aprovado\">Aceitar</a> <a href=\"status_vinculo.php?id=14&status=negado\">Negar</a>',	NULL,	11,	'a:3:{s:15:\"profissional_id\";s:2:\"14\";s:8:\"aluno_id\";s:2:\"11\";s:5:\"table\";s:7:\"vinculo\";}'),
+(12,	'2018-10-04 23:39:08',	'L',	'INFO',	'Você tem uma nova solicitação de Charles Konig <br> O que deseja fazer? <a href=\"status_vinculo.php?id=14&status=aprovado\">Aceitar</a> <a href=\"status_vinculo.php?id=14&status=negado\">Negar</a>',	NULL,	10,	'a:3:{s:15:\"profissional_id\";s:2:\"14\";s:8:\"aluno_id\";s:2:\"10\";s:5:\"table\";s:7:\"vinculo\";}'),
+(13,	'2018-10-04 23:39:08',	'L',	'INFO',	'Você tem uma nova solicitação de Charles Konig <br> O que deseja fazer? <a href=\"status_vinculo.php?id=14&status=aprovado\">Aceitar</a> <a href=\"status_vinculo.php?id=14&status=negado\">Negar</a>',	NULL,	11,	'a:3:{s:15:\"profissional_id\";s:2:\"14\";s:8:\"aluno_id\";s:2:\"11\";s:5:\"table\";s:7:\"vinculo\";}'),
 (14,	'2018-10-05 00:18:29',	'L',	'INFO',	'Você tem uma nova solicitação de Angelina Guzzatti <br> O que deseja fazer? <a href=\"status_vinculo.php?id=13&status=aprovado\"><i class=\"fa fa-check\"></i></a> <a href=\"status_vinculo.php?id=13&status=negado\"><i class=\"fa fa-close \"></i></a>',	2,	NULL,	'a:3:{s:15:\"profissional_id\";s:1:\"2\";s:8:\"aluno_id\";s:2:\"13\";s:5:\"table\";s:7:\"vinculo\";}'),
 (15,	'2018-10-05 00:19:40',	'L',	'INFO',	'Você tem uma nova solicitação de Karen Guzzatti Konig<a href=\"status_vinculo.php?id=2&status=aprovado\"><i class=\"fa fa-check\"></i></a> <a href=\"status_vinculo.php?id=2&status=negado\"><i class=\"fa fa-close \"></i></a>',	NULL,	13,	'a:3:{s:15:\"profissional_id\";s:1:\"2\";s:8:\"aluno_id\";s:2:\"13\";s:5:\"table\";s:7:\"vinculo\";}'),
 (16,	'2018-10-05 00:24:09',	'L',	'INFO',	'Você tem uma nova solicitação de Angelina Guzzatti <a href=\"status_vinculo.php?id=13&status=aprovado\"><i class=\"fa fa-check\"></i></a> <a href=\"status_vinculo.php?id=13&status=negado\"><i class=\"fa fa-close \"></i></a>',	2,	NULL,	'a:3:{s:15:\"profissional_id\";s:1:\"2\";s:8:\"aluno_id\";s:2:\"13\";s:5:\"table\";s:7:\"vinculo\";}'),
@@ -224,9 +249,17 @@ INSERT INTO `notificacao` (`id`, `data`, `lido`, `status`, `texto`, `profissiona
 (24,	'2018-10-05 01:00:14',	'L',	'INFO',	'Você tem uma nova solicitação de Diego Pereira <br> O que deseja fazer? <a href=\"status_vinculo.php?id=6&status=aprovado\">Aceitar</a> <a href=\"status_vinculo.php?id=6&status=negado\">Negar</a>',	2,	NULL,	'a:3:{s:15:\"profissional_id\";s:1:\"2\";s:8:\"aluno_id\";s:1:\"6\";s:5:\"table\";s:7:\"vinculo\";}'),
 (25,	'2018-10-05 01:00:42',	'L',	'INFO',	'Você tem uma nova solicitação de Karen Guzzatti Konig<br> O que deseja fazer? <a href=\"status_vinculo.php?id=2&status=aprovado\">Aceitar</a> <a href=\"status_vinculo.php?id=2&status=negado\">Negar</a>',	NULL,	6,	'a:3:{s:15:\"profissional_id\";s:1:\"2\";s:8:\"aluno_id\";s:1:\"6\";s:5:\"table\";s:7:\"vinculo\";}'),
 (26,	'2018-10-05 01:01:32',	'L',	'INFO',	'Você tem uma nova solicitação de Diego Pereira <br> O que deseja fazer? <a href=\"status_vinculo.php?id=6&status=aprovado\">Aceitar</a> <a href=\"status_vinculo.php?id=6&status=negado\">Negar</a>',	3,	NULL,	'a:3:{s:15:\"profissional_id\";s:1:\"3\";s:8:\"aluno_id\";s:1:\"6\";s:5:\"table\";s:7:\"vinculo\";}'),
-(27,	'2018-10-05 01:02:04',	'N',	'INFO',	'Você tem uma nova solicitação de Karen Guzzatti Konig<br> O que deseja fazer? <a href=\"status_vinculo.php?id=2&status=aprovado\">Aceitar</a> <a href=\"status_vinculo.php?id=2&status=negado\">Negar</a>',	NULL,	10,	'a:3:{s:15:\"profissional_id\";s:1:\"2\";s:8:\"aluno_id\";s:2:\"10\";s:5:\"table\";s:7:\"vinculo\";}'),
+(27,	'2018-10-05 01:02:04',	'L',	'INFO',	'Você tem uma nova solicitação de Karen Guzzatti Konig<br> O que deseja fazer? <a href=\"status_vinculo.php?id=2&status=aprovado\">Aceitar</a> <a href=\"status_vinculo.php?id=2&status=negado\">Negar</a>',	NULL,	10,	'a:3:{s:15:\"profissional_id\";s:1:\"2\";s:8:\"aluno_id\";s:2:\"10\";s:5:\"table\";s:7:\"vinculo\";}'),
 (28,	'2018-10-06 02:54:22',	'N',	'INFO',	'Você tem uma nova solicitação de Diego Pereira <br> O que deseja fazer? <a href=\"status_vinculo.php?id=6&status=aprovado\">Aceitar</a> <a href=\"status_vinculo.php?id=6&status=negado\">Negar</a>',	4,	NULL,	'a:3:{s:15:\"profissional_id\";s:1:\"4\";s:8:\"aluno_id\";s:1:\"6\";s:5:\"table\";s:7:\"vinculo\";}'),
-(29,	'2018-10-09 02:56:21',	'N',	'OK',	'Uma planilha foi enviada à você.\nAcesse <a href=\"planilha_aluno.php?id=1\">sua planilha</a>',	6,	NULL,	NULL);
+(29,	'2018-10-09 02:56:21',	'N',	'OK',	'Uma planilha foi enviada à você.\nAcesse <a href=\"planilha_aluno.php?id=1\">sua planilha</a>',	6,	NULL,	NULL),
+(30,	'2018-10-13 01:27:11',	'L',	'OK',	'Uma planilha foi enviada à você.\nAcesse <a href=\"planilha_aluno.php?id=2\">sua planilha</a>',	NULL,	6,	NULL),
+(31,	'2018-10-14 03:01:44',	'L',	'OK',	'Uma planilha foi enviada à você.\nAcesse <a href=\"planilha_aluno.php?id=3\">sua planilha</a>',	NULL,	13,	NULL),
+(32,	'2018-10-14 03:36:29',	'N',	'INFO',	'Você tem uma nova solicitação de Charles Konig <br> O que deseja fazer? <a href=\"status_vinculo.php?id=14&status=aprovado\">Aceitar</a> <a href=\"status_vinculo.php?id=14&status=negado\">Negar</a>',	NULL,	6,	'a:3:{s:15:\"profissional_id\";s:2:\"14\";s:8:\"aluno_id\";s:1:\"6\";s:5:\"table\";s:7:\"vinculo\";}'),
+(33,	'2018-10-14 03:36:30',	'L',	'INFO',	'Você tem uma nova solicitação de Charles Konig <br> O que deseja fazer? <a href=\"status_vinculo.php?id=14&status=aprovado\">Aceitar</a> <a href=\"status_vinculo.php?id=14&status=negado\">Negar</a>',	NULL,	9,	'a:3:{s:15:\"profissional_id\";s:2:\"14\";s:8:\"aluno_id\";s:1:\"9\";s:5:\"table\";s:7:\"vinculo\";}'),
+(34,	'2018-10-14 03:43:06',	'N',	'OK',	'Uma planilha foi enviada à você.\nAcesse <a href=\"planilha_aluno.php?id=4\">sua planilha</a>',	NULL,	8,	NULL),
+(35,	'2018-10-14 03:43:06',	'L',	'OK',	'Uma planilha foi enviada à você.\nAcesse <a href=\"planilha_aluno.php?id=4\">sua planilha</a>',	NULL,	9,	NULL),
+(36,	'2018-10-14 03:43:06',	'N',	'OK',	'Uma planilha foi enviada à você.\nAcesse <a href=\"planilha_aluno.php?id=4\">sua planilha</a>',	NULL,	10,	NULL),
+(37,	'2018-10-14 03:43:06',	'N',	'OK',	'Uma planilha foi enviada à você.\nAcesse <a href=\"planilha_aluno.php?id=4\">sua planilha</a>',	NULL,	11,	NULL);
 
 DROP TABLE IF EXISTS `planilha`;
 CREATE TABLE `planilha` (
@@ -237,7 +270,62 @@ CREATE TABLE `planilha` (
 
 TRUNCATE `planilha`;
 INSERT INTO `planilha` (`id`, `titulo`) VALUES
-(1,	'Corrida de 20 km');
+(1,	'Corrida de 20 km'),
+(2,	'Circuito de emagrecimento'),
+(3,	'teste1'),
+(4,	'lista');
+
+DROP TABLE IF EXISTS `planilha_aluno`;
+CREATE TABLE `planilha_aluno` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `aluno_id` int(11) DEFAULT NULL,
+  `planilha_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+TRUNCATE `planilha_aluno`;
+INSERT INTO `planilha_aluno` (`id`, `aluno_id`, `planilha_id`) VALUES
+(1,	6,	2),
+(2,	13,	3),
+(3,	8,	4),
+(4,	9,	4),
+(5,	10,	4),
+(6,	11,	4);
+
+DROP TABLE IF EXISTS `planilha_aluno_exercicio`;
+CREATE TABLE `planilha_aluno_exercicio` (
+  `planilha_feito_id` int(11) NOT NULL,
+  `exercicio` int(11) NOT NULL,
+  PRIMARY KEY (`planilha_feito_id`,`exercicio`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+TRUNCATE `planilha_aluno_exercicio`;
+INSERT INTO `planilha_aluno_exercicio` (`planilha_feito_id`, `exercicio`) VALUES
+(5,	17),
+(5,	87),
+(6,	9),
+(6,	11),
+(6,	25),
+(6,	58),
+(7,	64),
+(7,	75),
+(7,	85),
+(9,	64);
+
+DROP TABLE IF EXISTS `planilha_aluno_feito`;
+CREATE TABLE `planilha_aluno_feito` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `planilha_aluno_id` int(11) DEFAULT NULL,
+  `datahora` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+TRUNCATE `planilha_aluno_feito`;
+INSERT INTO `planilha_aluno_feito` (`id`, `planilha_aluno_id`, `datahora`) VALUES
+(5,	2,	'2018-10-13 05:06:11'),
+(6,	2,	'2018-10-14 05:48:14'),
+(7,	3,	'2018-10-14 06:03:05'),
+(9,	4,	'2018-10-14 06:45:03');
 
 DROP TABLE IF EXISTS `planilha_exercicio`;
 CREATE TABLE `planilha_exercicio` (
@@ -389,22 +477,27 @@ CREATE TABLE `planilha_tabela` (
 
 TRUNCATE `planilha_tabela`;
 INSERT INTO `planilha_tabela` (`id`, `grupo`, `musculo_cardio_id`, `exercicio_id`, `series`, `repeticoes`, `carga`, `intervalo`, `tempo`, `profissional_id`, `planilha_id`) VALUES
-(10,	'Ciclo #1',	20,	17,	'3X',	'12 - 15',	NULL,	'Sem Intervalo',	NULL,	2,	NULL),
-(11,	'Ciclo #1',	8,	87,	'3X',	'12 - 15',	NULL,	'Sem Intervalo',	NULL,	2,	NULL),
-(12,	'Ciclo #1',	26,	40,	'3X',	'20',	NULL,	'Sem Intervalo',	NULL,	2,	NULL),
-(13,	'Ciclo #1',	7,	65,	'3X',	'12 - 15',	NULL,	'Sem Intervalo',	NULL,	2,	NULL),
-(14,	'Ciclo #2',	17,	11,	'3X',	'12 - 15',	NULL,	'Sem Intervalo',	NULL,	2,	NULL),
-(15,	'Ciclo #2',	18,	9,	'3X',	'12 - 15',	NULL,	'Sem Intervalo',	NULL,	2,	NULL),
-(16,	'Ciclo #2',	22,	25,	'3X',	'12 - 15',	NULL,	'Sem Intervalo',	NULL,	2,	NULL),
-(17,	'Ciclo #2',	6,	58,	'3X',	'12 - 15',	NULL,	'Sem Intervalo',	NULL,	2,	NULL),
-(18,	'Ciclo #3',	20,	14,	'3X',	'12 - 15',	'45 graus',	'Sem Intervalo',	NULL,	2,	NULL),
-(19,	'Ciclo #3',	24,	31,	'3X',	'12 - 15',	NULL,	'Sem Intervalo',	NULL,	2,	NULL),
-(20,	'Ciclo #3',	28,	51,	'3X',	'20',	NULL,	'Sem Intervalo',	NULL,	2,	NULL),
-(21,	'Ciclo #3',	7,	88,	'3X',	'12 - 15',	NULL,	'Sem Intervalo',	NULL,	2,	NULL),
-(22,	'Ciclo #4',	22,	23,	'3X',	'12 - 15',	NULL,	'Sem Intervalo',	NULL,	2,	NULL),
-(23,	'Ciclo #4',	18,	6,	'3X',	'12 - 15',	NULL,	'Sem Intervalo',	NULL,	2,	NULL),
-(24,	'Ciclo #4',	21,	19,	'3X',	'12 - 15',	NULL,	'Sem Intervalo',	NULL,	2,	NULL),
-(25,	'Ciclo #4',	8,	52,	'3X',	'12 - 15',	NULL,	'Sem Intervalo',	NULL,	2,	NULL);
+(10,	'Ciclo #1',	20,	17,	'3X',	'12 - 15',	NULL,	'Sem Intervalo',	NULL,	2,	2),
+(11,	'Ciclo #1',	8,	87,	'3X',	'12 - 15',	NULL,	'Sem Intervalo',	NULL,	2,	2),
+(12,	'Ciclo #1',	26,	40,	'3X',	'20',	NULL,	'Sem Intervalo',	NULL,	2,	2),
+(13,	'Ciclo #1',	7,	65,	'3X',	'12 - 15',	NULL,	'Sem Intervalo',	NULL,	2,	2),
+(14,	'Ciclo #2',	17,	11,	'3X',	'12 - 15',	NULL,	'Sem Intervalo',	NULL,	2,	2),
+(15,	'Ciclo #2',	18,	9,	'3X',	'12 - 15',	NULL,	'Sem Intervalo',	NULL,	2,	2),
+(16,	'Ciclo #2',	22,	25,	'3X',	'12 - 15',	NULL,	'Sem Intervalo',	NULL,	2,	2),
+(17,	'Ciclo #2',	6,	58,	'3X',	'12 - 15',	NULL,	'Sem Intervalo',	NULL,	2,	2),
+(18,	'Ciclo #3',	20,	14,	'3X',	'12 - 15',	'45 graus',	'Sem Intervalo',	NULL,	2,	2),
+(19,	'Ciclo #3',	24,	31,	'3X',	'12 - 15',	NULL,	'Sem Intervalo',	NULL,	2,	2),
+(20,	'Ciclo #3',	28,	51,	'3X',	'20',	NULL,	'Sem Intervalo',	NULL,	2,	2),
+(21,	'Ciclo #3',	7,	88,	'3X',	'12 - 15',	NULL,	'Sem Intervalo',	NULL,	2,	2),
+(22,	'Ciclo #4',	22,	23,	'3X',	'12 - 15',	NULL,	'Sem Intervalo',	NULL,	2,	2),
+(23,	'Ciclo #4',	18,	6,	'3X',	'12 - 15',	NULL,	'Sem Intervalo',	NULL,	2,	2),
+(24,	'Ciclo #4',	21,	19,	'3X',	'12 - 15',	NULL,	'Sem Intervalo',	NULL,	2,	2),
+(25,	'Ciclo #4',	8,	52,	'3X',	'12 - 15',	NULL,	'Sem Intervalo',	NULL,	2,	2),
+(26,	'grupo 1',	7,	64,	'1',	'1',	'1',	'1',	NULL,	2,	3),
+(27,	'grupo 1',	16,	85,	NULL,	NULL,	NULL,	NULL,	1,	2,	3),
+(28,	'grupo 1',	30,	75,	'1',	'1',	'1',	'1',	NULL,	2,	3),
+(29,	'Grupo 1',	20,	15,	'2',	'1',	'1',	'1',	NULL,	14,	4),
+(30,	'Grupo 1',	7,	64,	'1',	'3',	'2',	'5',	NULL,	14,	4);
 
 DROP TABLE IF EXISTS `tipo_usuario`;
 CREATE TABLE `tipo_usuario` (
@@ -432,7 +525,8 @@ INSERT INTO `upload_dica` (`id`, `nome_arq`, `tipo`, `dica_id`) VALUES
 (5,	'f8270e3ed74d515e11bd14b0634aaf1fjpg',	'img',	7),
 (6,	'1639ca5e138e8cfd792b4526978c7f39jpg',	'img',	6),
 (7,	'443f060686448ffcfa472b42d805d848jpg',	'img',	8),
-(8,	'0a96e048f66f5fa6cd6d33817c8e8b97jpg',	'img',	9);
+(8,	'0a96e048f66f5fa6cd6d33817c8e8b97jpg',	'img',	9),
+(9,	'0842e2bb460d8a499c2991091614cae6jpg',	'img',	11);
 
 DROP TABLE IF EXISTS `usuario`;
 CREATE TABLE `usuario` (
@@ -447,27 +541,28 @@ CREATE TABLE `usuario` (
   `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `tipo_id` int(11) DEFAULT NULL,
   `codigo` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `status` enum('ativado','desativado','excluido') COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 TRUNCATE `usuario`;
-INSERT INTO `usuario` (`id`, `datahora`, `nome`, `sobrenome`, `datanasc`, `sexo`, `foto`, `senha`, `email`, `tipo_id`, `codigo`) VALUES
-(1,	'2018-10-02 02:05:07',	'Administrador',	'Geral',	NULL,	NULL,	NULL,	'$2y$10$v2UXi34ZLW0BCwunjyc6TORT9XAr2wM303D5at6t/405Z3QhpNI9e',	'admin@admin',	NULL,	NULL),
-(2,	'2018-10-02 02:07:01',	'Karen',	'Guzzatti Konig',	'1988-08-14',	'feminino',	'http://localhost/FitSan/uploads/img_5113.jpg',	'$2y$10$R/CXtAoYykcwHSO4poq3/uIK7P0e/nCtTHixz6aKVN7q/P5j1nkWi',	'karen.gk@aluno.ifsc.edu.br',	2,	'5bb777e262d8b'),
-(3,	'2018-10-02 02:09:43',	'Luana ',	'Gabriely Spricigo ',	NULL,	'feminino',	'http://localhost/FitSan/uploads/image-1.jpg',	'$2y$10$D2XMip1qrwDv8bc8YhriTeZQS1PbrNA4ZUDGoq4V0eKj8hqOtP6XK',	'luana@luana',	2,	NULL),
-(4,	'2018-10-02 02:10:31',	'Gabriel',	'Henrique Pessanha  ',	NULL,	NULL,	NULL,	'$2y$10$o5JrL22SL9Fs/c35rmJlqOYBK7agg5L0GI0ihfQh4QniNAep.HNny',	'gabriel@gabriel',	2,	NULL),
-(5,	'2018-10-02 02:10:58',	'Sandro ',	'Matias Cunha ',	NULL,	NULL,	NULL,	'$2y$10$HTtTkFOIK7g/dfOO6oBZ0.RPAFlxp85UVY7cvB9FIT3YZaQd6X3Ey',	'sandro@sandro',	1,	NULL),
-(6,	'2018-10-02 02:11:21',	'Diego',	'Pereira ',	'1986-08-06',	'masculino',	'http://localhost/FitSan/uploads/image.jpeg',	'$2y$10$i29vOQLqCrFdjsAo5NhhS.PgKTLhrKR64ThtUQGvf0yHuavxGmVkG',	'diego@diego',	1,	NULL),
-(7,	'2018-10-02 02:11:47',	'Neide',	'Guzzatti Konig ',	NULL,	NULL,	NULL,	'$2y$10$ifxnyqyle5wztgKX2tikCexQx22VbPqmG2YFURBUfa3cVhjMBls..',	'neide@neide',	1,	NULL),
-(8,	'2018-10-02 02:12:17',	'Nicoly',	'Pereira Ponciano ',	NULL,	NULL,	NULL,	'$2y$10$Y3ORaqNLGpyaA4B1Se3BZu0Z226W18/S5SdGEm4YJG7Y9Iv8LMi6u',	'ni@ni',	1,	NULL),
-(9,	'2018-10-02 02:12:43',	'Nathaly',	'Pereira Ponciano ',	'2004-06-22',	'feminino',	'http://localhost/FitSan/uploads/images.jpeg',	'$2y$10$fyFDUU6to3i5iMemsyEXV.30C.QseDiRKwNH5z6Q8S6qKoO1hyr56',	'tata@tata',	1,	NULL),
-(10,	'2018-10-02 02:13:05',	'Adryene',	'Pereira Ponciano ',	'2008-05-16',	'feminino',	'http://localhost/FitSan/uploads/image_1_.jpeg',	'$2y$10$ayWs3oAexRTDvmpYJ.AdyuTWRbv.Y5QHskbwNXjb6rMMhDOj22z2C',	'dy@dy',	1,	NULL),
-(11,	'2018-10-02 02:13:25',	'Adryan',	'Pereira Ponciano ',	NULL,	NULL,	NULL,	'$2y$10$u6ThhEyMoPiTV2m0g0mGcObq2hZ9y2OuWA/YGv.optidG1XedDf46',	'ady@ady',	1,	NULL),
-(12,	'2018-10-02 02:14:42',	'Gerson',	'Konig ',	NULL,	NULL,	NULL,	'$2y$10$zhLkyra0AmyXcWYUSjNgmOggJ0lVgMOnIemsx2o.wzoNnV0YNCr3S',	'gerson@gerson',	1,	NULL),
-(13,	'2018-10-02 02:15:12',	'Angelina',	'Guzzatti ',	NULL,	NULL,	NULL,	'$2y$10$qRxoYvURV75ckP7MpoH8EOcAY1N58bPPk8k67ajA7Rm7pEdQecvf6',	'angelina@angelina',	1,	NULL),
-(14,	'2018-10-02 02:15:45',	'Charles',	'Konig ',	NULL,	NULL,	NULL,	'$2y$10$1nKoC.5VYFm5dO6MGLR7PurkIriasL1mczbhcBeGHhR/9wj6dH2FS',	'charles@charles',	2,	NULL),
-(15,	'2018-10-02 02:17:50',	'Isadora',	'Cachoeira ',	NULL,	NULL,	NULL,	'$2y$10$4nYTOxaMpzj9/PteNbXVW.XLnwPeKIPwgeitKpUl5eb2tm4tw8XvC',	'isa@isa',	1,	NULL);
+INSERT INTO `usuario` (`id`, `datahora`, `nome`, `sobrenome`, `datanasc`, `sexo`, `foto`, `senha`, `email`, `tipo_id`, `codigo`, `status`) VALUES
+(1,	'2018-10-02 02:05:07',	'Administrador',	'Geral',	NULL,	NULL,	NULL,	'$2y$10$v2UXi34ZLW0BCwunjyc6TORT9XAr2wM303D5at6t/405Z3QhpNI9e',	'admin@admin',	NULL,	NULL,	'ativado'),
+(2,	'2018-10-02 02:07:01',	'Karen',	'Guzzatti Konig',	'1988-08-14',	'feminino',	'http://localhost/FitSan/uploads/img_5113.jpg',	'$2y$10$R/CXtAoYykcwHSO4poq3/uIK7P0e/nCtTHixz6aKVN7q/P5j1nkWi',	'karen.gk@aluno.ifsc.edu.br',	2,	'5bb777e262d8b',	'ativado'),
+(3,	'2018-10-02 02:09:43',	'Luana ',	'Gabriely Spricigo ',	NULL,	'feminino',	'http://localhost/FitSan/uploads/image-1.jpg',	'$2y$10$D2XMip1qrwDv8bc8YhriTeZQS1PbrNA4ZUDGoq4V0eKj8hqOtP6XK',	'luana@luana',	2,	NULL,	'ativado'),
+(4,	'2018-10-02 02:10:31',	'Gabriel',	'Henrique Pessanha  ',	NULL,	NULL,	NULL,	'$2y$10$o5JrL22SL9Fs/c35rmJlqOYBK7agg5L0GI0ihfQh4QniNAep.HNny',	'gabriel@gabriel',	2,	NULL,	'ativado'),
+(5,	'2018-10-02 02:10:58',	'Sandro ',	'Matias Cunha ',	NULL,	NULL,	NULL,	'$2y$10$HTtTkFOIK7g/dfOO6oBZ0.RPAFlxp85UVY7cvB9FIT3YZaQd6X3Ey',	'sandro@sandro',	1,	NULL,	'ativado'),
+(6,	'2018-10-02 02:11:21',	'Diego',	'Pereira ',	'1986-08-06',	'masculino',	'http://localhost/FitSan/uploads/image.jpeg',	'$2y$10$i29vOQLqCrFdjsAo5NhhS.PgKTLhrKR64ThtUQGvf0yHuavxGmVkG',	'diego@diego',	1,	NULL,	'desativado'),
+(7,	'2018-10-02 02:11:47',	'Neide',	'Guzzatti Konig ',	NULL,	NULL,	NULL,	'$2y$10$ifxnyqyle5wztgKX2tikCexQx22VbPqmG2YFURBUfa3cVhjMBls..',	'neide@neide',	1,	NULL,	'ativado'),
+(8,	'2018-10-02 02:12:17',	'Nicoly',	'Pereira Ponciano ',	NULL,	NULL,	NULL,	'$2y$10$Y3ORaqNLGpyaA4B1Se3BZu0Z226W18/S5SdGEm4YJG7Y9Iv8LMi6u',	'ni@ni',	1,	NULL,	'ativado'),
+(9,	'2018-10-02 02:12:43',	'Nathaly',	'Pereira Ponciano ',	'2004-06-22',	'feminino',	'http://localhost/FitSan/uploads/images.jpeg',	'$2y$10$fyFDUU6to3i5iMemsyEXV.30C.QseDiRKwNH5z6Q8S6qKoO1hyr56',	'tata@tata',	1,	NULL,	'ativado'),
+(10,	'2018-10-02 02:13:05',	'Adryene',	'Pereira Ponciano ',	'2008-05-16',	'feminino',	'http://localhost/FitSan/uploads/image_1_.jpeg',	'$2y$10$ayWs3oAexRTDvmpYJ.AdyuTWRbv.Y5QHskbwNXjb6rMMhDOj22z2C',	'dy@dy',	1,	NULL,	'ativado'),
+(11,	'2018-10-02 02:13:25',	'Adryan',	'Pereira Ponciano ',	NULL,	NULL,	NULL,	'$2y$10$u6ThhEyMoPiTV2m0g0mGcObq2hZ9y2OuWA/YGv.optidG1XedDf46',	'ady@ady',	1,	NULL,	'ativado'),
+(12,	'2018-10-02 02:14:42',	'Gerson',	'Konig ',	NULL,	NULL,	NULL,	'$2y$10$zhLkyra0AmyXcWYUSjNgmOggJ0lVgMOnIemsx2o.wzoNnV0YNCr3S',	'gerson@gerson',	1,	NULL,	'ativado'),
+(13,	'2018-10-02 02:15:12',	'Angelina',	'Guzzatti ',	NULL,	NULL,	NULL,	'$2y$10$qRxoYvURV75ckP7MpoH8EOcAY1N58bPPk8k67ajA7Rm7pEdQecvf6',	'angelina@angelina',	1,	NULL,	'ativado'),
+(14,	'2018-10-02 02:15:45',	'Charles',	'Konig ',	'1919-01-22',	'masculino',	'http://localhost/FitSan/uploads/image.jpg',	'$2y$10$1nKoC.5VYFm5dO6MGLR7PurkIriasL1mczbhcBeGHhR/9wj6dH2FS',	'charles@charles',	2,	NULL,	'ativado'),
+(15,	'2018-10-02 02:17:50',	'Isadora',	'Cachoeira ',	NULL,	NULL,	NULL,	'$2y$10$4nYTOxaMpzj9/PteNbXVW.XLnwPeKIPwgeitKpUl5eb2tm4tw8XvC',	'isa@isa',	1,	NULL,	'ativado');
 
 DROP TABLE IF EXISTS `vinculo`;
 CREATE TABLE `vinculo` (
@@ -482,17 +577,17 @@ TRUNCATE `vinculo`;
 INSERT INTO `vinculo` (`aluno_id`, `profissional_id`, `solicitante`, `status`) VALUES
 (6,	2,	'profissional',	'aprovado'),
 (6,	4,	'aluno',	'espera'),
-(6,	14,	'profissional',	'aprovado'),
+(6,	14,	'profissional',	'espera'),
 (7,	2,	'profissional',	'espera'),
-(8,	14,	'profissional',	'espera'),
+(8,	14,	'profissional',	'aprovado'),
 (9,	3,	'profissional',	'aprovado'),
 (9,	14,	'profissional',	'aprovado'),
-(10,	2,	'profissional',	'espera'),
-(10,	3,	'profissional',	'espera'),
-(10,	14,	'profissional',	'espera'),
-(11,	3,	'profissional',	'espera'),
-(11,	14,	'profissional',	'espera'),
+(10,	2,	'profissional',	'aprovado'),
+(10,	3,	'profissional',	'aprovado'),
+(10,	14,	'profissional',	'aprovado'),
+(11,	3,	'profissional',	'aprovado'),
+(11,	14,	'profissional',	'aprovado'),
 (12,	2,	'profissional',	'espera'),
 (13,	2,	'aluno',	'aprovado');
 
--- 2018-10-09 06:03:04
+-- 2018-10-14 06:49:09

@@ -9,7 +9,7 @@ if (tipoLogado('aluno')){
     $aluno_id = $_GET['id'];
 }
 
-$query2 = "select * from usuario where id = " . mysqliEscaparTexto($_SESSION['id']);
+$query2 = "select * from usuario where id = " . mysqliEscaparTexto($_SESSION['id']) . " and status = 'ativado'";
 $resultado = mysqli_query($conexao, $query2) or die('ERRO: '.mysqli_error($conexao).PHP_EOL.$query2.PHP_EOL.print_r(debug_backtrace(), true));
 $linha = mysqli_fetch_array($resultado) or die('ERRO: '.mysqli_error($conexao).PHP_EOL.$query2.PHP_EOL.print_r(debug_backtrace(), true));
 

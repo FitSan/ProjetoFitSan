@@ -13,10 +13,10 @@ if (!empty($busca) && (strlen($busca) > 3)) {
     $busca = preg_replace('{[^\\w\\d]+}', '%', $busca); //expressão regular
     $busca = ('%' . $busca . '%');
     if (tipoLogado('profissional')) {
-        $query = "select * from usuario u left join vinculo v on v.aluno_id = u.id and v.profissional_id = $_SESSION[id] where u.tipo_id=1 and concat(u.nome, ' ' , u.sobrenome) like '$busca'";
+        $query = "select * from usuario u left join vinculo v on v.aluno_id = u.id and v.profissional_id = $_SESSION[id] where u.status = 'ativado' and u.tipo_id=1 and concat(u.nome, ' ' , u.sobrenome) like '$busca'";
         $usuario_busca = 'aluno_id';
     } else {
-        $query = "select * from usuario u left join vinculo v on v.profissional_id = u.id and v.aluno_id = $_SESSION[id] where u.tipo_id=2 and concat(u.nome, ' ' , u.sobrenome) like '$busca'";
+        $query = "select * from usuario u left join vinculo v on v.profissional_id = u.id and v.aluno_id = $_SESSION[id] where u.status = 'ativado' and u.tipo_id=2 and concat(u.nome, ' ' , u.sobrenome) like '$busca'";
         $usuario_busca = 'profissional_id';
     }
     $resultado = mysqli_query($conexao, $query);

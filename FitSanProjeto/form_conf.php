@@ -99,7 +99,10 @@ if ($linha = mysqli_fetch_array($resultado)) {
                       
                         <button type="button" class="btn btn-primary" onclick="getElementById('inputSenha').style.display='block'; getElementById('submit').style.display='block'; this.style.display='none'">
                                    Salvar 
-                        </button>                                                
+                        </button> 
+<?php if (!tipoLogado("admin")){ ?>
+                        <a href="desativarP.php" type="button" class="btn btn-danger">Desativar Conta</a>
+<?php } ?>
                     </div>
 
 

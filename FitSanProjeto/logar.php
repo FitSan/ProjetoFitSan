@@ -7,7 +7,7 @@ ini_set("display_errors", true);
 $email = $_POST['e-mail'];
 $senha = $_POST['senha'];
 
-$sql = "select usuario.*, tipo_usuario.tipo from usuario left join tipo_usuario on tipo_usuario.id=usuario.tipo_id where email = '$email'";
+$sql = "select usuario.*, tipo_usuario.tipo from usuario left join tipo_usuario on tipo_usuario.id=usuario.tipo_id where email = '$email' and status = 'ativado'";
 $retorno = mysqli_query($conexao, $sql) or die('ERRO: '.mysqli_error($conexao).PHP_EOL.$sql.PHP_EOL.print_r(debug_backtrace(), true));
 $resultado = mysqli_fetch_array($retorno);
 
