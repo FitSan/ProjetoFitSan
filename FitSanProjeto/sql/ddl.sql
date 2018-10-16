@@ -283,6 +283,7 @@ CREATE TABLE IF NOT EXISTS `avaliacao` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=29 ;
 
 
+
 select * from `usuario`;
 
 select * from `avaliacao` join vinculo on usuario.id=vinculo.aluno_id where profissional_id= 19;
