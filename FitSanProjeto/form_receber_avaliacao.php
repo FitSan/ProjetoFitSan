@@ -36,6 +36,12 @@ if (!tipoLogado("aluno")) {
             while ($linhas = mysqli_fetch_array($retorno)) {
                 array_push($usuarios, $linhas);
             }
+            if($usuarios == null){
+                ?>
+                 <div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12" align="center"><h3><b>Você não possui nenhuma avaliação!</b></h3></div>
+                 <?php
+            } else {
+                
             foreach ($usuarios as $usuario) {
                 ?>
  
@@ -55,6 +61,8 @@ if (!tipoLogado("aluno")) {
             
             
             <?php }
+            
+            }
             ?>     
         </form>
     </section>
