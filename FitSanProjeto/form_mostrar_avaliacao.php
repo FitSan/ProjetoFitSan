@@ -48,24 +48,8 @@ $resultado = mysqli_query($conexao, $query);
                              <br> Caso sim, qual?<font color="red" ><h5><?= $linha[caso_sim]?></h5></font> 
                              <br> <strong>Considerações gerais</strong> <font color="red" ><h5><?= $linha[consideracoes]?></h5></font>
                              
-                         
-
-                        <div class="col-lg-6">
-                            <br> Caso sim, qual?<textarea name="caso_sim" class="form-control" rows="2" placeholder="Escreva aqui."></textarea> 
-
-                        </div>
-                        <hr>
-
-
-                        <div class="col-lg-6">
-                            <br> <strong>Considerações gerais</strong> <textarea name="consideracoes" class="form-control" rows="5" placeholder="NEscreva aqui"></textarea> 
-
-                        </div>
-
-                    </div>                    
-                </div>
-                <button type="submit" class="btn btn-primary btn-flat">Enviar</button>
-            </form>
+                        
+           
         </section>
         <!--</div>-->
 
