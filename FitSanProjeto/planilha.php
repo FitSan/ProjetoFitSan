@@ -26,11 +26,6 @@ if (($acao == 'incluir') || ($acao == 'alterar')){
         if (empty($grupo)) $erros[] = "Preencha o grupo.";
         if (empty($grupo_muscular)) $erros[] = "Preencha o grupo muscular.";
         if (empty($exercicio)) $erros[] = "Preencha o exercicio.";
-        //if (empty($series)) $erros[] = "Preencha as séries.";
-        //if (empty($repeticoes)) $erros[] = "Preencha as repetições.";
-        //if (empty($carga)) $erros[] = "Preencha a carga em Kg.";
-        //if (empty($intervalo)) $erros[] = "Preencha o intervalo de cada exercício.";
-        //if (empty($tempo)) $erros[] = "Preencha o tempo de cada exercício.";
     }
     if (empty($erros) && !empty($grupo)) {
         if ($id === null) {

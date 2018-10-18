@@ -219,9 +219,24 @@ $query['from'] = "
 $query['where'] = array(
     "a.aluno_id = " . mysqliEscaparTexto($_SESSION['id']),
 );
+
+//referente à paginação
+$query_pagina = $query;
+$query_pagina['select'] = "count(*) as total";
+$resultado_pagina = dbquery($query_pagina);
+$paginacao = ($resultado_pagina?$resultado_pagina[0]:array());
+$paginacao = array_merge(array(
+    'total' => 0,
+    'quantidade' => (!empty($_GET['quantidade']) ? $_GET['quantidade'] : 10),
+    'pagina' => (!empty($_GET['pagina']) ? $_GET['pagina'] : 1),
+), array_map('intval', (array)$paginacao));
+$paginacao['offset'] = (($paginacao['pagina'] - 1) * $paginacao['quantidade']);
+$paginacao['paginas'] = ceil($paginacao['total'] / $paginacao['quantidade']);
+
 $query['order'] = "
-    p.grupo
+    f.datahora desc
 ";
+$query['outro'] = "limit " . $paginacao['quantidade'] . " offset " . $paginacao['offset'];
 
 $resultado = dbquery($query);
 ?>
@@ -320,6 +335,17 @@ if ($grupo_atual){
         </li>
     
     </ul>
+<?php if ($paginacao['paginas'] > 1){ ?>
+        <div class="box-footer clearfix">
+            <ul class="pagination pagination-sm no-margin">
+                <li class="<?php echo (($paginacao['pagina'] == 1) ? 'disabled' : '') ?>"><a href="<?php echo basename(__FILE__) ?>">&laquo;</a></li>
+<?php for ($pag = 1; $pag <= $paginacao['paginas']; $pag++){ ?>
+                <li class="<?php echo (($paginacao['pagina'] == $pag) ? 'active' : '') ?>"><a href="<?php echo basename(__FILE__) ?>?pagina=<?php echo $pag ?>"><?php echo $pag ?></a></li>
+<?php } ?>
+                <li class="<?php echo (($paginacao['pagina'] == $paginacao['paginas']) ? 'disabled' : '') ?>"><a href="<?php echo basename(__FILE__) ?>?pagina=<?php echo $paginacao['paginas'] ?>">&raquo;</a></li>
+            </ul>
+        </div>
+<?php } ?>
 </div>
 <?php } else { ?>
 <div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12" align="center"><h3><b>Não foi realizado nenhum exercício ainda.</b></h3></div>

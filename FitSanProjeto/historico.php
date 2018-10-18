@@ -54,7 +54,7 @@ require_once './template/cabecalho.php';
                     "a.aluno_id = " . mysqliEscaparTexto($_SESSION['id']),
                 );
                 $query['order'] = "
-    p.grupo
+    f.datahora desc
 ";
 
                 $resultado = dbquery($query);
@@ -139,6 +139,8 @@ require_once './template/cabecalho.php';
             <?php } else { ?>
                 <div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12" align="center"><h3><b>Não foi realizado nenhum exercício ainda.</b></h3></div>
             <?php } ?>
+                
+                
 
             <!-- /.post -->
         </div>

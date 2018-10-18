@@ -203,25 +203,27 @@ if ($linha = mysqli_fetch_array($resultado)) {
                 
                 <!-- Inicio do histórico publico-->
                 
-                <?php if (tipoLogado("aluno")){ ?>
+                <?php if (tipoLogado("aluno")){
+                    $aba = (!empty($_GET['aba']) ? $_GET['aba'] : 'timeline');
+                ?>
                                 
                                 
                 
                 <div class="col-md-9">
                     <div class="nav-tabs-custom">
                         <ul class="nav nav-tabs">
-                            <li class="active"><a href="#timeline" data-toggle="tab">Linha do tempo</a></li> 
-                            <li><a href="#ativExtra" data-toggle="tab">Atividades Realizadas</a></li>
-                            <li><a href="#treinos_realizados" data-toggle="tab">Treinos realizados</a></li>
-                             <li><a href="#avaliacoes" data-toggle="tab">Avaliações</a></li>
+                            <li<?php if ($aba == 'timeline') echo ' class="active"'; ?>><a href="#timeline" data-toggle="tab">Linha do tempo</a></li> 
+                            <li<?php if ($aba == 'ativExtra') echo ' class="active"'; ?>><a href="#ativExtra" data-toggle="tab">Atividades Realizadas</a></li>
+                            <li<?php if ($aba == 'treinos_realizados') echo ' class="active"'; ?>><a href="#treinos_realizados" data-toggle="tab">Treinos realizados</a></li>
+                             <li<?php if ($aba == 'avaliacoes') echo ' class="active"'; ?>><a href="#avaliacoes" data-toggle="tab">Avaliações</a></li>
                         </ul>
                         <div class="tab-content">
-                            <div class="active tab-pane" id="timeline">
+                            <div class="tab-pane<?php if ($aba == 'timeline') echo ' active'; ?>" id="timeline">
                                <!-- Post -->
                                Postar todas as atualizações da plataforma
                                <!-- /.post -->
                             </div>
-                            <div class="tab-pane" id="ativExtra">
+                            <div class="tab-pane<?php if ($aba == 'ativExtra') echo ' active'; ?>" id="ativExtra">
                                 <!-- Post -->
                                 <ul class="timeline timeline-inverse"> 
                                 <?php
@@ -243,17 +245,17 @@ if (!empty($id)) {
 //referente à paginação
 $query_pagina = "select count(ativ_extras.id) as total from ativ_extras join usuario on usuario.id=ativ_extras.aluno_id where usuario.id= " . mysqliEscaparTexto($_SESSION['id']);
 $resultado_pagina = mysqli_query($conexao, $query_pagina) or die('ERRO: '.mysqli_error($conexao).PHP_EOL.$query_pagina.PHP_EOL.print_r(debug_backtrace(), true));
-$pagina = ($resultado_pagina?mysqli_fetch_array($resultado_pagina):array());
-$pagina = array_merge(array(
+$paginacao = ($resultado_pagina?mysqli_fetch_array($resultado_pagina):array());
+$paginacao = array_merge(array(
     'total' => 0,
     'quantidade' => (!empty($_GET['quantidade']) ? $_GET['quantidade'] : 10),
     'pagina' => (!empty($_GET['pagina']) ? $_GET['pagina'] : 1),
-), array_map('intval', (array)$pagina));
-$pagina['offset'] = (($pagina['pagina'] - 1) * $pagina['quantidade']);
-$pagina['paginas'] = ceil($pagina['total'] / $pagina['quantidade']);
+), array_map('intval', (array)$paginacao));
+$paginacao['offset'] = (($paginacao['pagina'] - 1) * $paginacao['quantidade']);
+$paginacao['paginas'] = ceil($paginacao['total'] / $paginacao['quantidade']);
 
 //referente à consulta
-$query = "select ativ_extras.*, usuario.nome, usuario.sobrenome, usuario.foto from ativ_extras join usuario on usuario.id=ativ_extras.aluno_id where usuario.id= " . mysqliEscaparTexto($_SESSION['id']) . " order by ativ_extras.datahora desc limit " . $pagina['quantidade'] . " offset " . $pagina['offset'];
+$query = "select ativ_extras.*, usuario.nome, usuario.sobrenome, usuario.foto from ativ_extras join usuario on usuario.id=ativ_extras.aluno_id where usuario.id= " . mysqliEscaparTexto($_SESSION['id']) . " order by ativ_extras.datahora desc limit " . $paginacao['quantidade'] . " offset " . $paginacao['offset'];
 $resultado = mysqli_query($conexao, $query) or die('ERRO: '.mysqli_error($conexao).PHP_EOL.$query.PHP_EOL.print_r(debug_backtrace(), true));
 
 
@@ -312,14 +314,14 @@ while ($linha = mysqli_fetch_array($resultado)) {
 
                 </ul>
             
-  <?php if ($pagina['paginas'] > 1){ ?>
+  <?php if ($paginacao['paginas'] > 1){ ?>
         <div class="box-footer clearfix">
             <ul class="pagination pagination-sm no-margin">
-                <li class="<?php echo (($pagina['pagina'] == 1) ? 'disabled' : '') ?>"><a href="<?php echo basename(__FILE__) ?>">&laquo;</a></li>
-<?php for ($pag = 1; $pag <= $pagina['paginas']; $pag++){ ?>
-                <li class="<?php echo (($pagina['pagina'] == $pag) ? 'active' : '') ?>"><a href="<?php echo basename(__FILE__) ?>?pagina=<?php echo $pag ?>"><?php echo $pag ?></a></li>
+                <li class="<?php echo (($paginacao['pagina'] == 1) ? 'disabled' : '') ?>"><a href="<?php echo basename(__FILE__) ?>?aba=ativExtra">&laquo;</a></li>
+<?php for ($pag = 1; $pag <= $paginacao['paginas']; $pag++){ ?>
+                <li class="<?php echo (($paginacao['pagina'] == $pag) ? 'active' : '') ?>"><a href="<?php echo basename(__FILE__) ?>?aba=ativExtra&pagina=<?php echo $pag ?>"><?php echo $pag ?></a></li>
 <?php } ?>
-                <li class="<?php echo (($pagina['pagina'] == $pagina['paginas']) ? 'disabled' : '') ?>"><a href="<?php echo basename(__FILE__) ?>?pagina=<?php echo $pagina['paginas'] ?>">&raquo;</a></li>
+                <li class="<?php echo (($paginacao['pagina'] == $paginacao['paginas']) ? 'disabled' : '') ?>"><a href="<?php echo basename(__FILE__) ?>?aba=ativExtra&pagina=<?php echo $paginacao['paginas'] ?>">&raquo;</a></li>
             </ul>
         </div>
 <?php } ?>  
@@ -328,7 +330,7 @@ while ($linha = mysqli_fetch_array($resultado)) {
                 
                                 <!-- /.post -->
                             </div>
-                            <div class="tab-pane" id="treinos_realizados">
+                            <div class="tab-pane<?php if ($aba == 'treinos_realizados') echo ' active'; ?>" id="treinos_realizados">
                                 <!-- Post -->
                                         <?php
                 $query = array();
@@ -361,16 +363,31 @@ while ($linha = mysqli_fetch_array($resultado)) {
                 $query['where'] = array(
                     "a.aluno_id = " . mysqliEscaparTexto($_SESSION['id']),
                 );
-                $query['order'] = "
-    p.grupo
-";
 
+
+                //referente à paginação
+                $query_pagina = $query;
+                $query_pagina['select'] = "count(*) as total";
+                $resultado_pagina = dbquery($query_pagina);
+                $paginacao2 = ($resultado_pagina?$resultado_pagina[0]:array());
+                $paginacao2 = array_merge(array(
+                    'total' => 0,
+                    'quantidade' => (!empty($_GET['quantidade']) ? $_GET['quantidade'] : 10),
+                    'pagina' => (!empty($_GET['pagina2']) ? $_GET['pagina2'] : 1),
+                ), array_map('intval', (array)$paginacao2));
+                $paginacao2['offset'] = (($paginacao2['pagina'] - 1) * $paginacao2['quantidade']);
+                $paginacao2['paginas'] = ceil($paginacao2['total'] / $paginacao2['quantidade']);
+
+                $query['order'] = "
+    f.datahora desc
+";
+                 $query['outro'] = "limit " . $paginacao2['quantidade'] . " offset " . $paginacao2['offset'];
                 $resultado = dbquery($query);
                 ?> 
                                         <h3 class="box-title">Exercícios Feitos</h3>
                     <br>
                     <?php if (!empty($resultado)) { ?>
-                        <div class="tab-pane" id="timeline">
+                        <div class="tab-pane active; ?>" id="timeline">
                             <ul class="timeline timeline-inverse">
                                 <?php
                                 $dataanterior = $grupo_atual = '';
@@ -441,14 +458,25 @@ while ($linha = mysqli_fetch_array($resultado)) {
                         <i class="fa fa-clock-o bg-gray"></i>
                     </li>   
                     </ul>
-                </div>
+  <?php if ($paginacao2['paginas'] > 1){ ?>
+        <div class="box-footer clearfix">
+            <ul class="pagination pagination-sm no-margin">
+                <li class="<?php echo (($paginacao2['pagina'] == 1) ? 'disabled' : '') ?>"><a href="<?php echo basename(__FILE__) ?>?aba=treinos_realizados">&laquo;</a></li>
+<?php for ($pag = 1; $pag <= $paginacao2['paginas']; $pag++){ ?>
+                <li class="<?php echo (($paginacao2['pagina'] == $pag) ? 'active' : '') ?>"><a href="<?php echo basename(__FILE__) ?>?aba=treinos_realizados&pagina2=<?php echo $pag ?>"><?php echo $pag ?></a></li>
+<?php } ?>
+                <li class="<?php echo (($paginacao2['pagina'] == $paginacao2['paginas']) ? 'disabled' : '') ?>"><a href="<?php echo basename(__FILE__) ?>?aba=treinos_realizados&pagina2=<?php echo $paginacao2['paginas'] ?>">&raquo;</a></li>
+            </ul>
+        </div>
+<?php } ?>  
+                              </div>
             <?php } else { ?>
                 <div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12" align="center"><h3><b>Não foi realizado nenhum exercício ainda.</b></h3></div>
             <?php } ?>
                                        
                                 <!-- /.post -->
                             </div>
-                            <div class="tab-pane" id="avaliacoes">
+                            <div class="tab-pane<?php if ($aba == 'avaliacoes') echo ' active'; ?>" id="avaliacoes">
                                 <!-- Post -->
                                 Postar as ultimas avaliações
                                 <!-- /.post -->
@@ -466,12 +494,12 @@ while ($linha = mysqli_fetch_array($resultado)) {
                 <div class="col-md-9">
                             <div class="nav-tabs-custom">
                                 <ul class="nav nav-tabs">
-                                    <li class="active"><a href="#timeline" data-toggle="tab">Linha do tempo</a></li>                    
-                                    <li><a href="#dicas" data-toggle="tab">Dicas</a></li>
+                                    <li<?php if ($aba == 'timeline') echo ' class="active"'; ?>><a href="#timeline" data-toggle="tab">Linha do tempo</a></li>                    
+                                    <li<?php if ($aba == 'dicas') echo ' class="active"'; ?>><a href="#dicas" data-toggle="tab">Dicas</a></li>
 
                                 </ul>
                                 <div class="tab-content">
-                                    <div class="active tab-pane" id="timeline">
+                                    <div class="tab-pane<?php if ($aba == 'timeline') echo ' active'; ?>" id="timeline">
                                         <!-- The timeline -->
                                         <ul class="timeline timeline-inverse">
                                             <!-- timeline time label -->
@@ -486,7 +514,7 @@ while ($linha = mysqli_fetch_array($resultado)) {
                                                     <span class="time"><i class="fa fa-clock-o"></i> 12:05</span>
                                                     <h3 class="timeline-header"><a href="#">Support Team</a> sent you an email</h3>
                                                     <div class="timeline-body">
-                                                        Discutir o que fazer pra por aqui...
+                                                        Você enviou uma nova dica.
                                                     </div>
                                                     <div class="timeline-footer">
                                                         <a class="btn btn-primary btn-xs">Read more</a>
@@ -512,7 +540,7 @@ while ($linha = mysqli_fetch_array($resultado)) {
                                                     <span class="time"><i class="fa fa-clock-o"></i> 27 mins ago</span>
                                                     <h3 class="timeline-header"><a href="#">Jay White</a> commented on your post</h3>
                                                     <div class="timeline-body">
-                                                        Ver o que por aqui!
+                                                        Você enviou uma avaliação para ...
                                                     </div>
                                                     <div class="timeline-footer">
                                                         <a class="btn btn-warning btn-flat btn-xs">View comment</a>
@@ -547,7 +575,7 @@ while ($linha = mysqli_fetch_array($resultado)) {
                                             </li>
                                         </ul>
                                     </div>
-                            <div class="tab-pane" id="dicas">
+                            <div class="tab-pane<?php if ($aba == 'dicas') echo ' active'; ?>" id="dicas">
                                 <!-- Post -->
                                 <?php include 'dicas.php'; ?>  
                                 <!-- /.post -->
