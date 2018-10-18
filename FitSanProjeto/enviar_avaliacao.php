@@ -21,6 +21,22 @@ $data_envio = $now->format('Y-m-d H:i:s');
 
             //echo $query;
 
-            mysqli_query($conexao, $query);
+            mysqli_query($conexao, $query);          
+            
+            $profissional_id = $_SESSION['id'];
+    $aluno_id = $_POST['id'];
+
+$query2 = "select * from usuario where id = " . mysqliEscaparTexto($_SESSION['id']) . " and status = 'ativado'";
+$resultado = mysqli_query($conexao, $query2) or die('ERRO: '.mysqli_error($conexao).PHP_EOL.$query2.PHP_EOL.print_r(debug_backtrace(), true));
+$linha = mysqli_fetch_array($resultado) or die('ERRO: '.mysqli_error($conexao).PHP_EOL.$query2.PHP_EOL.print_r(debug_backtrace(), true));
+
+
+criarNotificacao('INFO',
+    'Você tem uma Avaliação de '. $linha['nome'] . " " . $linha['sobrenome']  . "<br> <a href='form_receber_avaliacao.php'> Ver </a>",
+  tipoLogado('aluno') ? $profissional_id : null,
+    !tipoLogado('aluno') ? $aluno_id : null,
+    ['profissional_id' => $profissional_id, 'aluno_id' => $aluno_id, 'table' => 'notificacao']
+);
+            
 
             header('Location: pagina1.php');        

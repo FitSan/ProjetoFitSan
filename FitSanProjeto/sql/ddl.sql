@@ -75,6 +75,7 @@ tipo char(3) not null,
 dica_id int references dica(id)
 );
 
+select * from notificacao;
 
 CREATE TABLE notificacao(
 id INT primary key AUTO_INCREMENT,

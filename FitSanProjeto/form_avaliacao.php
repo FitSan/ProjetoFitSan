@@ -154,11 +154,7 @@ if (!tipoLogado("profissional")) {
             </div>
 
 
-
-
-         
-
-            <button type="submit" class="btn btn-primary btn-flat"><a href="notificar_avaliacao.php?id=<?= $usuario['id'] ?>">Enviar</a></button>
+            <button type="submit" class="btn btn-primary btn-flat">Enviar</button>
             
         </form>
     </section>
