@@ -283,7 +283,7 @@ if (mysqli_num_rows($resultado_all) === 0) {
             }
             if ($infoMeta) {
                 ?>
-                <div class="col-md-3">
+                <div class="col-md-3 pull-right">
                     <div class="box box-primary">
                         <div class="box-header with-border">
                             <h2 class="box-title" style="padding: 7px;"><b>Visualizar dados</b></h2> 
@@ -316,9 +316,7 @@ if (mysqli_num_rows($resultado_all) === 0) {
                     </div>
                 </div>   
                 
-                <div class="col-md-3" id="dados_meta">
-
-
+                <div class="col-md-3 pull-right" id="dados_meta">
 
                 </div>
             <?php }
