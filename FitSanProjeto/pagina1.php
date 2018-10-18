@@ -2,9 +2,6 @@
 $pagina = 'Página inicial';
 
 require_once './template/cabecalho.php';
-
-$query = "select * from dica";
-$resultado = mysqli_query($conexao, $query);
 ?>
 
 

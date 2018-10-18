@@ -92,6 +92,20 @@ function calculaidade($datanasc) {
     return floor($idade / 31557600);
 }
 
+function verificarMeta() {
+    $sql_meta = "select * from meta where status='ativa' and usuario_id=".$_SESSION['id']." and data_final<CURRENT_DATE()";
+    global $conexao;
+    $resultado_meta = mysqli_query($conexao, $sql_meta);
+    $linha_meta = mysqli_fetch_array($resultado_meta);
+    if(mysqli_num_rows($resultado_meta)===0){
+        return false;
+    }else{
+        $finalizar_meta = "update meta set status='finalizada' where status='ativa' and usuario_id=".$_SESSION['id'];
+        mysqli_query($conexao, $finalizar_meta);
+        criarNotificacao('INFO', 'Sua meta foi finalizada na data '.date('d M Y', dataParse($linha_meta['data_final'])).'<br><a href="okMetaNot.php">Ok</a>', null, $_SESSION['id'], null);
+    }
+}
+
 /* REMOVER ESTA FUNÇÃO E COLOCAR A DE BAIXO
 function converte_data($datanasc) {
     if (strstr($datanasc, "/")) {

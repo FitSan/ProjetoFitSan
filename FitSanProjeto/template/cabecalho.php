@@ -1,6 +1,6 @@
 <?php
 require_once 'autenticacao.php';
-
+verificarMeta();
 ?>  
 <html lang="pt-br">
     <head>

@@ -271,20 +271,21 @@
     </div>
   </div>-->
 
-
-
-
-
-<?php //if($erro){ ?>   
-<!--<script>
-        $(document).ready(function(){
-            $("#erro-dica").modal();
-        });
-</script>-->
-<?php
-//}
-//
-?>
+<div class="modal" id="modalDadoMeta" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document" style="height: auto; width: 400px;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h3 class="modal-title"></h3>        
+      </div>
+        <div class="modal-body" style="font-size: 18px; padding: 15px; ">
+          <p><b>Descrição:</b></p>
+          <div id="desc"></div>
+      </div>
+    </div>
+  </div>
 </div>
 <!-- jQuery 3 -->
 <script src="bower_components/jquery/dist/jquery.min.js"></script>
@@ -579,6 +580,131 @@
         });
     });
 </script>
+<script>
+    $(document).ready(function(){
+        $('#meta_id').change(function(){
+            var meta_id = $(this).val();
+//            showCheckGrafico(meta_id);
+            $.ajax({
+                url: "view_dados_meta.php",
+                method: "POST",
+                data:{meta_id:meta_id},
+                success:function(data){
+                    $('#dados_meta').html(data);
+                }
+            });
+        });
+    });
+</script>
+<!--<script>    
+        $('#add_dado').click(function(){
+            var data = $('#form_add_dado :input').serializeArray();
+            $.post("add_dados_meta.php", data, function(){
+                $("#form_add_dado :input").each(function(){
+                    $(this).val('');
+                });
+            });
+        });
+        $("#form_add_dado").submit(function(){
+            return false;
+        });
+</script>-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $('#dado_mes').change(function(){
+            var dado_mes = $(this).val();
+            $.ajax({
+                url: "chart_meta_mensal.php",
+                method: "POST",
+                data:{dado_mes:dado_mes},
+                success:function(data){
+                    $('#mensal_chart').html(data);          
+                    
+                }
+            });            
+        });
+    });
+</script>
+<script>
+    $(document).on('click', '.pagination a', function(){
+        var meta_id = $("#meta_id").val();
+            $.ajax({
+                url: "view_dados_meta.php?pag="+$(this).attr('id'),
+                method: "POST",
+                data:{meta_id:meta_id},
+                success:function(data){
+                    $('#dados_meta').html(data);          
+                    
+                }
+            });            
+    });
+</script>
+<script>
+    function alterarMeta(){
+        document.getElementById('meta_tipo').readOnly = false;
+        document.getElementById('data_inicial').readOnly = false;
+        document.getElementById('data_final').readOnly = false;
+        document.getElementById('peso_inicial').readOnly  = false;
+        document.getElementById('peso_final').readOnly  = false;
+        document.getElementById('btnSubmit').style.display = "inline";
+    }
+    function submitAlteracao(){
+        document.getElementById('form_meta').action = "alterar_meta.php";
+        document.getElementById('form_meta').submit();        
+        document.getElementById('btnSubmit').style.display = "none";
+        readonlyTrue();
+    }
+    function cancelAlteracao(){
+        document.getElementById('form_meta').action = "alterar_meta.php";
+        document.getElementById('form_meta').reset();        
+        document.getElementById('btnSubmit').style.display = "none";
+        readonlyTrue();
+    }
+    function readonlyTrue(){
+        document.getElementById('meta_tipo').readOnly = true;
+        document.getElementById('data_inicial').readOnly = true;
+        document.getElementById('data_final').readOnly = true;
+        document.getElementById('peso_inicial').readOnly = true;
+        document.getElementById('peso_final').readOnly = true;
+    }
+    
+    function descricaoDado(){
+        var check_desc = document.getElementById('check_desc_dado');
+        if (check_desc.checked === true) {   
+        document.getElementById('desc_dado').style.display = "inline";
 
+//        $(label' b').text('+');
+	}else{
+        document.getElementById('desc_dado').style.display = "none";
+//            $(label' b').text('X');
+        }
+    }
+</script>
+
+
+<script>
+    $('#modalDadoMeta').on('show.bs.modal', function (event) {
+  var button = $(event.relatedTarget); // Button that triggered the modal
+  var desc = button.data('desc');
+  var data = button.data('data'); // Extract info from data-* attributes
+  // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+  // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+  var modal = $(this);
+  modal.find('.modal-title').text('Dado ' + data);
+  modal.find('.modal-body #desc').text(desc);
+})
+</script>
+<!--<script>
+    function showCheckGrafico(meta_id){
+        var atual_id = document.getElementById('id_atual').val();
+        var meta_id = $(this).val();
+        var atual_id = document.getElementById('id_atual').val();
+        alert("meta_id+'l'+atual_id")
+        if (meta_id!=atual_id or meta_id!=""){
+            document.getElementById('check_grafico').style.display = "inline";
+        }
+    }
+</script>-->
 </body>
 </html>

@@ -11,7 +11,7 @@ foto varchar(255),
 senha varchar(255) not null,
 email varchar(255) not null unique,
 tipo_id integer references tipo_usuario(id),
-status enum('ativado', 'desativado', 'excluido')
+status enum('ativado', 'desativado', 'excluido') default 'ativado'
 );
 
 ALTER TABLE usuario ADD codigo varchar(255);
@@ -293,32 +293,30 @@ select * from `avaliacao` ;
 
 
 
-
-
-
-
-
-
-
-
-
+update usuario set status='ativado' where id = 16
 
 
 
 -------META------
 create table meta(
  id int primary key auto_increment,
-tipo ENUM ('PERDER', 'GANHAR') not null,
+tipo ENUM ('PERDER', 'GANHAR', 'MANTER') not null,
 data_inicial date not null,
 data_final date not null,
-peso_inicial decimal(7,3) not null,
-peso_final decimal(7,3) not null,
+peso_inicial decimal(6,3) not null,
+peso_final decimal(6,3) not null,
 status ENUM ('ativa', 'finalizada', 'cancelada') not null default 'ativa',
 usuario_id int references usuario(id)
 ); 
 
-alter table meta change column peso_inicial peso_inicial decimal(7,3) not null,
-change column peso_final peso_final decimal(7,3) not null;
+create table dados_meta(
+ id int primary key auto_increment,
+data_add date not null,
+peso_add decimal(6,3) not null,
+descricao TEXT,
+meta_id int references meta(id)
+);
+
 
 select * from meta;
 
@@ -326,15 +324,6 @@ select dados_meta.*, meta.* from dados_meta join meta on dados_meta.meta_id = me
 select meta.*, dados_meta.count(id) from dados_meta join meta on meta.id=dados_meta.meta_id where meta.usuario_id = 1 and meta.status = 'ativa'
 
 insert into meta (tipo, data_inicial, data_final, peso_inicial, peso_final, usuario_id) values ('PERDER', '2018-09-20', '2018-09-21', '50', '20', '1')
-
-create table dados_meta(
- id int primary key auto_increment,
-data_add date not null,
-peso_add decimal(7,3) not null,
-meta_id int references meta(id)
-);
-
-alter table dados_meta change column peso_add peso_add decimal(7,3) not null;
 
 select * from dados_meta;
 
