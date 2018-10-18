@@ -387,7 +387,7 @@ while ($linha = mysqli_fetch_array($resultado)) {
                                         <h3 class="box-title">Exercícios Feitos</h3>
                     <br>
                     <?php if (!empty($resultado)) { ?>
-                        <div class="tab-pane active; ?>" id="timeline">
+                        <div class="tab-pane active" id="timeline">
                             <ul class="timeline timeline-inverse">
                                 <?php
                                 $dataanterior = $grupo_atual = '';
