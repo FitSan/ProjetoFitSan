@@ -1,4 +1,5 @@
-<div class="clearfix"></div>
+<br>
+
 </div>
 <footer class="main-footer">
     <div class="pull-right hidden-xs">
