@@ -3,14 +3,14 @@ $pagina = 'Metas';
 include './template/cabecalho.php';
 
 $query = "select * from meta where usuario_id=" . $_SESSION['id'] . " and status='ativa'";
-$resultado = mysqli_query($conexao, $query) or die('ERRO: '.mysqli_error($conexao).PHP_EOL.$query.PHP_EOL.print_r(debug_backtrace(), true));
-$linha = mysqli_fetch_array($resultado) or die('ERRO: '.mysqli_error($conexao).PHP_EOL.$query.PHP_EOL.print_r(debug_backtrace(), true));
+$resultado = mysqli_query($conexao, $query);
+$linha = mysqli_fetch_array($resultado);
 
 $query_all = "select * from meta where usuario_id=" . $_SESSION['id'] . " order by data_inicial desc";
-$resultado_all = mysqli_query($conexao, $query_all) or die('ERRO: '.mysqli_error($conexao).PHP_EOL.$query_all.PHP_EOL.print_r(debug_backtrace(), true));
+$resultado_all = mysqli_query($conexao, $query_all);
 
 $query_meses = "select MAX(data_add) as data_add, MONTH(data_add) as meses from dados_meta where meta_id= " . $linha['id'] . " group by meses order by meses desc";
-$resultado_meses = mysqli_query($conexao, $query_meses) or die('ERRO: '.mysqli_error($conexao).PHP_EOL.$query_meses.PHP_EOL.print_r(debug_backtrace(), true));
+$resultado_meses = mysqli_query($conexao, $query_meses);
 if (mysqli_num_rows($resultado) === 0) {
     $novaMeta = true;
 //                      formulário inserção meta
@@ -236,12 +236,8 @@ if (mysqli_num_rows($resultado_all) === 0) {
 //                    include 'chart_meta_mensal.php';
                     ?>
 
-                </div>  
-                <?php
-            }
-            if ($infoMeta) {
-                ?>
-                <div class="col-md-6">
+                </div> 
+            <div class="col-md-6">
                     <div class="box box-primary" style="height: auto">
 
                         <div class="nav-tabs-custom" id="metaAtualDiv">
@@ -295,6 +291,11 @@ if (mysqli_num_rows($resultado_all) === 0) {
                         </div>-->
                     </div>
                 </div>
+                <?php
+            }
+            if ($infoMeta) {
+                ?>
+                
                 <div class="col-md-3 pull-right">
                     <div class="box box-primary">
                         <div class="box-header with-border">

@@ -5,14 +5,14 @@ require_once './autenticacao.php';
 
 
 $query_meta = "select *, MONTH(data_final) as mes_final from meta where usuario_id = ".$_SESSION['id']." and status='ativa'";
-$resultado_meta = mysqli_query($conexao, $query_meta) or die('ERRO: '.mysqli_error($conexao).PHP_EOL.$query_meta.PHP_EOL.print_r(debug_backtrace(), true));
+$resultado_meta = mysqli_query($conexao, $query_meta);
 $linha_meta = mysqli_fetch_array($resultado_meta);
 
 if(isset($_POST['dado_mes'])){
     $mes_dado = $_POST['dado_mes'];
 }else{
     $query_mes_dado = "select MAX(MONTH(data_add)) as mes from dados_meta where meta_id= $linha_meta[id]";
-    $resultado_mes_dado = mysqli_query($conexao, $query_mes_dado) or die('ERRO: '.mysqli_error($conexao).PHP_EOL.$query_mes_dado.PHP_EOL.print_r(debug_backtrace(), true));
+    $resultado_mes_dado = mysqli_query($conexao, $query_mes_dado);
     $linha_mes_dado = mysqli_fetch_array($resultado_mes_dado);
     $mes_dado = $linha_mes_dado['mes'];
 }
@@ -26,7 +26,7 @@ if(isset($_POST['dado_mes'])){
 //$resultado_anual = mysqli_query($conexao, $query_anual);
 
 $query_mensal = "select dados_meta.data_add, dados_meta.peso_add, meta.peso_final from dados_meta join meta on dados_meta.meta_id=meta.id where MONTH(data_add) = $mes_dado and meta_id=".$linha_meta['id']." order by dados_meta.data_add asc";
-$resultado_mensal = mysqli_query($conexao, $query_mensal) or die('ERRO: '.mysqli_error($conexao).PHP_EOL.$query_mensal.PHP_EOL.print_r(debug_backtrace(), true));
+$resultado_mensal = mysqli_query($conexao, $query_mensal);
 //echo $query_mensal;
 
 $datas = array();

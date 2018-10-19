@@ -24,11 +24,11 @@ where
     meta.usuario_id = ".$_SESSION['id']." and
     meta.status='ativa'
 order by
-    mes_final
+    mes
 ";
 // O MySQL já faz o cálculo da média dos pesos basta colocar no lugar do SUM a função AVG e assim o cálculo da média abaixo não é necessário.
 
-$resultado_anual = mysqli_query($conexao, $query_anual) or die('ERRO: '.mysqli_error($conexao).PHP_EOL.$query_anual.PHP_EOL.print_r(debug_backtrace(), true));
+$resultado_anual = mysqli_query($conexao, $query_anual);
 
 $datas = array();
 $pesos = array();
