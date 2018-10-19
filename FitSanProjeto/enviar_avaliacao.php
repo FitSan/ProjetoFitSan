@@ -23,7 +23,7 @@ $data_envio = $now->format('Y-m-d H:i:s');
 
             mysqli_query($conexao, $query);          
             
-            $profissional_id = $_SESSION['id'];
+    $profissional_id = $_SESSION['id'];
     $aluno_id = $_POST['id'];
 
 $query2 = "select * from usuario where id = " . mysqliEscaparTexto($_SESSION['id']) . " and status = 'ativado'";
