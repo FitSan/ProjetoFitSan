@@ -1,4 +1,4 @@
-<br>
+<div class="clearfix"></div>
 
 </div>
 <footer class="main-footer">

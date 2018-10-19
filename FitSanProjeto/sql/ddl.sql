@@ -14,6 +14,8 @@ tipo_id integer references tipo_usuario(id),
 status enum('ativado', 'desativado', 'excluido') default 'ativado'
 );
 
+alter table usuario change column status status enum('ativado', 'desativado', 'excluido') default 'ativado';
+
 ALTER TABLE usuario ADD codigo varchar(255);
 ALTER TABLE usuario ADD status enum('ativado', 'desativado', 'excluido');
 

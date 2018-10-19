@@ -3,14 +3,14 @@ $pagina = 'Metas';
 include './template/cabecalho.php';
 
 $query = "select * from meta where usuario_id=" . $_SESSION['id'] . " and status='ativa'";
-$resultado = mysqli_query($conexao, $query);
-$linha = mysqli_fetch_array($resultado);
+$resultado = mysqli_query($conexao, $query) or die('ERRO: '.mysqli_error($conexao).PHP_EOL.$query.PHP_EOL.print_r(debug_backtrace(), true));
+$linha = mysqli_fetch_array($resultado) or die('ERRO: '.mysqli_error($conexao).PHP_EOL.$query.PHP_EOL.print_r(debug_backtrace(), true));
 
 $query_all = "select * from meta where usuario_id=" . $_SESSION['id'] . " order by data_inicial desc";
-$resultado_all = mysqli_query($conexao, $query_all);
+$resultado_all = mysqli_query($conexao, $query_all) or die('ERRO: '.mysqli_error($conexao).PHP_EOL.$query_all.PHP_EOL.print_r(debug_backtrace(), true));
 
-$query_meses = "select data_add, MONTH(data_add) as meses from dados_meta where meta_id= " . $linha['id'] . " group by meses order by meses desc";
-$resultado_meses = mysqli_query($conexao, $query_meses);
+$query_meses = "select MAX(data_add) as data_add, MONTH(data_add) as meses from dados_meta where meta_id= " . $linha['id'] . " group by meses order by meses desc";
+$resultado_meses = mysqli_query($conexao, $query_meses) or die('ERRO: '.mysqli_error($conexao).PHP_EOL.$query_meses.PHP_EOL.print_r(debug_backtrace(), true));
 if (mysqli_num_rows($resultado) === 0) {
     $novaMeta = true;
 //                      formulário inserção meta
@@ -146,7 +146,7 @@ if (mysqli_num_rows($resultado_all) === 0) {
                             <div class="form-group" style="padding: 5px;">
                                 <label style="padding: 4px 3px 4px 0;">Peso atual:</label> 
                                 <div class="input-group">                                                               
-                                    <input type="number" class="form-control pull-right" id="peso_inicial" name="peso_inicial" step="0.001" min="0" value="<?= ($novaMeta) ? '' : $linha['peso_inicial'] ?>" <?= $novaMeta ? '' : 'readonly' ?>>
+                                    <input type="number" class="form-control" id="peso_inicial" name="peso_inicial" step="0.001" min="0" value="<?= ($novaMeta) ? '' : $linha['peso_inicial'] ?>" <?= $novaMeta ? '' : 'readonly' ?>>
                                 </div>
                                 <?php
                                 if (!empty($_SESSION['erro_pesoI'])) {
@@ -162,7 +162,7 @@ if (mysqli_num_rows($resultado_all) === 0) {
                             <div class="form-group" style="padding: 5px;">
                                 <label style="padding: 4px 3px 4px 0;">Meta de peso:</label> 
                                 <div class="input-group">                                                      
-                                    <input type="number" class="form-control pull-right" id="peso_final" name="peso_final" step="0.001" min="0" value="<?= ($novaMeta) ? '' : $linha['peso_final'] ?>" <?= $novaMeta ? '' : 'readonly' ?>>
+                                    <input type="number" class="form-control" id="peso_final" name="peso_final" step="0.001" min="0" value="<?= ($novaMeta) ? '' : $linha['peso_final'] ?>" <?= $novaMeta ? '' : 'readonly' ?>>
                                 </div>
                                 <?php
                                 if (!empty($_SESSION['erro_pesoF'])) {
@@ -198,7 +198,7 @@ if (mysqli_num_rows($resultado_all) === 0) {
             </div>
 
             <?php if (!$novaMeta) { ?>
-                <div class="col-md-6">
+                <div class="col-md-3">
                     <div class="box box-primary">
                         <form role="form" method="post" action="add_dados_meta.php">
                             <div class="box-header with-border">
@@ -213,17 +213,17 @@ if (mysqli_num_rows($resultado_all) === 0) {
                                             <div class="input-group-addon">
                                                 <i class="fa fa-calendar"></i>                                    
                                             </div>
-                                            <input type="text" class="form-control pull-right data_meta" id="data_dado_meta" name="data_dado_meta">
+                                            <input type="text" class="form-control data_meta" id="data_dado_meta" name="data_dado_meta">
                                         </div>
                                     </div>
                                     <div class="form-group" style="padding: 5px;">
                                         <label style="padding: 4px 3px 4px 0;">Peso:</label>                            
-                                        <input type="number" class="form-control pull-right" id="peso" name="peso" step="0.001" min="0">
-                                    </div>kg
+                                        <input type="number" class="form-control" id="peso" name="peso" step="0.001" min="0">
+                                    </div>
                                 </div>
                                 <div class="form-group"  style="padding: 5px;" id="active_desc_dado"> 
                                     <input type="checkbox" id="check_desc_dado" onclick="descricaoDado()" style="display: none;"><label for="check_desc_dado"><b><i class="fa fa-angle-down" style="padding: 5px;"></i></b>Descrição</label>
-                                  
+
                                     <textarea name="descricao_dado" class="form-control round" id="desc_dado" style="display: none;" rows="2" ></textarea>                                        
                                 </div>
                                 <div class="form-group">
@@ -235,16 +235,23 @@ if (mysqli_num_rows($resultado_all) === 0) {
                     <?php
 //                    include 'chart_meta_mensal.php';
                     ?>
+
+                </div>  
+                <?php
+            }
+            if ($infoMeta) {
+                ?>
+                <div class="col-md-6">
                     <div class="box box-primary" style="height: auto">
 
-                        <div class="nav-tabs-custom">
+                        <div class="nav-tabs-custom" id="metaAtualDiv">
                             <ul class="nav nav-tabs pull-right ui-sortable-handle">
-                                <li class="active"><a href="#mensal" data-toggle="tab">Mensal</a></li>
-                                <li class=""><a href="#anual" data-toggle="tab">Anual</a></li>
+                                <li class="active"><a href="#mensal"  data-toggle="tab">Mensal</a></li>
+                                <li class=""><a href="#anual"  data-toggle="tab">Anual</a></li>
                                 <li class="pull-left header"><i class="fa fa-inbox"></i>Gráfico Meta Atual</li>
                             </ul>
                             <div class="tab-content no-padding">    
-                                
+
                                 <div class="tab-pane active" id="mensal">
                                     <div class="box-body">  
                                         <form class="form-inline" role="form" method="post" action="<?php echo basename(__FILE__) ?>">
@@ -258,16 +265,16 @@ if (mysqli_num_rows($resultado_all) === 0) {
                                                 }
                                                 ?>  
                                             </select>    
-<!--                                            <div class="form-group">
-                                                <input type="submit" id="view_dados" style="padding: 10px; margin: 5px 0;" class="pull-right btn btn-block btn-google " value="Visualizar">
-                                            </div>-->
+                                            <!--                                            <div class="form-group">
+                                                                                            <input type="submit" id="view_dados" style="padding: 10px; margin: 5px 0;" class="pull-right btn btn-block btn-google " value="Visualizar">
+                                                                                        </div>-->
 
                                         </form>
                                     </div>
                                     <div id="mensal_chart">
-                                    <?php
-                                    include 'chart_meta_mensal.php';
-                                    ?>
+                                        <?php
+                                        include 'chart_meta_mensal.php';
+                                        ?>
                                     </div>
                                 </div>
                                 <div class="tab-pane " id="anual">
@@ -277,12 +284,17 @@ if (mysqli_num_rows($resultado_all) === 0) {
                                 </div>
                             </div>
                         </div>
+<!--                        <div id="historicoMetas">
+                            <p class="pull-left header"><i class="fa fa-inbox"></i></p>
+                            <div class="box-body" id="anual">  
+                                <?php
+                                include 'chart_meta_anual.php';
+                                ?>     
+                            </div>
+
+                        </div>-->
                     </div>
-                </div>  
-                <?php
-            }
-            if ($infoMeta) {
-                ?>
+                </div>
                 <div class="col-md-3 pull-right">
                     <div class="box box-primary">
                         <div class="box-header with-border">
@@ -293,9 +305,9 @@ if (mysqli_num_rows($resultado_all) === 0) {
                                 <input type="hidden" id="id_atual" value="<?= $linha['id'] ?>">
                                 <label style="padding: 4px 3px 4px 0;">Histórico: </label>
                                 <select name="meta_id" id="meta_id" class="form-control">
-                                    <option value="">Selecione uma meta</option>
+                                    <option value="<?= $linha['id'] ?>">Selecione uma meta</option>
                                     <?php
-                                    while ($linha_all = mysqli_fetch_array($resultado_all)) {                                        
+                                    while ($linha_all = mysqli_fetch_array($resultado_all)) {
                                         ?>
                                         <option value="<?= $linha_all['id'] ?>"><?= ($linha_all['status'] != 'ativa') ? date('d M', dataParse($linha_all['data_inicial'])) . ' - ' . date('d M', dataParse($linha_all['data_final'])) : 'Meta atual' ?></option>
                                         <?php
@@ -303,7 +315,8 @@ if (mysqli_num_rows($resultado_all) === 0) {
                                     ?>  
                                 </select>
                                 <br>
-                                <div id="check_grafico" style="display: none;"><label for="graficoDados" class="pull-right" style="cursor: pointer;"><i class="fa fa-angle-down" style="padding: 5px;"></i><b><i class="fa fa-line-chart" style="padding: 4px 6px 0 6px; font-size: 20px"></i></b></label><input type="checkbox" class="icheckbox_minimal-grey pull-right" id="graficoDados" onclick="descricaoDado()" style="display: none;"></div>
+                                <!--                                SELECIONAR VER OU NÃO O GRÁFICO DO HISTÓRICO-->
+                                <!--                                <div id="check_grafico" style="display: none;"><label for="graficoDados" class="pull-right" style="cursor: pointer;"><i class="fa fa-angle-down" style="padding: 5px;"></i><b><i class="fa fa-line-chart" style="padding: 4px 6px 0 6px; font-size: 20px"></i></b></label><input type="checkbox" class="icheckbox_minimal-grey pull-right" id="graficoDados" onclick="descricaoDado()" style="display: none;"></div>-->
 
 
 
@@ -313,15 +326,15 @@ if (mysqli_num_rows($resultado_all) === 0) {
 
                             </form>
                         </div>
-                    </div>
-                </div>   
-                
-                <div class="col-md-3 pull-right" id="dados_meta">
+                    </div> 
 
+                    <div id="dados_meta">
+
+                    </div>
                 </div>
             <?php }
             ?>
-        </section>
+      </section>
     </div>
     <?php
     include './template/rodape_especial.php';

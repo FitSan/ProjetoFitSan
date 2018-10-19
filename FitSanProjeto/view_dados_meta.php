@@ -2,7 +2,7 @@
 require_once './autenticacao.php';
 
 $output = '';
-$itens_por_pag = 10;
+$itens_por_pag = 5;
 if(isset($_GET['pag'])){
     $pagina = intval($_GET['pag']);
 }else{
