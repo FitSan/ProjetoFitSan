@@ -5,10 +5,7 @@ ini_set('display_errors', true);
 
 //quando um tipo diferente tentar acessar pelo navegador ele será redirecionado para a pagina 1. 
 
-if (!tipoLogado("aluno")){
-    header('Location: pagina1.php');
-    exit;
-}
+
 
 $id_avaliacao = $_GET['id_avaliacao'];
 

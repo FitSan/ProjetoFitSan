@@ -17,6 +17,11 @@ if (!tipoLogado("profissional")) {
         <h1>Formulário de Avaliação </h1>
     </section>
     <section class="content">
+        
+        <a href="form_historico_avaliacao_profissional.php">
+        <button type="button" class="btn btn-primary btn-flat">Histórico de avalições enviadas</button>
+        </a>
+        
         <form method="post" action="enviar_avaliacao.php">
             <div class="col-lg-6">
                 <br><strong>SELECIONE O ALUNO PARA SER AVALIADO</strong><select class="form-control select2" name="aluno" style="width: 100%;" >                                  
@@ -66,7 +71,7 @@ if (!tipoLogado("profissional")) {
                                         <option value="boa">Boa</option>
                                         <option value="excelente">Excelente</option>
                                         <option value="média">Média</option>
-                                        <option value="mé">Má</option>
+                                        <option value="má">Má</option>
                                         <option value="péssima">péssima</option>
                                     </select> </div>
 

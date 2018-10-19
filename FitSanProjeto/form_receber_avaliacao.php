@@ -36,34 +36,56 @@ if (!tipoLogado("aluno")) {
             while ($linhas = mysqli_fetch_array($retorno)) {
                 array_push($usuarios, $linhas);
             }
-            if($usuarios == null){
+            if ($usuarios == null) {
                 ?>
-                 <div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12" align="center"><h3><b>Você não possui nenhuma avaliação!</b></h3></div>
-                 <?php
-            } else {
-                
-            foreach ($usuarios as $usuario) {
-                ?>
- 
+                <div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12" align="center"><h3><b>Você não possui nenhuma avaliação!</b></h3></div>
                 <?php
-                $sql = "select * from `usuario` where id=" . $usuario['profissional_id'];
-                $retorno_usuario = mysqli_query($conexao, $sql);
-                $linha = (mysqli_fetch_array($retorno_usuario));
-                 
-                
-                 
-                $id_avaliacao = $usuario['id'];   
-                
-                ?>
-            <a href="http://localhost/FitSan/form_mostrar_avaliacao.php?id_avaliacao=<?php echo $id_avaliacao; ?>">
-                <h3> Avaliação do Profissional <?= $linha['nome'] ?> / <?= $usuario['data'] ?> </h3>
-                </a>
+            } else {
+
+                foreach ($usuarios as $usuario) {
+                    ?>
+
+                    <?php
+                    $sql = "select * from `usuario` where id=" . $usuario['profissional_id'];
+                    $retorno_usuario = mysqli_query($conexao, $sql);
+                    $linha = (mysqli_fetch_array($retorno_usuario));
+
+
+
+                    $id_avaliacao = $usuario['id'];
+                    ?>
+                    <a href="http://localhost/FitSan/form_mostrar_avaliacao.php?id_avaliacao=<?php echo $id_avaliacao; ?>">
+                        <h3> Avaliação do Profissional <?= $linha['nome'] ?> / <?= $usuario['data'] ?> </h3>
+                    </a>
+
+                  
             
-            
-            <?php }
-            
+
+                    <div class="timeline-item">
+                        
+                        <samp class="border border-primary"></samp>
+                        
+                        <span class="time"><i class="calendar-table"></i> <?= date('d/m/Y', dataParse($usuario['data'])) ?></span>
+
+                        <h3 class="timeline-header">Avaliação do profissional <strong><?php echo htmlspecialchars($linha['nome']); ?></strong></h3>
+
+
+                        <div class="timeline-body">
+
+
+
+                        </div>
+                      
+
+                    </div>
+                  
+
+
+                <?php
+                }
             }
-            ?>     
+            ?> 
+
         </form>
     </section>
     <!--</div>-->
