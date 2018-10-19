@@ -244,7 +244,7 @@ while ($linha = mysqli_fetch_array($resultado)) {
             </div>
         </div>
     </section>
-</div>
+<!--</div>-->
 <?php
 
 require_once './template/rodape_especial.php';

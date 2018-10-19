@@ -281,11 +281,11 @@ while ($linha = mysqli_fetch_array($resultado)) {
   <?php if ($pagina['paginas'] > 1){ ?>
         <div class="box-footer clearfix">
             <ul class="pagination pagination-sm no-margin">
-                <li class="<?php echo (($pagina['pagina'] == 1) ? 'disabled' : '') ?>"><a href="<?php echo basename(__FILE__) ?><?php if (!empty($_GET['id'])) echo '?id='.$_GET['id']; ?>">&laquo;</a></li>
+                <li class="<?php echo (($pagina['pagina'] == 1) ? 'disabled' : '') ?>"><a href="<?php echo basename(__FILE__) ?>?<?php if (isset($_GET['id'])) echo 'id=' . $_GET['id'] . '&'; ?>aba=ativExtra">&laquo;</a></li>
 <?php for ($pag = 1; $pag <= $pagina['paginas']; $pag++){ ?>
-                <li class="<?php echo (($pagina['pagina'] == $pag) ? 'active' : '') ?>"><a href="<?php echo basename(__FILE__) ?>?<?php if (!empty($_GET['id'])) echo 'id='.$_GET['id'].'&'; ?>pagina=<?php echo $pag ?>"><?php echo $pag ?></a></li>
+                <li class="<?php echo (($pagina['pagina'] == $pag) ? 'active' : '') ?>"><a href="<?php echo basename(__FILE__) ?>?<?php if (isset($_GET['id'])) echo 'id=' . $_GET['id'] . '&'; ?>aba=ativExtra&pagina=<?php echo $pag ?>"><?php echo $pag ?></a></li>
 <?php } ?>
-                <li class="<?php echo (($pagina['pagina'] == $pagina['paginas']) ? 'disabled' : '') ?>"><a href="<?php echo basename(__FILE__) ?>?<?php if (!empty($_GET['id'])) echo 'id='.$_GET['id'].'&'; ?>pagina=<?php echo $pagina['paginas'] ?>">&raquo;</a></li>
+                <li class="<?php echo (($pagina['pagina'] == $pagina['paginas']) ? 'disabled' : '') ?>"><a href="<?php echo basename(__FILE__) ?>?<?php if (isset($_GET['id'])) echo 'id=' . $_GET['id'] . '&'; ?>aba=ativExtra&pagina=<?php echo $pagina['paginas'] ?>">&raquo;</a></li>
             </ul>
         </div>
 <?php } ?>  
@@ -427,11 +427,11 @@ while ($linha = mysqli_fetch_array($resultado)) {
                             <?php if ($paginacao2['paginas'] > 1){ ?>
         <div class="box-footer clearfix">
             <ul class="pagination pagination-sm no-margin">
-                <li class="<?php echo (($paginacao2['pagina'] == 1) ? 'disabled' : '') ?>"><a href="<?php echo basename(__FILE__) ?>?aba=treinos_realizados">&laquo;</a></li>
+                <li class="<?php echo (($paginacao2['pagina'] == 1) ? 'disabled' : '') ?>"><a href="<?php echo basename(__FILE__) ?>?<?php if (isset($_GET['id'])) echo 'id=' . $_GET['id'] . '&'; ?>aba=treinos_realizados">&laquo;</a></li>
 <?php for ($pag = 1; $pag <= $paginacao2['paginas']; $pag++){ ?>
-                <li class="<?php echo (($paginacao2['pagina'] == $pag) ? 'active' : '') ?>"><a href="<?php echo basename(__FILE__) ?>?aba=treinos_realizados&pagina2=<?php echo $pag ?>"><?php echo $pag ?></a></li>
+                <li class="<?php echo (($paginacao2['pagina'] == $pag) ? 'active' : '') ?>"><a href="<?php echo basename(__FILE__) ?>?<?php if (isset($_GET['id'])) echo 'id=' . $_GET['id'] . '&'; ?>aba=treinos_realizados&pagina2=<?php echo $pag ?>"><?php echo $pag ?></a></li>
 <?php } ?>
-                <li class="<?php echo (($paginacao2['pagina'] == $paginacao2['paginas']) ? 'disabled' : '') ?>"><a href="<?php echo basename(__FILE__) ?>?aba=treinos_realizados&pagina2=<?php echo $paginacao2['paginas'] ?>">&raquo;</a></li>
+                <li class="<?php echo (($paginacao2['pagina'] == $paginacao2['paginas']) ? 'disabled' : '') ?>"><a href="<?php echo basename(__FILE__) ?>?<?php if (isset($_GET['id'])) echo 'id=' . $_GET['id'] . '&'; ?>aba=treinos_realizados&pagina2=<?php echo $paginacao2['paginas'] ?>">&raquo;</a></li>
             </ul>
         </div>
 <?php } ?>  
