@@ -29,7 +29,7 @@ function enviarPlanilha(){
     foreach ($alunos as $aluno){
         $query3 = "insert into planilha_aluno (planilha_id, aluno_id) values (" . mysqliEscaparTexto($id) . ", " . mysqliEscaparTexto($aluno) . ")";
         if (!mysqli_query($conexao, $query3)) return array('status' => 'error', 'mensagem' => ('ERRO: '.mysqli_error($conexao).PHP_EOL.$query.PHP_EOL.print_r(debug_backtrace(), true)));
-        criarNotificacao("OK", "Uma planilha foi enviada à você.".PHP_EOL.'Acesse <a href="planilha_aluno.php?id='.$id.'">sua planilha</a>', null, $aluno);
+        criarNotificacao("OK", "Uma planilha foi enviada à você.".PHP_EOL.'Acesse <a href="planilha_aluno.php?id='.$id.'">'.htmlspecialchars($titulo).'</a>', null, $aluno);
     }
     return array('status' => 'ok');
 }

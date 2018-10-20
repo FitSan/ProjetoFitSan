@@ -1,8 +1,9 @@
 <?php
-ob_start(); //gravar todas as saídas de texto em um local temporário antes de jogar para o navegador.
-session_start(); 
 
-error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING & ~E_STRICT & ~E_DEPRECATED);// Definindo para mostrar todos os erros exceto notificações, avisos, interoperabilidade e obsoletos. 
+ob_start(); //gravar todas as saídas de texto em um local temporário antes de jogar para o navegador.
+session_start();
+
+error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING & ~E_STRICT & ~E_DEPRECATED); // Definindo para mostrar todos os erros exceto notificações, avisos, interoperabilidade e obsoletos. 
 
 ini_set('default_charset', 'utf-8');
 ini_set('default_mimetype', 'text/html');
@@ -17,9 +18,10 @@ require_once './bancodedados/conectar.php';
  * @param $username será o identificador da sessão
  */
 function logar($email, $tipo = null, $nome = null, $id = null) {
-    if (is_array($email)){
-        foreach ($email as $campo => $valor){
-            if ($campo == 'senha') continue;
+    if (is_array($email)) {
+        foreach ($email as $campo => $valor) {
+            if ($campo == 'senha')
+                continue;
             $_SESSION[$campo] = $valor;
         }
     } else {
@@ -40,16 +42,19 @@ function estaLogado() {
 }
 
 function getTipo() {
-    if (empty($_SESSION['tipo'])) return 'admin';
+    if (empty($_SESSION['tipo']))
+        return 'admin';
     return $_SESSION['tipo'];
 }
 
 function tipoLogado() {
     $tipos = func_get_args();
-    if (is_array($tipos[0])) $tipos = $tipos[0];
+    if (is_array($tipos[0]))
+        $tipos = $tipos[0];
     $logado = getTipo();
     foreach ($tipos as $tipo) {
-        if ($logado == $tipo) return true;
+        if ($logado == $tipo)
+            return true;
     }
     return false;
 }
@@ -75,7 +80,7 @@ function autenticar() {
 }
 
 function exibirName($completo = false) {
-    if ($completo){
+    if ($completo) {
         return ($_SESSION['nome'] . ' ' . $_SESSION['sobrenome']);
     } else {
         return $_SESSION['nome'];
@@ -93,95 +98,108 @@ function calculaidade($datanasc) {
 }
 
 function verificarMeta() {
-    $sql_meta = "select * from meta where status='ativa' and usuario_id=".$_SESSION['id']." and data_final<CURRENT_DATE()";
+    $sql_meta = "select * from meta where status='ativa' and usuario_id=" . $_SESSION['id'] . " and data_final<CURRENT_DATE()";
     global $conexao;
     $resultado_meta = mysqli_query($conexao, $sql_meta);
     $linha_meta = mysqli_fetch_array($resultado_meta);
-    if(mysqli_num_rows($resultado_meta)===0){
+    if (mysqli_num_rows($resultado_meta) === 0) {
         return false;
-    }else{
-        $finalizar_meta = "update meta set status='finalizada' where status='ativa' and usuario_id=".$_SESSION['id'];
+    } else {
+        $finalizar_meta = "update meta set status='finalizada' where status='ativa' and usuario_id=" . $_SESSION['id'];
         mysqli_query($conexao, $finalizar_meta);
-        criarNotificacao('INFO', 'Sua meta foi finalizada na data '.date('d M Y', dataParse($linha_meta['data_final'])).'<br><a href="okMetaNot.php">Ok</a>', null, $_SESSION['id'], null);
+        criarNotificacao('INFO', 'Sua meta foi finalizada na data ' . date('d M Y', dataParse($linha_meta['data_final'])) . '<br><a href="okMetaNot.php">Ok</a>', null, $_SESSION['id'], null);
     }
 }
 
 /* REMOVER ESTA FUNÇÃO E COLOCAR A DE BAIXO
-function converte_data($datanasc) {
-    if (strstr($datanasc, "/")) {
-        $A = explode("/", $datanasc);
-        $V_data = $A[2] . "-" . $A[1] . "-" . $A[0];
-    } else {
-        $A = explode("-", $datanasc);
-        $V_data = $A[2] . "/" . $A[1] . "/" . $A[0];
-    }
-    return $V_data;
-}
-*/
+  function converte_data($datanasc) {
+  if (strstr($datanasc, "/")) {
+  $A = explode("/", $datanasc);
+  $V_data = $A[2] . "-" . $A[1] . "-" . $A[0];
+  } else {
+  $A = explode("-", $datanasc);
+  $V_data = $A[2] . "/" . $A[1] . "/" . $A[0];
+  }
+  return $V_data;
+  }
+ */
 
 // Converte a data em string para data do PHP
 function dataParse($data) {
 
     // Data no formato unixtime usado no PHP
-    if (is_numeric($data)) return intval($data);
+    if (is_numeric($data))
+        return intval($data);
 
     // Limpa espaços antes e depois do texto
     $data = trim($data);
 
     // Expressão regular para interpretar data e hora no formato DD/MM/YYYY HH:MM:SS (Ex.: 12/12/2018 15:00:00)
-    if (preg_match('{^(?P<d>\d{2})\D+(?P<m>\d{2})\D+(?P<y>\d{4})\D+(?P<h>\d{2})\D+(?P<i>\d{2})\D+(?P<s>\d{2}).*$}', $data, $match)) $dt = $match;
+    if (preg_match('{^(?P<d>\d{2})\D+(?P<m>\d{2})\D+(?P<y>\d{4})\D+(?P<h>\d{2})\D+(?P<i>\d{2})\D+(?P<s>\d{2}).*$}', $data, $match))
+        $dt = $match;
 
     // Expressão regular para interpretar data e hora no formato YYYY-MM-DD HH:MM:SS (Ex.: 12/12/2018 15:00:00)
-    elseif (preg_match('{^(?P<y>\d{4})\D+(?P<m>\d{2})\D+(?P<d>\d{2})\D+(?P<h>\d{2})\D+(?P<i>\d{2})\D+(?P<s>\d{2}).*$}', $data, $match)) $dt = $match;
+    elseif (preg_match('{^(?P<y>\d{4})\D+(?P<m>\d{2})\D+(?P<d>\d{2})\D+(?P<h>\d{2})\D+(?P<i>\d{2})\D+(?P<s>\d{2}).*$}', $data, $match))
+        $dt = $match;
 
     // Expressão regular para interpretar data e hora no formato DD/MM/YYYY HH:MM (Ex.: 12/12/2018 15:00)
-    elseif (preg_match('{^(?P<d>\d{2})\D+(?P<m>\d{2})\D+(?P<y>\d{4})\D+(?P<h>\d{2})\D+(?P<i>\d{2}).*$}', $data, $match)) $dt = $match;
+    elseif (preg_match('{^(?P<d>\d{2})\D+(?P<m>\d{2})\D+(?P<y>\d{4})\D+(?P<h>\d{2})\D+(?P<i>\d{2}).*$}', $data, $match))
+        $dt = $match;
 
     // Expressão regular para interpretar data e hora no formato YYYY-MM-DD HH:MM (Ex.: 12/12/2018 15:00)
-    elseif (preg_match('{^(?P<y>\d{4})\D+(?P<m>\d{2})\D+(?P<d>\d{2})\D+(?P<h>\d{2})\D+(?P<i>\d{2}).*$}', $data, $match)) $dt = $match;
+    elseif (preg_match('{^(?P<y>\d{4})\D+(?P<m>\d{2})\D+(?P<d>\d{2})\D+(?P<h>\d{2})\D+(?P<i>\d{2}).*$}', $data, $match))
+        $dt = $match;
 
     // Expressão regular para interpretar data no formato DD/MM/YYYY (Ex.: 12/12/2018)
-    elseif (preg_match('{^(?P<d>\d{2})\D+(?P<m>\d{2})\D+(?P<y>\d{4}).*$}', $data, $match)) $dt = $match;
+    elseif (preg_match('{^(?P<d>\d{2})\D+(?P<m>\d{2})\D+(?P<y>\d{4}).*$}', $data, $match))
+        $dt = $match;
 
     // Expressão regular para interpretar data no formato YYYY-MM-DD (Ex.: 12/12/2018)
-    elseif (preg_match('{^(?P<y>\d{4})\D+(?P<m>\d{2})\D+(?P<d>\d{2}).*$}', $data, $match)) $dt = $match;
+    elseif (preg_match('{^(?P<y>\d{4})\D+(?P<m>\d{2})\D+(?P<d>\d{2}).*$}', $data, $match))
+        $dt = $match;
 
     // Expressão regular para interpretar hora no formato HH:MM:SS (Ex.: 15:00:00)
-    elseif (preg_match('{^(?P<h>\d{2})\D+(?P<i>\d{2})\D+(?P<s>\d{2}).*$}', $data, $match)) $dt = $match;
+    elseif (preg_match('{^(?P<h>\d{2})\D+(?P<i>\d{2})\D+(?P<s>\d{2}).*$}', $data, $match))
+        $dt = $match;
 
     // Expressão regular para interpretar hora no formato HH:MM (Ex.: 15:00)
-    elseif (preg_match('{^(?P<h>\d{2})\D+(?P<i>\d{2}).*$}', $data, $match)) $dt = $match;
+    elseif (preg_match('{^(?P<h>\d{2})\D+(?P<i>\d{2}).*$}', $data, $match))
+        $dt = $match;
 
     // Formato não reconhecido
-    else $dt = array();
+    else
+        $dt = array();
 
     // Converte a data para o unixtime usado no PHP
     return mktime(
-        isset($dt['h']) ? intval($dt['h']) : 0,
-        isset($dt['i']) ? intval($dt['i']) : 0,
-        isset($dt['s']) ? intval($dt['s']) : 0,
-        isset($dt['m']) ? intval($dt['m']) : 0,
-        isset($dt['d']) ? intval($dt['d']) : 0,
-        isset($dt['y']) ? intval($dt['y']) : 0
+            isset($dt['h']) ? intval($dt['h']) : 0, isset($dt['i']) ? intval($dt['i']) : 0, isset($dt['s']) ? intval($dt['s']) : 0, isset($dt['m']) ? intval($dt['m']) : 0, isset($dt['d']) ? intval($dt['d']) : 0, isset($dt['y']) ? intval($dt['y']) : 0
     );
-
 }
 
-function numeroParse($numero){
-    if (is_int($numero)) return $numero; // Se for do tipo inteiro retorna o número
-    if (is_float($numero)) return $numero; // Se for do tipo fracionado retorna o número
-    if (!is_string($numero)) return 0; // Se não for caracter retorna 0
-    if (preg_match('{^\d+(,\d)+\.\d+$}', $numero)) return floatval(strtr($numero, array(',' => ''))); // Se for caracter no formato inglês com separador de milhar, limpa e converte para fracionado
-    if (preg_match('{^\d+(\.\d)+,\d+$}', $numero)) return floatval(strtr($numero, array('.' => '', ',' => '.'))); // Se for caracter no formato brasileiro com separador de milhar, limpa e converte para fracionado
-    if (preg_match('{^\d+,\d+$}', $numero)) return floatval(strtr($numero, array(',' => '.'))); // Se for caracter no formato brasileiro, limpa e converte para fracionado
-    if (preg_match('{^\d+\.\d+$}', $numero)) return floatval($numero); // Se for caracter no formato inglês, limpa e converte para fracionado
-    if (is_numeric($numero)) return floatval ($numero); // Se for caracter que tenha apenas números converte para fracionado
+function numeroParse($numero) {
+    if (is_int($numero))
+        return $numero; // Se for do tipo inteiro retorna o número
+    if (is_float($numero))
+        return $numero; // Se for do tipo fracionado retorna o número
+    if (!is_string($numero))
+        return 0; // Se não for caracter retorna 0
+    if (preg_match('{^\d+(,\d)+\.\d+$}', $numero))
+        return floatval(strtr($numero, array(',' => ''))); // Se for caracter no formato inglês com separador de milhar, limpa e converte para fracionado
+    if (preg_match('{^\d+(\.\d)+,\d+$}', $numero))
+        return floatval(strtr($numero, array('.' => '', ',' => '.'))); // Se for caracter no formato brasileiro com separador de milhar, limpa e converte para fracionado
+    if (preg_match('{^\d+,\d+$}', $numero))
+        return floatval(strtr($numero, array(',' => '.'))); // Se for caracter no formato brasileiro, limpa e converte para fracionado
+    if (preg_match('{^\d+\.\d+$}', $numero))
+        return floatval($numero); // Se for caracter no formato inglês, limpa e converte para fracionado
+    if (is_numeric($numero))
+        return floatval($numero); // Se for caracter que tenha apenas números converte para fracionado
     return 0; // Se for em um formato inválido retorna 0
 }
 
-function numeroFormatar($number, $decimals = -2, $dec_point = ',', $thousands_sep = '.'){
+function numeroFormatar($number, $decimals = -2, $dec_point = ',', $thousands_sep = '.') {
     $num = number_format($number, abs($decimals), $dec_point, $thousands_sep);
-    if ($decimals < 0) $num = rtrim(rtrim($num, '0'), $dec_point);
+    if ($decimals < 0)
+        $num = rtrim(rtrim($num, '0'), $dec_point);
     return $num;
 }
 
@@ -190,11 +208,11 @@ function mysqliEscaparTexto($valor, $tipo = null) {
     if (is_null($valor) || ($tipo == 'null'))
         return 'NULL'; // Retorna null do SQL
     if ($tipo == 'date')
-        return "'".date('Y-m-d', dataParse($valor))."'"; // Formata a data para o SQL
+        return "'" . date('Y-m-d', dataParse($valor)) . "'"; // Formata a data para o SQL
     if ($tipo == 'time')
-        return "'".date('H:i:s', dataParse($valor))."'"; // Formata a hora para o SQL
+        return "'" . date('H:i:s', dataParse($valor)) . "'"; // Formata a hora para o SQL
     if ($tipo == 'datetime')
-        return "'".date('Y-m-d H:i:s', dataParse($valor))."'"; // Formata a data e hora para o SQL
+        return "'" . date('Y-m-d H:i:s', dataParse($valor)) . "'"; // Formata a data e hora para o SQL
     if (is_int($valor) || ($tipo == 'int'))
         return number_format(numeroParse($valor), 0, '.', ''); // formata o numero inteiro para o padrao do SQL
     if (is_float($valor) || ($tipo == 'float'))
@@ -207,7 +225,8 @@ function mysqliEscaparTexto($valor, $tipo = null) {
 }
 
 function criarNotificacao($status, $texto, $profissional_id = null, $aluno_id = null, $dados = null) {
-    if ($dados !== null) $dados = serialize($dados);
+    if ($dados !== null)
+        $dados = serialize($dados);
     $sql = "insert into notificacao (data, lido, status, texto, profissional_id, aluno_id, dados) value (now(),'N', " . mysqliEscaparTexto($status) . ", " . mysqliEscaparTexto($texto) . ", " . mysqliEscaparTexto($profissional_id) . ", " . mysqliEscaparTexto($aluno_id) . ", " . mysqliEscaparTexto($dados) . ")";
     global $conexao; //importar variavel de fora da função.
     if (!$conexao)
@@ -240,7 +259,8 @@ function consultarNotificacao($lido = null) {
             $linha['texto'] = preg_replace_callback('{(href=["\'][^"\']+)(["\'])}i', function ($match) use ($linha) {//Adicionando código da notificação em todos os links do texto
                 return ($match[1] . ((strpos($match[0], '?') !== false) ? '&' : '?') . 'notificacao=' . $linha['id'] . $match[2]);
             }, $linha['texto']);
-            if (!empty($linha['dados']) || is_numeric($linha['dados'])) $linha['dados'] = unserialize($linha['dados']);
+            if (!empty($linha['dados']) || is_numeric($linha['dados']))
+                $linha['dados'] = unserialize($linha['dados']);
             $retorno[] = $linha;
         }
     }
@@ -253,7 +273,7 @@ function totalNotificacao($lido = null) {
         $sql .= "lido = '" . mysqliEscaparTexto($lido) . "' and (";
     else
         $sql .= "lido = 'N' and (";
-    if (tipoLogado('profissional')){
+    if (tipoLogado('profissional')) {
         $sql .= "profissional_id = " . mysqliEscaparTexto($_SESSION['id']);
     } else {
         $sql .= "aluno_id = " . mysqliEscaparTexto($_SESSION['id']);
@@ -276,13 +296,13 @@ function totalNotificacao($lido = null) {
 function leituraNotificacao($id, $lido = null, $dados = null) {
     if ($lido === null) $lido = 'L';
     $where = ["lido != " . mysqliEscaparTexto($lido)];
-    if ($id) $where[] = "id = ".mysqliEscaparTexto($id);
-    if ($dados !== null){
-        $where[] = "dados = ".mysqliEscaparTexto(serialize($dados));
+    if ($id) $where[] = "id = " . mysqliEscaparTexto($id);
+    if ($dados !== null) {
+        $where[] = "dados = " . mysqliEscaparTexto(serialize($dados));
     }
-    $sql = "update notificacao set lido = " . mysqliEscaparTexto($lido) . " where ".implode(' and ', $where);
+    $sql = "update notificacao set lido = " . mysqliEscaparTexto($lido) . " where " . implode(' and ', $where);
     global $conexao; //importar variavel de fora da função.
-    mysqli_query($conexao, $sql) or die('ERRO: '.mysqli_error($conexao).PHP_EOL.$sql.PHP_EOL.print_r(debug_backtrace(), true));
+    return mysqli_query($conexao, $sql) or die_mysql($sql, __FILE__, __LINE__);
 }
 
 //Esta função levará $ _SERVER ['REQUEST_URI'] e construirá uma trilha atual com base no caminho atual do usuário
@@ -298,14 +318,14 @@ function breadcrumbs($separator = ' &raquo; ', $home = 'Home') {
 // Inicialize um array temporário com nossos breadcrumbs. (começando com a nossa home page, que eu suponho que seja o URL base)
     $breadcrumbs = Array("<a href=\"$base\">$home</a>");
 
-    
+
 // Descobrir o índice do último valor em nosso array de caminho
     $last = end(array_keys($path));
 
 // Construa o restante
     foreach ($path AS $x => $crumb) {
-        
-        
+
+
 // Nosso "título" é o texto que será exibido (retire o arquivo .php e gire '_' em um espaço)
         $title = ucwords(str_replace(Array('.php', '_'), Array('', ' '), $crumb));
 
@@ -320,6 +340,7 @@ function breadcrumbs($separator = ' &raquo; ', $home = 'Home') {
     // Build our temporary array (pieces of bread) into one big string :)
     return implode($separator, $breadcrumbs);
 }
+
 //function listar_usuario_para_avaliacao() {
 //    $usuarios = array();
 //    $query = "select * from usuario join vinculo on usuario.id=vinculo.aluno_id where profissional_id=$_SESSION[id]";
@@ -329,8 +350,6 @@ function breadcrumbs($separator = ' &raquo; ', $home = 'Home') {
 //    }
 //    return $usuarios;
 //}
-
-
 // Faz uma consula ao bancon usando um array com os parâmetros
 // 
 //    Parâmetros:
@@ -360,21 +379,27 @@ function breadcrumbs($separator = ' &raquo; ', $home = 'Home') {
 //       )
 //    )
 // 
-function dbquery($query, $saida = true){
+function dbquery($query, $saida = true) {
     global $conexao;
-    if (is_array($query)){
+    if (is_array($query)) {
         $sql = ("select " . trim(is_array($query['select']) ? implode(', ', $query['select']) : $query['select']) . " ");
-        if (isset($query['from'])) $sql .= ("from " . trim(is_array($query['from']) ? implode(', ', $query['from']) : $query['from']) . " ");
-        if (isset($query['where'])) $sql .= ("where " . trim(is_array($query['where']) ? implode(' and ', $query['where']) : $query['where']) . " ");
-        if (isset($query['group'])) $sql .= ("group by " . trim(is_array($query['group']) ? implode(', ', $query['group']) : $query['group']) . " ");
-        if (isset($query['order'])) $sql .= ("order by " . trim(is_array($query['order']) ? implode(', ', $query['order']) : $query['order']) . " ");
-        if (isset($query['having'])) $sql .= ("having " . trim(is_array($query['having']) ? implode(' and ', $query['having']) : $query['having']) . " ");
-        if (isset($query['outro'])) $sql .= trim(is_array($query['outro']) ? implode(' ', $query['outro']) : $query['outro']);
+        if (isset($query['from']))
+            $sql .= ("from " . trim(is_array($query['from']) ? implode(', ', $query['from']) : $query['from']) . " ");
+        if (isset($query['where']))
+            $sql .= ("where " . trim(is_array($query['where']) ? implode(' and ', $query['where']) : $query['where']) . " ");
+        if (isset($query['group']))
+            $sql .= ("group by " . trim(is_array($query['group']) ? implode(', ', $query['group']) : $query['group']) . " ");
+        if (isset($query['order']))
+            $sql .= ("order by " . trim(is_array($query['order']) ? implode(', ', $query['order']) : $query['order']) . " ");
+        if (isset($query['having']))
+            $sql .= ("having " . trim(is_array($query['having']) ? implode(' and ', $query['having']) : $query['having']) . " ");
+        if (isset($query['outro']))
+            $sql .= trim(is_array($query['outro']) ? implode(' ', $query['outro']) : $query['outro']);
     } else {
         $sql = $query;
     }
-    $res = mysqli_query($conexao, $sql) or die('ERRO: '.mysqli_error($conexao).PHP_EOL.$sql.PHP_EOL.print_r(debug_backtrace(), true));
-    if ($saida){
+    $res = mysqli_query($conexao, $sql) or die_mysql($sql, __FILE__, __LINE__);
+    if ($saida) {
         $ret = array();
         while ($row = mysqli_fetch_array($res)) $ret[] = $row;
     } else {
@@ -384,6 +409,238 @@ function dbquery($query, $saida = true){
     return $ret;
 }
 
+// Encerra o processo mostrando a mensagem de erro
+// 
+//    Parâmetros:
+//       $msg => mensagem de erro
+//       $file => nome do arquivo atual (usar sempre __FILE__ )
+//       $line => linha do arquivo atual (usar sempre __LINE__ )
+// 
+//    Exemplo:
+//      die_debug('A mensagem de erro vai aqui', __FILE__, __LINE__);
+//
+function die_debug($msg, $file = false, $line = false) {
+    $r = @ob_start();
+    echo '*** ERRO ***' . PHP_EOL;
+    if (($file !== false) && ($line !== false)) {
+        printf('%s [%d]: %s', $file, $line, $msg);
+    } elseif ($file !== false) {
+        printf('%s: %s', $file, $msg);
+    } elseif ($line !== false) {
+        printf('%d: %s', $line, $msg);
+    } else {
+        echo $msg;
+    }
+    echo PHP_EOL;
+    print_r(debug_backtrace());
+    if ($r) echo '<pre style="position: fixed;z-index: 99999;top: 0px;left: 0px;width: 100%;height: 100vh;overflow: auto;">' . htmlentities(ob_get_clean()) . '</pre>';
+    exit;
+}
 
-?>
-    
+// Encerra o processo mostrando a mensagem de erro do banco de dados
+// 
+//    Parâmetros:
+//       $msg => Informações do erro (SQL, parâmetros, etc)
+//       $file => nome do arquivo atual (usar sempre __FILE__ )
+//       $line => linha do arquivo atual (usar sempre __LINE__ )
+// 
+//    Exemplo:
+//      mysqli_query($conexao, $query) or die_mysql($query, __FILE__, __LINE__);
+//
+function die_mysql($msg = '', $file = false, $line = false) {
+    global $conexao;
+    if ($msg)
+        $msg .= PHP_EOL;
+    if (mysqli_errno($conexao)) {
+        $msg .= mysqli_error($conexao);
+    } else {
+        $msg .= 'Ocorreu um erro desconhecido';
+    }
+    die_debug($msg, $file, $line);
+}
+
+// Obtém o endereço (a URL) chamada pelo navegador
+//
+//    Exemplo:
+//      $url = url_current();
+//          --> O retorno disso será semelhante à: http://localhost/FitSan/planilha.php?a=1&b=2
+//
+function url_current() {
+    return (
+       'http' .
+       ((isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] == 'on')) ? 's' : '') .
+       '://' .
+       $_SERVER['HTTP_HOST'] .
+       $_SERVER['REQUEST_URI']
+    );
+}
+
+// Ajusta uma URL
+// 
+//    Parâmetros:
+//       $url => A URL que será ajustada
+//       $params => Array com os parâmetros do ajuste
+//          'scheme' => Indica o schema ou se deve ou não colocar o schema (ex.: http, https, etc)
+//          'host' => Indica o host ou se deve ou não colocar o host (ex.: localhost)
+//          'path' => Indica o caminho ou se deve ou não colocar o caminho (ex.: /FitSan/planilha.php)
+//          'query' => Indica os parâmetros ou se deve ou não colocar o parâmetros (ex.: a=1&b=2 ou array('a' => '1', 'b' => '2'))
+//          'fragment' => Indica o id de um elemento ou se deve ou não colocar o id de um elemento (ex.: #header)
+//          'port' => Indica a porta ou se deve ou não colocar a porta (ex.: 80)
+//          'user' => Indica o usuário ou se deve ou não colocar o usuário (ex.: karen)
+//          'pass' => Indica a senha ou se deve ou não colocar a senha (ex.: 12345678)
+// 
+//    Exemplo 1: Adicionar um novo parâmetro na URL
+//      url_adjust(url_current(), array('query' => array('c' => 1)));
+//          --> O retorno disso será semelhante à: http://localhost/FitSan/planilha.php?a=1&b=2&c=1
+//
+//    Exemplo 2: Remover um parâmetro da URL
+//      url_adjust(url_current(), array('query' => array('a' => null)));
+//          --> O retorno disso será semelhante à: http://localhost/FitSan/planilha.php?b=2
+//
+//    Exemplo 3: Remover todos os parâmetro da URL
+//      url_adjust(url_current(), array('query' => false));
+//          --> O retorno disso será semelhante à: http://localhost/FitSan/planilha.php
+//
+function url_adjust($url, $params) {
+    if (!is_array($url))
+        $url = parse_url($url);
+
+    $params = array_merge(array(
+        'scheme' => true,
+        'host' => true,
+        'path' => true,
+        'query' => true,
+        'fragment' => true,
+        'port' => true,
+        'user' => true,
+        'pass' => true,
+    ), (array) $params);
+
+    $ret = '';
+
+    if ($params['scheme']) {
+        if (is_string($params['scheme'])) {
+            $ret = $params['scheme'];
+        } else {
+            $ret = (!empty($url['scheme']) ? $url['scheme'] : 'http');
+        }
+        $ret .= '://';
+    }
+
+    if ($params['user']) {
+        if (is_string($params['user'])) {
+            $user = $params['user'];
+        } elseif (!empty($url['user'])) {
+            $user = $url['user'];
+        } else {
+            $user = null;
+        }
+        if (is_string($params['pass'])) {
+            $pass = $params['pass'];
+        } elseif (!empty($url['pass'])) {
+            $pass = $url['pass'];
+        } else {
+            $pass = null;
+        }
+        if ($user) $ret .= ($user . ($pass ? (':' . $pass) : '') . '@');
+    }
+
+    if ($params['host']) {
+        if (is_string($params['host'])) {
+            $ret .= $params['host'];
+        } else {
+            $ret .= (!empty($url['host']) ? $url['host'] : 'localhost');
+        }
+    }
+
+    if (is_numeric($params['port'])) {
+        $ret .= (':' . $params['port']);
+    } elseif ($params['port'] && !empty($url['port'])) {
+        $ret .= (':' . $url['port']);
+    }
+
+    if (is_string($params['path'])) {
+        $ret .= ('/' . ltrim($params['path'], '/'));
+    } elseif (is_int($params['path'])) {
+        if ($params['path'] > 0) {
+            $cmd = explode('/', !empty($url['path']) ? trim($url['path'], '/') : '');
+            while ($params['path'] -- > 0)
+                array_pop($cmd);
+            $ret .= ('/' . (!empty($cmd) ? implode('/', $cmd) : ''));
+        } else {
+            $ret .= (!empty($url['path']) ? $url['path'] : '/');
+        }
+    } elseif ($params['path'] === true) {
+        $ret .= (!empty($url['path']) ? $url['path'] : '/');
+    } else {
+        $ret .= '/';
+    }
+
+    if ($params['query'] === true) {
+        if (!empty($url['query'])) $ret .= ('?' . $url['query']);
+    } elseif ($params['query']) {
+        if (is_string($params['query'])) {
+            parse_str($params['query'], $params['query']);
+        } elseif (!is_array($params['query'])) {
+            $params['query'] = array();
+        }
+        if (!empty($url['query'])) {
+            parse_str($url['query'], $arr);
+        } else {
+            $arr = array();
+        }
+        foreach ($params['query'] as $key => $value) {
+            if ($value === null) {
+                unset($arr[$key]);
+            } else {
+                $arr[$key] = $value;
+            }
+        }
+        $ret .= ('?' . http_build_query($arr));
+    }
+
+    if (is_string($params['fragment'])) {
+        $ret .= ('#' . $params['fragment']);
+    } elseif ($params['fragment'] && !empty($url['fragment'])) {
+        $ret .= ('#' . $url['fragment']);
+    }
+
+    return $ret;
+}
+
+// Adiciona e/ou remove parâmetros da URL
+// 
+//    Parâmetros:
+//       $url => A URL que será ajustada
+//       $query => Array com os parâmetros para alterar
+// 
+// 
+//    Exemplo 1: Adicionar um novo parâmetro na URL
+//      url_param_add(url_current(), 'c', 1);
+//          --> O retorno disso será semelhante à: http://localhost/FitSan/planilha.php?a=1&b=2&c=1
+//
+//    Exemplo 2: Remover um parâmetro da URL
+//      url_param_add(url_current(), 'a', null);
+//          --> O retorno disso será semelhante à: http://localhost/FitSan/planilha.php?b=2
+//
+//    Exemplo 3: Adicionar mais de um parâmetro da URL
+//      url_param_add(url_current(), array('c' => 5, 'b' => 7));
+//          --> O retorno disso será semelhante à: http://localhost/FitSan/planilha.php?a=1&b=7&c=5
+//
+//    Exemplo 4: Remover mais de um parâmetro da URL
+//      url_param_add(url_current(), array('a' => null, 'b' => null));
+//          --> O retorno disso será semelhante à: http://localhost/FitSan/planilha.php
+//
+function url_param_add($url, $query, $value = null) {
+    if (!is_array($query)) $query = array($query => $value);
+    return url_adjust($url, array(
+        'scheme' => true,
+        'host' => true,
+        'path' => true,
+        'query' => $query,
+        'fragment' => true,
+        'port' => true,
+        'user' => true,
+        'pass' => true,
+    ));
+}

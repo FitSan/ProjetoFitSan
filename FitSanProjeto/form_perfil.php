@@ -5,7 +5,7 @@ require_once './template/cabecalho.php';
 
 
 $query = "select * from usuario where id='" . $_SESSION['id'] . "'";
-$resultado = mysqli_query($conexao, $query) or die('ERRO: ' . mysqli_error($conexao) . PHP_EOL . $query . PHP_EOL . print_r(debug_backtrace(), true));
+$resultado = mysqli_query($conexao, $query) or die_mysql($query, __FILE__, __LINE__);
 if ($linha = mysqli_fetch_array($resultado)) {
     ?>
 

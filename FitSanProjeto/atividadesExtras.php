@@ -31,17 +31,17 @@ if (($acao == 'incluir') || ($acao == 'alterar')){
     if (empty($erros) && !empty($titulo) && !empty($texto) && !empty($exercicios)) {
         if ($id === null) {
             $query = "insert into ativ_extras ( datahora, titulo , texto, aluno_id) values ( now(), " . mysqliEscaparTexto($titulo) . ", " . mysqliEscaparTexto($texto) . ", " . mysqliEscaparTexto($_SESSION['id']) . " )";
-            mysqli_query($conexao, $query) or die('ERRO: ' . mysqli_error($conexao) . PHP_EOL . $query . PHP_EOL . print_r(debug_backtrace(), true));
+            mysqli_query($conexao, $query) or die_mysql($query, __FILE__, __LINE__);
             $id = mysqli_insert_id($conexao);
         } else {
             $query = "update ativ_extras set titulo=" . mysqliEscaparTexto($titulo) . ",  texto= " . mysqliEscaparTexto($texto) . " where id= " . mysqliEscaparTexto($id);
-            mysqli_query($conexao, $query) or die('ERRO: ' . mysqli_error($conexao) . PHP_EOL . $query . PHP_EOL . print_r(debug_backtrace(), true));
+            mysqli_query($conexao, $query) or die_mysql($query, __FILE__, __LINE__);
             $query = "delete from ativ_extras_exercicios where ativ_extras_id= " . mysqliEscaparTexto($id);
-            mysqli_query($conexao, $query) or die('ERRO: ' . mysqli_error($conexao) . PHP_EOL . $query . PHP_EOL . print_r(debug_backtrace(), true));
+            mysqli_query($conexao, $query) or die_mysql($query, __FILE__, __LINE__);
         }
         foreach ($exercicios as $exercicio) {
             $query1 = "insert into ativ_extras_exercicios ( ativ_extras_id, exercicio ) values ( " . mysqliEscaparTexto($id) . ", " . mysqliEscaparTexto($exercicio) . " )";
-            mysqli_query($conexao, $query1) or die('ERRO: ' . mysqli_error($conexao) . PHP_EOL . $query1 . PHP_EOL . print_r(debug_backtrace(), true));
+            mysqli_query($conexao, $query1) or die_mysql($query1, __FILE__, __LINE__);
         }
         header('Location: '.basename(__FILE__));
         exit();
@@ -49,9 +49,9 @@ if (($acao == 'incluir') || ($acao == 'alterar')){
 } elseif ($acao == 'excluir') {
     if ($id !== null) {
         $query = "delete from ativ_extras_exercicios where ativ_extras_id= " . mysqliEscaparTexto($id);
-        mysqli_query($conexao, $query) or die('ERRO: ' . mysqli_error($conexao) . PHP_EOL . $query . PHP_EOL . print_r(debug_backtrace(), true));
+        mysqli_query($conexao, $query) or die_mysql($query, __FILE__, __LINE__);
         $query = "delete from ativ_extras where id= " . mysqliEscaparTexto($id);
-        mysqli_query($conexao, $query) or die('ERRO: ' . mysqli_error($conexao) . PHP_EOL . $query . PHP_EOL . print_r(debug_backtrace(), true));
+        mysqli_query($conexao, $query) or die_mysql($query, __FILE__, __LINE__);
     }
     header('Location: '.basename(__FILE__));
     exit();
@@ -60,10 +60,10 @@ if (($acao == 'incluir') || ($acao == 'alterar')){
 //referente ao formulário
 if (!empty($id)) {
     $query_alterar = "select * from ativ_extras where aluno_id = " . mysqliEscaparTexto($_SESSION['id']) . " and id= " . mysqliEscaparTexto($id);
-    $resultado_alterar = mysqli_query($conexao, $query_alterar) or die('ERRO: '.mysqli_error($conexao).PHP_EOL.$query_alterar.PHP_EOL.print_r(debug_backtrace(), true));
+    $resultado_alterar = mysqli_query($conexao, $query_alterar) or die_mysql($query_alterar, __FILE__, __LINE__);
     $linha_alterar = ($resultado_alterar?mysqli_fetch_array($resultado_alterar):array());
     $query_exe_alterar = "select * from ativ_extras_exercicios where ativ_extras_id= " . mysqliEscaparTexto($id);
-    $resultado_exe_alterar = mysqli_query($conexao, $query_exe_alterar) or die('ERRO: '.mysqli_error($conexao).PHP_EOL.$query_exe_alterar.PHP_EOL.print_r(debug_backtrace(), true));
+    $resultado_exe_alterar = mysqli_query($conexao, $query_exe_alterar) or die_mysql($query_exe_alterar, __FILE__, __LINE__);
     $linha_alterar['exercicios'] = array();
     while ($linha2 = mysqli_fetch_array($resultado_exe_alterar)) $linha_alterar['exercicios'][] = $linha2['exercicio'];
 } else {
@@ -72,7 +72,7 @@ if (!empty($id)) {
 
 //referente à paginação
 $query_pagina = "select count(ativ_extras.id) as total from ativ_extras join usuario on usuario.id=ativ_extras.aluno_id where usuario.id= " . mysqliEscaparTexto($_SESSION['id']);
-$resultado_pagina = mysqli_query($conexao, $query_pagina) or die('ERRO: '.mysqli_error($conexao).PHP_EOL.$query_pagina.PHP_EOL.print_r(debug_backtrace(), true));
+$resultado_pagina = mysqli_query($conexao, $query_pagina) or die_mysql($query_pagina, __FILE__, __LINE__);
 $pagina = ($resultado_pagina?mysqli_fetch_array($resultado_pagina):array());
 $pagina = array_merge(array(
     'total' => 0,
@@ -84,7 +84,7 @@ $pagina['paginas'] = ceil($pagina['total'] / $pagina['quantidade']);
 
 //referente à consulta
 $query = "select ativ_extras.*, usuario.nome, usuario.sobrenome, usuario.foto from ativ_extras join usuario on usuario.id=ativ_extras.aluno_id where usuario.id= " . mysqliEscaparTexto($_SESSION['id']) . " order by ativ_extras.datahora desc limit " . $pagina['quantidade'] . " offset " . $pagina['offset'];
-$resultado = mysqli_query($conexao, $query) or die('ERRO: '.mysqli_error($conexao).PHP_EOL.$query.PHP_EOL.print_r(debug_backtrace(), true));
+$resultado = mysqli_query($conexao, $query) or die_mysql($query, __FILE__, __LINE__);
 ?>
 
 

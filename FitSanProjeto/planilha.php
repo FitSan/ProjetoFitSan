@@ -30,11 +30,11 @@ if (($acao == 'incluir') || ($acao == 'alterar')){
     if (empty($erros) && !empty($grupo)) {
         if ($id === null) {
             $query = "insert into planilha_tabela ( grupo, musculo_cardio_id , exercicio_id, series, repeticoes, carga, intervalo, tempo, profissional_id) values (" . mysqliEscaparTexto($grupo) . ", " . mysqliEscaparTexto($grupo_muscular) . ", " . mysqliEscaparTexto($exercicio) . ", " . mysqliEscaparTexto($series) . ", " . mysqliEscaparTexto($repeticoes) . ", " . mysqliEscaparTexto($carga) . ", " . mysqliEscaparTexto($intervalo) . ", " . mysqliEscaparTexto($tempo) . ", " . mysqliEscaparTexto($_SESSION['id']) . " )";
-            mysqli_query($conexao, $query) or die('ERRO: ' . mysqli_error($conexao) . PHP_EOL . $query . PHP_EOL . print_r(debug_backtrace(), true));
+            mysqli_query($conexao, $query) or die_mysql($query, __FILE__, __LINE__);
             $id = mysqli_insert_id($conexao);
         } else {
             $query = "update planilha_tabela set grupo = " . mysqliEscaparTexto($grupo) . ", musculo_cardio_id = " . mysqliEscaparTexto($grupo_muscular) . ", exercicio_id = " . mysqliEscaparTexto($exercicio) . ", series = " . mysqliEscaparTexto($series) . ", repeticoes = " . mysqliEscaparTexto($repeticoes) . ", carga = " . mysqliEscaparTexto($carga) . ", intervalo = " . mysqliEscaparTexto($intervalo) . ", tempo = " . mysqliEscaparTexto($tempo) . " where id = " . mysqliEscaparTexto($id) . " and profissional_id = " . mysqliEscaparTexto($_SESSION['id']);
-            mysqli_query($conexao, $query) or die('ERRO: ' . mysqli_error($conexao) . PHP_EOL . $query . PHP_EOL . print_r(debug_backtrace(), true));
+            mysqli_query($conexao, $query) or die_mysql($query, __FILE__, __LINE__);
         }
         header('Location: ' . basename(__FILE__));
         exit();
@@ -42,7 +42,7 @@ if (($acao == 'incluir') || ($acao == 'alterar')){
 } elseif ($acao == 'excluir') {
     if ($id !== null) {
         $query = "delete from planilha_tabela where id= " . mysqliEscaparTexto($id) . " and profissional_id = " . mysqliEscaparTexto($_SESSION['id']);
-        mysqli_query($conexao, $query) or die('ERRO: ' . mysqli_error($conexao) . PHP_EOL . $query . PHP_EOL . print_r(debug_backtrace(), true));
+        mysqli_query($conexao, $query) or die_mysql($query, __FILE__, __LINE__);
     }
     header('Location: ' . basename(__FILE__));
     exit();
@@ -51,7 +51,7 @@ if (($acao == 'incluir') || ($acao == 'alterar')){
 //referente ao formulário
 if (!empty($id)) {
     $query_alterar = "select * from planilha_tabela where profissional_id = " . mysqliEscaparTexto($_SESSION['id']) . " and id= " . mysqliEscaparTexto($id);
-    $resultado_alterar = mysqli_query($conexao, $query_alterar) or die('ERRO: '.mysqli_error($conexao).PHP_EOL.$query_alterar.PHP_EOL.print_r(debug_backtrace(), true));
+    $resultado_alterar = mysqli_query($conexao, $query_alterar) or die_mysql($query_alterar, __FILE__, __LINE__);
     $linha_alterar = ($resultado_alterar?mysqli_fetch_array($resultado_alterar):array());
 } else {
     $linha_alterar = array();
@@ -59,7 +59,7 @@ if (!empty($id)) {
 
 //referente aos grupos
 $query_grupos = "select distinct grupo from planilha_tabela where planilha_id is null and profissional_id = " . mysqliEscaparTexto($_SESSION['id']) . " order by grupo";
-$resultado_grupos = mysqli_query($conexao, $query_grupos) or die('ERRO: '.mysqli_error($conexao).PHP_EOL.$query_grupos.PHP_EOL.print_r(debug_backtrace(), true));
+$resultado_grupos = mysqli_query($conexao, $query_grupos) or die_mysql($query_grupos, __FILE__, __LINE__);
 $grupos = array();
 while ($linha_grupo = mysqli_fetch_array($resultado_grupos)) $grupos[] = $linha_grupo['grupo'];
 mysqli_free_result($resultado_grupos);
@@ -86,7 +86,7 @@ order by
     p.grupo,
     u.nome
 ";
-$resultado = mysqli_query($conexao, $query) or die('ERRO: '.mysqli_error($conexao).PHP_EOL.$query.PHP_EOL.print_r(debug_backtrace(), true));
+$resultado = mysqli_query($conexao, $query) or die_mysql($query, __FILE__, __LINE__);
 ?>
 
 <div class="content-wrapper">

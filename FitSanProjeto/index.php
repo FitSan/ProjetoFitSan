@@ -53,3 +53,11 @@ $z = --$x; // x <- x - 1 ; z <- x
 $x = 1;
 $z = $x--; // z <- x ; x <- x - 1
 // z = 1 e x = 0
+
+// marcar notificacao como lida
+// 
+//if (isset($_GET['notificacao'])){
+//    leituraNotificacao($_GET['notificacao']);
+//    echo '<script>window.location.reload();</script>';
+//    exit;
+//}

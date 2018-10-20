@@ -8,19 +8,19 @@ $erros = array();
 
 //referente ao formulário
 $query_alterar = "select * from informacoes_adicionais where aluno_id = " . mysqliEscaparTexto($_SESSION['id']);
-$resultado_alterar = mysqli_query($conexao, $query_alterar) or die('ERRO: ' . mysqli_error($conexao) . PHP_EOL . $query_alterar . PHP_EOL . print_r(debug_backtrace(), true));
+$resultado_alterar = mysqli_query($conexao, $query_alterar) or die_mysql($query_alterar, __FILE__, __LINE__);
 $linha_alterar = ($resultado_alterar ? mysqli_fetch_array($resultado_alterar) : array());
 if (!empty($linha_alterar['id'])) {
     $query_cont_alterar = "select * from informacoes_adicionais_contatos where informacoes_adicionais_id= " . mysqliEscaparTexto($linha_alterar['id']);
-    $resultado_cont_alterar = mysqli_query($conexao, $query_cont_alterar) or die('ERRO: ' . mysqli_error($conexao) . PHP_EOL . $query_cont_alterar . PHP_EOL . print_r(debug_backtrace(), true));
+    $resultado_cont_alterar = mysqli_query($conexao, $query_cont_alterar) or die_mysql($query_cont_alterar, __FILE__, __LINE__);
     $linha_alterar['contatos'] = array();
     while ($linha2 = mysqli_fetch_array($resultado_cont_alterar)) $linha_alterar['contatos'][] = $linha2;
     $query_exe_alterar = "select * from informacoes_adicionais_exercicios where informacoes_adicionais_id= " . mysqliEscaparTexto($linha_alterar['id']);
-    $resultado_exe_alterar = mysqli_query($conexao, $query_exe_alterar) or die('ERRO: ' . mysqli_error($conexao) . PHP_EOL . $query_exe_alterar . PHP_EOL . print_r(debug_backtrace(), true));
+    $resultado_exe_alterar = mysqli_query($conexao, $query_exe_alterar) or die_mysql($query_exe_alterar, __FILE__, __LINE__);
     $linha_alterar['exercicios'] = array();
     while ($linha2 = mysqli_fetch_array($resultado_exe_alterar)) $linha_alterar['exercicios'][] = $linha2['exercicios'];
     $query_med_alterar = "select * from informacoes_adicionais_medidas where informacoes_adicionais_id= " . mysqliEscaparTexto($linha_alterar['id']);
-    $resultado_med_alterar = mysqli_query($conexao, $query_med_alterar) or die('ERRO: ' . mysqli_error($conexao) . PHP_EOL . $query_med_alterar . PHP_EOL . print_r(debug_backtrace(), true));
+    $resultado_med_alterar = mysqli_query($conexao, $query_med_alterar) or die_mysql($query_med_alterar, __FILE__, __LINE__);
     $linha_alterar['medidas'] = array();
     while ($linha2 = mysqli_fetch_array($resultado_med_alterar)) $linha_alterar['medidas'][] = $linha2;
 }
@@ -49,7 +49,7 @@ if (($acao == 'incluir') || ($acao == 'alterar')) {
         if ($linha_alterar['id'] === null) {
             $query = "insert into informacoes_adicionais ( saude, medico , alergia, medicamento, gruposangue, doador, academia_frequentada, academia_atual, aluno_id) "
                     . "values ( " . mysqliEscaparTexto($saude) . ", " . mysqliEscaparTexto($medico) . " , " . mysqliEscaparTexto($alergia) . " , " . mysqliEscaparTexto($medicamento) . ", " . mysqliEscaparTexto($gruposangue) . " , " . mysqliEscaparTexto($doador) . " , " . mysqliEscaparTexto($academia_frequentada) . " , " . mysqliEscaparTexto($academia_atual) . ", " . mysqliEscaparTexto($_SESSION['id']) . " )";
-            mysqli_query($conexao, $query) or die('ERRO: ' . mysqli_error($conexao) . PHP_EOL . $query . PHP_EOL . print_r(debug_backtrace(), true));
+            mysqli_query($conexao, $query) or die_mysql($query, __FILE__, __LINE__);
             $linha_alterar['id'] = mysqli_insert_id($conexao);
         } else {
             $query = "update informacoes_adicionais set saude=" . mysqliEscaparTexto($saude)
@@ -58,28 +58,28 @@ if (($acao == 'incluir') || ($acao == 'alterar')) {
                     . ", academia_frequentada= " . mysqliEscaparTexto($academia_frequentada) . ", academia_atual=" . mysqliEscaparTexto($academia_atual)
                     . " where id= " . mysqliEscaparTexto($linha_alterar['id']);
 
-            mysqli_query($conexao, $query) or die('ERRO: ' . mysqli_error($conexao) . PHP_EOL . $query . PHP_EOL . print_r(debug_backtrace(), true));
+            mysqli_query($conexao, $query) or die_mysql($query, __FILE__, __LINE__);
             $query = "delete from informacoes_adicionais_contatos where informacoes_adicionais_id= " . mysqliEscaparTexto($linha_alterar['id']);
-            mysqli_query($conexao, $query) or die('ERRO: ' . mysqli_error($conexao) . PHP_EOL . $query . PHP_EOL . print_r(debug_backtrace(), true));
+            mysqli_query($conexao, $query) or die_mysql($query, __FILE__, __LINE__);
             $query = "delete from informacoes_adicionais_exercicios where informacoes_adicionais_id= " . mysqliEscaparTexto($linha_alterar['id']);
-            mysqli_query($conexao, $query) or die('ERRO: ' . mysqli_error($conexao) . PHP_EOL . $query . PHP_EOL . print_r(debug_backtrace(), true));
+            mysqli_query($conexao, $query) or die_mysql($query, __FILE__, __LINE__);
             $query = "delete from informacoes_adicionais_medidas where informacoes_adicionais_id= " . mysqliEscaparTexto($linha_alterar['id']);
-            mysqli_query($conexao, $query) or die('ERRO: ' . mysqli_error($conexao) . PHP_EOL . $query . PHP_EOL . print_r(debug_backtrace(), true));
+            mysqli_query($conexao, $query) or die_mysql($query, __FILE__, __LINE__);
         }
         foreach ($tipo as $posicao => $contato) {
             $query1 = "insert into informacoes_adicionais_contatos ( informacoes_adicionais_id, tipo, nome, telefone ) values ( " . mysqliEscaparTexto($linha_alterar['id']) . ", " . mysqliEscaparTexto($contato) . ", " . mysqliEscaparTexto($nome[$posicao]) . ", " . mysqliEscaparTexto($telefone[$posicao]) . " )";
-            mysqli_query($conexao, $query1) or die('ERRO: ' . mysqli_error($conexao) . PHP_EOL . $query1 . PHP_EOL . print_r(debug_backtrace(), true));
+            mysqli_query($conexao, $query1) or die_mysql($query1, __FILE__, __LINE__);
         }
         if ($outros_exercicios) {
             $exercicios = array_merge($exercicios, array_map("trim", explode(",", $outros_exercicios))); //quebra outros exercicios nas virgulas, limpa espaços dos itens do array e concatena com o array dos exercicios.
         }
         foreach ($exercicios as $exercicio) {
             $query1 = "insert into informacoes_adicionais_exercicios ( informacoes_adicionais_id, exercicios) values ( " . mysqliEscaparTexto($linha_alterar['id']) . ", " . mysqliEscaparTexto($exercicio) . " )";
-            mysqli_query($conexao, $query1) or die('ERRO: ' . mysqli_error($conexao) . PHP_EOL . $query1 . PHP_EOL . print_r(debug_backtrace(), true));
+            mysqli_query($conexao, $query1) or die_mysql($query1, __FILE__, __LINE__);
         }
         foreach ($altura as $posicao => $valor) {
             $query1 = "insert into informacoes_adicionais_medidas ( informacoes_adicionais_id, altura, peso, massa_magra, gordura_corporal) values ( " . mysqliEscaparTexto($linha_alterar['id']) . ", " . mysqliEscaparTexto($valor, 'float') . " , " . mysqliEscaparTexto($peso[$posicao], 'float') . " , " . mysqliEscaparTexto($massa_magra[$posicao], 'float') . " , " . mysqliEscaparTexto($gordura_corporal[$posicao], 'float') . ")";
-            mysqli_query($conexao, $query1) or die('ERRO: ' . mysqli_error($conexao) . PHP_EOL . $query1 . PHP_EOL . print_r(debug_backtrace(), true));
+            mysqli_query($conexao, $query1) or die_mysql($query1, __FILE__, __LINE__);
         }
     }
     //header('Location: ' . basename(__FILE__));
@@ -89,7 +89,7 @@ if (($acao == 'incluir') || ($acao == 'alterar')) {
 
 //referente à consulta
 $query = "select informacoes_adicionais.*, usuario.nome, usuario.sobrenome, usuario.foto from informacoes_adicionais join usuario on usuario.id=informacoes_adicionais.aluno_id where usuario.id= " . mysqliEscaparTexto($_SESSION['id']);
-$resultado = mysqli_query($conexao, $query) or die('ERRO: ' . mysqli_error($conexao) . PHP_EOL . $query . PHP_EOL . print_r(debug_backtrace(), true));
+$resultado = mysqli_query($conexao, $query) or die_mysql($query, __FILE__, __LINE__);
 ?>
 <div class="content-wrapper">
     <section class="content-header">

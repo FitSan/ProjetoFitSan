@@ -7,7 +7,11 @@ if (!tipoLogado("aluno")) {
     exit;
 }
 
-if (isset($_GET['notificacao'])) leituraNotificacao($_GET['notificacao']);
+if (isset($_GET['notificacao'])){
+    echo leituraNotificacao($_GET['notificacao']);
+    echo '<script>window.location = ' . json_encode(url_param_add(url_current(), 'notificacao', null)). ';</script>';
+    exit;
+}
 
 // Iniciando variaveis
 $acao = (!empty($_GET['acao']) ? $_GET['acao'] : 'consultar'); //obtendo ação
@@ -29,12 +33,12 @@ if ($acao == 'checkin'){
             list($check, $grupo) = explode('|', $check, 2);
             if ($anterior != $grupo){
                 $query = "insert into planilha_aluno_feito ( planilha_aluno_id, datahora) values (" . mysqliEscaparTexto($planilha_id) . ", " . mysqliEscaparTexto(time(), 'datetime') . " )";
-                mysqli_query($conexao, $query) or die('ERRO: ' . mysqli_error($conexao) . PHP_EOL . $query . PHP_EOL . print_r(debug_backtrace(), true));
+                mysqli_query($conexao, $query) or die_mysql($query, __FILE__, __LINE__);
                 $id = mysqli_insert_id($conexao);
                 $anterior = $grupo;
             }
             $query = "insert into planilha_aluno_exercicio ( planilha_feito_id, exercicio) values (" . mysqliEscaparTexto($id) . ", " . mysqliEscaparTexto($check) . " )";
-            mysqli_query($conexao, $query) or die('ERRO: ' . mysqli_error($conexao) . PHP_EOL . $query . PHP_EOL . print_r(debug_backtrace(), true));
+            mysqli_query($conexao, $query) or die_mysql($query, __FILE__, __LINE__);
         }
         header('Location: ' . basename(__FILE__));
         exit();
@@ -42,9 +46,9 @@ if ($acao == 'checkin'){
 } elseif ($acao == 'excluir') {
     if ($id !== null){
         $query = "delete from planilha_aluno_exercicio where planilha_feito_id = " . mysqliEscaparTexto($id);
-        mysqli_query($conexao, $query) or die('ERRO: ' . mysqli_error($conexao) . PHP_EOL . $query . PHP_EOL . print_r(debug_backtrace(), true));
+        mysqli_query($conexao, $query) or die_mysql($query, __FILE__, __LINE__);
         $query = "delete from planilha_aluno_feito where id = " . mysqliEscaparTexto($id);
-        mysqli_query($conexao, $query) or die('ERRO: ' . mysqli_error($conexao) . PHP_EOL . $query . PHP_EOL . print_r(debug_backtrace(), true));
+        mysqli_query($conexao, $query) or die_mysql($query, __FILE__, __LINE__);
     }
     header('Location: '.basename(__FILE__));
     exit();
@@ -53,7 +57,7 @@ if ($acao == 'checkin'){
 //referente ao formulário
 if (!empty($id)) {
     $query_alterar = "select * from planilha_tabela where profissional_id = " . mysqliEscaparTexto($_SESSION['id']) . " and id= " . mysqliEscaparTexto($id);
-    $resultado_alterar = mysqli_query($conexao, $query_alterar) or die('ERRO: '.mysqli_error($conexao).PHP_EOL.$query_alterar.PHP_EOL.print_r(debug_backtrace(), true));
+    $resultado_alterar = mysqli_query($conexao, $query_alterar) or die_mysql($query_alterar, __FILE__, __LINE__);
     $linha_alterar = ($resultado_alterar?mysqli_fetch_array($resultado_alterar):array());
 } else {
     $linha_alterar = array();

@@ -60,14 +60,14 @@ if (($acao == 'incluir') || ($acao == 'alterar')) {
     if (empty($erros) && !empty($nome) && !empty($descricao) && !empty($musculo_cardio_id)) {
         if ($id === null) {
             $query = "insert into planilha_exercicio ( nome, descricao , musculo_cardio_id, foto, profissional_id) values ( " . mysqliEscaparTexto($nome) . ", " . mysqliEscaparTexto($descricao) . ", " . mysqliEscaparTexto($musculo_cardio_id) . ", " . mysqliEscaparTexto($foto) . ", " . mysqliEscaparTexto(tipoLogado("admin") ? null : $_SESSION['id']) . " )";
-            mysqli_query($conexao, $query) or die('ERRO: ' . mysqli_error($conexao) . PHP_EOL . $query . PHP_EOL . print_r(debug_backtrace(), true));
+            mysqli_query($conexao, $query) or die_mysql($query, __FILE__, __LINE__);
             $id = mysqli_insert_id($conexao);
         } else {
             $query = "update planilha_exercicio set nome=" . mysqliEscaparTexto($nome) . ", descricao= " . mysqliEscaparTexto($descricao) . ", musculo_cardio_id= " . mysqliEscaparTexto($musculo_cardio_id) . " where id= " . mysqliEscaparTexto($id);
-            mysqli_query($conexao, $query) or die('ERRO: ' . mysqli_error($conexao) . PHP_EOL . $query . PHP_EOL . print_r(debug_backtrace(), true));
+            mysqli_query($conexao, $query) or die_mysql($query, __FILE__, __LINE__);
             if ($foto) {
                 $query = "update planilha_exercicio set foto= " . mysqliEscaparTexto($foto) . " where id= " . mysqliEscaparTexto($id);
-                mysqli_query($conexao, $query) or die('ERRO: ' . mysqli_error($conexao) . PHP_EOL . $query . PHP_EOL . print_r(debug_backtrace(), true));
+                mysqli_query($conexao, $query) or die_mysql($query, __FILE__, __LINE__);
             }
         }
         header('Location: ' . basename(__FILE__));
@@ -81,7 +81,7 @@ if (($acao == 'incluir') || ($acao == 'alterar')) {
     }
     if (empty($erros) && ($id !== null)) {
         $query = "delete from planilha_exercicio where id= " . mysqliEscaparTexto($id);
-        mysqli_query($conexao, $query) or die('ERRO: ' . mysqli_error($conexao) . PHP_EOL . $query . PHP_EOL . print_r(debug_backtrace(), true));
+        mysqli_query($conexao, $query) or die_mysql($query, __FILE__, __LINE__);
         header('Location: ' . basename(__FILE__));
         exit();
     }
@@ -90,7 +90,7 @@ if (($acao == 'incluir') || ($acao == 'alterar')) {
 //referente ao formulário
 if (!empty($id)) {
     $query_alterar = "select * from planilha_exercicio where id= " . mysqliEscaparTexto($id);
-    $resultado_alterar = mysqli_query($conexao, $query_alterar) or die('ERRO: ' . mysqli_error($conexao) . PHP_EOL . $query_alterar . PHP_EOL . print_r(debug_backtrace(), true));
+    $resultado_alterar = mysqli_query($conexao, $query_alterar) or die_mysql($query_alterar, __FILE__, __LINE__);
     $linha_alterar = ($resultado_alterar ? mysqli_fetch_array($resultado_alterar) : array());
 } else {
     $linha_alterar = array();
@@ -101,7 +101,7 @@ $query_pagina = "select count(e.id) as total from planilha_exercicio e";
 if (tipoLogado("admin")) $query_pagina .= " where e.profissional_id is null";
 elseif (tipoLogado("profissional")) $query_pagina .= " where e.profissional_id = ".mysqliEscaparTexto($_SESSION['id']);
 //elseif (tipoLogado("profissional")) $query_pagina .= " where e.profissional_id is null or e.profissional_id = ".mysqliEscaparTexto($_SESSION['id']);
-$resultado_pagina = mysqli_query($conexao, $query_pagina) or die('ERRO: ' . mysqli_error($conexao) . PHP_EOL . $query_pagina . PHP_EOL . print_r(debug_backtrace(), true));
+$resultado_pagina = mysqli_query($conexao, $query_pagina) or die_mysql($query_pagina, __FILE__, __LINE__);
 $pagina = ($resultado_pagina ? mysqli_fetch_array($resultado_pagina) : array());
 $pagina = array_merge(array(
     'total' => 0,
@@ -117,7 +117,7 @@ if (tipoLogado("admin")) $query .= " where e.profissional_id is null";
 elseif (tipoLogado("profissional")) $query .= " where e.profissional_id = ".mysqliEscaparTexto($_SESSION['id']);
 //elseif (tipoLogado("profissional")) $query .= " where e.profissional_id is null or e.profissional_id = ".mysqliEscaparTexto($_SESSION['id']);
 $query .= " order by e.nome limit " . $pagina['quantidade'] . " offset " . $pagina['offset'];
-$resultado = mysqli_query($conexao, $query) or die('ERRO: ' . mysqli_error($conexao) . PHP_EOL . $query . PHP_EOL . print_r(debug_backtrace(), true));
+$resultado = mysqli_query($conexao, $query) or die_mysql($query, __FILE__, __LINE__);
 ?>
 
 <div class="content-wrapper">

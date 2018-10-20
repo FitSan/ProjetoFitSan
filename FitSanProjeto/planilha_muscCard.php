@@ -23,11 +23,11 @@ if (($acao == 'incluir') || ($acao == 'alterar')) {
     if (empty($erros) && !empty($nome)) {
         if ($id === null) {
             $query = "insert into planilha_grupoMuscuCardio ( nome) values ( " . mysqliEscaparTexto($nome) . ")";
-            mysqli_query($conexao, $query) or die('ERRO: ' . mysqli_error($conexao) . PHP_EOL . $query . PHP_EOL . print_r(debug_backtrace(), true));
+            mysqli_query($conexao, $query) or die_mysql($query, __FILE__, __LINE__);
             $id = mysqli_insert_id($conexao);
         } else {
             $query = "update planilha_grupoMuscuCardio set nome=" . mysqliEscaparTexto($nome) . " where id= " . mysqliEscaparTexto($id);
-            mysqli_query($conexao, $query) or die('ERRO: ' . mysqli_error($conexao) . PHP_EOL . $query . PHP_EOL . print_r(debug_backtrace(), true));
+            mysqli_query($conexao, $query) or die_mysql($query, __FILE__, __LINE__);
         }
         header('Location: ' . basename(__FILE__));
         exit();
@@ -35,7 +35,7 @@ if (($acao == 'incluir') || ($acao == 'alterar')) {
 } elseif ($acao == 'excluir') {
     if (empty($erros) && ($id !== null)) {
         $query = "delete from planilha_grupoMuscuCardio where id= " . mysqliEscaparTexto($id);
-        mysqli_query($conexao, $query) or die('ERRO: ' . mysqli_error($conexao) . PHP_EOL . $query . PHP_EOL . print_r(debug_backtrace(), true));
+        mysqli_query($conexao, $query) or die_mysql($query, __FILE__, __LINE__);
         header('Location: ' . basename(__FILE__));
         exit();
     }
@@ -44,7 +44,7 @@ if (($acao == 'incluir') || ($acao == 'alterar')) {
 //referente ao formulário
 if (!empty($id)) {
     $query_alterar = "select * from planilha_grupoMuscuCardio where id= " . mysqliEscaparTexto($id);
-    $resultado_alterar = mysqli_query($conexao, $query_alterar) or die('ERRO: ' . mysqli_error($conexao) . PHP_EOL . $query_alterar . PHP_EOL . print_r(debug_backtrace(), true));
+    $resultado_alterar = mysqli_query($conexao, $query_alterar) or die_mysql($query_alterar, __FILE__, __LINE__);
     $linha_alterar = ($resultado_alterar ? mysqli_fetch_array($resultado_alterar) : array());
 } else {
     $linha_alterar = array();
@@ -52,7 +52,7 @@ if (!empty($id)) {
 
 //referente à consulta
 $query = "select * from planilha_grupoMuscuCardio order by nome";
-$resultado = mysqli_query($conexao, $query) or die('ERRO: '.mysqli_error($conexao).PHP_EOL.$query.PHP_EOL.print_r(debug_backtrace(), true));
+$resultado = mysqli_query($conexao, $query) or die_mysql($query, __FILE__, __LINE__);
 ?>
 
 <div class="content-wrapper">

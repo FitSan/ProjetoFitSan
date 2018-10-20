@@ -52,7 +52,7 @@ if (!tipoLogado("profissional")) {
 
                     </ul>
                     <div class="tab-content">
-                        <div class="tab-pane" id="performance">
+                        <div class="tab-pane active" id="performance">
                          
                             <div class="box-body">           
                                 <div class="col-lg-6">

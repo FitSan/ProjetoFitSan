@@ -27,8 +27,8 @@ $data_envio = $now->format('Y-m-d H:i:s');
     $aluno_id = $_POST['id'];
 
 $query2 = "select * from usuario where id = " . mysqliEscaparTexto($_SESSION['id']) . " and status = 'ativado'";
-$resultado = mysqli_query($conexao, $query2) or die('ERRO: '.mysqli_error($conexao).PHP_EOL.$query2.PHP_EOL.print_r(debug_backtrace(), true));
-$linha = mysqli_fetch_array($resultado) or die('ERRO: '.mysqli_error($conexao).PHP_EOL.$query2.PHP_EOL.print_r(debug_backtrace(), true));
+$resultado = mysqli_query($conexao, $query2) or die_mysql($query2, __FILE__, __LINE__);
+$linha = mysqli_fetch_array($resultado) or die_mysql($query2, __FILE__, __LINE__);
 
 
 criarNotificacao('INFO',

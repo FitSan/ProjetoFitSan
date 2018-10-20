@@ -54,7 +54,7 @@ if ($foto !== null){
     else $query_perfil .= ", foto = NULL";
 }
 $query_perfil .= " where id = $_SESSION[id]";
-mysqli_query($conexao, $query_perfil) or die('ERRO: '.mysqli_error($conexao).PHP_EOL.$query_perfil.PHP_EOL.print_r(debug_backtrace(), true));
+mysqli_query($conexao, $query_perfil) or die_mysql($query_perfil, __FILE__, __LINE__);
 
 $logar = array(
     'nome' => $nome,

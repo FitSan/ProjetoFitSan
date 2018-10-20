@@ -2,15 +2,20 @@
 $pagina = 'Metas';
 include './template/cabecalho.php';
 
+if (!tipoLogado("aluno")){
+    header('Location: pagina1.php');
+    exit;
+}
+
 $query = "select * from meta where usuario_id=" . $_SESSION['id'] . " and status='ativa'";
-$resultado = mysqli_query($conexao, $query);
+$resultado = mysqli_query($conexao, $query) or die_mysql($query, __FILE__, __LINE__);
 $linha = mysqli_fetch_array($resultado);
 
 $query_all = "select * from meta where usuario_id=" . $_SESSION['id'] . " order by data_inicial desc";
-$resultado_all = mysqli_query($conexao, $query_all);
+$resultado_all = mysqli_query($conexao, $query_all) or die_mysql($query_all, __FILE__, __LINE__);
 
-$query_meses = "select MAX(data_add) as data_add, MONTH(data_add) as meses from dados_meta where meta_id= " . $linha['id'] . " group by meses order by meses desc";
-$resultado_meses = mysqli_query($conexao, $query_meses);
+$query_meses = "select MAX(data_add) as data_add, MONTH(data_add) as meses from dados_meta where meta_id= " . (!empty($linha['id']) ? $linha['id'] : 0) . " group by meses order by meses desc";
+$resultado_meses = mysqli_query($conexao, $query_meses) or die_mysql($query_meses, __FILE__, __LINE__);
 if (mysqli_num_rows($resultado) === 0) {
     $novaMeta = true;
 //                      formulário inserção meta

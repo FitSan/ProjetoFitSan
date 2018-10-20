@@ -5,7 +5,7 @@ require_once './template/cabecalho.php';
 
 
 $query = "select * from usuario where id=" . $_SESSION['id'];
-$resultado = mysqli_query($conexao, $query) or die('ERRO: ' . mysqli_error($conexao) . PHP_EOL . $query . PHP_EOL . print_r(debug_backtrace(), true));
+$resultado = mysqli_query($conexao, $query) or die_mysql($query, __FILE__, __LINE__);
 if ($linha = mysqli_fetch_array($resultado)) {
     ?>
 
@@ -51,19 +51,19 @@ if ($linha = mysqli_fetch_array($resultado)) {
 
                         //referente ao formulário
                         $query_alterar = "select * from informacoes_adicionais where aluno_id = " . mysqliEscaparTexto($_SESSION['id']);
-                        $resultado_alterar = mysqli_query($conexao, $query_alterar) or die('ERRO: ' . mysqli_error($conexao) . PHP_EOL . $query_alterar . PHP_EOL . print_r(debug_backtrace(), true));
+                        $resultado_alterar = mysqli_query($conexao, $query_alterar) or die_mysql($query_alterar, __FILE__, __LINE__);
                         $linha_alterar = ($resultado_alterar ? mysqli_fetch_array($resultado_alterar) : array());
                         if (!empty($linha_alterar['id'])) {
                             $query_cont_alterar = "select * from informacoes_adicionais_contatos where informacoes_adicionais_id= " . mysqliEscaparTexto($linha_alterar['id']);
-                            $resultado_cont_alterar = mysqli_query($conexao, $query_cont_alterar) or die('ERRO: ' . mysqli_error($conexao) . PHP_EOL . $query_cont_alterar . PHP_EOL . print_r(debug_backtrace(), true));
+                            $resultado_cont_alterar = mysqli_query($conexao, $query_cont_alterar) or die_mysql($query_cont_alterar, __FILE__, __LINE__);
                             $linha_alterar['contatos'] = array();
                             while ($linha2 = mysqli_fetch_array($resultado_cont_alterar)) $linha_alterar['contatos'][] = $linha2;
                             $query_exe_alterar = "select * from informacoes_adicionais_exercicios where informacoes_adicionais_id= " . mysqliEscaparTexto($linha_alterar['id']);
-                            $resultado_exe_alterar = mysqli_query($conexao, $query_exe_alterar) or die('ERRO: ' . mysqli_error($conexao) . PHP_EOL . $query_exe_alterar . PHP_EOL . print_r(debug_backtrace(), true));
+                            $resultado_exe_alterar = mysqli_query($conexao, $query_exe_alterar) or die_mysql($query_exe_alterar, __FILE__, __LINE__);
                             $linha_alterar['exercicios'] = array();
                             while ($linha2 = mysqli_fetch_array($resultado_exe_alterar)) $linha_alterar['exercicios'][] = $linha2['exercicios'];
                             $query_med_alterar = "select * from informacoes_adicionais_medidas where informacoes_adicionais_id= " . mysqliEscaparTexto($linha_alterar['id']);
-                            $resultado_med_alterar = mysqli_query($conexao, $query_med_alterar) or die('ERRO: ' . mysqli_error($conexao) . PHP_EOL . $query_med_alterar . PHP_EOL . print_r(debug_backtrace(), true));
+                            $resultado_med_alterar = mysqli_query($conexao, $query_med_alterar) or die_mysql($query_med_alterar, __FILE__, __LINE__);
                             $linha_alterar['medidas'] = array();
                             while ($linha2 = mysqli_fetch_array($resultado_med_alterar)) $linha_alterar['medidas'][] = $linha2;
                         }
@@ -232,10 +232,10 @@ if ($linha = mysqli_fetch_array($resultado)) {
 //referente ao formulário
 if (!empty($id)) {
     $query_alterar = "select * from ativ_extras where aluno_id = " . mysqliEscaparTexto($_SESSION['id']) . " and id= " . mysqliEscaparTexto($id);
-    $resultado_alterar = mysqli_query($conexao, $query_alterar) or die('ERRO: '.mysqli_error($conexao).PHP_EOL.$query_alterar.PHP_EOL.print_r(debug_backtrace(), true));
+    $resultado_alterar = mysqli_query($conexao, $query_alterar) or die_mysql($query_alterar, __FILE__, __LINE__);
     $linha_alterar = ($resultado_alterar?mysqli_fetch_array($resultado_alterar):array());
     $query_exe_alterar = "select * from ativ_extras_exercicios where ativ_extras_id= " . mysqliEscaparTexto($id);
-    $resultado_exe_alterar = mysqli_query($conexao, $query_exe_alterar) or die('ERRO: '.mysqli_error($conexao).PHP_EOL.$query_exe_alterar.PHP_EOL.print_r(debug_backtrace(), true));
+    $resultado_exe_alterar = mysqli_query($conexao, $query_exe_alterar) or die_mysql($query_exe_alterar, __FILE__, __LINE__);
     $linha_alterar['exercicios'] = array();
     while ($linha2 = mysqli_fetch_array($resultado_exe_alterar)) $linha_alterar['exercicios'][] = $linha2['exercicio'];
 } else {
@@ -244,7 +244,7 @@ if (!empty($id)) {
 
 //referente à paginação
 $query_pagina = "select count(ativ_extras.id) as total from ativ_extras join usuario on usuario.id=ativ_extras.aluno_id where usuario.id= " . mysqliEscaparTexto($_SESSION['id']);
-$resultado_pagina = mysqli_query($conexao, $query_pagina) or die('ERRO: '.mysqli_error($conexao).PHP_EOL.$query_pagina.PHP_EOL.print_r(debug_backtrace(), true));
+$resultado_pagina = mysqli_query($conexao, $query_pagina) or die_mysql($query_pagina, __FILE__, __LINE__);
 $paginacao = ($resultado_pagina?mysqli_fetch_array($resultado_pagina):array());
 $paginacao = array_merge(array(
     'total' => 0,
@@ -256,7 +256,7 @@ $paginacao['paginas'] = ceil($paginacao['total'] / $paginacao['quantidade']);
 
 //referente à consulta
 $query = "select ativ_extras.*, usuario.nome, usuario.sobrenome, usuario.foto from ativ_extras join usuario on usuario.id=ativ_extras.aluno_id where usuario.id= " . mysqliEscaparTexto($_SESSION['id']) . " order by ativ_extras.datahora desc limit " . $paginacao['quantidade'] . " offset " . $paginacao['offset'];
-$resultado = mysqli_query($conexao, $query) or die('ERRO: '.mysqli_error($conexao).PHP_EOL.$query.PHP_EOL.print_r(debug_backtrace(), true));
+$resultado = mysqli_query($conexao, $query) or die_mysql($query, __FILE__, __LINE__);
 
 
 
@@ -489,17 +489,18 @@ while ($linha = mysqli_fetch_array($resultado)) {
                 <?php } 
                 
                  if (tipoLogado("profissional")){ 
+                     $aba = (!empty($_GET['aba']) ? $_GET['aba'] : 'timeline');
                      ?>
                 
                 <div class="col-md-9">
                             <div class="nav-tabs-custom">
-                                <ul class="nav nav-tabs">
+                                <ul class="nav nav-tabs ">
                                     <li<?php if ($aba == 'timeline') echo ' class="active"'; ?>><a href="#timeline" data-toggle="tab">Linha do tempo</a></li>                    
                                     <li<?php if ($aba == 'dicas') echo ' class="active"'; ?>><a href="#dicas" data-toggle="tab">Dicas</a></li>
 
                                 </ul>
                                 <div class="tab-content">
-                                    <div class="tab-pane<?php if ($aba == 'timeline') echo ' active'; ?>" id="timeline">
+                                    <div class="tab-pane<?php if ($aba == 'timeline') echo 'active'; ?>" id="timeline">
                                         <!-- The timeline -->
                                         <ul class="timeline timeline-inverse">
                                             <!-- timeline time label -->

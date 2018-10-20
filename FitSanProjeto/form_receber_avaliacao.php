@@ -10,7 +10,13 @@ if (!tipoLogado("aluno")) {
     exit;
 }
 
+//tem q ter isso aqui amiguinho
 
+//leituraNotificacao(
+//    isset($_GET['notificacao']) ? $_GET['notificacao'] : null,
+//    null,
+//    ['profissional_id' => $profissional_id, 'aluno_id' => $aluno_id, 'table' => 'vinculo']
+//);
 
 
 //
