@@ -1,6 +1,10 @@
 <?php
 require_once './autenticacao.php';
-
+if (isset($_POST['meta_id'])){
+    $where = " meta.id=".$_POST['meta_id'];
+}else{
+    $where = " meta.usuario_id = ".$_SESSION['id']." and meta.status='ativa'";
+}
 //$query_anual = "select meta.*, dados_meta.data_add, MONTH(meta.data_final) as mes_final, sum(dados_meta.peso_add) as pesoTotal, MONTH(dados_meta.data_add) as mes, count(dados_meta.id) as quant_dados from dados_meta join meta on meta.id=dados_meta.meta_id where meta.usuario_id = ".$_SESSION['id']." and meta.status='ativa' group by mes";
 $query_anual = "
 select
@@ -20,9 +24,8 @@ from
         dados_meta.meta_id,
         mes
     ) as d on meta.id = d.meta_id
-where
-    meta.usuario_id = ".$_SESSION['id']." and
-    meta.status='ativa'
+where 
+    $where
 order by
     mes
 ";

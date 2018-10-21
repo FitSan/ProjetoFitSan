@@ -319,17 +319,6 @@ descricao TEXT,
 meta_id int references meta(id)
 );
 
-
-select * from meta;
-
-select dados_meta.*, meta.* from dados_meta join meta on dados_meta.meta_id = meta.id where meta.usuario_id = 1 and meta.status='ativa'
-select meta.*, dados_meta.count(id) from dados_meta join meta on meta.id=dados_meta.meta_id where meta.usuario_id = 1 and meta.status = 'ativa'
-
-insert into meta (tipo, data_inicial, data_final, peso_inicial, peso_final, usuario_id) values ('PERDER', '2018-09-20', '2018-09-21', '50', '20', '1')
-
-select * from dados_meta;
-
-
 ----------------------------------------------------------------
 
 ALTER DATABASE FitSan CHARACTER SET utf8 COLLATE utf8_unicode_ci;

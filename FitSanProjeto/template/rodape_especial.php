@@ -580,7 +580,7 @@
         });
     });
 </script>
-<script>
+<!--<script>
     $(document).ready(function(){
         $('#meta_id').change(function(){
             var meta_id = $(this).val();
@@ -595,7 +595,55 @@
             });
         });
     });
+</script>-->
+
+<script>
+    $(document).ready(function(){
+        $('#meta_id').change(function(){
+            var meta_id = $(this).val();
+            if(meta_id != ''){
+                document.getElementById('metasDiv').style.display="inline";
+            }else{
+                document.getElementById('metasDiv').style.display="none";
+            }
+//            showCheckGrafico(meta_id);
+            $.ajax({
+                url: "view_dados_meta.php",
+                method: "POST",
+                data:{meta_id:meta_id},
+                success:function(data){
+                    $('#dados_meta').html(data);
+                    $.ajax({
+                        url: "chart_meta_mensal.php",
+                        method: "POST",
+                        data:{meta_id:meta_id},
+                        success:function(data){
+                            $('#mensal_chart').html(data);         
+                            $.ajax({
+                                url: "chart_meta_anual.php",
+                                method: "POST",
+                                data:{meta_id:meta_id},
+                                success:function(data){
+                                    $('#anual').html(data);         
+                                    $.ajax({
+                                        url: "select_mes_grafico_meta.php",
+                                        method: "POST",
+                                        data:{meta_id:meta_id},
+                                        success:function(data){
+                                            $('#mensal_select').html(data);         
+
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+        });
+    });
 </script>
+
 <!--<script>    
         $('#add_dado').click(function(){
             var data = $('#form_add_dado :input').serializeArray();
@@ -610,7 +658,7 @@
         });
 </script>-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
-<script>
+<!--<script>
     $(document).ready(function(){
         $('#dado_mes').change(function(){
             var dado_mes = $(this).val();
@@ -625,7 +673,26 @@
             });            
         });
     });
+</script>-->
+
+<script>
+    $(document).ready(function(){
+        $('#dado_mes').change(function(){
+            var dado_mes = $(this).val();
+            var meta_id = $("#meta_id").val();
+            $.ajax({
+                url: "chart_meta_mensal.php",
+                method: "POST",
+                data:{dado_mes:dado_mes, meta_id:meta_id},
+                success:function(data){
+                    $('#mensal_chart').html(data);          
+                    
+                }
+            });            
+        });
+    });
 </script>
+
 <script>
     $(document).on('click', '.pagination a', function(){
         var meta_id = $("#meta_id").val();

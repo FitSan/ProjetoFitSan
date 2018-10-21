@@ -23,29 +23,44 @@ if ($data_final == null) {
 } 
 
 if (!$erro){
-    $data_now = date('Y-m-d');
-    $data_now = new DateTime($data_now);
-    
-    $data_inicial = date('Y-m-d', dataParse($data_inicial));
+    $query_dados = "select MAX(data_add) as max_mes from dados_meta join meta on dados_meta.meta_id= meta.id where usuario_id='".$_SESSION[id]."' and status='ativa'";
+    $resultado_dados = mysqli_query($conexao, $query_dados);
+    $linha_dados = mysqli_fetch_array($resultado_dados);
+
+    $max_data_add = date('Y-m-d', dataParse($linha_dados['max_mes']));
+    $max_data_add = new DateTime($max_data_add);
+   
     $data_final = date('Y-m-d', dataParse($data_final));
-    $data_inicio = new DateTime($data_inicial);
     $data_fim = new DateTime($data_final);
-
-    // Resgata diferença entre as datas
-    $diff_agora = $data_fim->diff($data_now);
-    $diff_agora = $diff_agora->format("%r%a");
-    
-    $diff = $data_inicio->diff($data_fim);
-    $diff = $diff->format("%r%a");
-    
-    if($diff_agora>0){
-        $_SESSION['erro_data'] = 'Escolha uma data final posterior à atual';
+   
+    $diff_add = $max_data_add->diff($data_fim);
+    $diff_add = $diff_add->format("%r%a");
+ 
+    if($diff_add<0){
+        $_SESSION['erro_data'] = 'Erro! Meta possui dados posteriores a data final inserida!';
         $erro = true;
-    }else if ($diff <= 0) {
-    $_SESSION['erro_data'] = 'Escolha datas válidas';
-    $erro = true;
-}
+    }else{    
+        $data_now = date('Y-m-d');
+        $data_now = new DateTime($data_now);
 
+        $data_inicial = date('Y-m-d', dataParse($data_inicial));        
+        $data_inicio = new DateTime($data_inicial);
+        
+        // Resgata diferença entre as datas
+        $diff_agora = $data_fim->diff($data_now);
+        $diff_agora = $diff_agora->format("%r%a");
+
+        $diff = $data_inicio->diff($data_fim);
+        $diff = $diff->format("%r%a");
+
+        if($diff_agora>0){
+            $_SESSION['erro_data'] = 'Escolha uma data final posterior à atual';
+            $erro = true;
+        }else if ($diff <= 0) {
+            $_SESSION['erro_data'] = 'Escolha datas válidas';
+            $erro = true;
+        }
+    }
 }
 
 
@@ -67,6 +82,7 @@ if ($peso_final <= $peso_inicial && $tipo == 'GANHAR' || $peso_inicial <= $peso_
     $_SESSION['erro_peso'] = 'Preencha uma meta de peso válida';
     $erro = true;
 }
+
 
 if ($erro) {
     header('Location: metas.php');
