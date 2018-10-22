@@ -10,6 +10,12 @@ if (!tipoLogado("aluno")) {
     exit;
 }
 
+if (isset($_GET['notificacao'])){
+    echo leituraNotificacao($_GET['notificacao']);
+    echo '<script>window.location = ' . json_encode(url_param_add(url_current(), 'notificacao', null)). ';</script>';
+    exit;
+}
+
 //tem q ter isso aqui amiguinho
 //leituraNotificacao(
 //    isset($_GET['notificacao']) ? $_GET['notificacao'] : null,
