@@ -14,13 +14,21 @@ $data_envio = $now->format('Y-m-d H:i:s');
   $dificuldade = (!empty($_POST['grupo_dificuldade']) ? $_POST['grupo_dificuldade'] : null);
   $caso_sim = (!empty($_POST['caso_sim']) ? $_POST['caso_sim'] : null);
    $consideracoes = (!empty($_POST['consideracoes']) ? $_POST['consideracoes'] : null);
+   
+   $musculatura = (!empty($_POST['musculatura']) ? $_POST['musculatura'] : null); 
+   $lesao = (!empty($_POST['lesao']) ? $_POST['lesao'] : null); 
+   $queimacao = (!empty($_POST['queimacao']) ? $_POST['queimacao'] : null); 
+   $caimbras = (!empty($_POST['caimbras']) ? $_POST['caimbras'] : null); 
+   $tontura = (!empty($_POST['tontura']) ? $_POST['tontura'] : null); 
+   $consideracoes_corporal = (!empty($_POST['consideracoes_corporal']) ? $_POST['consideracoes_corporal'] : null); 
+   
 
-   $query = "insert into `avaliacao` (`data`, `desempenho`, `frequencia`, `grupo_cumpriu`, `grupo_duvida`, `grupo_dificuldade`, `caso_sim`, `consideracoes`, `profissional_id`, `aluno_id`) values "
-           . "('$data_envio', '$desempenho', '$frequencia', '$cumpriu', '$duvida', '$dificuldade', '$caso_sim', '$consideracoes', '$_SESSION[id]', '$aluno')";
+   $query = "insert into `avaliacao` (`data`, `desempenho`, `frequencia`, `grupo_cumpriu`, `grupo_duvida`, `grupo_dificuldade`, `caso_sim`, `consideracoes`, `musculatura`, `lesao`, `queimação`, `caimbras`, `tontura`, `consideracoes_corporal`, `profissional_id`, `aluno_id`) values "
+           . "('$data_envio', '$desempenho', '$frequencia', '$cumpriu', '$duvida', '$dificuldade', '$caso_sim', '$consideracoes', '$musculatura', '$lesao', '$queimacao', '$caimbras', '$tontura', '$consideracoes_corporal', '$_SESSION[id]', '$aluno')";
 
-
-            //echo $query;
-
+          echo $query;
+           exit();
+           
             mysqli_query($conexao, $query);          
             
     $profissional_id = $_SESSION['id'];

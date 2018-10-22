@@ -55,9 +55,33 @@ if (!tipoLogado("profissional")) {
                 $id_avaliacao = $usuario['id'];   
                 
                 ?>
-            <a href="http://localhost/FitSan/form_mostrar_avaliacao.php?id_avaliacao=<?php echo $id_avaliacao; ?>">
-                <h3> Avaliação do Aluno <?= $linha['nome'] ?> / <?= $usuario['data'] ?> </h3>
-                </a>
+
+                    <div class="nav-tabs-custom" align="center">
+                        <div class="tab-content">
+
+
+                            <div class="timeline-item">
+
+                                <samp class="border border-primary"></samp>
+
+                                <span class="time"><i class="calendar-table"></i> <?= date('d/m/Y', dataParse($usuario['data'])) ?></span>
+
+                                <h3 class="timeline-header">Avaliação do Aluno <br> <strong><?php echo htmlspecialchars($linha['nome'])?> <?= htmlspecialchars($linha['sobrenome']); ?></strong></h3>
+
+                              
+                                    
+                                    <a href="http://localhost/FitSan/form_mostrar_avaliacao.php?id_avaliacao=<?php echo $id_avaliacao; ?>">  
+                                        <button type="button" class="btn btn-primary btn-flat"> Conferir </button>
+                                    </a>
+
+
+                                
+
+
+                            </div>
+                        </div>
+                    </div>
+
             
             
             <?php }

@@ -11,14 +11,11 @@ if (!tipoLogado("aluno")) {
 }
 
 //tem q ter isso aqui amiguinho
-
 //leituraNotificacao(
 //    isset($_GET['notificacao']) ? $_GET['notificacao'] : null,
 //    null,
 //    ['profissional_id' => $profissional_id, 'aluno_id' => $aluno_id, 'table' => 'vinculo']
 //);
-
-
 //
 //echo $linha[data]  ;
 //exit;
@@ -35,15 +32,15 @@ if (!tipoLogado("aluno")) {
             <div class="box box-primary">
 
             </div>
-            <?php
-            $usuarios = array();
-            $query = "select * from `avaliacao` where aluno_id=" . $_SESSION['id'];
-            $retorno = mysqli_query($conexao, $query);
-            while ($linhas = mysqli_fetch_array($retorno)) {
-                array_push($usuarios, $linhas);
-            }
-            if ($usuarios == null) {
-                ?>
+<?php
+$usuarios = array();
+$query = "select * from `avaliacao`  where aluno_id=" . $_SESSION['id'];
+$retorno = mysqli_query($conexao, $query);
+while ($linhas = mysqli_fetch_array($retorno)) {
+    array_push($usuarios, $linhas);
+}
+if ($usuarios == null) {
+    ?>
                 <div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12" align="center"><h3><b>Você não possui nenhuma avaliação!</b></h3></div>
                 <?php
             } else {
@@ -60,42 +57,45 @@ if (!tipoLogado("aluno")) {
 
                     $id_avaliacao = $usuario['id'];
                     ?>
-                    <a href="http://localhost/FitSan/form_mostrar_avaliacao.php?id_avaliacao=<?php echo $id_avaliacao; ?>">
-                        <h3> Avaliação do Profissional <?= $linha['nome'] ?> / <?= $usuario['data'] ?> </h3>
-                    </a>
-
-                  
-            
-
-                    <div class="timeline-item">
-                        
-                        <samp class="border border-primary"></samp>
-                        
-                        <span class="time"><i class="calendar-table"></i> <?= date('d/m/Y', dataParse($usuario['data'])) ?></span>
-
-                        <h3 class="timeline-header">Avaliação do profissional <strong><?php echo htmlspecialchars($linha['nome']); ?></strong></h3>
-
-
-                        <div class="timeline-body">
 
 
 
+                    <div class="nav-tabs-custom" align="center">
+                        <div class="tab-content">
+
+
+                            <div class="timeline-item">
+
+                                <samp class="border border-primary"></samp>
+
+                                <span class="time"><i class="calendar-table"></i> <?= date('d/m/Y', dataParse($usuario['data'])) ?></span>
+
+                                <h3 class="timeline-header">Avaliação do profissional <br> <strong><?php echo htmlspecialchars($linha['nome'])?> <?= htmlspecialchars($linha['sobrenome']); ?></strong></h3>
+
+                              
+                                    
+                                    <a href="http://localhost/FitSan/form_mostrar_avaliacao.php?id_avaliacao=<?php echo $id_avaliacao; ?>">  
+                                        <button type="button" class="btn btn-primary btn-flat"> Conferir </button>
+                                    </a>
+
+
+                                
+
+
+                            </div>
                         </div>
-                      
-
                     </div>
-                  
 
 
-                <?php
-                }
-            }
-            ?> 
+
+        <?php
+    }
+}
+?> 
 
         </form>
     </section>
     <!--</div>-->
 
-    <?php
-    require_once './template/rodape_especial.php';
-    
+<?php
+require_once './template/rodape_especial.php';

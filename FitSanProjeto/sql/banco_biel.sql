@@ -108,21 +108,40 @@ DROP TABLE IF EXISTS `avaliacao`;
 CREATE TABLE IF NOT EXISTS `avaliacao` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `data` datetime NOT NULL,
-  `desempenho` text COLLATE utf8_unicode_ci NOT NULL,
-  `frequencia` text COLLATE utf8_unicode_ci NOT NULL,
-  `grupo_cumpriu` text COLLATE utf8_unicode_ci NOT NULL,
-  `grupo_duvida` text COLLATE utf8_unicode_ci NOT NULL,
-  `grupo_dificuldade` text COLLATE utf8_unicode_ci NOT NULL,
-  `caso_sim` text COLLATE utf8_unicode_ci NOT NULL,
-  `consideracoes` text COLLATE utf8_unicode_ci NOT NULL,
+  `desempenho` text COLLATE utf8_unicode_ci,
+  `frequencia` text COLLATE utf8_unicode_ci,
+  `grupo_cumpriu` text COLLATE utf8_unicode_ci,
+  `grupo_duvida` text COLLATE utf8_unicode_ci,
+  `grupo_dificuldade` text COLLATE utf8_unicode_ci,
+  `caso_sim` text COLLATE utf8_unicode_ci,
+  `consideracoes` text COLLATE utf8_unicode_ci,
+`musculatura` text COLLATE utf8_unicode_ci,
+`lesao` text COLLATE utf8_unicode_ci,
+`queimacao` text COLLATE utf8_unicode_ci,
+`caimbras` text COLLATE utf8_unicode_ci,
+`tontura` text COLLATE utf8_unicode_ci,
+`consideracoes_corporal` text COLLATE utf8_unicode_ci,
   `profissional_id` int(11) DEFAULT NULL,
   `aluno_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+select * from `avaliacao`;
 --
 -- Extraindo dados da tabela `avaliacao`
 --
+
+
+
+insert into `avaliacao` (`data`, `desempenho`, `frequencia`, `grupo_cumpriu`, `grupo_duvida`, `grupo_dificuldade`, `caso_sim`, `consideracoes`, `musculatura`, `lesao`, `queimação`, `caimbras`, `tontura`, `consideracoes_corporal`, `profissional_id`, `aluno_id`) values
+            ('2018-10-05 00:32:33', 'fff', 'vvchg', 'hghg', 'jkkk', 'dfghj', 'xcvbn', 'cccc', 'zzz', 'sasas', 'asasa', 'asasa', 'asasas', 'asasasas', 13, 15);
+
+
+
+
+
+
+
 
 INSERT INTO `avaliacao` (`id`, `data`, `desempenho`, `frequencia`, `grupo_cumpriu`, `grupo_duvida`, `grupo_dificuldade`, `caso_sim`, `consideracoes`, `profissional_id`, `aluno_id`) VALUES
 (29, '2018-10-14 04:04:00', 'bom', 'boa', 'sim', 'sim', 'sim', 'oi', 'oi', 2, 13);
@@ -837,10 +856,74 @@ INSERT INTO `vinculo` (`aluno_id`, `profissional_id`, `solicitante`, `status`) V
 (13, 2, 'aluno', 'aprovado');
 COMMIT;
 
+select * from `avaliacao`;
+
+select * from `avaliacao` ORDER BY DATA where aluno_id=13   ;
+    
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
  
 /* TESTES */
 
-SELECT * FROM `notificacao`;
+/*SELECT * FROM `notificacao`;
+
+SELECT * FROM `avaliacao2`;
+
+SELECT descricao FROM `pergunta` where `avaliacao2`= 29;
+
+
+DROP TABLE IF EXISTS `avaliacao2`;
+CREATE TABLE IF NOT EXISTS `avaliacao2` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `data` datetime NOT NULL,
+  `pergunta` int references `pergunta`(id),
+  `resposta` int references `resposta`(id),
+  `profissional_id` int(11) DEFAULT NULL,
+  `aluno_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+INSERT INTO `avaliacao2` (`id`, `data`,`pergunta`,`resposta`, `profissional_id`, `aluno_id`) VALUES
+(29, '2018-10-14 04:04:00', 1, 1, 2, 13);
+
+DROP TABLE IF EXISTS `pergunta`;
+CREATE TABLE IF NOT EXISTS `pergunta` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `descricao` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+insert into `pergunta`(`id`, `descricao`) values 
+(1,'Desempenho do aluno com as atividades'),
+(2,'Cumpriu com os objetivos estipulados?'),
+(3,''),
+(4,''),
+(5,''),
+(6,''),
+(7,''),
+(8,''),
+(9,''),
+(10,''),
+(11,''),
+(12,''),
+(13,''),
+(14,''),
+(15,''),
+(16,''),
+(17,''),
+(18,''),
+(19,''),
+(20,''),
+
+DROP TABLE IF EXISTS `resposta`;
+CREATE TABLE IF NOT EXISTS `resposta` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `descricao` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+insert into `resposta`(`id`, `descricao`) values 
+(1,'17'),
+(2,'Gabriel');
+*/
