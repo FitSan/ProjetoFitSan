@@ -133,18 +133,8 @@ select * from `avaliacao`;
 
 
 
-insert into `avaliacao` (`data`, `desempenho`, `frequencia`, `grupo_cumpriu`, `grupo_duvida`, `grupo_dificuldade`, `caso_sim`, `consideracoes`, `musculatura`, `lesao`, `queimação`, `caimbras`, `tontura`, `consideracoes_corporal`, `profissional_id`, `aluno_id`) values
+insert into `avaliacao` (`data`, `desempenho`, `frequencia`, `grupo_cumpriu`, `grupo_duvida`, `grupo_dificuldade`, `caso_sim`, `consideracoes`, `musculatura`, `lesao`, `queimacao`, `caimbras`, `tontura`, `consideracoes_corporal`, `profissional_id`, `aluno_id`) values
             ('2018-10-05 00:32:33', 'fff', 'vvchg', 'hghg', 'jkkk', 'dfghj', 'xcvbn', 'cccc', 'zzz', 'sasas', 'asasa', 'asasa', 'asasas', 'asasasas', 13, 15);
-
-
-
-
-
-
-
-
-INSERT INTO `avaliacao` (`id`, `data`, `desempenho`, `frequencia`, `grupo_cumpriu`, `grupo_duvida`, `grupo_dificuldade`, `caso_sim`, `consideracoes`, `profissional_id`, `aluno_id`) VALUES
-(29, '2018-10-14 04:04:00', 'bom', 'boa', 'sim', 'sim', 'sim', 'oi', 'oi', 2, 13);
 
 -- --------------------------------------------------------
 
@@ -858,6 +848,8 @@ COMMIT;
 
 select * from `avaliacao`;
 
+select * from `notificacao`;
+
 select * from `avaliacao` ORDER BY DATA where aluno_id=13   ;
     
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
@@ -878,7 +870,7 @@ CREATE TABLE IF NOT EXISTS `avaliacao2` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `data` datetime NOT NULL,
   `pergunta` int references `pergunta`(id),
-  `resposta` int references `resposta`(id),
+  `resposta` text COLLATE utf8_unicode_ci,
   `profissional_id` int(11) DEFAULT NULL,
   `aluno_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -916,7 +908,7 @@ insert into `pergunta`(`id`, `descricao`) values
 (19,''),
 (20,''),
 
-DROP TABLE IF EXISTS `resposta`;
+/*DROP TABLE IF EXISTS `resposta`;
 CREATE TABLE IF NOT EXISTS `resposta` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `descricao` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
