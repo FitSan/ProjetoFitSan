@@ -77,7 +77,7 @@ $resultado_meses = mysqli_query($conexao, $query_meses);
                 },
                 {
                     label: "Meta",
-                    backgroundColor: ' transparent',
+                    backgroundColor: 'transparent',
                     borderColor: 'rgb(255, 99, 132)',
                     data: [<?php
             foreach ($meta as $meta_x) {

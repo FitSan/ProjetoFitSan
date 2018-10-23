@@ -77,7 +77,7 @@ while ($linha_anual = mysqli_fetch_array($resultado_anual)){
                             },
                             {
                                 label: "Meta",
-                                backgroundColor:' transparent',
+                                backgroundColor: 'transparent',
                                 borderColor: 'rgb(255, 99, 132)',
                                 data: [<?php foreach ($meta as $i => $meta_x){
                                     if ($i > 0) echo ", "; // Isto é necessário para não colocar uma vírgula no final da lista pois da erro em alguns navegadores
