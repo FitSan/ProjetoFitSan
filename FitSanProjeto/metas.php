@@ -2,12 +2,18 @@
 $pagina = 'Metas';
 include './template/cabecalho.php';
 
+if (!tipoLogado("aluno")){
+    header('Location: pagina1.php');
+    exit;
+}
+
 $query = "select * from meta where usuario_id=" . $_SESSION['id'] . " and status='ativa'";
-$resultado = mysqli_query($conexao, $query);
+$resultado = mysqli_query($conexao, $query) or die_mysql($query, __FILE__, __LINE__);
 $linha = mysqli_fetch_array($resultado);
 
 $query_all = "select * from meta where usuario_id=" . $_SESSION['id'] . " order by data_inicial desc";
-$resultado_all = mysqli_query($conexao, $query_all);
+$resultado_all = mysqli_query($conexao, $query_all) or die_mysql($query_all, __FILE__, __LINE__);
+
 
 
 if (mysqli_num_rows($resultado) === 0) {

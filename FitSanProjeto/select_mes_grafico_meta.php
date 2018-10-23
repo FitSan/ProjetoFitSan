@@ -7,11 +7,11 @@ if (isset($_POST['meta_id'])) {
     $query_meta = "select *, MONTH(data_final) as mes_final from meta where usuario_id = " . $_SESSION['id'] . " and status='ativa'";
 }
 
-$resultado_meta = mysqli_query($conexao, $query_meta);
+$resultado_meta = mysqli_query($conexao, $query_meta) or die_mysql($query_meta, __FILE__, __LINE__);
 $linha_meta = mysqli_fetch_array($resultado_meta);
 
-$query_meses = "select data_add, MONTH(data_add) as meses from dados_meta where meta_id= " . $linha_meta['id'] . " group by meses order by meses desc";
-$resultado_meses = mysqli_query($conexao, $query_meses);
+$query_meses = "select MAX(data_add) as data_add, MONTH(data_add) as meses from dados_meta where meta_id= " . (!empty($linha_meta['id']) ? $linha_meta['id'] : 0) . " group by meses order by meses desc";
+$resultado_meses = mysqli_query($conexao, $query_meses) or die_mysql($query_meses, __FILE__, __LINE__);
 ?>
 <div class="box-body">  
     <form class="form-inline" role="form" method="post" action="<?php echo basename(__FILE__) ?>">

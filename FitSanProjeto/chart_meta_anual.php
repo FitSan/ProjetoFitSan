@@ -31,7 +31,7 @@ order by
 ";
 // O MySQL já faz o cálculo da média dos pesos basta colocar no lugar do SUM a função AVG e assim o cálculo da média abaixo não é necessário.
 
-$resultado_anual = mysqli_query($conexao, $query_anual);
+$resultado_anual = mysqli_query($conexao, $query_anual) or die_mysql($query_anual, __FILE__, __LINE__);
 
 $datas = array();
 $pesos = array();

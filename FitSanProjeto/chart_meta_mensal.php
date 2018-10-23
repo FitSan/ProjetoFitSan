@@ -9,7 +9,7 @@ if (isset($_POST['meta_id'])) {
     $query_meta = "select *, MONTH(data_final) as mes_final from meta where usuario_id = " . $_SESSION['id'] . " and status='ativa'";
 }
 
-$resultado_meta = mysqli_query($conexao, $query_meta);
+$resultado_meta = mysqli_query($conexao, $query_meta) or die_mysql($query_meta, __FILE__, __LINE__);
 $linha_meta = mysqli_fetch_array($resultado_meta);
 
 if (isset($_POST['dado_mes'])) {
