@@ -17,7 +17,7 @@ if (!tipoLogado("admin")){
             <h3 class="box-title">Escolha onde deseja ir</h3>
         </div>
         <div class="box-body">
-            <a href="#" class="btn btn-app">
+            <a href="lista_usuarios_admin.php" class="btn btn-app">
                 <i class="fa fa-user"></i> Usuarios
             </a>
             

@@ -103,6 +103,7 @@ $resultado = dbquery($query);
     <div class="box">
         <div class="box-header"><form class="form-horizontal" action="<?php echo basename(__FILE__) ?>?acao=checkin" method="POST" enctype="multipart/form-data">
             <h3 class="box-title">Prescrição de treino</h3>
+<!--            TODO: colocar mais uma aba aqui para profissionais, que se tiver mais profissionais vai aparecer o mome aqui-->
             <br><br>
 <!--            <div class="box-body" >-->
             <ul class="nav nav-tabs">

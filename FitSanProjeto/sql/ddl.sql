@@ -102,6 +102,7 @@ id int primary key auto_increment,
 datahora timestamp not null,
 titulo varchar(255) not null,
 texto text not null,
+visualizacao ENUM('PUBLICO','PRIVADO') not null default 'PRIVADO',
 aluno_id int references usuario(id)
 );
 
@@ -401,7 +402,7 @@ insert into usuario values (default, concat(Upper(substr('mathias', 1, 1)), lowe
 
 insert into usuario (id, nome, sobrenome, datanasc, sexo, foto, senha, email, tipo_id) values (default, 'Charles ','Konig ','','','', '$2y$10$DTZydgfgwrk70b4u2.RTtuWE9GF1o1vda1vxDY15Q6Sn6L/tWX5XC', 'charles@charles', '2');
 
-replace into usuario (nome, sobrenome, senha, email, tipo_id) values ('Administrador','Geral','$2y$10$1Hv5TSETg2DMCtJuOSves.NclePxal7x4FN/KVOk.n1g9O400zqsW', 'admin@admin', null);
+replace into usuario (nome, sobrenome, senha, email, tipo_id) values ('Administrador','Geral','$2y$10$F4o1IGnrLVcWQaibszv.9O18QcUQ0cES8XYr6Hqv0lqiic00dC8vC', 'admin@admin', null);
 
 
 

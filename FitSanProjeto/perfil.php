@@ -144,54 +144,30 @@ if ($linha = mysqli_fetch_array($resultado)) {
                     
                     <?php if (tipoLogado("profissional")){ ?>
                     <div class="box box-primary">
+                        
+                        <?php
+                         $query = "select * from usuario join vinculo on usuario.id = vinculo.aluno_id where vinculo.status = 'aprovado' and usuario.status = 'ativado' and vinculo.profissional_id = " . $_SESSION[id] ;
+                                if ($resultado = mysqli_query($conexao, $query)){
+        
+                                
+                        ?>
                                 <div class="box-header with-border">
                                     <h3 class="box-title">Meus alunos</h3>
                                 </div>
                                 
                         <div class="box-body no-padding">
                             <ul class="users-list clearfix">
-                                <li>
-                                    <img src="dist/img/user1-128x128.jpg" alt="User Image">
-                                    <a class="users-list-name" href="#">Alexander Pierce</a>
-                                     <span class="users-list-date">Today</span>
+                                <?php while ($linha = mysqli_fetch_array($resultado)){ ?>
+                                <li>                          
+                                    <img class="img-responsive" src=" <?= htmlspecialchars(!empty($linha['foto']) ? $linha['foto'] : 'img/user-avatar-placeholder.png') ?>">
+                                    <a href="perfil_externo.php?id=<?= $linha['aluno_id'] ?>"><?= htmlspecialchars($linha['nome']) ?></a>
                                 </li>
-                                <li>
-                      <img src="dist/img/user8-128x128.jpg" alt="User Image">
-                      <a class="users-list-name" href="#">Norman</a>
-                      <span class="users-list-date">Yesterday</span>
-                    </li>
-                    <li>
-                      <img src="dist/img/user7-128x128.jpg" alt="User Image">
-                      <a class="users-list-name" href="#">Jane</a>
-                      <span class="users-list-date">12 Jan</span>
-                    </li>
-                    <li>
-                      <img src="dist/img/user6-128x128.jpg" alt="User Image">
-                      <a class="users-list-name" href="#">John</a>
-                      <span class="users-list-date">12 Jan</span>
-                    </li>
-                    <li>
-                      <img src="dist/img/user2-160x160.jpg" alt="User Image">
-                      <a class="users-list-name" href="#">Alexander</a>
-                      <span class="users-list-date">13 Jan</span>
-                    </li>
-                    <li>
-                      <img src="dist/img/user5-128x128.jpg" alt="User Image">
-                      <a class="users-list-name" href="#">Sarah</a>
-                      <span class="users-list-date">14 Jan</span>
-                    </li>
-                    <li>
-                      <img src="dist/img/user4-128x128.jpg" alt="User Image">
-                      <a class="users-list-name" href="#">Nora</a>
-                      <span class="users-list-date">15 Jan</span>
-                    </li>
-                    <li>
-                      <img src="dist/img/user3-128x128.jpg" alt="User Image">
-                      <a class="users-list-name" href="#">Nadia</a>
-                      <span class="users-list-date">15 Jan</span>
-                    </li>
+                                <?php } ?>
                             </ul>
                         </div>
+                        <?php }
+                ?>
+                        
                             </div>
                    
                <?php }
@@ -490,6 +466,7 @@ while ($linha = mysqli_fetch_array($resultado)) {
                 
                  if (tipoLogado("profissional")){ 
                      $aba = (!empty($_GET['aba']) ? $_GET['aba'] : 'timeline');
+//                     TODO: as acima das dicas estao aparecendo a timeline. 
                      ?>
                 
                 <div class="col-md-9">
@@ -500,7 +477,7 @@ while ($linha = mysqli_fetch_array($resultado)) {
 
                                 </ul>
                                 <div class="tab-content">
-                                    <div class="tab-pane<?php if ($aba == 'timeline') echo 'active'; ?>" id="timeline">
+                                    <div class="tab-pane<?php if ($aba == 'timeline') echo ' active'; ?>" id="timeline">
                                         <!-- The timeline -->
                                         <ul class="timeline timeline-inverse">
                                             <!-- timeline time label -->
@@ -578,7 +555,76 @@ while ($linha = mysqli_fetch_array($resultado)) {
                                     </div>
                             <div class="tab-pane<?php if ($aba == 'dicas') echo ' active'; ?>" id="dicas">
                                 <!-- Post -->
-                                <?php include 'dicas.php'; ?>  
+                                <?php 
+
+$query = "select dica.*, usuario.nome, usuario.sobrenome, usuario.foto from dica join usuario on usuario.id = dica.profissional_id";
+if (tipoLogado("profissional")){
+    $query .= " where dica.profissional_id = ".$_SESSION['id'];
+} elseif (tipoLogado("aluno")){
+    if (!empty($aluno_profissional)) $query .= " where dica.profissional_id = ".$aluno_profissional;
+}
+$query .= " order by data_envio desc";
+$resultado = mysqli_query($conexao, $query);
+                while ($linha = mysqli_fetch_array($resultado)) {
+                    ?>
+                    <div class="post">
+                        <div class="user-block">
+                            <img class="img-circle img-bordered-sm" src="<?= htmlspecialchars(!empty($linha['foto']) ? $linha['foto'] : 'img/user-avatar-placeholder.png') ?>" alt="User profile picture">
+                            <span class="username">
+                                <a href="perfil_externo.php?id=<?= $linha['profissional_id'] ?>"><?= $linha['profissional_nome'] ?></a> 
+                                <?php
+                                if($linha['profissional_id']==$_SESSION['id']){
+                                ?>
+                               
+                                
+                                <button type="button" class="pull-right btn-box-tool" data-toggle="modal" data-target="#excluir-dica" data-id="<?= $linha['id'] ?>"><i class="fa fa-times"></i></button>
+                                <?php
+                                }
+                                ?>
+                                <!--Fim do icone x-->
+                            </span>
+                            <span class="description"><?= date('d/m/Y H:i:s', dataParse($linha['data_envio'])) ?></span>
+                        </div>
+                        <p> <?= nl2br(htmlentities($linha['texto'])) ?> </p> 
+                        <div id="uploads"><ul><?php
+                            $query_dica = "select * from upload_dica where dica_id = $linha[id]";
+                            $resultado_upload = mysqli_query($conexao, $query_dica);
+                            while ($linha_upload = mysqli_fetch_array($resultado_upload)) {
+                                if($linha_upload['tipo']!='img'){
+                        ?>                          
+                        <li><video height="380" style="padding: 5px;" controls>
+                                <source src="upload/dica/<?= $linha_upload['nome_arq'] ?>" type="video/mp4">
+                            </video></li>
+                           <?php 
+                                }else{
+                                  ?>  
+                        <li><img src="upload/dica/<?= $linha_upload['nome_arq'] ?>" height="380" style="padding: 5px;"></li>                  
+
+                           <?php   
+                                }
+
+                                }?>
+                            </ul>
+                        </div>
+                        
+                        <!--Caso necessario colocar comentário e as opções de compartilhar e gostar -->
+
+                        <!--<ul class="list-inline">
+                                        <li><a href="#" class="link-black text-sm"><i class="fa fa-share margin-r-5"></i> Share</a></li>
+                                        <li><a href="#" class="link-black text-sm"><i class="fa fa-thumbs-o-up margin-r-5"></i> Like</a>
+                                        </li>
+                                        <li class="pull-right">
+                                            <a href="#" class="link-black text-sm"><i class="fa fa-comments-o margin-r-5"></i> Comments
+                                                (5)</a></li>
+                                    </ul>
+                                    <input class="form-control input-sm" type="text" placeholder="Type a comment">-->
+
+                        <!--final do comentario -->
+                    </div>
+                    <!-- /.post -->
+                    <?php
+                }
+                ?>
                                 <!-- /.post -->
                             </div>
                             

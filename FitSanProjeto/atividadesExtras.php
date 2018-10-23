@@ -12,6 +12,19 @@ $acao = (!empty($_GET['acao']) ? $_GET['acao'] : 'consultar'); //obtendo ação
 $id = (!empty($_GET['id']) ? $_GET['id'] : null); //obtendo id de alteração
 $erros = array();
 
+//referente ao formulário
+if (!empty($id)) {
+    $query_alterar = "select * from ativ_extras where aluno_id = " . mysqliEscaparTexto($_SESSION['id']) . " and id= " . mysqliEscaparTexto($id);
+    $resultado_alterar = mysqli_query($conexao, $query_alterar) or die_mysql($query_alterar, __FILE__, __LINE__);
+    $linha_alterar = ($resultado_alterar?mysqli_fetch_array($resultado_alterar):array());
+    $query_exe_alterar = "select * from ativ_extras_exercicios where ativ_extras_id= " . mysqliEscaparTexto($id);
+    $resultado_exe_alterar = mysqli_query($conexao, $query_exe_alterar) or die_mysql($query_exe_alterar, __FILE__, __LINE__);
+    $linha_alterar['exercicios'] = array();
+    while ($linha2 = mysqli_fetch_array($resultado_exe_alterar)) $linha_alterar['exercicios'][] = $linha2['exercicio'];
+} else {
+    $linha_alterar = array();
+}
+
 //referente a inclusão/alteração no banco.
 if (($acao == 'incluir') || ($acao == 'alterar')){
     if (!empty($_POST)) {
@@ -55,19 +68,19 @@ if (($acao == 'incluir') || ($acao == 'alterar')){
     }
     header('Location: '.basename(__FILE__));
     exit();
-}
-
-//referente ao formulário
-if (!empty($id)) {
-    $query_alterar = "select * from ativ_extras where aluno_id = " . mysqliEscaparTexto($_SESSION['id']) . " and id= " . mysqliEscaparTexto($id);
-    $resultado_alterar = mysqli_query($conexao, $query_alterar) or die_mysql($query_alterar, __FILE__, __LINE__);
-    $linha_alterar = ($resultado_alterar?mysqli_fetch_array($resultado_alterar):array());
-    $query_exe_alterar = "select * from ativ_extras_exercicios where ativ_extras_id= " . mysqliEscaparTexto($id);
-    $resultado_exe_alterar = mysqli_query($conexao, $query_exe_alterar) or die_mysql($query_exe_alterar, __FILE__, __LINE__);
-    $linha_alterar['exercicios'] = array();
-    while ($linha2 = mysqli_fetch_array($resultado_exe_alterar)) $linha_alterar['exercicios'][] = $linha2['exercicio'];
-} else {
-    $linha_alterar = array();
+} elseif ($acao == 'visualizacao') {
+    if ($id !== null) {
+        $visualizacao = (isset($linha_alterar['visualizacao']) ? $linha_alterar['visualizacao'] : 'PRIVADO');
+        if (!strcasecmp($visualizacao, 'PUBLICO')){
+            $visualizacao = 'PRIVADO';
+        } else {
+            $visualizacao = 'PUBLICO';
+        }
+        $query = "update ativ_extras set visualizacao = " . mysqliEscaparTexto($visualizacao) . " where id= " . mysqliEscaparTexto($id);
+        mysqli_query($conexao, $query) or die_mysql($query, __FILE__, __LINE__);
+    }
+    header('Location: '.basename(__FILE__));
+    exit();
 }
 
 //referente à paginação
@@ -83,7 +96,7 @@ $pagina['offset'] = (($pagina['pagina'] - 1) * $pagina['quantidade']);
 $pagina['paginas'] = ceil($pagina['total'] / $pagina['quantidade']);
 
 //referente à consulta
-$query = "select ativ_extras.*, usuario.nome, usuario.sobrenome, usuario.foto from ativ_extras join usuario on usuario.id=ativ_extras.aluno_id where usuario.id= " . mysqliEscaparTexto($_SESSION['id']) . " order by ativ_extras.datahora desc limit " . $pagina['quantidade'] . " offset " . $pagina['offset'];
+$query = "select ativ_extras.*, usuario.nome, usuario.sobrenome, usuario.foto from ativ_extras join usuario on usuario.id=ativ_extras.aluno_id where usuario.id= " . mysqliEscaparTexto($_SESSION['id']) . " order by ativ_extras.datahora desc, ativ_extras.titulo limit " . $pagina['quantidade'] . " offset " . $pagina['offset'];
 $resultado = mysqli_query($conexao, $query) or die_mysql($query, __FILE__, __LINE__);
 ?>
 
@@ -218,6 +231,13 @@ while ($linha = mysqli_fetch_array($resultado)) {
                             <div class="timeline-footer">
                                 <a class="btn btn-primary btn-xs" href="<?php echo basename(__FILE__) ?>?acao=alterar&id=<?= htmlentities($linha['id']) ?>">Atualizar</a>
                                 <a class="btn btn-danger btn-xs" href="<?php echo basename(__FILE__) ?>?acao=excluir&id=<?= htmlentities($linha['id']) ?>">Excluir</a>
+                                <a class="btn btn-xs" href="<?php echo basename(__FILE__) ?>?acao=visualizacao&id=<?= htmlentities($linha['id']) ?>"><?php
+                                    if ($linha['visualizacao'] == 'PUBLICO'){
+                                        ?><i class="fa fa-unlock-alt"></i><?php
+                                    } else {
+                                        ?><i class="fa fa-lock"></i><?php
+                                    }
+                                ?></a>
                             </div>
                         </div>
                     </li>
