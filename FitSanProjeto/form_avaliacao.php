@@ -40,11 +40,33 @@ if (!tipoLogado("profissional")) {
                     ?>
 
                 </select> </div> 
+
+
+
+
+
+
+
             <br>
 
 
             <div class="col-md-12">
                 <div class="nav-tabs-custom">
+                    <?php if (!empty($_SESSION['semaluno'])) {
+                        ?> <div class="alert alert-danger">
+                            <strong>Selecione um aluno</strong>.
+                        </div> <?php
+                        unset($_SESSION['semaluno']);
+                    }
+                    ?>
+                                        <?php if (!empty($_SESSION['semnada'])) {
+                        ?> <div class="alert alert-danger">
+                            <strong>Selecione as respostas do seu questionário </strong>.
+                        </div> <?php
+                        unset($_SESSION['semnada']);
+                    }
+                    ?>
+
                     <ul class="nav nav-tabs">
 
                         <li class="active" ><a href="#performance" data-toggle="tab"> Performance </a></li>
