@@ -28,7 +28,7 @@ if($aluno == null){
 
         header('Location: form_avaliacao.php');
 }else {
-    if($frequencia && $desempenho && $cumpriu && $duvida && $dificuldade && $caso_sim && $consideracoes && $musculatura && $lesao && $queimacao && $caimbras && $tontura && $consideracoes_corporal === null){
+    if($frequencia == null && $desempenho == null && $cumpriu == null && $duvida == null && $dificuldade == null && $caso_sim == null && $consideracoes == null && $musculatura == null && $lesao == null && $queimacao == null && $caimbras == null && $tontura == null && $consideracoes_corporal == null){
 
         $_SESSION['semnada']= "Dados nao conferem!";
 
