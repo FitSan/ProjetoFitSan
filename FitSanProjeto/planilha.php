@@ -239,17 +239,19 @@ if ($grupo_id){
 }
 ?>
             </div>
+</div>
+<div class="box-footer">
+    <div class="form-group col-lg-12">
+        <div class="pull-left">
+            <a class="btn btn-app" type="button" data-toggle="modal" data-target="#modal-lista" id="modal-lista-button"><i class="fa fa-users"></i> Enviar </a>
+
         </div>
-    <div class="box-footer">
-        <div class="form-group col-lg-12">
-            <div class="pull-left">
-                <button type="button" class="btn btn-info " data-toggle="modal" data-target="#modal-lista" id="modal-lista-button">Enviar para</button>
-            </div>
-            <div class="pull-right">
-                <a href="planilha_exercicios.php" class="btn btn-warning">Novos Exercicios</a>
-            </div>
+        <div class="pull-right">
+            <a href="planilha_exercicios.php" class="btn btn-app"><span class="badge bg-aqua">Novos</span><i class="fa fa-bicycle"></i> Exercícios </a>  
+            <a href="planilhas_salvas.php" class="btn btn-app"><span class="badge bg-aqua">Histórico</span><i class="fa fa-calendar"></i> Planilhas </a>               
         </div>
     </div>
+</div>
 <!--    </div>-->
 </div>
 

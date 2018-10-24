@@ -319,6 +319,7 @@
 <!-- SlimScroll -->
 <script src="bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
 
+
 <!--CONTROLADOR RODAPÉ DA PLANILHA -->
 <script>
   $(function () {
@@ -530,7 +531,11 @@
 <script>
     $(function(){
         var lista = $('#modal-lista');
-        lista.on('shown.bs.modal', function(){
+        var botao = lista.find('.btn-primary');
+        lista.on('shown.bs.modal', function(e){
+            if (e.relatedTarget){
+                botao.data('id', $(e.relatedTarget).data('id'));
+            }
             $.ajax({
                 url: 'ajax.php',
                 method: 'POST',
@@ -556,12 +561,14 @@
                 }
             });
         });
-        $('#modal-lista .btn-primary').click(function (e){
+        botao.click(function (e){
             e.preventDefault();
             var dt = { acao : 'enviar_planilha' };
             $.each(lista.find(':input').serializeArray(), function(i, field){
                 dt[field.name] = field.value;
             });
+            var id = botao.data('id');
+            if (id) dt['id'] = id;
             $.ajax({
                 url: 'ajax.php',
                 method: 'POST',

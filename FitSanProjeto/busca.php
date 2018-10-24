@@ -29,11 +29,44 @@ if (!empty($busca) && (strlen($busca) > 3)) {
     <section class="content-header">
         <h1><?= $pagina ?></h1>
     </section>
+    
+    <section class="content">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">Dicas</h3>
+            </div>
+            <div class="box-body">
+                <table id="buscauser" class="table table-bordered table-striped">
+                    <thead>
+                            <tr>
+                                <th>Dica</th> 
+                                <th>Profissional</th>
+                                <th>Data</th> 
+                                <th>Ir</th> 
+                            </tr>  
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Dica</td>
+                            <td>Profissional</td>
+                            <td>Data</td>
+                            <td>Ação</td>
+                        </tr>
+                    </tbody>
+                    
+                </table> 
+            </div>
+        </div>
+    </section>
+    
+    
+    <br>
+    <br>
 
     <section class="content">
         <div class="box">
             <div class="box-header">
-                <h3 class="box-title">Buscando Usuários</h3>
+                <h3 class="box-title">Usuários</h3>
             </div>
 
             <div class="box-body">
@@ -96,7 +129,7 @@ if (!empty($busca) && (strlen($busca) > 3)) {
             </div>
         </div>
     </section>
-</div>
+<!--</div>-->
 
 <?php
 include './template/rodape_especial.php';

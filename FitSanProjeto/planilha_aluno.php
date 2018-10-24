@@ -18,7 +18,7 @@ $acao = (!empty($_GET['acao']) ? $_GET['acao'] : 'consultar'); //obtendo ação
 $id = (!empty($_GET['id']) ? $_GET['id'] : null); //obtendo id de alteração
 $erros = array();
 
-$planilha_id = dbquery("select max(z.planilha_id) as id from planilha_aluno z where z.aluno_id = " . mysqliEscaparTexto($_SESSION['id']));
+$planilha_id = dbquery("select p.id from planilha p join planilha_aluno a on a.planilha_id = p.id where a.aluno_id = " . mysqliEscaparTexto($_SESSION['id']) . " order by datahora desc limit 1");
 if (!empty($planilha_id)) $planilha_id = $planilha_id[0]['id'];
 
 //referente a inclusão/alteração no banco.
@@ -94,13 +94,21 @@ foreach ($resultado_grupos as $linha_grupo) $grupos[] = $linha_grupo['grupo'];
 $resultado = dbquery($query);
 ?>
 
-
-
 <div class="content-wrapper">
     <section class="content-header">
         <h1>Prescrição de Treino</h1>
-    </section><br>
-    <div class="box">
+    </section>
+    <br>
+    <div class="nav-tabs-custom">
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#profissional_1" data-toggle="tab">Profissional 1</a></li>
+            <li><a href="#profissional_2" data-toggle="tab">Profissional 2</a></li>
+            <li><a href="#profissional_3" data-toggle="tab">Profissional 3</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="active tab-pane" id="profissional_1">
+                <!-- Post -->
+<!--                <div class="box">-->
         <div class="box-header"><form class="form-horizontal" action="<?php echo basename(__FILE__) ?>?acao=checkin" method="POST" enctype="multipart/form-data">
             <h3 class="box-title">Prescrição de treino</h3>
 <!--            TODO: colocar mais uma aba aqui para profissionais, que se tiver mais profissionais vai aparecer o mome aqui-->
@@ -185,14 +193,23 @@ if ($grupo_id){
 <?php
 }
 ?>
-    <button class="button" type="submit" href="#">Enviar</button></form>
-          </div>
+            <div class="box-footer">
+                <div class="pull-right">
+                    <br><br>
+                    <button class="btn btn-app" type="submit" href="#"><i class="fa fa-save"></i> Salvar </button>
+<!--                    <a class="btn btn-social-icon btn-info"><i class="fa fa-save"></i></a>-->
+                </div>
+            </form>
+    
+<!--          </div>-->
         </div>
+            </div>
 
     <!--</div>-->
         <!--</div>-->   
     <!--</div>-->
 </div>
+        <hr>
 <?php
 $query = array();
 $query['select'] = array(
@@ -264,7 +281,8 @@ foreach ($resultado as $linha) {
                     
                 </div>
                 <div class="timeline-footer">
-                    <a href="<?php echo basename(__FILE__) ?>?acao=excluir&id=<?= htmlentities($anterior['planilha_feito_id']) ?>" class="btn btn-danger btn-xs">Apagar</a>
+                    <a href="<?php echo basename(__FILE__) ?>?acao=excluir&id=<?= htmlentities($anterior['planilha_feito_id']) ?>" class="btn btn-social-icon btn-danger"><i class="fa fa-trash-o"></i></a>
+                   
                 </div>
             </div>
         </li> 
@@ -328,7 +346,8 @@ if ($grupo_atual){
                     
                 </div>
                 <div class="timeline-footer">
-                    <a href="<?php echo basename(__FILE__) ?>?acao=excluir&id=<?= htmlentities($anterior['planilha_feito_id']) ?>" class="btn btn-danger btn-xs">Apagar</a>
+                    <a href="<?php echo basename(__FILE__) ?>?acao=excluir&id=<?= htmlentities($anterior['planilha_feito_id']) ?>" class="btn btn-social-icon btn-danger"><i class="fa fa-trash-o"></i></a>
+                    
                 </div>
             </div>
         </li> 
@@ -355,7 +374,21 @@ if ($grupo_atual){
 <?php } else { ?>
 <div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12" align="center"><h3><b>Não foi realizado nenhum exercício ainda.</b></h3></div>
 <?php } ?>
-
+                <!-- /.post -->
+            </div>
+            <div class="tab-pane" id="profissional_2">
+                <!-- Post -->
+                postar outra planilha aqui
+                <!-- /.post -->
+            </div>
+            <div class="tab-pane" id="profissional_3">
+                <!-- Post -->
+                postar mais outra planilha aqui
+                <!-- /.post -->
+            </div>
+        </div>
+    </div>
+<!--</div>-->
 
 <?php
 require_once './template/rodape_especial.php';

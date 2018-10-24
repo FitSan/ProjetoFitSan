@@ -177,8 +177,14 @@ TRUNCATE TABLE ativ_extras_exercicios;
 
 create table planilha(
 id int not null primary key auto_increment,
-titulo varchar(255) not null
+titulo varchar(255) not null,
+datahora timestamp not null default now()
 );
+
+ALTER TABLE planilha ADD datahora timestamp not null default now() after titulo;
+
+select * from planilha order by datahora desc, titulo;
+
 
 --Planilha Tabela -----
 

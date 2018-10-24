@@ -19,18 +19,38 @@ function enviarPlanilha(){
     if (!tipoLogado("profissional")) return array('status' => 'error', 'mensagem' => 'Apenas para profissionais');
     $titulo = (!empty($_REQUEST['titulo']) ? $_REQUEST['titulo'] : '');
     $alunos = (!empty($_REQUEST['lista-aluno']) ? $_REQUEST['lista-aluno'] : '');
-    if (empty($titulo)) return array('status' => 'error', 'mensagem' => 'Título está vazio');
+    $id = (!empty($_REQUEST['id']) ? $_REQUEST['id'] : '');
     if (empty($alunos)) return array('status' => 'error', 'mensagem' => 'Alunos está vazio');
-    $query = "insert into planilha ( titulo ) values (" . mysqliEscaparTexto($titulo) . " )";
-    if (!mysqli_query($conexao, $query)) return array('status' => 'error', 'mensagem' => ('ERRO: '.mysqli_error($conexao).PHP_EOL.$query.PHP_EOL.print_r(debug_backtrace(), true)));
-    $id = mysqli_insert_id($conexao);
-    $query2 = "update planilha_tabela set planilha_id = " . mysqliEscaparTexto($id) . " where planilha_id is null";
-    if (!mysqli_query($conexao, $query2)) return array('status' => 'error', 'mensagem' => ('ERRO: '.mysqli_error($conexao).PHP_EOL.$query.PHP_EOL.print_r(debug_backtrace(), true)));
-    foreach ($alunos as $aluno){
-        $query3 = "insert into planilha_aluno (planilha_id, aluno_id) values (" . mysqliEscaparTexto($id) . ", " . mysqliEscaparTexto($aluno) . ")";
-        if (!mysqli_query($conexao, $query3)) return array('status' => 'error', 'mensagem' => ('ERRO: '.mysqli_error($conexao).PHP_EOL.$query.PHP_EOL.print_r(debug_backtrace(), true)));
-        criarNotificacao("OK", "Uma planilha foi enviada à você.".PHP_EOL.'Acesse <a href="planilha_aluno.php?id='.$id.'">'.htmlspecialchars($titulo).'</a>', null, $aluno);
-    }
+    if (!$id){
+        if (empty($titulo)) return array('status' => 'error', 'mensagem' => 'Título está vazio');
+        $query = "insert into planilha ( titulo ) values (" . mysqliEscaparTexto($titulo) . " )";
+        if (!mysqli_query($conexao, $query)) return array('status' => 'error', 'mensagem' => ('ERRO: '.mysqli_error($conexao).PHP_EOL.$query.PHP_EOL.print_r(debug_backtrace(), true)));
+        $id = mysqli_insert_id($conexao);
+        $query2 = "update planilha_tabela set planilha_id = " . mysqliEscaparTexto($id) . " where planilha_id is null";
+        if (!mysqli_query($conexao, $query2)) return array('status' => 'error', 'mensagem' => ('ERRO: '.mysqli_error($conexao).PHP_EOL.$query.PHP_EOL.print_r(debug_backtrace(), true)));
+        foreach ($alunos as $aluno){
+            $query3 = "insert into planilha_aluno (planilha_id, aluno_id) values (" . mysqliEscaparTexto($id) . ", " . mysqliEscaparTexto($aluno) . ")";
+            if (!mysqli_query($conexao, $query3)) return array('status' => 'error', 'mensagem' => ('ERRO: '.mysqli_error($conexao).PHP_EOL.$query.PHP_EOL.print_r(debug_backtrace(), true)));
+            criarNotificacao("OK", "Uma planilha foi enviada à você.".PHP_EOL.'Acesse <a href="planilha_aluno.php?id='.$id.'">'.htmlspecialchars($titulo).'</a>', null, $aluno);
+        }
+    } else {
+        $query = "update planilha set datahora = now()";
+        if (!empty($titulo)) $query .= ", titulo = " . mysqliEscaparTexto($titulo);
+        $query .= " where id = " . mysqliEscaparTexto($id);
+        if (!mysqli_query($conexao, $query)) return array('status' => 'error', 'mensagem' => ('ERRO: '.mysqli_error($conexao).PHP_EOL.$query.PHP_EOL.print_r(debug_backtrace(), true)));
+        foreach ($alunos as $aluno){
+            $existe = false;
+            $query3 = "select count(*) as existe from planilha_aluno where planilha_id = " . mysqliEscaparTexto($id) . " and aluno_id = " . mysqliEscaparTexto($aluno);
+            if ($retorno = mysqli_query($conexao, $query3)){
+                if ($resultado = mysqli_fetch_array($retorno)) $existe = (intval($resultado['existe']) > 0);
+            }
+            if (!$existe){
+                $query3 = "insert into planilha_aluno (planilha_id, aluno_id) values (" . mysqliEscaparTexto($id) . ", " . mysqliEscaparTexto($aluno) . ")";
+                if (!mysqli_query($conexao, $query3)) return array('status' => 'error', 'mensagem' => ('ERRO: '.mysqli_error($conexao).PHP_EOL.$query.PHP_EOL.print_r(debug_backtrace(), true)));
+            }
+            criarNotificacao("OK", "Uma planilha foi enviada à você.".PHP_EOL.'Acesse <a href="planilha_aluno.php?id='.$id.'">'.htmlspecialchars($titulo).'</a>', null, $aluno);
+        }
+   }
     return array('status' => 'ok');
 }
 
