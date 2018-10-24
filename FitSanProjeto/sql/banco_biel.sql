@@ -857,12 +857,12 @@ select * from `avaliacao` ORDER BY DATA where aluno_id=13   ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
  
 /* TESTES */
-
-/*SELECT * FROM `notificacao`;
+/*
+SELECT * FROM `usuario`;
 
 SELECT * FROM `avaliacao2`;
 
-SELECT descricao FROM `pergunta` where `avaliacao2`= 29;
+SELECT descricao FROM `pergunta` where `profissional_id`= 4 and  ;
 
 
 DROP TABLE IF EXISTS `avaliacao2`;
@@ -879,16 +879,22 @@ CREATE TABLE IF NOT EXISTS `avaliacao2` (
 INSERT INTO `avaliacao2` (`id`, `data`,`pergunta`,`resposta`, `profissional_id`, `aluno_id`) VALUES
 (29, '2018-10-14 04:04:00', 1, 1, 2, 13);
 
+SELECT `descricao` FROM `resposta` where `id` from `pergunta` = 1 ;
+
+SELECT * FROM `pergunta`;
+
 DROP TABLE IF EXISTS `pergunta`;
 CREATE TABLE IF NOT EXISTS `pergunta` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `descricao` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+`profissional_id` int(11) DEFAULT NULL,
+ `resposta` int references `resposta`(`id`),
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-insert into `pergunta`(`id`, `descricao`) values 
-(1,'Desempenho do aluno com as atividades'),
-(2,'Cumpriu com os objetivos estipulados?'),
+insert into `pergunta`(`id`, `descricao`,`profissional_id`,`resposta`) values 
+(1,'Desempenho do aluno com as atividades',4,1),
+(2,'Cumpriu com os objetivos estipulados?',4,1);
 (3,''),
 (4,''),
 (5,''),
@@ -906,9 +912,9 @@ insert into `pergunta`(`id`, `descricao`) values
 (17,''),
 (18,''),
 (19,''),
-(20,''),
+(20,'');
 
-/*DROP TABLE IF EXISTS `resposta`;
+DROP TABLE IF EXISTS `resposta`;
 CREATE TABLE IF NOT EXISTS `resposta` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `descricao` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -916,6 +922,5 @@ CREATE TABLE IF NOT EXISTS `resposta` (
 ) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 insert into `resposta`(`id`, `descricao`) values 
-(1,'17'),
-(2,'Gabriel');
-*/
+(1,'sim'),
+(2,'Não');
