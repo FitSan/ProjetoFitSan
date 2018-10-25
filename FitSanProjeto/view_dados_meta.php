@@ -26,7 +26,7 @@ if(isset($_POST['meta_id'])){
         
         $output .= '<div class="box box-primary" >
                         <div class="box-header with-border">
-                                        <h2 class="box-title" style="padding: 7px;"><b>'.date('d M Y', dataParse($linha_meta_id['data_inicial'])) . ' - ' . date('d M Y', dataParse($linha_meta_id['data_final'])) .'</b></h2> 
+                                        <h2 class="box-title" style="padding: 7px;"><b>'.date('d M Y', dataParse($linha_meta_id['data_inicial'])) . ' - ' . date('d M Y', dataParse($linha_meta_id['data_final'])) .'</b><a class="btn-default" data-toggle="modal" data-target="#deleteMeta" data-meta_id="'.$linha_meta_id['id'].'" data-dado_id="" style="margin: 5px 10px;"><i class="fa fa-trash" style="padding: 5px; font-size: 20px;"></i></a></h2> 
                                     </div>
                                     <div class="box-body" >
                                         <table class="table table-bordered table-hover">';
@@ -37,7 +37,7 @@ if(isset($_POST['meta_id'])){
                                             if($linha_dados['descricao']!=null){ 
                             $output .= '<a data-toggle="modal" data-target="#modalDadoMeta" data-data="'.date('d M Y', dataParse($linha_dados['data_add'])).'" data-desc="'.$linha_dados['descricao'].'" style="padding: 5px;"><i class="fa fa-question-circle"></i></a>';                    
                                             }
-                            $output .= '</td></tr>';
+                            $output .= '<a class="btn-default" data-toggle="modal" data-target="#deleteMeta" data-meta_id="'.$linha_meta_id['id'].'" data-dado_id="'.$linha_dados['id'].'" style="margin: 5px 10px;"><i class="fa fa-trash" style="padding: 5px; font-size: 17px;"></i></a></td></tr>';
                                     }
                             $output .= '</table>    
                             <div class="box-footer dados_meta_pag">';

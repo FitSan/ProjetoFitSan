@@ -232,24 +232,23 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Excluir dica</h5>
-                <button type="button" class="close" data-dismiss="modal">
-                    <span>&times;</span>
-                </button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Excluir dica</h4>
             </div>
             <div class="modal-body">
                 <p> Você tem certeza que deseja excluir sua dica? Deseja continuar?</p>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Não</button>
+            <div class="modal-footer">                
                 <form method="post" action="excluirDica.php">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Não</button>
                     <input type="hidden" id="id" name="id">
                     <button type="submit" class="btn btn-primary">Sim</button>
                 </form>
             </div>
         </div>
     </div>
-</div>    
+</div> 
 
 <!--<div class="modal fade" id="erro-dica" role="dialog">
     <div class="modal-dialog">
@@ -287,6 +286,52 @@
     </div>
   </div>
 </div>
+
+<div class="modal" id="deleteMeta" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Confirmar Exclusão</h4>
+            </div>
+            <div class="modal-body">
+                <p> Você tem certeza que deseja continuar?</p>
+            </div>
+            <div class="modal-footer">                
+                <form method="post" action="excluirMeta.php">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Não</button>
+                    <input type="hidden" id="meta_id" name="meta_id">
+                    <input type="hidden" id="dado_id" name="dado_id">
+                    <button type="submit" class="btn btn-primary">Sim</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div> 
+
+<div class="modal" id="fimMeta" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Finalizar meta</h4>
+            </div>
+            <div class="modal-body">
+                <p> Tem certeza que deseja finalizar a meta atual?</p>
+            </div>
+            <div class="modal-footer">                
+                <form method="post" action="fimMeta.php">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Não</button>
+                    <input type="hidden" id="meta_id" name="meta_id">
+                    <button type="submit" class="btn btn-primary">Sim</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div> 
+
 <!-- jQuery 3 -->
 <script src="bower_components/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap 3.3.7 -->
@@ -428,8 +473,7 @@
 <script type="text/javascript">
     $('.data_meta').datepicker({
         format: "dd/mm/yyyy",
-        language: "pt-BR",
-        startDate: '-3d'
+        language: "pt-BR"
     });
 </script>
 
@@ -459,6 +503,24 @@
         modal.find('.modal-footer #id').val(id)
     })
 </script>
+
+<script type="text/javascript">
+    $('#deleteMeta').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget)
+        var meta_id = button.data('meta_id')  
+        var dado_id = button.data('dado_id')
+        var modal = $(this)
+        modal.find('.modal-footer #meta_id').val(meta_id)
+        modal.find('.modal-footer #dado_id').val(dado_id)
+    });
+    $('#fimMeta').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget)
+        var meta_id = button.data('meta_id')  
+        var modal = $(this)
+        modal.find('.modal-footer #meta_id').val(meta_id)
+    });
+</script>
+
 <script>
     function hideUpload(up, check) {
         var label = 'label'+up;

@@ -314,7 +314,7 @@ data_inicial date not null,
 data_final date not null,
 peso_inicial decimal(6,3) not null,
 peso_final decimal(6,3) not null,
-status ENUM ('ativa', 'finalizada', 'cancelada') not null default 'ativa',
+status ENUM ('ativa', 'finalizada') not null default 'ativa',
 usuario_id int references usuario(id)
 ); 
 
@@ -325,7 +325,7 @@ peso_add decimal(6,3) not null,
 descricao TEXT,
 meta_id int references meta(id)
 );
-
+drop table dados_meta
 ----------------------------------------------------------------
 
 ALTER DATABASE FitSan CHARACTER SET utf8 COLLATE utf8_unicode_ci;

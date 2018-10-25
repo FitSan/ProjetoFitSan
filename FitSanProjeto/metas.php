@@ -82,7 +82,8 @@ if (mysqli_num_rows($resultado_all) === 0) {
                             ?> 
                             <div class="pull-right" style="margin-bottom: 5px;">                            
                                 <button style="margin: 2px;" type="button" class="btn btn-sm" id="btnAlterarMeta" onclick="alterarMeta()"><b><i class="fa fa-edit" style="font-size:22px"></i></b></button>
-                                <a href="cancelMeta.php?id=<?= $linha['id'] ?>" class="btn btn-google" style="margin: 2px;">Cancelar Meta</a>
+                                <a data-toggle="modal" data-target="#deleteMeta" data-meta_id="<?= $linha['id'] ?>" data-dado_id="" class="btn btn-google" style="margin: 2px;"><i class="fa fa-trash" style="font-size:20px; padding: 0 3px"></i></a>
+                                <a data-toggle="modal" data-target="#fimMeta" data-meta_id="<?= $linha['id'] ?>" class="btn btn-success" style="margin: 2px;">Finalizar Meta</a>
                             </div>
 
                             <?php
@@ -114,7 +115,7 @@ if (mysqli_num_rows($resultado_all) === 0) {
                                     <div class="input-group-addon">
                                         <i class="fa fa-calendar"></i>                                    
                                     </div>
-                                    <input type="text" class="form-control pull-right data_meta" id="data_inicial" name="data_inicial" value="<?= ($novaMeta) ? '' : date('d/m/Y', dataParse($linha['data_inicial'])) ?>" <?= $novaMeta ? '' : 'readonly' ?>>
+                                    <input type="text" class="form-control pull-right data_meta" id="data_inicial" name="data_inicial" autocomplete="off" value="<?= ($novaMeta) ? '' : date('d/m/Y', dataParse($linha['data_inicial'])) ?>" <?= $novaMeta ? '' : 'readonly' ?>>
 
                                 </div>
                                 <?php
@@ -134,7 +135,7 @@ if (mysqli_num_rows($resultado_all) === 0) {
                                     <div class="input-group-addon">
                                         <i class="fa fa-calendar"></i>                                    
                                     </div>
-                                    <input type="text" class="form-control pull-right data_meta" id="data_final" name="data_final" value="<?= ($novaMeta) ? '' : date('d/m/Y', dataParse($linha['data_final'])) ?>" <?= $novaMeta ? '' : 'readonly' ?>>
+                                    <input type="text" class="form-control pull-right data_meta" id="data_final" name="data_final" autocomplete="off" value="<?= ($novaMeta) ? '' : date('d/m/Y', dataParse($linha['data_final'])) ?>" <?= $novaMeta ? '' : 'readonly' ?>>
 
                                 </div>
                                 <?php
@@ -219,7 +220,7 @@ if (mysqli_num_rows($resultado_all) === 0) {
                                         <div class="input-group-addon">
                                             <i class="fa fa-calendar"></i>                                    
                                         </div>
-                                        <input type="text" class="form-control data_meta" id="data_dado_meta" name="data_dado_meta">
+                                        <input type="text" class="form-control data_meta" id="data_dado_meta" autocomplete="off" name="data_dado_meta">
                                     </div>
                                 </div>
                                 <div class="form-group" style="padding: 5px;">
