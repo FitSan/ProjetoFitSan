@@ -187,7 +187,7 @@ if ($grupoMuscuCardio){
 <?php
 $grupo_atual = ''; $grupo_id = 0;
 while ($linha = mysqli_fetch_array($resultado)) {
-    if ($grupo_atual != $linha['grupo']){
+    if (strcasecmp($grupo_atual, $linha['grupo'])){
         if ($grupo_id){
 ?>                               
                         </table></div>

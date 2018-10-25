@@ -239,9 +239,9 @@ verificarMeta();
                                     if (tipoLogado("aluno")){ ?>
                                         <li><a href="http://localhost/FitSan/metas.php"><i class="fa fa-circle-o"></i> Metas </a></li>
                                         <li><a href="http://localhost/FitSan/atividadesExtras.php"><i class="fa fa-circle-o"></i> Atividades Extras </a></li>
-                                        <li><a href="#"><i class="fa fa-circle-o"></i> Contato </a></li>
+                                        <li><a href="http://localhost/FitSan/contato.php"><i class="fa fa-circle-o"></i> Contato </a></li>
                                     <?php } elseif (tipoLogado("profissional")){ ?>
-                                        <li><a href="#"><i class="fa fa-circle-o"></i> Contato </a></li>
+                                        <li><a href="http://localhost/FitSan/contato.php"><i class="fa fa-circle-o"></i> Contato </a></li>
                                     <?php } ?>     
                                 </ul>
                             </li>

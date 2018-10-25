@@ -16,6 +16,7 @@ if (isset($_GET['notificacao'])){
 // Iniciando variaveis
 $acao = (!empty($_GET['acao']) ? $_GET['acao'] : 'consultar'); //obtendo ação
 $id = (!empty($_GET['id']) ? $_GET['id'] : null); //obtendo id de alteração
+$profissional = (!empty($_GET['profissional']) ? $_GET['profissional'] : ''); //obtendo profissional atual
 $erros = array();
 
 $planilha_id = dbquery("select p.id from planilha p join planilha_aluno a on a.planilha_id = p.id where a.aluno_id = " . mysqliEscaparTexto($_SESSION['id']) . " order by datahora desc limit 1");
@@ -54,14 +55,21 @@ if ($acao == 'checkin'){
     exit();
 }
 
-//referente ao formulário
-if (!empty($id)) {
-    $query_alterar = "select * from planilha_tabela where profissional_id = " . mysqliEscaparTexto($_SESSION['id']) . " and id= " . mysqliEscaparTexto($id);
-    $resultado_alterar = mysqli_query($conexao, $query_alterar) or die_mysql($query_alterar, __FILE__, __LINE__);
-    $linha_alterar = ($resultado_alterar?mysqli_fetch_array($resultado_alterar):array());
-} else {
-    $linha_alterar = array();
-}
+$profissionais = dbquery("select
+    u.*
+from
+    vinculo v join
+    usuario u on u.id = v.profissional_id
+where
+    u.status = 'ativado' and
+    v.status = 'aprovado' and
+    v.aluno_id = " . mysqliEscaparTexto($_SESSION['id']) . "
+order by
+    u.nome
+");
+if (empty($profissionais)) $profissionais = array();
+
+//monta o sql de consulta
 $query = array();
 $query['select'] = array(
     'p.*',
@@ -79,6 +87,7 @@ $query['from'] = "
 $query['where'] = array(
     "a.aluno_id = " . mysqliEscaparTexto($_SESSION['id']),
     "a.planilha_id = " . mysqliEscaparTexto($planilha_id),
+    "p.profissional_id = " . mysqliEscaparTexto($profissional),
 );
 $query['order'] = "
     p.grupo
@@ -97,21 +106,16 @@ $resultado = dbquery($query);
 <div class="content-wrapper">
     <section class="content-header">
         <h1>Prescrição de Treino</h1>
-    </section>
-    <br>
-    <div class="nav-tabs-custom">
-        <ul class="nav nav-tabs">
-            <li class="active"><a href="#profissional_1" data-toggle="tab">Profissional 1</a></li>
-            <li><a href="#profissional_2" data-toggle="tab">Profissional 2</a></li>
-            <li><a href="#profissional_3" data-toggle="tab">Profissional 3</a></li>
-        </ul>
-        <div class="tab-content">
-            <div class="active tab-pane" id="profissional_1">
-                <!-- Post -->
-<!--                <div class="box">-->
+    </section><br>
+    <div class="box"><br>
+        <form action="" method="GET"><select class="select2-dropdown"name="profissional" onchange="this.form.submit();" onkeyup="this.form.submit();">
+                <option value="">(Selecione um profissional)</option>
+<?php foreach ($profissionais as $value){ ?>
+                <option value="<?php echo htmlspecialchars($value['id']); ?>"<?php if ($value['id'] == $profissional) echo ' selected="selected"' ?>><?php echo htmlspecialchars($value['nome'] . ' ' . $value['sobrenome']); ?></option>
+<?php } ?>
+        </select></form>
         <div class="box-header"><form class="form-horizontal" action="<?php echo basename(__FILE__) ?>?acao=checkin" method="POST" enctype="multipart/form-data">
             <h3 class="box-title">Prescrição de treino</h3>
-<!--            TODO: colocar mais uma aba aqui para profissionais, que se tiver mais profissionais vai aparecer o mome aqui-->
             <br><br>
 <!--            <div class="box-body" >-->
             <ul class="nav nav-tabs">
@@ -193,23 +197,14 @@ if ($grupo_id){
 <?php
 }
 ?>
-            <div class="box-footer">
-                <div class="pull-right">
-                    <br><br>
-                    <button class="btn btn-app" type="submit" href="#"><i class="fa fa-save"></i> Salvar </button>
-<!--                    <a class="btn btn-social-icon btn-info"><i class="fa fa-save"></i></a>-->
+    <button class="button" type="submit" href="#">Enviar</button></form>
                 </div>
-            </form>
-    
-<!--          </div>-->
         </div>
-            </div>
 
     <!--</div>-->
         <!--</div>-->   
     <!--</div>-->
 </div>
-        <hr>
 <?php
 $query = array();
 $query['select'] = array(
@@ -229,6 +224,9 @@ $query['select'] = array(
     'e.foto exercicio_foto',
     'f.datahora',
     'z.planilha_feito_id',
+    'u.nome as profissional_nome',
+    'u.sobrenome as profissional_sobrenome',
+    'u.email as profissional_email',
 );
 $query['from'] = "
     planilha_aluno a join
@@ -236,7 +234,8 @@ $query['from'] = "
     planilha_grupoMuscuCardio g on g.id = p.musculo_cardio_id join
     planilha_exercicio e on e.id = p.exercicio_id and e.musculo_cardio_id = g.id join
     planilha_aluno_feito f on f.planilha_aluno_id = a.planilha_id join
-    planilha_aluno_exercicio z on z.planilha_feito_id = f.id and z.exercicio = e.id
+    planilha_aluno_exercicio z on z.planilha_feito_id = f.id and z.exercicio = e.id join
+    usuario u on u.id = p.profissional_id
 ";
 $query['where'] = array(
     "a.aluno_id = " . mysqliEscaparTexto($_SESSION['id']),
@@ -281,8 +280,7 @@ foreach ($resultado as $linha) {
                     
                 </div>
                 <div class="timeline-footer">
-                    <a href="<?php echo basename(__FILE__) ?>?acao=excluir&id=<?= htmlentities($anterior['planilha_feito_id']) ?>" class="btn btn-social-icon btn-danger"><i class="fa fa-trash-o"></i></a>
-                   
+                    <a href="<?php echo basename(__FILE__) ?>?acao=excluir&id=<?= htmlentities($anterior['planilha_feito_id']) ?>" class="btn btn-danger btn-xs">Apagar</a>
                 </div>
             </div>
         </li> 
@@ -310,7 +308,7 @@ foreach ($resultado as $linha) {
             <div class="timeline-item">
                 <span class="time"><i class="fa fa-clock-o"></i> <?= date('H:i:s', dataParse($linha['datahora'])) ?></span>
 
-                <h3 class="timeline-header"><strong><?php echo htmlspecialchars($linha['grupo']); ?></strong> Exercícios Feitos</h3>
+                <h3 class="timeline-header"><strong><?php echo htmlspecialchars($linha['grupo']); ?></strong> - por <?php echo htmlspecialchars($linha['profissional_nome'] . ' ' . $linha['profissional_sobrenome']); ?></h3>
                 
 
                 <div class="timeline-body">
@@ -374,21 +372,7 @@ if ($grupo_atual){
 <?php } else { ?>
 <div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12" align="center"><h3><b>Não foi realizado nenhum exercício ainda.</b></h3></div>
 <?php } ?>
-                <!-- /.post -->
-            </div>
-            <div class="tab-pane" id="profissional_2">
-                <!-- Post -->
-                postar outra planilha aqui
-                <!-- /.post -->
-            </div>
-            <div class="tab-pane" id="profissional_3">
-                <!-- Post -->
-                postar mais outra planilha aqui
-                <!-- /.post -->
-            </div>
-        </div>
-    </div>
-<!--</div>-->
+
 
 <?php
 require_once './template/rodape_especial.php';

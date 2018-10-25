@@ -209,8 +209,8 @@ drop table planilha_tabela;
 ALTER TABLE planilha_tabela ADD series varchar(255) after exercicio_id;
 ALTER TABLE planilha_tabela ADD planilha_id int references planilha(id) after profissional_id;
 
-ALTER TABLE planilha_tabela CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 select * from planilha_tabela;
+select * from planilha_tabela order by grupo, id;
 
 truncate table planilha_aluno_exercicio;
 truncate table planilha_aluno;
@@ -224,7 +224,6 @@ id int primary key auto_increment,
 nome varchar(255) not null
 );
 
-ALTER TABLE planilha_grupoMuscuCardio CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 select * from planilha_grupoMuscuCardio;
 
 ---Grupos Exercicios---
@@ -243,7 +242,6 @@ UPDATE planilha_exercicio SET profissional_id = 2 WHERE profissional_id is null;
 
 
 ALTER TABLE planilha_exercicio ADD musculo_cardio_id int references planilha_grupoMuscuCardio(id) after id;
-ALTER TABLE planilha_exercicio CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 select * from planilha_exercicio;
 
 -------Aluno Planilha-----
@@ -280,17 +278,17 @@ truncate table planilha_aluno_exercicio;
 CREATE TABLE IF NOT EXISTS `avaliacao` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `data` datetime NOT NULL,
-  `desempenho` text COLLATE utf8_unicode_ci NOT NULL,
-  `frequencia` text COLLATE utf8_unicode_ci NOT NULL,
-  `grupo_cumpriu` text COLLATE utf8_unicode_ci NOT NULL,
-  `grupo_duvida` text COLLATE utf8_unicode_ci NOT NULL,
-  `grupo_dificuldade` text COLLATE utf8_unicode_ci NOT NULL,
-  `caso_sim` text COLLATE utf8_unicode_ci NOT NULL,
-  `consideracoes` text COLLATE utf8_unicode_ci NOT NULL,
+  `desempenho` text NOT NULL,
+  `frequencia` text NOT NULL,
+  `grupo_cumpriu` text NOT NULL,
+  `grupo_duvida` text NOT NULL,
+  `grupo_dificuldade` text NOT NULL,
+  `caso_sim` text NOT NULL,
+  `consideracoes` text NOT NULL,
   `profissional_id` int(11) DEFAULT NULL,
   `aluno_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=29 ;
+);
 
 
 
@@ -326,25 +324,9 @@ descricao TEXT,
 meta_id int references meta(id)
 );
 
-----------------------------------------------------------------
 
-ALTER DATABASE FitSan CHARACTER SET utf8 COLLATE utf8_unicode_ci;
-SELECT CONCAT('ALTER TABLE ',  table_name, ' CHARACTER SET utf8 COLLATE utf8_unicode_ci;') FROM information_schema.TABLES WHERE table_schema = 'FitSan';
 
-ALTER TABLE dica CHARACTER SET utf8 COLLATE utf8_unicode_ci;
-ALTER TABLE notificacao CHARACTER SET utf8 COLLATE utf8_unicode_ci;
-ALTER TABLE tipo_usuario CHARACTER SET utf8 COLLATE utf8_unicode_ci;
-ALTER TABLE usuario CHARACTER SET utf8 COLLATE utf8_unicode_ci;
-ALTER TABLE vinculo CHARACTER SET utf8 COLLATE utf8_unicode_ci;
-ALTER TABLE ativ_extras CHARACTER SET utf8 COLLATE utf8_unicode_ci;
-ALTER TABLE ativ_extras_exercicios CHARACTER SET utf8 COLLATE utf8_unicode_ci;
-ALTER TABLE upload_dica CHARACTER SET utf8 COLLATE utf8_unicode_ci;
-ALTER TABLE informacoes_adicionais CHARACTER SET utf8 COLLATE utf8_unicode_ci;
-ALTER TABLE informacoes_adicionais_contatos CHARACTER SET utf8 COLLATE utf8_unicode_ci;
-ALTER TABLE informacoes_adicionais_exercicios CHARACTER SET utf8 COLLATE utf8_unicode_ci;
-ALTER TABLE informacoes_adicionais_medidas CHARACTER SET utf8 COLLATE utf8_unicode_ci;
-ALTER TABLE meta CHARACTER SET utf8 COLLATE utf8_unicode_ci;
-ALTER TABLE dados_meta CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+
 
 
 --inserir dados no banco.
@@ -458,3 +440,80 @@ select * from `avaliacao`;
 select * from `avaliacao` where aluno_id = 19;
 
 select * from `usuario` where id=17;
+
+
+
+
+
+
+
+
+----------------------------------------------------------------
+-- ALTERANDO CHARSET E COLLATION DO BANCO ----------------------
+----------------------------------------------------------------
+-- INICIO ------------------------------------------------------
+----------------------------------------------------------------
+
+-- Gerar instruções para alteração do charset no banco
+--     Executar esse primeiro e copiar os resultados
+SELECT
+        item
+FROM
+        ((
+                SELECT DISTINCT
+                        1 ordem,
+                        TABLE_SCHEMA,
+                        CONCAT( 'ALTER DATABASE ', TABLE_SCHEMA, ' DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;' ) item
+                FROM
+                        information_schema.COLUMNS
+        ) UNION (
+                SELECT DISTINCT
+                        2 ordem,
+                        TABLE_SCHEMA,
+                        CONCAT( 'ALTER TABLE ', TABLE_SCHEMA, '.', TABLE_NAME, ' CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;' ) item
+                FROM
+                        information_schema.COLUMNS
+        )) t
+WHERE
+        /*TABLE_SCHEMA = 'eduimove_site'*/
+        TABLE_SCHEMA = DATABASE()
+ORDER BY
+        ordem,
+        item
+;
+
+-- Instruções geradas pela SQL acima
+--      Cole aqui os resultados INICIO:
+ALTER DATABASE FitSan DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+ALTER TABLE FitSan.ativ_extras CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+ALTER TABLE FitSan.ativ_extras_exercicios CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+ALTER TABLE FitSan.avaliacao CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+ALTER TABLE FitSan.contato CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+ALTER TABLE FitSan.dados_meta CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+ALTER TABLE FitSan.dica CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+ALTER TABLE FitSan.informacoes_adicionais CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+ALTER TABLE FitSan.informacoes_adicionais_contatos CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+ALTER TABLE FitSan.informacoes_adicionais_exercicios CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+ALTER TABLE FitSan.informacoes_adicionais_medidas CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+ALTER TABLE FitSan.meta CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+ALTER TABLE FitSan.notificacao CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+ALTER TABLE FitSan.planilha CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+ALTER TABLE FitSan.planilha_aluno CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+ALTER TABLE FitSan.planilha_aluno_exercicio CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+ALTER TABLE FitSan.planilha_aluno_feito CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+ALTER TABLE FitSan.planilha_exercicio CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+ALTER TABLE FitSan.planilha_grupoMuscuCardio CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+ALTER TABLE FitSan.planilha_tabela CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+ALTER TABLE FitSan.tipo_usuario CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+ALTER TABLE FitSan.upload_dica CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+ALTER TABLE FitSan.usuario CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+ALTER TABLE FitSan.vinculo CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+--      FIM: Cole aqui os resultados, selecione todos e execute
+
+----------------------------------------------------------------
+-- FIM ------------------------------------------------------
+----------------------------------------------------------------
+-- ALTERANDO CHARSET E COLLATION DO BANCO ----------------------
+----------------------------------------------------------------
+
+

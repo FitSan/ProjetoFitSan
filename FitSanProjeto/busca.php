@@ -9,7 +9,7 @@ if (isset($_POST['busca'])){
 } elseif (isset($_SESSION['busca'])){
     $busca = $_SESSION['busca'];
 }
-if (!empty($busca) && (strlen($busca) > 3)) {
+if (!empty($busca) && (strlen($busca) >= 3)) {
     $busca = preg_replace('{[^\\w\\d]+}', '%', $busca); //expressão regular
     $busca = ('%' . $busca . '%');
     if (tipoLogado('profissional')) {
@@ -19,9 +19,18 @@ if (!empty($busca) && (strlen($busca) > 3)) {
         $query = "select * from usuario u left join vinculo v on v.profissional_id = u.id and v.aluno_id = $_SESSION[id] where u.status = 'ativado' and u.tipo_id=2 and concat(u.nome, ' ' , u.sobrenome) like '$busca'";
         $usuario_busca = 'profissional_id';
     }
-    $resultado = mysqli_query($conexao, $query);
+    $usuarios = dbquery($query);
+    $dicas = dbquery("
+    select
+        *
+    from
+        dica
+    where
+        texto like '$busca' or
+        profissional_nome like '$busca'
+    ");
 } else {
-    $resultado = null;
+    $dicas = $usuarios = null;
 }
 ?>
 
@@ -29,40 +38,7 @@ if (!empty($busca) && (strlen($busca) > 3)) {
     <section class="content-header">
         <h1><?= $pagina ?></h1>
     </section>
-    
-    <section class="content">
-        <div class="box">
-            <div class="box-header">
-                <h3 class="box-title">Dicas</h3>
-            </div>
-            <div class="box-body">
-                <table id="buscauser" class="table table-bordered table-striped">
-                    <thead>
-                            <tr>
-                                <th>Dica</th> 
-                                <th>Profissional</th>
-                                <th>Data</th> 
-                                <th>Ir</th> 
-                            </tr>  
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Dica</td>
-                            <td>Profissional</td>
-                            <td>Data</td>
-                            <td>Ação</td>
-                        </tr>
-                    </tbody>
-                    
-                </table> 
-            </div>
-        </div>
-    </section>
-    
-    
-    <br>
-    <br>
-
+ 
     <section class="content">
         <div class="box">
             <div class="box-header">
@@ -71,7 +47,7 @@ if (!empty($busca) && (strlen($busca) > 3)) {
 
             <div class="box-body">
                 <?php
-                if (empty($resultado) /* || !mysqli_num_rows($conexao, $resultado) */) {
+                if (empty($usuarios)) {
                     echo 'Usuário não encontrado';
                 } else {
                     ?>
@@ -86,7 +62,7 @@ if (!empty($busca) && (strlen($busca) > 3)) {
                         </thead>
                         
                             <tbody><?php
-                        while ($linha = mysqli_fetch_array($resultado)) {
+                        foreach ($usuarios as $linha) {
                             ?>
                                 <tr>
                                     <td><a href="perfil_externo.php?id=<?= $linha['id'] ?>"><?= $linha['nome'] . ' ' . $linha['sobrenome'] ?></a></td>
@@ -121,11 +97,44 @@ if (!empty($busca) && (strlen($busca) > 3)) {
                             }
                             ?>
                         </tbody>
+                    </table>
                         <?php
                 }
                 ?>
-                    </table>
                     
+                <?php
+                if (empty($dicas)) {
+                    echo 'Dica não encontrada';
+                } else {
+                    ?>
+                    <table id="buscadicas" class="table table-bordered table-striped">
+
+                        <thead>
+                            <tr>
+                                <th>Nome</th> 
+                                <th style="width: 10px">Data</th>                        
+                            </tr>  
+                        </thead>
+                        
+                            <tbody><?php
+                        foreach ($dicas as $linha) {
+                            ?>
+                                <tr>
+                                    <td><?= htmlspecialchars($linha['profissional_nome']) ?></td>
+                                    <td style="width: 10px"><?= htmlspecialchars(date('d/m/Y H:i:s', dataParse($linha['data_envio']))) ?></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"><?= nl2br(htmlspecialchars($linha['texto'])) ?></td>
+                                </tr>
+                                <?php
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+                        <?php
+                }
+                ?>
+
             </div>
         </div>
     </section>
