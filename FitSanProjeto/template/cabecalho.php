@@ -1,6 +1,8 @@
 <?php
 require_once 'autenticacao.php';
-verificarMeta();
+if (tipoLogado('aluno')){
+    verificarMeta();
+}
 ?>  
 <html lang="pt-br">
     <head>
