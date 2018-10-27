@@ -250,7 +250,6 @@ id int primary key auto_increment,
 aluno_id int references usuario(id),
 planilha_id int references planilha(id)
 );
-select * from planilha_aluno;
 
 create table planilha_aluno_feito (
 id int primary key auto_increment,
@@ -260,16 +259,60 @@ datahora datetime not null
 
 create table planilha_aluno_exercicio(
 planilha_feito_id int references planilha_aluno_feito(id),
+planilha_tabela_id int references planilha_tabela (id),
 exercicio int references planilha_exercicio (id),
-primary key (planilha_feito_id, exercicio)
+primary key (planilha_feito_id, planilha_tabela_id, exercicio)
 );
 
+select * from planilha_aluno;
 select * from planilha_aluno_feito;
 select * from planilha_aluno_exercicio;
 
 truncate table planilha_aluno_feito;
 truncate table planilha_aluno_exercicio;
 
+
+
+
+select
+    a.planilha_id,
+    p.profissional_id,
+    p.musculo_cardio_id,
+    p.exercicio_id,
+    p.grupo,
+    p.series,
+    p.repeticoes,
+    p.carga,
+    p.intervalo,
+    p.tempo,
+    g.nome grupomusc,
+    e.nome exercicio,
+    e.descricao exercicio_desc,
+    e.foto exercicio_foto,
+    f.datahora,
+    z.planilha_feito_id,
+    u.nome as profissional_nome,
+    u.sobrenome as profissional_sobrenome,
+    u.email as profissional_email
+from
+    planilha_aluno a join
+    planilha_aluno_feito f on f.planilha_aluno_id = a.id join
+    planilha_aluno_exercicio z on z.planilha_feito_id = f.id join
+    planilha_tabela p on p.planilha_id = a.planilha_id and p.id = z.planilha_tabela_id join
+    planilha_grupoMuscuCardio g on g.id = p.musculo_cardio_id join
+    planilha_exercicio e on e.id = z.exercicio join
+    usuario u on u.id = p.profissional_id
+where
+    a.aluno_id = 9
+order by
+    f.datahora desc,
+    p.grupo,
+    exercicio
+limit
+    10
+offset
+    0
+;
 
 -------Fim Planilha-----
 

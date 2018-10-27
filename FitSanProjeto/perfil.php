@@ -310,72 +310,77 @@ while ($linha = mysqli_fetch_array($resultado)) {
                                 <!-- Post -->
                                         <?php
                 $query = array();
-                $query['select'] = array(
-                    'a.planilha_id',
-                    'p.profissional_id',
-                    'p.musculo_cardio_id',
-                    'p.exercicio_id',
-                    'p.grupo',
-                    'p.series',
-                    'p.repeticoes',
-                    'p.carga',
-                    'p.intervalo',
-                    'p.tempo',
-                    'g.nome grupomusc',
-                    'e.nome exercicio',
-                    'e.descricao exercicio_desc',
-                    'e.foto exercicio_foto',
-                    'f.datahora',
-                    'z.planilha_feito_id',
-                );
-                $query['from'] = "
+$query['select'] = array(
+    'a.planilha_id',
+    'p.profissional_id',
+    'p.musculo_cardio_id',
+    'p.exercicio_id',
+    'p.grupo',
+    'p.series',
+    'p.repeticoes',
+    'p.carga',
+    'p.intervalo',
+    'p.tempo',
+    'g.nome grupomusc',
+    'e.nome exercicio',
+    'e.descricao exercicio_desc',
+    'e.foto exercicio_foto',
+    'f.datahora',
+    'z.planilha_feito_id',
+    'u.nome as profissional_nome',
+    'u.sobrenome as profissional_sobrenome',
+    'u.email as profissional_email',
+);
+$query['from'] = "
     planilha_aluno a join
     planilha_tabela p on p.planilha_id = a.planilha_id join
     planilha_grupoMuscuCardio g on g.id = p.musculo_cardio_id join
     planilha_exercicio e on e.id = p.exercicio_id and e.musculo_cardio_id = g.id join
     planilha_aluno_feito f on f.planilha_aluno_id = a.planilha_id join
-    planilha_aluno_exercicio z on z.planilha_feito_id = f.id and z.exercicio = e.id
+    planilha_aluno_exercicio z on z.planilha_feito_id = f.id and z.exercicio = e.id join
+    usuario u on u.id = p.profissional_id
 ";
-                $query['where'] = array(
-                    "a.aluno_id = " . mysqliEscaparTexto($_SESSION['id']),
-                );
+$query['where'] = array(
+    "a.aluno_id = " . mysqliEscaparTexto($_SESSION['id']),
+);
 
+//referente à paginação
+$query_pagina = $query;
+$query_pagina['select'] = "count(*) as total";
+$resultado_pagina = dbquery($query_pagina);
+$paginacao = ($resultado_pagina?$resultado_pagina[0]:array());
+$paginacao = array_merge(array(
+    'total' => 0,
+    'quantidade' => (!empty($_GET['quantidade']) ? $_GET['quantidade'] : 10),
+    'pagina' => (!empty($_GET['pagina']) ? $_GET['pagina'] : 1),
+), array_map('intval', (array)$paginacao));
+$paginacao['offset'] = (($paginacao['pagina'] - 1) * $paginacao['quantidade']);
+$paginacao['paginas'] = ceil($paginacao['total'] / $paginacao['quantidade']);
 
-                //referente à paginação
-                $query_pagina = $query;
-                $query_pagina['select'] = "count(*) as total";
-                $resultado_pagina = dbquery($query_pagina);
-                $paginacao2 = ($resultado_pagina?$resultado_pagina[0]:array());
-                $paginacao2 = array_merge(array(
-                    'total' => 0,
-                    'quantidade' => (!empty($_GET['quantidade']) ? $_GET['quantidade'] : 10),
-                    'pagina' => (!empty($_GET['pagina2']) ? $_GET['pagina2'] : 1),
-                ), array_map('intval', (array)$paginacao2));
-                $paginacao2['offset'] = (($paginacao2['pagina'] - 1) * $paginacao2['quantidade']);
-                $paginacao2['paginas'] = ceil($paginacao2['total'] / $paginacao2['quantidade']);
-
-                $query['order'] = "
+$query['order'] = "
     f.datahora desc
 ";
-                 $query['outro'] = "limit " . $paginacao2['quantidade'] . " offset " . $paginacao2['offset'];
-                $resultado = dbquery($query);
+$query['outro'] = "limit " . $paginacao['quantidade'] . " offset " . $paginacao['offset'];
+
+$resultado = dbquery($query);
+
                 ?> 
                                         <h3 class="box-title">Exercícios Feitos</h3>
                     <br>
-                    <?php if (!empty($resultado)) { ?>
-                        <div class="tab-pane active" id="timeline">
-                            <ul class="timeline timeline-inverse">
-                                <?php
-                                $dataanterior = $grupo_atual = '';
-                                $anterior = null;
-                                foreach ($resultado as $linha) {
-                                    $dataatual = date('d/m/Y', dataParse($linha['datahora']));
-                                    if ($grupo_atual && (($dataanterior != $dataatual) || ($grupo_atual != $linha['grupo']))) {
-                                        ?>
+                    <?php if (!empty($resultado)){ ?>
+<div class="tab-pane" id="timeline">
+    <ul class="timeline timeline-inverse">
+        <?php
+$dataanterior = $grupo_atual = ''; $anterior = null;
+foreach ($resultado as $linha) {
+    $dataatual = date('d/m/Y', dataParse($linha['datahora']));
+    if ($grupo_atual && (($dataanterior != $dataatual) || ($grupo_atual != $linha['grupo']))){
+?>
                                         </table>
                                 </div>
-                            </div>
+                </div>
                             </li> 
+                            
                             <?php
                         }
                         if ($dataanterior != $dataatual) {
@@ -385,44 +390,49 @@ while ($linha = mysqli_fetch_array($resultado)) {
                                     <?= $dataatual ?>
                                 </span>
                             </li>
-                            <?php
-                            $dataanterior = $dataatual;
-                            $grupo_atual = '';
-                        }
-                        if ($grupo_atual != $linha['grupo']) {
-                            $grupo_atual = $linha['grupo'];
-                            ?>            
+                               <?php
+        $dataanterior = $dataatual;
+        $grupo_atual = '';
+    }
+    if ($grupo_atual != $linha['grupo']){
+        $grupo_atual = $linha['grupo'];
+?>             
                             <li>
                                 <i class="fa fa-thumbs-o-up bg-blue"></i>
-                                <div class="timeline-item">
-                                    <span class="time"><i class="fa fa-clock-o"></i> <?= date('H:i:s', dataParse($linha['datahora'])) ?></span>
-                                    <h3 class="timeline-header"><strong><?php echo htmlspecialchars($linha['grupo']); ?></strong> Exercícios Feitos</h3>
-                                    <div class="timeline-body">
-                                        <table class="table table-striped planilha dataTable">
-                                            <tr>
-                                                <th>Exercício</th>
-                                                <th>Séries</th>
-                                                <th>Repetições</th>                      
-                                                <th>Carga(Kg)</th>
-                                                <th>Intervalo</th>
-                                                <th>Tempo</th>
-                                            </tr>
+
+            <div class="timeline-item">
+                <span class="time"><i class="fa fa-clock-o"></i> <?= date('H:i:s', dataParse($linha['datahora'])) ?></span>
+
+                <h3 class="timeline-header"><strong><?php echo htmlspecialchars($linha['grupo']); ?></strong> - por <?php echo htmlspecialchars($linha['profissional_nome'] . ' ' . $linha['profissional_sobrenome']); ?></h3>
+                
+
+                <div class="timeline-body">
+                    
+                    <table class="table table-striped planilha dataTable">
+                        <tr>
+                            <th>Exercício</th>
+                            <th>Séries</th>
+                            <th>Repetições</th>                      
+                            <th>Carga(Kg)</th>
+                            <th>Intervalo</th>
+                            <th>Tempo</th>
+                        </tr>
                                             <?php
-                                        }
-                                        ?>
-                                        <tr>
-                                            <td><?php echo htmlentities($linha['exercicio']) ?><b class="label label-danger"><?php echo htmlentities($linha['grupomusc']) ?></b></td>
-                                            <td><?php echo htmlentities($linha['series']) ?></td>
-                                            <td><?php echo htmlentities($linha['repeticoes']) ?></td>
-                                            <td><?php echo htmlentities($linha['carga']) ?></td>
-                                            <td><?php echo htmlentities($linha['intervalo']) ?></td>
-                                            <td><?php echo htmlentities($linha['tempo']) ?></td>
-                                        </tr>
-                                        <?php
-                                        $anterior = $linha;
-                                    }
-                                    if ($grupo_atual) {
-                                        ?>
+    }
+?>
+                        <tr>
+                            <td><?php echo htmlentities($linha['exercicio']) ?><b class="label label-danger"><?php echo htmlentities($linha['grupomusc']) ?></b></td>
+                            <td><?php echo htmlentities($linha['series']) ?></td>
+                            <td><?php echo htmlentities($linha['repeticoes']) ?></td>
+                            <td><?php echo htmlentities($linha['carga']) ?></td>
+                            <td><?php echo htmlentities($linha['intervalo']) ?></td>
+                            <td><?php echo htmlentities($linha['tempo']) ?></td>
+                        </tr>
+<?php
+    $anterior = $linha;
+}
+if ($grupo_atual){
+?>
                                     </table>
                                 </div>
                             </div>

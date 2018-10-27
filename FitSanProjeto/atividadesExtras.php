@@ -241,11 +241,14 @@ while ($linha = mysqli_fetch_array($resultado)) {
                             </div>
                         </div>
                     </li>
+                    
                     <!-- END timeline item -->
 <?php
 }
 ?>
-
+<li>
+            <i class="fa fa-clock-o bg-gray"></i>
+        </li>
                 </ul>
 
               <!-- /.tab-pane -->

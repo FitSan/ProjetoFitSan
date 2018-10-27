@@ -19,8 +19,14 @@ $id = (!empty($_GET['id']) ? $_GET['id'] : null); //obtendo id de alteração
 $profissional = (!empty($_GET['profissional']) ? $_GET['profissional'] : ''); //obtendo profissional atual
 $erros = array();
 
-$planilha_id = dbquery("select p.id from planilha p join planilha_aluno a on a.planilha_id = p.id where a.aluno_id = " . mysqliEscaparTexto($_SESSION['id']) . " order by datahora desc limit 1");
-if (!empty($planilha_id)) $planilha_id = $planilha_id[0]['id'];
+$resultado = dbquery("select p.id, a.id as planilha_aluno_id from planilha p join planilha_aluno a on a.planilha_id = p.id where a.aluno_id = " . mysqliEscaparTexto($_SESSION['id']) . " order by datahora desc limit 1");
+if (!empty($resultado)){
+    $planilha_id = $resultado[0]['id'];
+    $planilha_aluno_id = $resultado[0]['planilha_aluno_id'];
+} else {
+    $planilha_id = null;
+    $planilha_aluno_id = null;
+}
 
 //referente a inclusão/alteração no banco.
 if ($acao == 'checkin'){
@@ -31,14 +37,14 @@ if ($acao == 'checkin'){
     if (empty($erros) && !empty($ativ_feita)) {
         $anterior = '';
         foreach ((array)$ativ_feita as $check){
-            list($check, $grupo) = explode('|', $check, 2);
+            list($planilha_tabela_id, $exercicio, $grupo) = explode('|', $check, 3);
             if ($anterior != $grupo){
-                $query = "insert into planilha_aluno_feito ( planilha_aluno_id, datahora) values (" . mysqliEscaparTexto($planilha_id) . ", " . mysqliEscaparTexto(time(), 'datetime') . " )";
+                $query = "insert into planilha_aluno_feito ( planilha_aluno_id, datahora) values (" . mysqliEscaparTexto($planilha_aluno_id) . ", now() )";
                 mysqli_query($conexao, $query) or die_mysql($query, __FILE__, __LINE__);
                 $id = mysqli_insert_id($conexao);
                 $anterior = $grupo;
             }
-            $query = "insert into planilha_aluno_exercicio ( planilha_feito_id, exercicio) values (" . mysqliEscaparTexto($id) . ", " . mysqliEscaparTexto($check) . " )";
+            $query = "insert into planilha_aluno_exercicio ( planilha_feito_id, planilha_tabela_id, exercicio) values (" . mysqliEscaparTexto($id) . ", " . mysqliEscaparTexto($planilha_tabela_id) . ", " . mysqliEscaparTexto($exercicio) . "  )";
             mysqli_query($conexao, $query) or die_mysql($query, __FILE__, __LINE__);
         }
         header('Location: ' . basename(__FILE__));
@@ -180,7 +186,7 @@ foreach ($resultado as $i => $linha) {
                                         </div>
                                     </div>
                                 </td>
-                                <td class="text-center"><input type="checkbox" class="flat-red" name="ativ_feita[<?php echo $i ?>]" value="<?php echo htmlentities($linha['exercicio_id']) ?>|<?php echo htmlentities($linha['grupo']) ?>"></td>
+                                <td class="text-center"><input type="checkbox" class="flat-red" name="ativ_feita[<?php echo $i ?>]" value="<?php echo htmlentities($linha['id']) ?>|<?php echo htmlentities($linha['exercicio_id']) ?>|<?php echo htmlentities($linha['grupo']) ?>"></td>
                             </tr>
 <?php
 }
@@ -197,8 +203,9 @@ if ($grupo_id){
 <?php
 }
 ?>
-    <button class="button" type="submit" href="#">Enviar</button></form>
-                </div>
+            <div class="pull-left"><br>       
+    <button class="button btn-app" type="submit" href="#"><i class="fa fa-paper-plane-o"></i> Enviar </button></form>
+        </div></div>
         </div>
 
     <!--</div>-->
@@ -230,11 +237,11 @@ $query['select'] = array(
 );
 $query['from'] = "
     planilha_aluno a join
-    planilha_tabela p on p.planilha_id = a.planilha_id join
+    planilha_aluno_feito f on f.planilha_aluno_id = a.id join
+    planilha_aluno_exercicio z on z.planilha_feito_id = f.id join
+    planilha_tabela p on p.planilha_id = a.planilha_id and p.id = z.planilha_tabela_id join
     planilha_grupoMuscuCardio g on g.id = p.musculo_cardio_id join
-    planilha_exercicio e on e.id = p.exercicio_id and e.musculo_cardio_id = g.id join
-    planilha_aluno_feito f on f.planilha_aluno_id = a.planilha_id join
-    planilha_aluno_exercicio z on z.planilha_feito_id = f.id and z.exercicio = e.id join
+    planilha_exercicio e on e.id = z.exercicio join
     usuario u on u.id = p.profissional_id
 ";
 $query['where'] = array(
@@ -255,7 +262,9 @@ $paginacao['offset'] = (($paginacao['pagina'] - 1) * $paginacao['quantidade']);
 $paginacao['paginas'] = ceil($paginacao['total'] / $paginacao['quantidade']);
 
 $query['order'] = "
-    f.datahora desc
+    f.datahora desc,
+    p.grupo,
+    exercicio
 ";
 $query['outro'] = "limit " . $paginacao['quantidade'] . " offset " . $paginacao['offset'];
 
@@ -280,7 +289,8 @@ foreach ($resultado as $linha) {
                     
                 </div>
                 <div class="timeline-footer">
-                    <a href="<?php echo basename(__FILE__) ?>?acao=excluir&id=<?= htmlentities($anterior['planilha_feito_id']) ?>" class="btn btn-danger btn-xs">Apagar</a>
+                    <a href="<?php echo basename(__FILE__) ?>?acao=excluir&id=<?= htmlentities($anterior['planilha_feito_id']) ?>" class="btn btn-social-icon btn-danger"><i class="fa fa-trash-o"></i></a>
+                    
                 </div>
             </div>
         </li> 

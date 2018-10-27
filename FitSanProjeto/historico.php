@@ -24,54 +24,73 @@ require_once './template/cabecalho.php';
                 <div class="active tab-pane" id="exercicios">
                     <?php
                 $query = array();
-                $query['select'] = array(
-                    'a.planilha_id',
-                    'p.profissional_id',
-                    'p.musculo_cardio_id',
-                    'p.exercicio_id',
-                    'p.grupo',
-                    'p.series',
-                    'p.repeticoes',
-                    'p.carga',
-                    'p.intervalo',
-                    'p.tempo',
-                    'g.nome grupomusc',
-                    'e.nome exercicio',
-                    'e.descricao exercicio_desc',
-                    'e.foto exercicio_foto',
-                    'f.datahora',
-                    'z.planilha_feito_id',
-                );
-                $query['from'] = "
+$query['select'] = array(
+    'a.planilha_id',
+    'p.profissional_id',
+    'p.musculo_cardio_id',
+    'p.exercicio_id',
+    'p.grupo',
+    'p.series',
+    'p.repeticoes',
+    'p.carga',
+    'p.intervalo',
+    'p.tempo',
+    'g.nome grupomusc',
+    'e.nome exercicio',
+    'e.descricao exercicio_desc',
+    'e.foto exercicio_foto',
+    'f.datahora',
+    'z.planilha_feito_id',
+    'u.nome as profissional_nome',
+    'u.sobrenome as profissional_sobrenome',
+    'u.email as profissional_email',
+);
+$query['from'] = "
     planilha_aluno a join
     planilha_tabela p on p.planilha_id = a.planilha_id join
     planilha_grupoMuscuCardio g on g.id = p.musculo_cardio_id join
     planilha_exercicio e on e.id = p.exercicio_id and e.musculo_cardio_id = g.id join
     planilha_aluno_feito f on f.planilha_aluno_id = a.planilha_id join
-    planilha_aluno_exercicio z on z.planilha_feito_id = f.id and z.exercicio = e.id
+    planilha_aluno_exercicio z on z.planilha_feito_id = f.id and z.exercicio = e.id join
+    usuario u on u.id = p.profissional_id
 ";
-                $query['where'] = array(
-                    "a.aluno_id = " . mysqliEscaparTexto($_SESSION['id']),
-                );
-                $query['order'] = "
+$query['where'] = array(
+    "a.aluno_id = " . mysqliEscaparTexto($_SESSION['id']),
+);
+
+//referente à paginação
+$query_pagina = $query;
+$query_pagina['select'] = "count(*) as total";
+$resultado_pagina = dbquery($query_pagina);
+$paginacao = ($resultado_pagina?$resultado_pagina[0]:array());
+$paginacao = array_merge(array(
+    'total' => 0,
+    'quantidade' => (!empty($_GET['quantidade']) ? $_GET['quantidade'] : 10),
+    'pagina' => (!empty($_GET['pagina']) ? $_GET['pagina'] : 1),
+), array_map('intval', (array)$paginacao));
+$paginacao['offset'] = (($paginacao['pagina'] - 1) * $paginacao['quantidade']);
+$paginacao['paginas'] = ceil($paginacao['total'] / $paginacao['quantidade']);
+
+$query['order'] = "
     f.datahora desc
 ";
+$query['outro'] = "limit " . $paginacao['quantidade'] . " offset " . $paginacao['offset'];
 
-                $resultado = dbquery($query);
+$resultado = dbquery($query);
+
                 ?> 
                     <!-- Post -->
                     <h3 class="box-title">Exercícios Feitos</h3>
                     <br>
-                    <?php if (!empty($resultado)) { ?>
-                        <div class="tab-pane" id="timeline">
-                            <ul class="timeline timeline-inverse">
-                                <?php
-                                $dataanterior = $grupo_atual = '';
-                                $anterior = null;
-                                foreach ($resultado as $linha) {
-                                    $dataatual = date('d/m/Y', dataParse($linha['datahora']));
-                                    if ($grupo_atual && (($dataanterior != $dataatual) || ($grupo_atual != $linha['grupo']))) {
-                                        ?>
+                    <?php if (!empty($resultado)){ ?>
+<div class="tab-pane" id="timeline">
+    <ul class="timeline timeline-inverse">
+        <?php
+$dataanterior = $grupo_atual = ''; $anterior = null;
+foreach ($resultado as $linha) {
+    $dataatual = date('d/m/Y', dataParse($linha['datahora']));
+    if ($grupo_atual && (($dataanterior != $dataatual) || ($grupo_atual != $linha['grupo']))){
+?>
                                         </table>
                                 </div>
                 </div>
@@ -87,43 +106,48 @@ require_once './template/cabecalho.php';
                                 </span>
                             </li>
                                <?php
-                            $dataanterior = $dataatual;
-                            $grupo_atual = '';
-                        }
-                        if ($grupo_atual != $linha['grupo']) {
-                            $grupo_atual = $linha['grupo'];
-                            ?>         
-                            <li>                               
-                                <i class="fa fa-thumbs-o-up bg-blue"></i>
-                                <div class="timeline-item">
-                                    <span class="time"><i class="fa fa-clock-o"></i> <?= date('H:i:s', dataParse($linha['datahora'])) ?></span>
-                                    <h3 class="timeline-header"><strong><?php echo htmlspecialchars($linha['grupo']); ?></strong> Exercícios Feitos</h3>
-                                    <div class="timeline-body">
-                                        <table class="table table-striped planilha dataTable">
-                                            <tr>
-                                                <th>Exercício</th>
-                                                <th>Séries</th>
-                                                <th>Repetições</th>                      
-                                                <th>Carga(Kg)</th>
-                                                <th>Intervalo</th>
-                                                <th>Tempo</th>
-                                            </tr>
-                                            <?php
-                                        }
-                                        ?>
-                                        <tr>
-                                            <td><?php echo htmlentities($linha['exercicio']) ?><b class="label label-danger"><?php echo htmlentities($linha['grupomusc']) ?></b></td>
-                                            <td><?php echo htmlentities($linha['series']) ?></td>
-                                            <td><?php echo htmlentities($linha['repeticoes']) ?></td>
-                                            <td><?php echo htmlentities($linha['carga']) ?></td>
-                                            <td><?php echo htmlentities($linha['intervalo']) ?></td>
-                                            <td><?php echo htmlentities($linha['tempo']) ?></td>
-                                        </tr>
-                                        <?php
-                                        $anterior = $linha;
-                                    }
-                                    if ($grupo_atual) {
-                                        ?>
+        $dataanterior = $dataatual;
+        $grupo_atual = '';
+    }
+    if ($grupo_atual != $linha['grupo']){
+        $grupo_atual = $linha['grupo'];
+?>             
+                            <li>
+            <i class="fa fa-thumbs-o-up bg-blue"></i>
+
+            <div class="timeline-item">
+                <span class="time"><i class="fa fa-clock-o"></i> <?= date('H:i:s', dataParse($linha['datahora'])) ?></span>
+
+                <h3 class="timeline-header"><strong><?php echo htmlspecialchars($linha['grupo']); ?></strong> - por <?php echo htmlspecialchars($linha['profissional_nome'] . ' ' . $linha['profissional_sobrenome']); ?></h3>
+                
+
+                <div class="timeline-body">
+                    
+                    <table class="table table-striped planilha dataTable">
+                        <tr>
+                            <th>Exercício</th>
+                            <th>Séries</th>
+                            <th>Repetições</th>                      
+                            <th>Carga(Kg)</th>
+                            <th>Intervalo</th>
+                            <th>Tempo</th>
+                        </tr>
+<?php
+    }
+?>
+                        <tr>
+                            <td><?php echo htmlentities($linha['exercicio']) ?><b class="label label-danger"><?php echo htmlentities($linha['grupomusc']) ?></b></td>
+                            <td><?php echo htmlentities($linha['series']) ?></td>
+                            <td><?php echo htmlentities($linha['repeticoes']) ?></td>
+                            <td><?php echo htmlentities($linha['carga']) ?></td>
+                            <td><?php echo htmlentities($linha['intervalo']) ?></td>
+                            <td><?php echo htmlentities($linha['tempo']) ?></td>
+                        </tr>
+<?php
+    $anterior = $linha;
+}
+if ($grupo_atual){
+?>
                                     </table>
                                 </div>
                             </div>
@@ -136,14 +160,27 @@ require_once './template/cabecalho.php';
                     </li>   
                     </ul>
                 </div>
-            <?php } else { ?>
-                <div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12" align="center"><h3><b>Não foi realizado nenhum exercício ainda.</b></h3></div>
-            <?php } ?>
+            <?php if ($paginacao['paginas'] > 1){ ?>
+        <div class="box-footer clearfix">
+            <ul class="pagination pagination-sm no-margin">
+                <li class="<?php echo (($paginacao['pagina'] == 1) ? 'disabled' : '') ?>"><a href="<?php echo basename(__FILE__) ?>">&laquo;</a></li>
+<?php for ($pag = 1; $pag <= $paginacao['paginas']; $pag++){ ?>
+                <li class="<?php echo (($paginacao['pagina'] == $pag) ? 'active' : '') ?>"><a href="<?php echo basename(__FILE__) ?>?pagina=<?php echo $pag ?>"><?php echo $pag ?></a></li>
+<?php } ?>
+                <li class="<?php echo (($paginacao['pagina'] == $paginacao['paginas']) ? 'disabled' : '') ?>"><a href="<?php echo basename(__FILE__) ?>?pagina=<?php echo $paginacao['paginas'] ?>">&raquo;</a></li>
+            </ul>
+        </div>
+<?php } ?>
+</div>
+<?php } else { ?>
+</div><div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12" align="center"><h3><b>Não foi realizado nenhum exercício ainda.</b></h3></div>
+<?php } ?>
                 
                 
 
             <!-- /.post -->
-        </div>
+        
+
         
         <div class="tab-pane" id="avaliacoes">
             <!-- Post -->
