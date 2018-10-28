@@ -594,6 +594,11 @@
     $(function(){
         var lista = $('#modal-lista');
         var botao = lista.find('.btn-primary');
+        var mensagem = false;
+        function alert2(msg, type){
+            if (mensagem) mensagem.remove();
+            mensagem = $('<div class="alert"></div>').text(msg).addClass('alert-' + type).appendTo(lista.find('.modal-body'));
+        }
         lista.on('shown.bs.modal', function(e){
             if (e.relatedTarget){
                 botao.data('id', $(e.relatedTarget).data('id'));
@@ -605,7 +610,7 @@
                 dataType: 'json',
                 success: function(result){
                     if (result.status != 'ok'){
-                        alert(result.mensagem ? result.mensagem : 'Erro');
+                        alert2(result.mensagem ? result.mensagem : 'Erro', 'danger');
                         return;
                     }
                     var corpo = lista.find('#lista-alunos'), ul = $('<ul class="list-group">');
@@ -620,15 +625,25 @@
                       checkboxClass: 'icheckbox_flat-blue',
                       radioClass: 'iradio_flat-blue'
                     });
+                    botao.attr('disabled', !result.len).toggleClass('disabled', !result.len);
+                    if (!result.len){
+                        alert2('Não há nada para enviar', 'danger');
+                        return;
+                    }
                 }
             });
         });
         botao.click(function (e){
             e.preventDefault();
-            var dt = { acao : 'enviar_planilha' };
+            var dt = { acao : 'enviar_planilha' }, len = 0;
             $.each(lista.find(':input').serializeArray(), function(i, field){
                 dt[field.name] = field.value;
+                len++;
             });
+            if (botao.hasClass('disabled')){
+                alert2('Lista vazia');
+                return;
+            }
             var id = botao.data('id');
             if (id) dt['id'] = id;
             $.ajax({
@@ -638,10 +653,10 @@
                 dataType: 'json',
                 success: function(result){
                     if (result.status != 'ok'){
-                        alert(result.mensagem ? result.mensagem : 'Erro');
+                        alert2(result.mensagem ? result.mensagem : 'Erro', 'danger');
                         return;
                     }
-                    alert('A planilha foi enviada com êxito');
+                    alert2('A planilha foi enviada com êxito', 'success');
                     window.location.reload();
                 }
             });

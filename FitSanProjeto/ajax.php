@@ -3,15 +3,25 @@ require_once './autenticacao.php';
 
 function pegarLista(){
     global $conexao;
+
     if (!tipoLogado("profissional")) return array('status' => 'error', 'mensagem' => 'Apenas para profissionais');
+
+    $ret = array('status' => 'ok', 'dados' => array(), 'len' => 0);
+
     $query = "select * from usuario join vinculo on usuario.id = vinculo.aluno_id where vinculo.status = 'aprovado' and usuario.status = 'ativado' and vinculo.profissional_id = " . $_SESSION[id];
     $retorno = mysqli_query($conexao, $query);
     if (!$retorno) return array('status' => 'error', 'mensagem' => ('ERRO: '.mysqli_error($conexao).PHP_EOL.$query.PHP_EOL.print_r(debug_backtrace(), true)));
-    $dados = array();
     while ($resultado = mysqli_fetch_array($retorno)){
-        $dados[] = $resultado;
+        $ret['dados'][] = $resultado;
     }
-    return array('status' => 'ok', 'dados' => $dados);
+
+    $query = "select count(*) as len from planilha_tabela where planilha_id is null";
+    if ($retorno = mysqli_query($conexao, $query)){
+        if ($resultado = mysqli_fetch_array($retorno)) $ret['len'] = intval($resultado['len']);
+    }
+
+    return $ret;
+
 }
 
 function enviarPlanilha(){

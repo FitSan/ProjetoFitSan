@@ -57,6 +57,7 @@ if (tipoLogado('aluno')){
             .example-modal .modal {
                 background: transparent !important;
             }
+            .wrapper .sidebar-menu li>a>.pull-right-container {margin-top:0px;}
         </style>
     </head>
     <body class="hold-transition skin-blue sidebar-collapse sidebar-mini">

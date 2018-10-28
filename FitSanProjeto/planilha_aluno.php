@@ -19,15 +19,6 @@ $id = (!empty($_GET['id']) ? $_GET['id'] : null); //obtendo id de alteração
 $profissional = (!empty($_GET['profissional']) ? $_GET['profissional'] : ''); //obtendo profissional atual
 $erros = array();
 
-$resultado = dbquery("select p.id, a.id as planilha_aluno_id from planilha p join planilha_aluno a on a.planilha_id = p.id where a.aluno_id = " . mysqliEscaparTexto($_SESSION['id']) . " order by datahora desc limit 1");
-if (!empty($resultado)){
-    $planilha_id = $resultado[0]['id'];
-    $planilha_aluno_id = $resultado[0]['planilha_aluno_id'];
-} else {
-    $planilha_id = null;
-    $planilha_aluno_id = null;
-}
-
 //referente a inclusão/alteração no banco.
 if ($acao == 'checkin'){
     if (!empty($_POST)) {
@@ -37,7 +28,7 @@ if ($acao == 'checkin'){
     if (empty($erros) && !empty($ativ_feita)) {
         $anterior = '';
         foreach ((array)$ativ_feita as $check){
-            list($planilha_tabela_id, $exercicio, $grupo) = explode('|', $check, 3);
+            list($planilha_aluno_id, $planilha_tabela_id, $exercicio, $grupo) = explode('|', $check, 4);
             if ($anterior != $grupo){
                 $query = "insert into planilha_aluno_feito ( planilha_aluno_id, datahora) values (" . mysqliEscaparTexto($planilha_aluno_id) . ", now() )";
                 mysqli_query($conexao, $query) or die_mysql($query, __FILE__, __LINE__);
@@ -78,6 +69,7 @@ if (empty($profissionais)) $profissionais = array();
 //monta o sql de consulta
 $query = array();
 $query['select'] = array(
+    'a.id as planilha_aluno_id',
     'p.*',
     'g.nome grupomusc',
     'e.nome exercicio',
@@ -92,7 +84,6 @@ $query['from'] = "
 ";
 $query['where'] = array(
     "a.aluno_id = " . mysqliEscaparTexto($_SESSION['id']),
-    "a.planilha_id = " . mysqliEscaparTexto($planilha_id),
     "p.profissional_id = " . mysqliEscaparTexto($profissional),
 );
 $query['order'] = "
@@ -186,7 +177,7 @@ foreach ($resultado as $i => $linha) {
                                         </div>
                                     </div>
                                 </td>
-                                <td class="text-center"><input type="checkbox" class="flat-red" name="ativ_feita[<?php echo $i ?>]" value="<?php echo htmlentities($linha['id']) ?>|<?php echo htmlentities($linha['exercicio_id']) ?>|<?php echo htmlentities($linha['grupo']) ?>"></td>
+                                <td class="text-center"><input type="checkbox" class="flat-red" name="ativ_feita[<?php echo $i ?>]" value="<?php echo htmlentities($linha['planilha_aluno_id']) ?>|<?php echo htmlentities($linha['id']) ?>|<?php echo htmlentities($linha['exercicio_id']) ?>|<?php echo htmlentities($linha['grupo']) ?>"></td>
                             </tr>
 <?php
 }
@@ -278,10 +269,14 @@ $resultado = dbquery($query);
 <div class="tab-pane" id="timeline">
     <ul class="timeline timeline-inverse">
         <?php
-$dataanterior = $grupo_atual = ''; $anterior = null;
+$dataanterior = $grupo_atual = $prof_atual = ''; $anterior = null;
 foreach ($resultado as $linha) {
     $dataatual = date('d/m/Y', dataParse($linha['datahora']));
-    if ($grupo_atual && (($dataanterior != $dataatual) || ($grupo_atual != $linha['grupo']))){
+    if ($grupo_atual && (
+        ($dataanterior != $dataatual) ||
+        ($prof_atual != $linha['profissional_id']) ||
+        ($grupo_atual != $linha['grupo'])
+    )){
 ?>
                     </table>
                     
@@ -307,10 +302,11 @@ foreach ($resultado as $linha) {
             
 <?php
         $dataanterior = $dataatual;
-        $grupo_atual = '';
+        $prof_atual = $grupo_atual = '';
     }
-    if ($grupo_atual != $linha['grupo']){
+    if (($prof_atual != $linha['profissional_id']) || ($grupo_atual != $linha['grupo'])){
         $grupo_atual = $linha['grupo'];
+        $prof_atual = $linha['profissional_id'];
 ?>            
         <li>
             <i class="fa fa-thumbs-o-up bg-blue"></i>

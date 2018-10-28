@@ -457,7 +457,7 @@ if ($grupo_atual){
 <?php } ?>  
                               </div>
             <?php } else { ?>
-                <div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12" align="center"><h3><b>Não foi realizado nenhum exercício ainda.</b></h3></div>
+                <div class="text-center"><h3><b>Não foi realizado nenhum exercício ainda.</b></h3></div>
             <?php } ?>
                                        
                                 <!-- /.post -->

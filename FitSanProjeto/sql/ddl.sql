@@ -212,11 +212,6 @@ ALTER TABLE planilha_tabela ADD planilha_id int references planilha(id) after pr
 select * from planilha_tabela;
 select * from planilha_tabela order by grupo, id;
 
-truncate table planilha_aluno_exercicio;
-truncate table planilha_aluno;
-truncate table planilha;
-update planilha_tabela set planilha_id = null;
-
 ---Grupos Musculares/Cárdio---
 
 create table planilha_grupoMuscuCardio(
@@ -268,11 +263,33 @@ select * from planilha_aluno;
 select * from planilha_aluno_feito;
 select * from planilha_aluno_exercicio;
 
+truncate table planilha_tabela;
 truncate table planilha_aluno_feito;
 truncate table planilha_aluno_exercicio;
+truncate table planilha_aluno;
+truncate table planilha;
+update planilha_tabela set planilha_id = null;
 
 
 
+
+select
+    p.*,
+    g.nome grupomusc,
+    e.nome exercicio,
+    e.descricao exercicio_desc,
+    e.foto exercicio_foto
+from
+    planilha_aluno a join
+    planilha_tabela p on p.planilha_id = a.planilha_id join
+    planilha_grupoMuscuCardio g on g.id = p.musculo_cardio_id join
+    planilha_exercicio e on e.id = p.exercicio_id and e.musculo_cardio_id = g.id
+where
+    a.aluno_id = 9 and
+    p.profissional_id in (2,7)
+order by
+    p.grupo
+;
 
 select
     a.planilha_id,

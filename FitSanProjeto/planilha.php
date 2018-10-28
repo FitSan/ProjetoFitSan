@@ -27,6 +27,11 @@ if (($acao == 'incluir') || ($acao == 'alterar')){
         if (empty($grupo_muscular)) $erros[] = "Preencha o grupo muscular.";
         if (empty($exercicio)) $erros[] = "Preencha o exercicio.";
     }
+    if (empty($erros) && !empty($grupo) && ($id === null)) {
+        $query = "select id from planilha_tabela where planilha_id is null and grupo = " . mysqliEscaparTexto($grupo) . " and musculo_cardio_id = " . mysqliEscaparTexto($grupo_muscular) . " and exercicio_id = " . mysqliEscaparTexto($exercicio) . " and profissional_id = " . mysqliEscaparTexto($_SESSION['id']);
+        if ($res = dbquery($query)) $res = $res[0]['id'];
+        if ($res) $erros[] = "Exercício já cadastrado.";
+    }
     if (empty($erros) && !empty($grupo)) {
         if ($id === null) {
             $query = "insert into planilha_tabela ( grupo, musculo_cardio_id , exercicio_id, series, repeticoes, carga, intervalo, tempo, profissional_id) values (" . mysqliEscaparTexto($grupo) . ", " . mysqliEscaparTexto($grupo_muscular) . ", " . mysqliEscaparTexto($exercicio) . ", " . mysqliEscaparTexto($series) . ", " . mysqliEscaparTexto($repeticoes) . ", " . mysqliEscaparTexto($carga) . ", " . mysqliEscaparTexto($intervalo) . ", " . mysqliEscaparTexto($tempo) . ", " . mysqliEscaparTexto($_SESSION['id']) . " )";
