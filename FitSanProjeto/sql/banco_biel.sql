@@ -846,12 +846,19 @@ INSERT INTO `vinculo` (`aluno_id`, `profissional_id`, `solicitante`, `status`) V
 (13, 2, 'aluno', 'aprovado');
 COMMIT;
 
+select * from `usuario`;
+
 select * from `avaliacao`;
 
 select * from `notificacao`;
 
 select * from `avaliacao` ORDER BY DATA where aluno_id=13   ;
     
+
+select * from `avaliacao` inner join `notificacao` on `avaliacao`.aluno_id=`notificacao`.aluno_id where `notificacao`.lido='L'  and `avaliacao`.aluno_id =15;
+
+select * from `avaliacao` outer join `notificacao`.lido='N' where  `avaliacao`.aluno_id=15; 
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
