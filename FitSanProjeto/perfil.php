@@ -179,7 +179,7 @@ if ($linha = mysqli_fetch_array($resultado)) {
                 <!-- Inicio do histórico publico-->
                 
                 <?php if (tipoLogado("aluno")){
-                    $aba = (!empty($_GET['aba']) ? $_GET['aba'] : 'timeline');
+                       $aba = (!empty($_GET['aba']) ? $_GET['aba'] : 'timeline');
                 ?>
                                 
                 <!-- inicio do perfil aluno -->                
@@ -204,7 +204,7 @@ if ($linha = mysqli_fetch_array($resultado)) {
                             
                             <div class="tab-pane<?php if ($aba == 'atividadesExtras') echo ' active'; ?>" id="atividadesExtras">
                                 <!-- Post -->
-                                <ul class="timeline timeline-inverse"> 
+                                
                                 <?php
                                 
 
@@ -222,7 +222,15 @@ if (!empty($id)) {
 }
 
 //referente à paginação
-$query_pagina = "select count(ativ_extras.id) as total from ativ_extras join usuario on usuario.id=ativ_extras.aluno_id where usuario.id= " . mysqliEscaparTexto($_SESSION['id']);
+$query_pagina = "
+select
+    count(ativ_extras.id) as total
+from
+    ativ_extras join
+    usuario on usuario.id=ativ_extras.aluno_id
+where
+    usuario.id= " . mysqliEscaparTexto($_SESSION['id']) . " 
+";
 $resultado_pagina = mysqli_query($conexao, $query_pagina) or die_mysql($query_pagina, __FILE__, __LINE__);
 $paginacao = ($resultado_pagina?mysqli_fetch_array($resultado_pagina):array());
 $paginacao = array_merge(array(
@@ -233,8 +241,31 @@ $paginacao = array_merge(array(
 $paginacao['offset'] = (($paginacao['pagina'] - 1) * $paginacao['quantidade']);
 $paginacao['paginas'] = ceil($paginacao['total'] / $paginacao['quantidade']);
 
+if ($paginacao['total'] > 0){
+?>
+<ul class="timeline timeline-inverse"> 
+<?php
+
+
 //referente à consulta
-$query = "select ativ_extras.*, usuario.nome, usuario.sobrenome, usuario.foto from ativ_extras join usuario on usuario.id=ativ_extras.aluno_id where usuario.id= " . mysqliEscaparTexto($_SESSION['id']) . " order by ativ_extras.datahora desc limit " . $paginacao['quantidade'] . " offset " . $paginacao['offset'];
+$query = "
+select
+    ativ_extras.*,
+    usuario.nome,
+    usuario.sobrenome,
+    usuario.foto
+from 
+    ativ_extras join
+    usuario on usuario.id=ativ_extras.aluno_id
+where
+    usuario.id= " . mysqliEscaparTexto($_SESSION['id']) . " 
+order by
+    ativ_extras.datahora desc
+limit
+    " . $paginacao['quantidade'] . "
+offset
+    " . $paginacao['offset']
+;
 $resultado = mysqli_query($conexao, $query) or die_mysql($query, __FILE__, __LINE__);
 
 
@@ -263,7 +294,14 @@ while ($linha = mysqli_fetch_array($resultado)) {
 
                             <h3 class="timeline-header"><a href="#"><?= htmlentities($linha['titulo']) ?></a>
 <?php
-    $query2 = "select * from ativ_extras_exercicios where ativ_extras_id= " . mysqliEscaparTexto($linha['id']);
+    $query2 = "
+select
+    *
+from
+    ativ_extras_exercicios
+where 
+    ativ_extras_id= " . mysqliEscaparTexto($linha['id'])
+;
     if ($resultado2 = mysqli_query($conexao, $query2)){
         while ($linha2 = mysqli_fetch_array($resultado2)){
 ?>
@@ -285,30 +323,28 @@ while ($linha = mysqli_fetch_array($resultado)) {
                     
 <?php
 }
+if ($dataanterior){
 ?>
                     
                     <li>
                         <i class="fa fa-clock-o bg-gray"></i>
                     </li>
-
+<?php } ?>
                 </ul> 
-                    
-                    <?php if ($paginacao['paginas'] > 1){ ?>
+<?php if ($paginacao['paginas'] > 1){ ?>
         <div class="box-footer clearfix">
             <ul class="pagination pagination-sm no-margin">
-                <li class="<?php echo (($paginacao['pagina'] == 1) ? 'disabled' : '') ?>"><a href="<?php echo basename(__FILE__) ?>?aba=ativExtra">&laquo;</a></li>
+                <li class="<?php echo (($paginacao['pagina'] == 1) ? 'disabled' : '') ?>"><a href="<?php echo basename(__FILE__) ?>?aba=atividadesExtras">&laquo;</a></li>
 <?php for ($pag = 1; $pag <= $paginacao['paginas']; $pag++){ ?>
-                <li class="<?php echo (($paginacao['pagina'] == $pag) ? 'active' : '') ?>"><a href="<?php echo basename(__FILE__) ?>?aba=ativExtra&pagina=<?php echo $pag ?>"><?php echo $pag ?></a></li>
+                <li class="<?php echo (($paginacao['pagina'] == $pag) ? 'active' : '') ?>"><a href="<?php echo basename(__FILE__) ?>?aba=atividadesExtras&pagina=<?php echo $pag ?>"><?php echo $pag ?></a></li>
 <?php } ?>
-                <li class="<?php echo (($paginacao['pagina'] == $paginacao['paginas']) ? 'disabled' : '') ?>"><a href="<?php echo basename(__FILE__) ?>?aba=ativExtra&pagina=<?php echo $paginacao['paginas'] ?>">&raquo;</a></li>
+                <li class="<?php echo (($paginacao['pagina'] == $paginacao['paginas']) ? 'disabled' : '') ?>"><a href="<?php echo basename(__FILE__) ?>?aba=atividadesExtras&pagina=<?php echo $paginacao['paginas'] ?>">&raquo;</a></li>
             </ul>
         </div>
-<?php } else { ?>
-                                
-<div class="text-center"><h3><b>Não foi realizado nenhuma atividade extra ainda.</b></h3></div>
-
     <?php } ?>  
-              
+<?php } else { ?>
+<div class="text-center"><h3><b>Não foi realizado nenhuma atividade extra ainda.</b></h3></div>
+<?php } ?>           
               
                                 
                                 <!-- /.post -->
@@ -365,21 +401,20 @@ $query['where'] = array(
 $query_pagina = $query;
 $query_pagina['select'] = "count(*) as total";
 $resultado_pagina = dbquery($query_pagina);
-$paginacao = ($resultado_pagina?$resultado_pagina[0]:array());
-$paginacao = array_merge(array(
+$paginacao2 = ($resultado_pagina?$resultado_pagina[0]:array());
+$paginacao2 = array_merge(array(
     'total' => 0,
     'quantidade' => (!empty($_GET['quantidade']) ? $_GET['quantidade'] : 10),
-    'pagina' => (!empty($_GET['pagina']) ? $_GET['pagina'] : 1),
-), array_map('intval', (array)$paginacao));
-$paginacao['offset'] = (($paginacao['pagina'] - 1) * $paginacao['quantidade']);
-$paginacao['paginas'] = ceil($paginacao['total'] / $paginacao['quantidade']);
+    'pagina' => (!empty($_GET['pagina2']) ? $_GET['pagina2'] : 1),
+), array_map('intval', (array)$paginacao2));
+$paginacao2['offset'] = (($paginacao2['pagina'] - 1) * $paginacao2['quantidade']);
+$paginacao2['paginas'] = ceil($paginacao2['total'] / $paginacao2['quantidade']);
 
-$query['order'] = "
-    f.datahora desc,
-    p.grupo,
-    exercicio
-";
-$query['outro'] = "limit " . $paginacao['quantidade'] . " offset " . $paginacao['offset'];
+
+$query['order'] = "f.datahora desc,p.grupo,exercicio";
+$query['outro'] = "limit " . $paginacao2['quantidade'] . " offset " . $paginacao2['offset'];
+
+
 
 $resultado = dbquery($query);
 ?>
@@ -471,22 +506,22 @@ if ($grupo_atual){
 
             </div>
         </li> 
-        <?php
-}
-        ?>
         <li>
             <i class="fa fa-clock-o bg-gray"></i>
         </li>
+        <?php
+}
+        ?>
     
     </ul>
-<?php if ($paginacao['paginas'] > 1){ ?>
+<?php if ($paginacao2['paginas'] > 1){ ?>
         <div class="box-footer clearfix">
             <ul class="pagination pagination-sm no-margin">
-                <li class="<?php echo (($paginacao['pagina'] == 1) ? 'disabled' : '') ?>"><a href="<?php echo basename(__FILE__) ?>">&laquo;</a></li>
-<?php for ($pag = 1; $pag <= $paginacao['paginas']; $pag++){ ?>
-                <li class="<?php echo (($paginacao['pagina'] == $pag) ? 'active' : '') ?>"><a href="<?php echo basename(__FILE__) ?>?pagina=<?php echo $pag ?>"><?php echo $pag ?></a></li>
+                <li class="<?php echo (($paginacao2['pagina'] == 1) ? 'disabled' : '') ?>"><a href="<?php echo basename(__FILE__) ?>?aba=treinosPlanilha">&laquo;</a></li>
+<?php for ($pag = 1; $pag <= $paginacao2['paginas']; $pag++){ ?>
+                <li class="<?php echo (($paginacao2['pagina'] == $pag) ? 'active' : '') ?>"><a href="<?php echo basename(__FILE__) ?>?aba=treinosPlanilha&pagina2=<?php echo $pag ?>"><?php echo $pag ?></a></li>
 <?php } ?>
-                <li class="<?php echo (($paginacao['pagina'] == $paginacao['paginas']) ? 'disabled' : '') ?>"><a href="<?php echo basename(__FILE__) ?>?pagina=<?php echo $paginacao['paginas'] ?>">&raquo;</a></li>
+                <li class="<?php echo (($paginacao2['pagina'] == $paginacao2['paginas']) ? 'disabled' : '') ?>"><a href="<?php echo basename(__FILE__) ?>?aba=treinosPlanilha&pagina2=<?php echo $paginacao2['paginas'] ?>">&raquo;</a></li>
             </ul>
         </div>
 <?php } ?>
@@ -589,7 +624,6 @@ $resultado = mysqli_query($conexao, $query);
                             </ul>
                         </div>
                     </div>
-                    <!-- /.post -->
                     <?php
                 }
                 ?>
