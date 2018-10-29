@@ -56,20 +56,6 @@ $resultado = mysqli_query($conexao, $query);
                                 }?>
                             </ul>
                         </div>
-                        
-                        <!--Caso necessario colocar comentário e as opções de compartilhar e gostar -->
-
-                        <!--<ul class="list-inline">
-                                        <li><a href="#" class="link-black text-sm"><i class="fa fa-share margin-r-5"></i> Share</a></li>
-                                        <li><a href="#" class="link-black text-sm"><i class="fa fa-thumbs-o-up margin-r-5"></i> Like</a>
-                                        </li>
-                                        <li class="pull-right">
-                                            <a href="#" class="link-black text-sm"><i class="fa fa-comments-o margin-r-5"></i> Comments
-                                                (5)</a></li>
-                                    </ul>
-                                    <input class="form-control input-sm" type="text" placeholder="Type a comment">-->
-
-                        <!--final do comentario -->
                     </div>
                     <!-- /.post -->
                     <?php

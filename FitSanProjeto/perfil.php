@@ -42,12 +42,13 @@ if ($linha = mysqli_fetch_array($resultado)) {
                                 </li>
                             </ul>
 
-                            <?php if (!tipoLogado("admin")){ ?>
-                            <a href="form_perfil.php" class="btn btn-primary btn-block"><b>Alterar</b></a>
+                            <?php if (!tipoLogado("admin")) { ?>
+                                <a href="form_perfil.php" class="btn btn-primary btn-block"><b>Alterar</b></a>
                             <?php } ?>
                         </div>
                     </div>
-                    <?php if (tipoLogado("aluno")){
+                    <?php
+                    if (tipoLogado("aluno")) {
 
                         //referente ao formulário
                         $query_alterar = "select * from informacoes_adicionais where aluno_id = " . mysqliEscaparTexto($_SESSION['id']);
@@ -57,19 +58,19 @@ if ($linha = mysqli_fetch_array($resultado)) {
                             $query_cont_alterar = "select * from informacoes_adicionais_contatos where informacoes_adicionais_id= " . mysqliEscaparTexto($linha_alterar['id']);
                             $resultado_cont_alterar = mysqli_query($conexao, $query_cont_alterar) or die_mysql($query_cont_alterar, __FILE__, __LINE__);
                             $linha_alterar['contatos'] = array();
-                            while ($linha2 = mysqli_fetch_array($resultado_cont_alterar)) $linha_alterar['contatos'][] = $linha2;
+                            while ($linha2 = mysqli_fetch_array($resultado_cont_alterar))
+                                $linha_alterar['contatos'][] = $linha2;
                             $query_exe_alterar = "select * from informacoes_adicionais_exercicios where informacoes_adicionais_id= " . mysqliEscaparTexto($linha_alterar['id']);
                             $resultado_exe_alterar = mysqli_query($conexao, $query_exe_alterar) or die_mysql($query_exe_alterar, __FILE__, __LINE__);
                             $linha_alterar['exercicios'] = array();
-                            while ($linha2 = mysqli_fetch_array($resultado_exe_alterar)) $linha_alterar['exercicios'][] = $linha2['exercicios'];
+                            while ($linha2 = mysqli_fetch_array($resultado_exe_alterar))
+                                $linha_alterar['exercicios'][] = $linha2['exercicios'];
                             $query_med_alterar = "select * from informacoes_adicionais_medidas where informacoes_adicionais_id= " . mysqliEscaparTexto($linha_alterar['id']);
                             $resultado_med_alterar = mysqli_query($conexao, $query_med_alterar) or die_mysql($query_med_alterar, __FILE__, __LINE__);
                             $linha_alterar['medidas'] = array();
-                            while ($linha2 = mysqli_fetch_array($resultado_med_alterar)) $linha_alterar['medidas'][] = $linha2;
+                            while ($linha2 = mysqli_fetch_array($resultado_med_alterar))
+                                $linha_alterar['medidas'][] = $linha2;
                         }
-
-                        
-                        
                         ?>
                         <div class="box box-primary">
                             <div class="box-header with-border">
@@ -77,7 +78,7 @@ if ($linha = mysqli_fetch_array($resultado)) {
                             </div>
                             <div class="box-body">
                                 <strong><i class="fa fa-fw fa-medkit margin-r-5"></i>Ficha médica</strong><br><br>
-                                <b>Problemas de saúde:</b> <?php echo htmlspecialchars(!empty($linha_alterar['saude']) ? $linha_alterar['saude'] : '(Não informado)')  ?> <br>
+                                <b>Problemas de saúde:</b> <?php echo htmlspecialchars(!empty($linha_alterar['saude']) ? $linha_alterar['saude'] : '(Não informado)') ?> <br>
                                 <b>Notas médicas:</b> <?php echo htmlspecialchars(!empty($linha_alterar['medico']) ? ($linha_alterar['medico']) : '(Não informado)') ?> <br>
                                 <b>Alergias e reações:</b> <?php echo htmlspecialchars(!empty($linha_alterar['alergia']) ? ($linha_alterar['alergia']) : '(Não informado)') ?> <br>
                                 <b>Medicamentos:</b> <?php echo htmlspecialchars(!empty($linha_alterar['medicamento']) ? ($linha_alterar['medicamento']) : '(Não informado)') ?> <br>
@@ -87,27 +88,27 @@ if ($linha = mysqli_fetch_array($resultado)) {
                                 <hr>
                                 <strong><i class="fa fa-fw fa-phone"></i> Contato de emergência</strong><br><br>
                                 <?php
-                                if (!empty($linha_alterar['contatos'])){
+                                if (!empty($linha_alterar['contatos'])) {
                                     foreach ($linha_alterar['contatos'] as $contato) {
-                                ?>
+                                        ?>
                                         <b><?php echo htmlspecialchars($contato['tipo']) ?>:</b> <?php echo htmlspecialchars($contato['nome']) ?> - <?php echo htmlspecialchars($contato['telefone']) ?> <br>
-                                <?php
+                                        <?php
                                     }
                                 } else {
-                                ?>
-                                        Não informado <br>
-                                <?php
+                                    ?>
+                                    Não informado <br>
+                                    <?php
                                 }
                                 ?>
 
                                 <hr>
                                 <strong><i class="fa fa-fw fa-male margin-r-5"></i>Medidas</strong><br><br>
 
-                                <b>Altura:</b> <?php echo !empty($linha_alterar['medidas'][0]['altura']) ? numeroFormatar($linha_alterar['medidas'][0]['altura'], -2) : '(Não informado)' ?><br>
-                                <b>Peso:</b><?php echo  !empty($linha_alterar['medidas'][0]['peso']) ? numeroFormatar($linha_alterar['medidas'][0]['peso'], -3)  : '(Não informado)' ?> <br>
-                                <b>Massa magra:</b><?php echo !empty($linha_alterar['medidas'][0]['massa_magra']) ? numeroFormatar($linha_alterar['medidas'][0]['massa_magra'], -3) : '(Não informado)' ?> <br>
-                                <b>Gordura corporal:</b><?php echo !empty($linha_alterar['medidas'][0]['gordura_corporal']) ? numeroFormatar($linha_alterar['medidas'][0]['gordura_corporal'], -3) : '(Não informado)' ?> <br>
-                                <b>IMC:</b><?php echo (!empty($linha_alterar['medidas'][0]['peso']) && !empty($linha_alterar['medidas'][0]['altura']))? numeroFormatar($linha_alterar['medidas'][0]['peso'] / pow($linha_alterar['medidas'][0]['altura'], 2), -2) : '(Não informado)'?>
+                                <b>Altura:</b> <?php echo!empty($linha_alterar['medidas'][0]['altura']) ? numeroFormatar($linha_alterar['medidas'][0]['altura'], -2) : '(Não informado)' ?><br>
+                                <b>Peso:</b><?php echo!empty($linha_alterar['medidas'][0]['peso']) ? numeroFormatar($linha_alterar['medidas'][0]['peso'], -3) : '(Não informado)' ?> <br>
+                                <b>Massa magra:</b><?php echo!empty($linha_alterar['medidas'][0]['massa_magra']) ? numeroFormatar($linha_alterar['medidas'][0]['massa_magra'], -3) : '(Não informado)' ?> <br>
+                                <b>Gordura corporal:</b><?php echo!empty($linha_alterar['medidas'][0]['gordura_corporal']) ? numeroFormatar($linha_alterar['medidas'][0]['gordura_corporal'], -3) : '(Não informado)' ?> <br>
+                                <b>IMC:</b><?php echo (!empty($linha_alterar['medidas'][0]['peso']) && !empty($linha_alterar['medidas'][0]['altura'])) ? numeroFormatar($linha_alterar['medidas'][0]['peso'] / pow($linha_alterar['medidas'][0]['altura'], 2), -2) : '(Não informado)' ?>
 
                                 <hr>
                                 <strong><i class="fa fa-fw fa-diamond margin-r-5"></i>Academia</strong><br><br>
@@ -117,89 +118,91 @@ if ($linha = mysqli_fetch_array($resultado)) {
 
                                 <hr>
                                 <strong><i class="fa fa-fw fa-bicycle margin-r-5"></i>Esportes Praticados </strong><br><br>
-                                
+
                                 <?php
-                                $classes = array('label-danger', 'label-success', 'label-info', 'label-warning', 'label-primary'); $clsindice = 0;
-                                if (!empty($linha_alterar['exercicios'])){
-                                foreach ($linha_alterar['exercicios'] as $exercicio) {
-                                    $classe = $classes[$clsindice++];
-                                    if ($clsindice >= count($classes)) $clsindice = 0;
-                                ?>
-                                 <span class="label <?php echo $classe ?>"><?php echo htmlspecialchars($exercicio) ?></span>
-                                <?php }
+                                $classes = array('label-danger', 'label-success', 'label-info', 'label-warning', 'label-primary');
+                                $clsindice = 0;
+                                if (!empty($linha_alterar['exercicios'])) {
+                                    foreach ($linha_alterar['exercicios'] as $exercicio) {
+                                        $classe = $classes[$clsindice++];
+                                        if ($clsindice >= count($classes))
+                                            $clsindice = 0;
+                                        ?>
+                                        <span class="label <?php echo $classe ?>"><?php echo htmlspecialchars($exercicio) ?></span>
+                                    <?php
+                                    }
                                 } else {
+                                    ?>
+                                    Não informado <br>
+                                    <?php }
                                 ?>
-                                        Não informado <br>
-                                <?php
-                                } ?>
 
-                                 <hr>
+                                <hr>
 
-                                <?php if (!tipoLogado("admin")){ ?>
-                                <a href="informacoes_adicionais.php" class="btn btn-primary btn-block"><b>Alterar</b></a>
-                                <?php } ?>
+                        <?php if (!tipoLogado("admin")) { ?>
+                                    <a href="informacoes_adicionais.php" class="btn btn-primary btn-block"><b>Alterar</b></a>
+                        <?php } ?>
                             </div>                    
                         </div> 
-                    <?php }  ?>
-                    
-                    <?php if (tipoLogado("profissional")){ ?>
-                    <div class="box box-primary">
-                        
-                        <?php
-                         $query = "select * from usuario join vinculo on usuario.id = vinculo.aluno_id where vinculo.status = 'aprovado' and usuario.status = 'ativado' and vinculo.profissional_id = " . $_SESSION[id] ;
-                                if ($resultado = mysqli_query($conexao, $query)){
-        
-                                
-                        ?>
+                        <?php } ?>
+
+                        <?php if (tipoLogado("profissional")) { ?>
+                        <div class="box box-primary">
+
+                            <?php
+                            $query = "select * from usuario join vinculo on usuario.id = vinculo.aluno_id where vinculo.status = 'aprovado' and usuario.status = 'ativado' and vinculo.profissional_id = " . $_SESSION[id];
+                            if ($resultado = mysqli_query($conexao, $query)) {
+                                ?>
                                 <div class="box-header with-border">
                                     <h3 class="box-title">Meus alunos</h3>
                                 </div>
-                                
-                        <div class="box-body no-padding">
-                            <ul class="users-list clearfix">
-                                <?php while ($linha = mysqli_fetch_array($resultado)){ ?>
-                                <li>                          
-                                    <img class="img-responsive" src=" <?= htmlspecialchars(!empty($linha['foto']) ? $linha['foto'] : 'img/user-avatar-placeholder.png') ?>" style="width: 100px">
-                                    <a href="perfil_externo.php?id=<?= $linha['aluno_id'] ?>"><?= htmlspecialchars($linha['nome']) ?></a>
-                                </li>
+
+                                <div class="box-body no-padding">
+                                    <ul class="users-list clearfix">
+            <?php while ($linha = mysqli_fetch_array($resultado)) { ?>
+                                            <li>                          
+                                                <img class="img-responsive" src=" <?= htmlspecialchars(!empty($linha['foto']) ? $linha['foto'] : 'img/user-avatar-placeholder.png') ?>" style="width: 100px">
+                                                <a href="perfil_externo.php?id=<?= $linha['aluno_id'] ?>"><?= htmlspecialchars($linha['nome']) ?></a>
+                                            </li>
                                 <?php } ?>
-                            </ul>
+                                    </ul>
+                                </div>
+        <?php }
+        ?>
+
                         </div>
-                        <?php }
-                ?>
-                        
-                            </div>
-                   
-               <?php }
-                ?>
+
+    <?php }
+    ?>
                 </div>
-                
-                
-                
-                
+
                 <!-- Inicio do histórico publico-->
                 
                 <?php if (tipoLogado("aluno")){
                     $aba = (!empty($_GET['aba']) ? $_GET['aba'] : 'timeline');
                 ?>
                                 
-                                
+                <!-- inicio do perfil aluno -->                
                 
                 <div class="col-md-9">
                     <div class="nav-tabs-custom">
                         <ul class="nav nav-tabs">
                             <li<?php if ($aba == 'timeline') echo ' class="active"'; ?>><a href="#timeline" data-toggle="tab">Linha do tempo</a></li> 
-                            <li<?php if ($aba == 'ativExtra') echo ' class="active"'; ?>><a href="#ativExtra" data-toggle="tab">Atividades Realizadas</a></li>
-                            <li<?php if ($aba == 'treinos_realizados') echo ' class="active"'; ?>><a href="#treinos_realizados" data-toggle="tab">Treinos realizados</a></li>
-                             <li<?php if ($aba == 'avaliacoes') echo ' class="active"'; ?>><a href="#avaliacoes" data-toggle="tab">Avaliações</a></li>
+                            <li<?php if ($aba == 'atividadesExtras') echo ' class="active"'; ?>><a href="#atividadesExtras" data-toggle="tab">Atividades Extras</a></li>
+                            <li<?php if ($aba == 'pesosMedidas') echo ' class="active"'; ?>><a href="#pesosMedidas" data-toggle="tab">Pesos e Medidas</a></li>
+                            <li<?php if ($aba == 'treinosPlanilha') echo ' class="active"'; ?>><a href="#treinosPlanilha" data-toggle="tab">Treinos da Planilha</a></li>
+                            <li<?php if ($aba == 'avaliacoes') echo ' class="active"'; ?>><a href="#avaliacoes" data-toggle="tab">Avaliações</a></li>
                         </ul>
                         <div class="tab-content">
                             <div class="tab-pane<?php if ($aba == 'timeline') echo ' active'; ?>" id="timeline">
                                <!-- Post -->
-                               Postar todas as atualizações da plataforma
+                               
+                               Linha do Tempo
+                               
                                <!-- /.post -->
                             </div>
-                            <div class="tab-pane<?php if ($aba == 'ativExtra') echo ' active'; ?>" id="ativExtra">
+                            
+                            <div class="tab-pane<?php if ($aba == 'atividadesExtras') echo ' active'; ?>" id="atividadesExtras">
                                 <!-- Post -->
                                 <ul class="timeline timeline-inverse"> 
                                 <?php
@@ -279,7 +282,7 @@ while ($linha = mysqli_fetch_array($resultado)) {
                             
                         </div>
                     </li>
-                    <!-- END timeline item -->
+                    
 <?php
 }
 ?>
@@ -288,9 +291,9 @@ while ($linha = mysqli_fetch_array($resultado)) {
                         <i class="fa fa-clock-o bg-gray"></i>
                     </li>
 
-                </ul>
-            
-  <?php if ($paginacao['paginas'] > 1){ ?>
+                </ul> 
+                    
+                    <?php if ($paginacao['paginas'] > 1){ ?>
         <div class="box-footer clearfix">
             <ul class="pagination pagination-sm no-margin">
                 <li class="<?php echo (($paginacao['pagina'] == 1) ? 'disabled' : '') ?>"><a href="<?php echo basename(__FILE__) ?>?aba=ativExtra">&laquo;</a></li>
@@ -300,16 +303,30 @@ while ($linha = mysqli_fetch_array($resultado)) {
                 <li class="<?php echo (($paginacao['pagina'] == $paginacao['paginas']) ? 'disabled' : '') ?>"><a href="<?php echo basename(__FILE__) ?>?aba=ativExtra&pagina=<?php echo $paginacao['paginas'] ?>">&raquo;</a></li>
             </ul>
         </div>
-<?php } ?>  
-                                       
-                
-                
+<?php } else { ?>
+                                
+<div class="text-center"><h3><b>Não foi realizado nenhuma atividade extra ainda.</b></h3></div>
+
+    <?php } ?>  
+              
+              
+                                
                                 <!-- /.post -->
                             </div>
-                            <div class="tab-pane<?php if ($aba == 'treinos_realizados') echo ' active'; ?>" id="treinos_realizados">
+                            
+                            <div class="tab-pane<?php if ($aba == 'pesosMedidas') echo ' active'; ?>" id="pesosMedidas">
+                               <!-- Post -->
+                               
+                               Pesos e Medidas
+                               
+                               <!-- /.post -->
+                            </div>
+                            
+                            <div class="tab-pane<?php if ($aba == 'treinosPlanilha') echo ' active'; ?>" id="treinosPlanilha">
                                 <!-- Post -->
-                                        <?php
-                $query = array();
+                                
+                                <?php
+$query = array();
 $query['select'] = array(
     'a.planilha_id',
     'p.profissional_id',
@@ -333,11 +350,11 @@ $query['select'] = array(
 );
 $query['from'] = "
     planilha_aluno a join
-    planilha_tabela p on p.planilha_id = a.planilha_id join
+    planilha_aluno_feito f on f.planilha_aluno_id = a.id join
+    planilha_aluno_exercicio z on z.planilha_feito_id = f.id join
+    planilha_tabela p on p.planilha_id = a.planilha_id and p.id = z.planilha_tabela_id join
     planilha_grupoMuscuCardio g on g.id = p.musculo_cardio_id join
-    planilha_exercicio e on e.id = p.exercicio_id and e.musculo_cardio_id = g.id join
-    planilha_aluno_feito f on f.planilha_aluno_id = a.planilha_id join
-    planilha_aluno_exercicio z on z.planilha_feito_id = f.id and z.exercicio = e.id join
+    planilha_exercicio e on e.id = z.exercicio join
     usuario u on u.id = p.profissional_id
 ";
 $query['where'] = array(
@@ -358,47 +375,60 @@ $paginacao['offset'] = (($paginacao['pagina'] - 1) * $paginacao['quantidade']);
 $paginacao['paginas'] = ceil($paginacao['total'] / $paginacao['quantidade']);
 
 $query['order'] = "
-    f.datahora desc
+    f.datahora desc,
+    p.grupo,
+    exercicio
 ";
 $query['outro'] = "limit " . $paginacao['quantidade'] . " offset " . $paginacao['offset'];
 
 $resultado = dbquery($query);
+?>
 
-                ?> 
-                                        <h3 class="box-title">Exercícios Feitos</h3>
-                    <br>
-                    <?php if (!empty($resultado)){ ?>
+<section class="content-header">   
+<h3 class="box-title">Exercícios Feitos</h3>
+</section><br>
+<?php if (!empty($resultado)){ ?>
 <div class="tab-pane" id="timeline">
     <ul class="timeline timeline-inverse">
         <?php
-$dataanterior = $grupo_atual = ''; $anterior = null;
+$dataanterior = $grupo_atual = $prof_atual = ''; $anterior = null;
 foreach ($resultado as $linha) {
     $dataatual = date('d/m/Y', dataParse($linha['datahora']));
-    if ($grupo_atual && (($dataanterior != $dataatual) || ($grupo_atual != $linha['grupo']))){
+    if ($grupo_atual && (
+        ($dataanterior != $dataatual) ||
+        ($prof_atual != $linha['profissional_id']) ||
+        ($grupo_atual != $linha['grupo'])
+    )){
 ?>
-                                        </table>
-                                </div>
+                    </table>
+                    
+                   
+                    
                 </div>
-                            </li> 
-                            
-                            <?php
-                        }
-                        if ($dataanterior != $dataatual) {
-                            ?>
-                            <li class="time-label">
-                                <span class="bg-red">
-                                    <?= $dataatual ?>
-                                </span>
-                            </li>
-                               <?php
-        $dataanterior = $dataatual;
-        $grupo_atual = '';
+
+            </div>
+        </li> 
+<?php
     }
-    if ($grupo_atual != $linha['grupo']){
+    if ($dataanterior != $dataatual){
+?>
+
+        <li class="time-label">
+            <span class="bg-red">
+                <?= $dataatual ?>
+            </span>
+        </li>
+            
+<?php
+        $dataanterior = $dataatual;
+        $prof_atual = $grupo_atual = '';
+    }
+    if (($prof_atual != $linha['profissional_id']) || ($grupo_atual != $linha['grupo'])){
         $grupo_atual = $linha['grupo'];
-?>             
-                            <li>
-                                <i class="fa fa-thumbs-o-up bg-blue"></i>
+        $prof_atual = $linha['profissional_id'];
+?>            
+        <li>
+            <i class="fa fa-thumbs-o-up bg-blue"></i>
 
             <div class="timeline-item">
                 <span class="time"><i class="fa fa-clock-o"></i> <?= date('H:i:s', dataParse($linha['datahora'])) ?></span>
@@ -417,7 +447,7 @@ foreach ($resultado as $linha) {
                             <th>Intervalo</th>
                             <th>Tempo</th>
                         </tr>
-                                            <?php
+<?php
     }
 ?>
                         <tr>
@@ -433,50 +463,61 @@ foreach ($resultado as $linha) {
 }
 if ($grupo_atual){
 ?>
-                                    </table>
-                                </div>
-                            </div>
-                        </li> 
-                        <?php
-                    }
-                    ?>
-                    <li>
-                        <i class="fa fa-clock-o bg-gray"></i>
-                    </li>   
-                    </ul>
-  <?php if ($paginacao2['paginas'] > 1){ ?>
+                    </table>
+                    
+                   
+                    
+                </div>
+
+            </div>
+        </li> 
+        <?php
+}
+        ?>
+        <li>
+            <i class="fa fa-clock-o bg-gray"></i>
+        </li>
+    
+    </ul>
+<?php if ($paginacao['paginas'] > 1){ ?>
         <div class="box-footer clearfix">
             <ul class="pagination pagination-sm no-margin">
-                <li class="<?php echo (($paginacao2['pagina'] == 1) ? 'disabled' : '') ?>"><a href="<?php echo basename(__FILE__) ?>?aba=treinos_realizados">&laquo;</a></li>
-<?php for ($pag = 1; $pag <= $paginacao2['paginas']; $pag++){ ?>
-                <li class="<?php echo (($paginacao2['pagina'] == $pag) ? 'active' : '') ?>"><a href="<?php echo basename(__FILE__) ?>?aba=treinos_realizados&pagina2=<?php echo $pag ?>"><?php echo $pag ?></a></li>
+                <li class="<?php echo (($paginacao['pagina'] == 1) ? 'disabled' : '') ?>"><a href="<?php echo basename(__FILE__) ?>">&laquo;</a></li>
+<?php for ($pag = 1; $pag <= $paginacao['paginas']; $pag++){ ?>
+                <li class="<?php echo (($paginacao['pagina'] == $pag) ? 'active' : '') ?>"><a href="<?php echo basename(__FILE__) ?>?pagina=<?php echo $pag ?>"><?php echo $pag ?></a></li>
 <?php } ?>
-                <li class="<?php echo (($paginacao2['pagina'] == $paginacao2['paginas']) ? 'disabled' : '') ?>"><a href="<?php echo basename(__FILE__) ?>?aba=treinos_realizados&pagina2=<?php echo $paginacao2['paginas'] ?>">&raquo;</a></li>
+                <li class="<?php echo (($paginacao['pagina'] == $paginacao['paginas']) ? 'disabled' : '') ?>"><a href="<?php echo basename(__FILE__) ?>?pagina=<?php echo $paginacao['paginas'] ?>">&raquo;</a></li>
             </ul>
         </div>
-<?php } ?>  
-                              </div>
-            <?php } else { ?>
-                <div class="text-center"><h3><b>Não foi realizado nenhum exercício ainda.</b></h3></div>
-            <?php } ?>
-                                       
-                                <!-- /.post -->
-                            </div>
-                            <div class="tab-pane<?php if ($aba == 'avaliacoes') echo ' active'; ?>" id="avaliacoes">
-                                <!-- Post -->
-                                Postar as ultimas avaliações
+<?php } ?>
+</div>
+<?php } else { ?>
+<div class="text-center"><h3><b>Não foi realizado nenhum exercício ainda.</b></h3></div>
+    <?php } ?> 
+                                
                                 <!-- /.post -->
                             </div>
                             
+                            <div class="tab-pane<?php if ($aba == 'avaliacoes') echo ' active'; ?>" id="avaliacoes">
+                                <!-- Post -->
+                                
+                                Postar avaliações
+                                
+                                <!-- /.post -->
+                            </div>
                             
                         </div>
                     </div>
+                    
                 </div>
+                
+                 <!-- /.fim do perfil aluno -->
+                
                 <?php } 
                 
                  if (tipoLogado("profissional")){ 
                      $aba = (!empty($_GET['aba']) ? $_GET['aba'] : 'timeline');
-//                     TODO: as acima das dicas estao aparecendo a timeline. 
+//                     
                      ?>
                 
                 <div class="col-md-9">
@@ -488,80 +529,11 @@ if ($grupo_atual){
                                 </ul>
                                 <div class="tab-content">
                                     <div class="tab-pane<?php if ($aba == 'timeline') echo ' active'; ?>" id="timeline">
-                                        <!-- The timeline -->
-                                        <ul class="timeline timeline-inverse">
-                                            <!-- timeline time label -->
-                                            <li class="time-label">
-                                                <span class="bg-red">
-                                                    10 Feb. 2014
-                                                </span>
-                                            </li>
-                                            <li>
-                                                <i class="fa fa-envelope bg-blue"></i>
-                                                <div class="timeline-item">
-                                                    <span class="time"><i class="fa fa-clock-o"></i> 12:05</span>
-                                                    <h3 class="timeline-header"><a href="#">Support Team</a> sent you an email</h3>
-                                                    <div class="timeline-body">
-                                                        Você enviou uma nova dica.
-                                                    </div>
-                                                    <div class="timeline-footer">
-                                                        <a class="btn btn-primary btn-xs">Read more</a>
-                                                        <a class="btn btn-danger btn-xs">Delete</a>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <!-- END timeline item -->
-                                            <!-- timeline item -->
-                                            <li>
-                                                <i class="fa fa-user bg-aqua"></i>
-                                                <div class="timeline-item">
-                                                    <span class="time"><i class="fa fa-clock-o"></i> 5 mins ago</span>
-                                                    <h3 class="timeline-header no-border"><a href="#">Sarah Young</a> Colocar aqui uma mensagem quando receber solicitação de amizade.
-                                                    </h3>
-                                                </div>
-                                            </li>
-                                            <!-- END timeline item -->
-                                            <!-- timeline item -->
-                                            <li>
-                                                <i class="fa fa-comments bg-yellow"></i>
-                                                <div class="timeline-item">
-                                                    <span class="time"><i class="fa fa-clock-o"></i> 27 mins ago</span>
-                                                    <h3 class="timeline-header"><a href="#">Jay White</a> commented on your post</h3>
-                                                    <div class="timeline-body">
-                                                        Você enviou uma avaliação para ...
-                                                    </div>
-                                                    <div class="timeline-footer">
-                                                        <a class="btn btn-warning btn-flat btn-xs">View comment</a>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <!-- END timeline item -->
-                                            <!-- timeline time label -->
-                                            <li class="time-label">
-                                                <span class="bg-green">
-                                                    3 Jan. 2014
-                                                </span>
-                                            </li>
-                                            <!-- /.timeline-label -->
-                                            <!-- timeline item -->
-                                            <li>
-                                                <i class="fa fa-camera bg-purple"></i>
-                                                <div class="timeline-item">
-                                                    <span class="time"><i class="fa fa-clock-o"></i> 2 days ago</span>
-                                                    <h3 class="timeline-header"><a href="#">Mina Lee</a> uploaded new photos</h3>
-                                                    <div class="timeline-body">
-                                                        <img src="http://placehold.it/150x100" alt="..." class="margin">
-                                                        <img src="http://placehold.it/150x100" alt="..." class="margin">
-                                                        <img src="http://placehold.it/150x100" alt="..." class="margin">
-                                                        <img src="http://placehold.it/150x100" alt="..." class="margin">
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <!-- END timeline item -->
-                                            <li>
-                                                <i class="fa fa-clock-o bg-gray"></i>
-                                            </li>
-                                        </ul>
+                                        
+                                        <!-- post -->
+                                        PostarLinha do tempo
+                                        <!-- /.post -->
+                                        
                                     </div>
                             <div class="tab-pane<?php if ($aba == 'dicas') echo ' active'; ?>" id="dicas">
                                 <!-- Post -->
@@ -616,20 +588,6 @@ $resultado = mysqli_query($conexao, $query);
                                 }?>
                             </ul>
                         </div>
-                        
-                        <!--Caso necessario colocar comentário e as opções de compartilhar e gostar -->
-
-                        <!--<ul class="list-inline">
-                                        <li><a href="#" class="link-black text-sm"><i class="fa fa-share margin-r-5"></i> Share</a></li>
-                                        <li><a href="#" class="link-black text-sm"><i class="fa fa-thumbs-o-up margin-r-5"></i> Like</a>
-                                        </li>
-                                        <li class="pull-right">
-                                            <a href="#" class="link-black text-sm"><i class="fa fa-comments-o margin-r-5"></i> Comments
-                                                (5)</a></li>
-                                    </ul>
-                                    <input class="form-control input-sm" type="text" placeholder="Type a comment">-->
-
-                        <!--final do comentario -->
                     </div>
                     <!-- /.post -->
                     <?php
