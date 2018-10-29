@@ -2,7 +2,7 @@ create database FitSan;
 
 create table usuario(
 id int primary key auto_increment,
-datahora timestamp not null default now(),
+datahora datetime not null default now(),
 nome varchar(255) not null,
 sobrenome varchar(255) not null,
 datanasc date,
@@ -21,8 +21,8 @@ ALTER TABLE usuario ADD status enum('ativado', 'desativado', 'excluido');
 
 
 -- Criando campo na tabela usuario depois do campo id com valor padrao
-ALTER TABLE usuario ADD datahora timestamp not null after id;
-ALTER TABLE usuario CHANGE datahora datahora timestamp not null default now() after id;
+ALTER TABLE usuario ADD datahora datetime not null after id;
+ALTER TABLE usuario CHANGE datahora datahora datetime not null default now() after id;
 
 ALTER TABLE usuario ADD datanasc date;
 ALTER TABLE usuario ADD sexo enum('masculino', 'feminino');
@@ -99,7 +99,7 @@ DROP TABLE ativ_extras_exercicios;
 
 create table ativ_extras(
 id int primary key auto_increment,
-datahora timestamp not null,
+datahora datetime not null,
 titulo varchar(255) not null,
 texto text not null,
 visualizacao ENUM('PUBLICO','PRIVADO') not null default 'PRIVADO',
@@ -178,10 +178,10 @@ TRUNCATE TABLE ativ_extras_exercicios;
 create table planilha(
 id int not null primary key auto_increment,
 titulo varchar(255) not null,
-datahora timestamp not null default now()
+datahora datetime not null default now()
 );
 
-ALTER TABLE planilha ADD datahora timestamp not null default now() after titulo;
+ALTER TABLE planilha ADD datahora datetime not null default now() after titulo;
 
 select * from planilha order by datahora desc, titulo;
 

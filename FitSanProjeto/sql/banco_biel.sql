@@ -31,7 +31,7 @@ SET time_zone = "+00:00";
 DROP TABLE IF EXISTS `ativ_extras`;
 CREATE TABLE IF NOT EXISTS `ativ_extras` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `datahora` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `datahora` timestamp NOT NULL,
   `titulo` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `texto` text COLLATE utf8_unicode_ci NOT NULL,
   `aluno_id` int(11) DEFAULT NULL,

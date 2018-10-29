@@ -5,33 +5,43 @@ SET time_zone = '+00:00';
 SET foreign_key_checks = 0;
 SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
 
+SET NAMES utf8mb4;
+
 DROP TABLE IF EXISTS `ativ_extras`;
 CREATE TABLE `ativ_extras` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `datahora` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `titulo` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `texto` text COLLATE utf8_unicode_ci NOT NULL,
-  `visualizacao` enum('PUBLICO','PRIVADO') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'PRIVADO',
+  `datahora` datetime NOT NULL,
+  `titulo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `texto` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `visualizacao` enum('PUBLICO','PRIVADO') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'PRIVADO',
   `aluno_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 TRUNCATE `ativ_extras`;
 INSERT INTO `ativ_extras` (`id`, `datahora`, `titulo`, `texto`, `visualizacao`, `aluno_id`) VALUES
-(1,	'2018-10-23 04:13:44',	'Corrida de 20 km',	'corri',	'PRIVADO',	3),
-(2,	'2018-10-23 04:13:46',	'iuiuiui',	'hggfds',	'PUBLICO',	3),
-(3,	'2018-10-23 12:25:31',	'testando ',	'12345',	'PRIVADO',	4),
-(4,	'2018-10-23 22:23:35',	'Caminhada',	'Caminhada na floresta',	'PUBLICO',	9),
-(5,	'2018-10-23 22:23:04',	'Basquete com o irmão',	'Basquete com meu irmão.',	'PUBLICO',	9),
-(6,	'2018-10-23 22:23:29',	'Pedalada na praia',	'Pedalei durante horas pela praia',	'PRIVADO',	9);
+(1,	'2018-10-23 01:13:44',	'Corrida de 20 km',	'corri',	'PRIVADO',	3),
+(2,	'2018-10-23 01:13:46',	'iuiuiui',	'hggfds',	'PUBLICO',	3),
+(3,	'2018-10-23 09:25:31',	'testando ',	'12345',	'PRIVADO',	4),
+(43,	'2018-10-15 01:08:29',	'1',	'1',	'PRIVADO',	9),
+(44,	'2018-10-16 01:08:40',	'2',	'2',	'PRIVADO',	9),
+(45,	'2018-10-17 01:08:51',	'3',	'3',	'PRIVADO',	9),
+(46,	'2018-10-29 01:11:26',	'4',	'4',	'PUBLICO',	9),
+(47,	'2018-10-19 01:09:16',	'5',	'5',	'PRIVADO',	9),
+(48,	'2018-10-20 01:09:30',	'6',	'6',	'PRIVADO',	9),
+(49,	'2018-10-21 01:09:44',	'7',	'7',	'PRIVADO',	9),
+(50,	'2018-10-22 01:10:01',	'8',	'8',	'PRIVADO',	9),
+(51,	'2018-10-29 01:11:24',	'9',	'9',	'PUBLICO',	9),
+(52,	'2018-10-29 02:34:39',	'10',	'10',	'PUBLICO',	9),
+(53,	'2018-10-29 02:34:52',	'11',	'11',	'PUBLICO',	9);
 
 DROP TABLE IF EXISTS `ativ_extras_exercicios`;
 CREATE TABLE `ativ_extras_exercicios` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `ativ_extras_id` int(11) DEFAULT NULL,
-  `exercicio` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `exercicio` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 TRUNCATE `ativ_extras_exercicios`;
 INSERT INTO `ativ_extras_exercicios` (`id`, `ativ_extras_id`, `exercicio`) VALUES
@@ -39,25 +49,33 @@ INSERT INTO `ativ_extras_exercicios` (`id`, `ativ_extras_id`, `exercicio`) VALUE
 (2,	2,	'Karatê'),
 (3,	2,	'Basquete'),
 (4,	3,	'Caminhada'),
-(5,	4,	'Caminhada'),
-(6,	5,	'Basquete'),
-(7,	6,	'Bicicleta');
+(44,	43,	'Futebol'),
+(45,	44,	'Caminhada'),
+(46,	45,	'Karatê'),
+(47,	46,	'Ping-Pong'),
+(48,	47,	'Basquete'),
+(49,	48,	'Skate'),
+(50,	49,	'Balé'),
+(51,	50,	'Natação'),
+(52,	51,	'Jiu-jitsu'),
+(53,	52,	'Bicicleta'),
+(54,	53,	'Corrida');
 
 DROP TABLE IF EXISTS `avaliacao`;
 CREATE TABLE `avaliacao` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `data` datetime NOT NULL,
-  `desempenho` text COLLATE utf8_unicode_ci NOT NULL,
-  `frequencia` text COLLATE utf8_unicode_ci NOT NULL,
-  `grupo_cumpriu` text COLLATE utf8_unicode_ci NOT NULL,
-  `grupo_duvida` text COLLATE utf8_unicode_ci NOT NULL,
-  `grupo_dificuldade` text COLLATE utf8_unicode_ci NOT NULL,
-  `caso_sim` text COLLATE utf8_unicode_ci NOT NULL,
-  `consideracoes` text COLLATE utf8_unicode_ci NOT NULL,
+  `desempenho` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `frequencia` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `grupo_cumpriu` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `grupo_duvida` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `grupo_dificuldade` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `caso_sim` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `consideracoes` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `profissional_id` int(11) DEFAULT NULL,
   `aluno_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 TRUNCATE `avaliacao`;
 INSERT INTO `avaliacao` (`id`, `data`, `desempenho`, `frequencia`, `grupo_cumpriu`, `grupo_duvida`, `grupo_dificuldade`, `caso_sim`, `consideracoes`, `profissional_id`, `aluno_id`) VALUES
@@ -71,13 +89,13 @@ INSERT INTO `avaliacao` (`id`, `data`, `desempenho`, `frequencia`, `grupo_cumpri
 DROP TABLE IF EXISTS `contato`;
 CREATE TABLE `contato` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nome` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `email` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `assunto` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `mensagem` varchar(250) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `nome` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `assunto` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `mensagem` varchar(250) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `data_cadastro` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 TRUNCATE `contato`;
 
@@ -86,10 +104,10 @@ CREATE TABLE `dados_meta` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `data_add` date NOT NULL,
   `peso_add` decimal(6,3) NOT NULL,
-  `descricao` text COLLATE utf8_unicode_ci,
+  `descricao` mediumtext COLLATE utf8mb4_unicode_ci,
   `meta_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 TRUNCATE `dados_meta`;
 INSERT INTO `dados_meta` (`id`, `data_add`, `peso_add`, `descricao`, `meta_id`) VALUES
@@ -116,31 +134,32 @@ INSERT INTO `dados_meta` (`id`, `data_add`, `peso_add`, `descricao`, `meta_id`) 
 DROP TABLE IF EXISTS `dica`;
 CREATE TABLE `dica` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `texto` text COLLATE utf8_unicode_ci NOT NULL,
-  `profissional_nome` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `texto` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `profissional_nome` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `profissional_id` int(11) DEFAULT NULL,
-  `data_envio` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `data_envio` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 TRUNCATE `dica`;
 INSERT INTO `dica` (`id`, `texto`, `profissional_nome`, `profissional_id`, `data_envio`) VALUES
-(1,	'Beber bastante água\r\nCerca de 70% do corpo humano é composto por água, logo, ela é fundamental do ponto de vista fisiológico. \r\n\"Todas as células do nosso organismo precisam de água. \r\nEla não tem energia, não produz calorias, mas é essencial para o funcionamento do corpo. \r\nE quando digo que é importante beber água quero dizer exatamente isso, \r\ne não líquidos no geral. Suco é fruta no estado líquido, isso não é água\", \r\ndiz Andrea Bottoni, especialista em nutrologia e medicina do esporte do Hospital Alemão Oswaldo Cruz.\r\n',	'Karen',	2,	'2018-10-22 19:43:01');
+(1,	'Beber bastante água\r\nCerca de 70% do corpo humano é composto por água, logo, ela é fundamental do ponto de vista fisiológico. \r\n\"Todas as células do nosso organismo precisam de água. \r\nEla não tem energia, não produz calorias, mas é essencial para o funcionamento do corpo. \r\nE quando digo que é importante beber água quero dizer exatamente isso, \r\ne não líquidos no geral. Suco é fruta no estado líquido, isso não é água\", \r\ndiz Andrea Bottoni, especialista em nutrologia e medicina do esporte do Hospital Alemão Oswaldo Cruz.\r\n',	'Karen',	2,	'2018-10-22 19:43:01'),
+(2,	'Aprenda a usar a informática para emagrecer.\r\nCom o FitSan você pode acompanhar  o progresso de seus exercícios \r\nalém de poder ter um acompanhamento profissional de vários especialistas,\r\nentre treinadores, nutricionistas e muitos outros profissionais.\r\nFaça  hoje mesmo um teste inteiramente grátis e veja o que podemos fazer por você.',	'Charles',	7,	'2018-10-14 03:35:25');
 
 DROP TABLE IF EXISTS `informacoes_adicionais`;
 CREATE TABLE `informacoes_adicionais` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `saude` text COLLATE utf8_unicode_ci,
-  `medico` text COLLATE utf8_unicode_ci,
-  `alergia` text COLLATE utf8_unicode_ci,
-  `medicamento` text COLLATE utf8_unicode_ci,
-  `gruposangue` varchar(3) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `doador` enum('SIM','NAO') COLLATE utf8_unicode_ci DEFAULT NULL,
-  `academia_frequentada` text COLLATE utf8_unicode_ci,
-  `academia_atual` text COLLATE utf8_unicode_ci,
+  `saude` mediumtext COLLATE utf8mb4_unicode_ci,
+  `medico` mediumtext COLLATE utf8mb4_unicode_ci,
+  `alergia` mediumtext COLLATE utf8mb4_unicode_ci,
+  `medicamento` mediumtext COLLATE utf8mb4_unicode_ci,
+  `gruposangue` varchar(3) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `doador` enum('SIM','NAO') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `academia_frequentada` mediumtext COLLATE utf8mb4_unicode_ci,
+  `academia_atual` mediumtext COLLATE utf8mb4_unicode_ci,
   `aluno_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 TRUNCATE `informacoes_adicionais`;
 INSERT INTO `informacoes_adicionais` (`id`, `saude`, `medico`, `alergia`, `medicamento`, `gruposangue`, `doador`, `academia_frequentada`, `academia_atual`, `aluno_id`) VALUES
@@ -150,12 +169,12 @@ INSERT INTO `informacoes_adicionais` (`id`, `saude`, `medico`, `alergia`, `medic
 DROP TABLE IF EXISTS `informacoes_adicionais_contatos`;
 CREATE TABLE `informacoes_adicionais_contatos` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `tipo` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `nome` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `telefone` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `tipo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `nome` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `telefone` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `informacoes_adicionais_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 TRUNCATE `informacoes_adicionais_contatos`;
 INSERT INTO `informacoes_adicionais_contatos` (`id`, `tipo`, `nome`, `telefone`, `informacoes_adicionais_id`) VALUES
@@ -165,10 +184,10 @@ INSERT INTO `informacoes_adicionais_contatos` (`id`, `tipo`, `nome`, `telefone`,
 DROP TABLE IF EXISTS `informacoes_adicionais_exercicios`;
 CREATE TABLE `informacoes_adicionais_exercicios` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `exercicios` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `exercicios` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `informacoes_adicionais_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 TRUNCATE `informacoes_adicionais_exercicios`;
 INSERT INTO `informacoes_adicionais_exercicios` (`id`, `exercicios`, `informacoes_adicionais_id`) VALUES
@@ -196,7 +215,7 @@ CREATE TABLE `informacoes_adicionais_medidas` (
   `gordura_corporal` decimal(7,3) DEFAULT NULL,
   `informacoes_adicionais_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 TRUNCATE `informacoes_adicionais_medidas`;
 INSERT INTO `informacoes_adicionais_medidas` (`id`, `altura`, `peso`, `massa_magra`, `gordura_corporal`, `informacoes_adicionais_id`) VALUES
@@ -206,15 +225,15 @@ INSERT INTO `informacoes_adicionais_medidas` (`id`, `altura`, `peso`, `massa_mag
 DROP TABLE IF EXISTS `meta`;
 CREATE TABLE `meta` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `tipo` enum('PERDER','GANHAR','MANTER') COLLATE utf8_unicode_ci NOT NULL,
+  `tipo` enum('PERDER','GANHAR','MANTER') COLLATE utf8mb4_unicode_ci NOT NULL,
   `data_inicial` date NOT NULL,
   `data_final` date NOT NULL,
   `peso_inicial` decimal(6,3) NOT NULL,
   `peso_final` decimal(6,3) NOT NULL,
-  `status` enum('ativa','finalizada','cancelada') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'ativa',
+  `status` enum('ativa','finalizada','cancelada') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'ativa',
   `usuario_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 TRUNCATE `meta`;
 INSERT INTO `meta` (`id`, `tipo`, `data_inicial`, `data_final`, `peso_inicial`, `peso_final`, `status`, `usuario_id`) VALUES
@@ -228,38 +247,56 @@ DROP TABLE IF EXISTS `notificacao`;
 CREATE TABLE `notificacao` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `data` datetime NOT NULL,
-  `lido` enum('N','L') COLLATE utf8_unicode_ci NOT NULL,
-  `status` enum('OK','ERRO','INFO') COLLATE utf8_unicode_ci NOT NULL,
-  `texto` text COLLATE utf8_unicode_ci NOT NULL,
+  `lido` enum('N','L') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` enum('OK','ERRO','INFO') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `texto` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `profissional_id` int(11) DEFAULT NULL,
   `aluno_id` int(11) DEFAULT NULL,
-  `dados` text COLLATE utf8_unicode_ci,
+  `dados` mediumtext COLLATE utf8mb4_unicode_ci,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 TRUNCATE `notificacao`;
 INSERT INTO `notificacao` (`id`, `data`, `lido`, `status`, `texto`, `profissional_id`, `aluno_id`, `dados`) VALUES
 (1,	'2018-10-24 11:41:07',	'L',	'OK',	'Uma planilha foi enviada à você.\nAcesse <a href=\"planilha_aluno.php?id=4\"></a>',	NULL,	9,	NULL),
 (2,	'2018-10-24 11:41:57',	'L',	'OK',	'Uma planilha foi enviada à você.\nAcesse <a href=\"planilha_aluno.php?id=4\">Teste 123</a>',	NULL,	9,	NULL),
-(3,	'2018-10-24 18:41:09',	'N',	'INFO',	'Sua meta foi finalizada na data 30 Nov 1999<br><a href=\"okMetaNot.php\">Ok</a>',	NULL,	NULL,	NULL),
-(4,	'2018-10-24 18:41:09',	'N',	'INFO',	'Sua meta foi finalizada na data 30 Nov 1999<br><a href=\"okMetaNot.php\">Ok</a>',	NULL,	NULL,	NULL),
-(5,	'2018-10-24 21:38:20',	'N',	'INFO',	'Sua meta foi finalizada na data 30 Nov 1999<br><a href=\"okMetaNot.php\">Ok</a>',	NULL,	NULL,	NULL),
-(6,	'2018-10-24 21:38:20',	'N',	'INFO',	'Sua meta foi finalizada na data 30 Nov 1999<br><a href=\"okMetaNot.php\">Ok</a>',	NULL,	NULL,	NULL);
+(3,	'2018-10-24 18:41:09',	'L',	'INFO',	'Sua meta foi finalizada na data 30 Nov 1999<br><a href=\"okMetaNot.php\">Ok</a>',	NULL,	NULL,	NULL),
+(4,	'2018-10-24 18:41:09',	'L',	'INFO',	'Sua meta foi finalizada na data 30 Nov 1999<br><a href=\"okMetaNot.php\">Ok</a>',	NULL,	NULL,	NULL),
+(5,	'2018-10-24 21:38:20',	'L',	'INFO',	'Sua meta foi finalizada na data 30 Nov 1999<br><a href=\"okMetaNot.php\">Ok</a>',	NULL,	NULL,	NULL),
+(6,	'2018-10-24 21:38:20',	'L',	'INFO',	'Sua meta foi finalizada na data 30 Nov 1999<br><a href=\"okMetaNot.php\">Ok</a>',	NULL,	NULL,	NULL),
+(7,	'2018-10-25 01:09:05',	'L',	'INFO',	'Você tem uma nova solicitação de Can Divit <br> O que deseja fazer? <a href=\"status_vinculo.php?id=9&status=aprovado\">Aceitar</a> <a href=\"status_vinculo.php?id=9&status=negado\">Negar</a>',	7,	NULL,	'a:3:{s:15:\"profissional_id\";s:1:\"7\";s:8:\"aluno_id\";s:1:\"9\";s:5:\"table\";s:7:\"vinculo\";}'),
+(8,	'2018-10-25 01:09:46',	'L',	'OK',	'Uma planilha foi enviada à você.\nAcesse <a href=\"planilha_aluno.php?id=5\">Planilha1</a>',	NULL,	9,	NULL),
+(9,	'2018-10-26 01:14:08',	'L',	'OK',	'Uma planilha foi enviada à você.\nAcesse <a href=\"planilha_aluno.php?id=6\">Treino leve</a>',	NULL,	9,	NULL),
+(10,	'2018-10-26 01:19:53',	'N',	'OK',	'Uma planilha foi enviada à você.\nAcesse <a href=\"planilha_aluno.php?id=6\">test</a>',	NULL,	3,	NULL),
+(11,	'2018-10-26 01:20:26',	'N',	'OK',	'Uma planilha foi enviada à você.\nAcesse <a href=\"planilha_aluno.php?id=7\">test</a>',	NULL,	11,	NULL),
+(12,	'2018-10-27 22:46:43',	'L',	'OK',	'Uma planilha foi enviada à você.\nAcesse <a href=\"planilha_aluno.php?id=8\">Testando </a>',	NULL,	9,	NULL),
+(13,	'2018-10-27 22:59:44',	'L',	'OK',	'Uma planilha foi enviada à você.\nAcesse <a href=\"planilha_aluno.php?id=9\">Teste1</a>',	NULL,	9,	NULL),
+(14,	'2018-10-27 23:04:38',	'L',	'OK',	'Uma planilha foi enviada à você.\nAcesse <a href=\"planilha_aluno.php?id=10\">teste 2</a>',	NULL,	9,	NULL),
+(15,	'2018-10-28 00:40:32',	'L',	'OK',	'Uma planilha foi enviada à você.\nAcesse <a href=\"planilha_aluno.php?id=11\">teste121</a>',	NULL,	9,	NULL),
+(16,	'2018-10-28 00:41:49',	'L',	'OK',	'Uma planilha foi enviada à você.\nAcesse <a href=\"planilha_aluno.php?id=12\">teste 2</a>',	NULL,	9,	NULL),
+(17,	'2018-10-28 01:36:37',	'L',	'OK',	'Uma planilha foi enviada à você.\nAcesse <a href=\"planilha_aluno.php?id=1\">1</a>',	NULL,	9,	NULL),
+(18,	'2018-10-28 01:38:10',	'L',	'OK',	'Uma planilha foi enviada à você.\nAcesse <a href=\"planilha_aluno.php?id=2\">2</a>',	NULL,	9,	NULL),
+(19,	'2018-10-28 02:06:22',	'L',	'OK',	'Uma planilha foi enviada à você.\nAcesse <a href=\"planilha_aluno.php?id=3\">cc</a>',	NULL,	9,	NULL),
+(20,	'2018-10-28 02:14:50',	'L',	'OK',	'Uma planilha foi enviada à você.\nAcesse <a href=\"planilha_aluno.php?id=1\">Basquete com o irmão</a>',	NULL,	9,	NULL),
+(21,	'2018-10-28 02:35:58',	'L',	'OK',	'Uma planilha foi enviada à você.\nAcesse <a href=\"planilha_aluno.php?id=2\">Corrida de 20 km</a>',	NULL,	9,	NULL),
+(22,	'2018-10-28 02:59:47',	'L',	'OK',	'Uma planilha foi enviada à você.\nAcesse <a href=\"planilha_aluno.php?id=1\">Corrida de 20 km</a>',	NULL,	9,	NULL),
+(23,	'2018-10-28 03:05:50',	'L',	'OK',	'Uma planilha foi enviada à você.\nAcesse <a href=\"planilha_aluno.php?id=2\">Corrida de 20 km</a>',	NULL,	9,	NULL),
+(24,	'2018-10-28 13:49:16',	'L',	'OK',	'Uma planilha foi enviada à você.\nAcesse <a href=\"planilha_aluno.php?id=1\">Treino Intermediario</a>',	NULL,	9,	NULL),
+(25,	'2018-10-28 17:36:33',	'L',	'OK',	'Uma planilha foi enviada à você.\nAcesse <a href=\"planilha_aluno.php?id=2\">teste 2</a>',	NULL,	9,	NULL),
+(26,	'2018-10-29 02:25:19',	'N',	'INFO',	'Você tem uma nova solicitação de Lua Ana <br> O que deseja fazer? <a href=\"status_vinculo.php?id=12&status=aprovado\">Aceitar</a> <a href=\"status_vinculo.php?id=12&status=negado\">Negar</a>',	NULL,	9,	'a:3:{s:15:\"profissional_id\";s:2:\"12\";s:8:\"aluno_id\";s:1:\"9\";s:5:\"table\";s:7:\"vinculo\";}');
 
 DROP TABLE IF EXISTS `planilha`;
 CREATE TABLE `planilha` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `titulo` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `datahora` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `titulo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `datahora` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 TRUNCATE `planilha`;
 INSERT INTO `planilha` (`id`, `titulo`, `datahora`) VALUES
-(1,	'Testando',	'2018-10-24 05:00:37'),
-(2,	'Teste',	'2018-10-24 04:58:02'),
-(3,	'testees',	'2018-10-24 04:29:19'),
-(4,	'Teste 123',	'2018-10-24 14:41:57');
+(1,	'Treino Intermediario',	'2018-10-28 16:49:16'),
+(2,	'teste 2',	'2018-10-28 20:36:33');
 
 DROP TABLE IF EXISTS `planilha_aluno`;
 CREATE TABLE `planilha_aluno` (
@@ -267,33 +304,55 @@ CREATE TABLE `planilha_aluno` (
   `aluno_id` int(11) DEFAULT NULL,
   `planilha_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 TRUNCATE `planilha_aluno`;
 INSERT INTO `planilha_aluno` (`id`, `aluno_id`, `planilha_id`) VALUES
-(1,	3,	1),
-(2,	8,	2),
-(3,	9,	2),
-(4,	3,	3),
-(5,	4,	3),
-(6,	5,	3),
-(7,	4,	1),
-(8,	5,	1),
-(9,	9,	1),
-(10,	9,	4);
+(1,	9,	1),
+(2,	9,	2);
 
 DROP TABLE IF EXISTS `planilha_aluno_exercicio`;
 CREATE TABLE `planilha_aluno_exercicio` (
   `planilha_feito_id` int(11) NOT NULL,
+  `planilha_tabela_id` int(11) NOT NULL,
   `exercicio` int(11) NOT NULL,
-  PRIMARY KEY (`planilha_feito_id`,`exercicio`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  PRIMARY KEY (`planilha_feito_id`,`planilha_tabela_id`,`exercicio`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 TRUNCATE `planilha_aluno_exercicio`;
-INSERT INTO `planilha_aluno_exercicio` (`planilha_feito_id`, `exercicio`) VALUES
-(11,	56),
-(12,	65),
-(13,	2);
+INSERT INTO `planilha_aluno_exercicio` (`planilha_feito_id`, `planilha_tabela_id`, `exercicio`) VALUES
+(22,	24,	37),
+(22,	25,	3),
+(22,	26,	16),
+(22,	27,	40),
+(22,	28,	12),
+(23,	1,	84),
+(23,	2,	85),
+(23,	3,	86),
+(23,	7,	56),
+(23,	8,	63),
+(23,	9,	52),
+(23,	10,	11),
+(23,	11,	1),
+(23,	12,	68),
+(23,	13,	81),
+(23,	14,	73),
+(23,	15,	23),
+(23,	16,	35),
+(24,	29,	85),
+(24,	30,	36),
+(24,	31,	3),
+(25,	4,	84),
+(25,	5,	85),
+(25,	6,	86),
+(25,	17,	83),
+(25,	18,	76),
+(25,	19,	47),
+(25,	20,	42),
+(25,	21,	25),
+(25,	22,	4),
+(25,	23,	87),
+(26,	32,	11);
 
 DROP TABLE IF EXISTS `planilha_aluno_feito`;
 CREATE TABLE `planilha_aluno_feito` (
@@ -301,24 +360,26 @@ CREATE TABLE `planilha_aluno_feito` (
   `planilha_aluno_id` int(11) DEFAULT NULL,
   `datahora` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 TRUNCATE `planilha_aluno_feito`;
 INSERT INTO `planilha_aluno_feito` (`id`, `planilha_aluno_id`, `datahora`) VALUES
-(11,	1,	'2018-10-24 03:11:08'),
-(12,	1,	'2018-10-24 03:11:09'),
-(13,	4,	'2018-10-24 12:42:55');
+(22,	2,	'2018-10-23 17:40:03'),
+(23,	1,	'2018-10-24 17:40:33'),
+(24,	2,	'2018-10-25 17:41:19'),
+(25,	1,	'2018-10-26 17:41:37'),
+(26,	2,	'2018-10-27 17:42:02');
 
 DROP TABLE IF EXISTS `planilha_exercicio`;
 CREATE TABLE `planilha_exercicio` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `musculo_cardio_id` int(11) DEFAULT NULL,
-  `nome` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `descricao` text COLLATE utf8_unicode_ci NOT NULL,
-  `foto` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `nome` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `descricao` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `foto` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `profissional_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 TRUNCATE `planilha_exercicio`;
 INSERT INTO `planilha_exercicio` (`id`, `musculo_cardio_id`, `nome`, `descricao`, `foto`, `profissional_id`) VALUES
@@ -413,9 +474,9 @@ INSERT INTO `planilha_exercicio` (`id`, `musculo_cardio_id`, `nome`, `descricao`
 DROP TABLE IF EXISTS `planilha_grupoMuscuCardio`;
 CREATE TABLE `planilha_grupoMuscuCardio` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nome` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `nome` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 TRUNCATE `planilha_grupoMuscuCardio`;
 INSERT INTO `planilha_grupoMuscuCardio` (`id`, `nome`) VALUES
@@ -443,37 +504,60 @@ INSERT INTO `planilha_grupoMuscuCardio` (`id`, `nome`) VALUES
 DROP TABLE IF EXISTS `planilha_tabela`;
 CREATE TABLE `planilha_tabela` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `grupo` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `grupo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `musculo_cardio_id` int(11) NOT NULL,
   `exercicio_id` int(11) NOT NULL,
-  `series` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `repeticoes` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `carga` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `intervalo` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `series` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `repeticoes` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `carga` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `intervalo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `tempo` int(11) DEFAULT NULL,
   `profissional_id` int(11) NOT NULL,
   `planilha_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 TRUNCATE `planilha_tabela`;
 INSERT INTO `planilha_tabela` (`id`, `grupo`, `musculo_cardio_id`, `exercicio_id`, `series`, `repeticoes`, `carga`, `intervalo`, `tempo`, `profissional_id`, `planilha_id`) VALUES
-(1,	'grupo1',	6,	56,	'1',	'1',	'1',	'1',	1,	2,	1),
-(2,	'grupo2',	7,	65,	'1',	'1',	'1',	'1',	1,	2,	1),
-(3,	'Grupo A',	6,	56,	'11',	'3',	'10',	'15',	NULL,	2,	2),
-(4,	'Grupo A',	7,	63,	'11',	'3',	'10',	'15',	NULL,	2,	2),
-(5,	'Grupo A',	8,	53,	'11',	'3',	'10',	'15',	NULL,	2,	2),
-(6,	'Grupo A',	16,	84,	NULL,	NULL,	NULL,	NULL,	30,	2,	2),
-(7,	'Grupo A',	17,	11,	'11',	'3',	'10',	'15',	NULL,	2,	2),
-(8,	'Grupo A',	6,	56,	'11',	'3',	'10',	'15',	NULL,	2,	3),
-(9,	'Grupo A',	19,	2,	'2',	'2',	'2',	'2',	NULL,	2,	4);
+(1,	'Grupo A',	16,	84,	NULL,	NULL,	NULL,	NULL,	30,	2,	1),
+(2,	'Grupo A',	16,	85,	NULL,	NULL,	NULL,	NULL,	30,	2,	1),
+(3,	'Grupo A',	16,	86,	NULL,	NULL,	NULL,	NULL,	30,	2,	1),
+(4,	'Grupo B',	16,	84,	NULL,	NULL,	NULL,	NULL,	30,	2,	1),
+(5,	'Grupo B',	16,	85,	NULL,	NULL,	NULL,	NULL,	30,	2,	1),
+(6,	'Grupo B',	16,	86,	NULL,	NULL,	NULL,	NULL,	30,	2,	1),
+(7,	'Grupo A',	6,	56,	'11',	'3',	'10',	'15',	NULL,	2,	1),
+(8,	'Grupo A',	7,	63,	'11',	'3',	'10',	'15',	NULL,	2,	1),
+(9,	'Grupo A',	8,	52,	'11',	'3',	'10',	'15',	NULL,	2,	1),
+(10,	'Grupo A',	17,	11,	'11',	'3',	'10',	'15',	NULL,	2,	1),
+(11,	'Grupo A',	18,	1,	'11',	'3',	'10',	'15',	NULL,	2,	1),
+(12,	'Grupo A',	29,	68,	'11',	'3',	'10',	'15',	NULL,	2,	1),
+(13,	'Grupo A',	32,	81,	'11',	'3',	'10',	'15',	NULL,	2,	1),
+(14,	'Grupo A',	30,	73,	'11',	'3',	'10',	'15',	NULL,	2,	1),
+(15,	'Grupo A',	22,	23,	'11',	'3',	'10',	'15',	NULL,	2,	1),
+(16,	'Grupo A',	25,	35,	'11',	'3',	'10',	'15',	NULL,	2,	1),
+(17,	'Grupo B',	32,	83,	'11',	'3',	'10',	'15',	NULL,	2,	1),
+(18,	'Grupo B',	30,	76,	'11',	'3',	'10',	'15',	NULL,	2,	1),
+(19,	'Grupo B',	27,	47,	'11',	'3',	'10',	'15',	NULL,	2,	1),
+(20,	'Grupo B',	26,	42,	'11',	'3',	'10',	'15',	NULL,	2,	1),
+(21,	'Grupo B',	22,	25,	'11',	'3',	'10',	'15',	NULL,	2,	1),
+(22,	'Grupo B',	19,	4,	'11',	'3',	'10',	'15',	NULL,	2,	1),
+(23,	'Grupo B',	8,	87,	'11',	'3',	'10',	'15',	NULL,	2,	1),
+(24,	'Grupo A',	25,	37,	'1',	'1',	'1',	'1',	NULL,	7,	2),
+(25,	'Grupo A',	19,	3,	'1',	'1',	'1',	'1',	NULL,	7,	2),
+(26,	'Grupo A',	20,	16,	'1',	'1',	'11',	'1',	NULL,	7,	2),
+(27,	'Grupo A',	26,	40,	'1',	'1',	'1',	'1',	NULL,	7,	2),
+(28,	'Grupo A',	17,	12,	'1',	'1',	'1',	'1',	NULL,	7,	2),
+(29,	'Grupo B',	16,	85,	NULL,	NULL,	NULL,	NULL,	1,	7,	2),
+(30,	'Grupo B',	25,	36,	'1',	'1',	'1',	'1',	NULL,	7,	2),
+(31,	'Grupo B',	19,	3,	'1',	'1',	'1',	'1',	NULL,	7,	2),
+(32,	'Grupo C',	17,	11,	'1',	'1',	'1',	'1',	NULL,	7,	2);
 
 DROP TABLE IF EXISTS `tipo_usuario`;
 CREATE TABLE `tipo_usuario` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `tipo` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `tipo` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 TRUNCATE `tipo_usuario`;
 INSERT INTO `tipo_usuario` (`id`, `tipo`) VALUES
@@ -483,30 +567,30 @@ INSERT INTO `tipo_usuario` (`id`, `tipo`) VALUES
 DROP TABLE IF EXISTS `upload_dica`;
 CREATE TABLE `upload_dica` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nome_arq` varchar(40) COLLATE utf8_unicode_ci NOT NULL,
-  `tipo` char(3) COLLATE utf8_unicode_ci NOT NULL,
+  `nome_arq` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tipo` char(3) COLLATE utf8mb4_unicode_ci NOT NULL,
   `dica_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 TRUNCATE `upload_dica`;
 
 DROP TABLE IF EXISTS `usuario`;
 CREATE TABLE `usuario` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `datahora` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `nome` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `sobrenome` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `datahora` datetime NOT NULL,
+  `nome` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `sobrenome` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `datanasc` date DEFAULT NULL,
-  `sexo` enum('masculino','feminino') COLLATE utf8_unicode_ci DEFAULT NULL,
-  `foto` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `senha` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `sexo` enum('masculino','feminino') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `foto` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `senha` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `tipo_id` int(11) DEFAULT NULL,
-  `status` enum('ativado','desativado','excluido') COLLATE utf8_unicode_ci DEFAULT 'ativado',
+  `status` enum('ativado','desativado','excluido') COLLATE utf8mb4_unicode_ci DEFAULT 'ativado',
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 TRUNCATE `usuario`;
 INSERT INTO `usuario` (`id`, `datahora`, `nome`, `sobrenome`, `datanasc`, `sexo`, `foto`, `senha`, `email`, `tipo_id`, `status`) VALUES
@@ -520,16 +604,17 @@ INSERT INTO `usuario` (`id`, `datahora`, `nome`, `sobrenome`, `datanasc`, `sexo`
 (8,	'2018-10-23 13:13:20',	'Sanem',	'Aydin ',	NULL,	'feminino',	'http://localhost/FitSan/uploads/4g7s1pr892x_erkenci-kus-pa_ssaro-madrugador-5.jpg',	'$2y$10$I1Dwn7vXMPteuqeXMFzTdevrmjAGCY5LQp8wLaXXx4Kb.RtRhVkqS',	'san@san',	1,	'ativado'),
 (9,	'2018-10-23 13:15:29',	'Can',	'Divit ',	'1989-11-08',	'masculino',	'http://localhost/FitSan/uploads/dbb0c5002e1ded8cb966c693e0c83fc4.jpg',	'$2y$10$6Qupknhthq6yUezblxyOau4xpopuUyVPCLzwC5gxEU3f94SlyGThW',	'can@can',	1,	'ativado'),
 (10,	'2018-10-23 13:43:47',	'Adryene',	'Pereira Ponciano ',	'2006-04-16',	NULL,	'http://localhost/FitSan/uploads/image-1.jpg',	'$2y$10$dNiegeFy4tn3ljH9dIdZjOTwFmSmw7goNpW2QZfX9RnXaJy8fRg8K',	'dy@dy',	1,	'ativado'),
-(11,	'2018-10-23 13:45:12',	'Nathaly',	'Pereira Ponciano ',	'2006-05-20',	'feminino',	'http://localhost/FitSan/uploads/images.jpeg',	'$2y$10$9I50u2yuYWIN7FaLfsyOOe2ERWZZ/uHasJA35kq4lWmOn.wC6rWWW',	'tata@tata',	1,	'ativado');
+(11,	'2018-10-23 13:45:12',	'Nathaly',	'Pereira Ponciano ',	'2006-05-20',	'feminino',	'http://localhost/FitSan/uploads/images.jpeg',	'$2y$10$9I50u2yuYWIN7FaLfsyOOe2ERWZZ/uHasJA35kq4lWmOn.wC6rWWW',	'tata@tata',	1,	'ativado'),
+(12,	'2018-10-28 21:27:47',	'Lua',	'Ana ',	NULL,	NULL,	NULL,	'$2y$10$1QCGX81RJhXt9OgqVfiXSO9u06MsI12xh1h/bdsMYXcm59gse0H.C',	'luana@luana',	2,	'ativado');
 
 DROP TABLE IF EXISTS `vinculo`;
 CREATE TABLE `vinculo` (
   `aluno_id` int(11) NOT NULL,
   `profissional_id` int(11) NOT NULL,
-  `solicitante` enum('aluno','profissional') COLLATE utf8_unicode_ci NOT NULL,
-  `status` enum('espera','aprovado','negado') COLLATE utf8_unicode_ci NOT NULL,
+  `solicitante` enum('aluno','profissional') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` enum('espera','aprovado','negado') COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`aluno_id`,`profissional_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 TRUNCATE `vinculo`;
 INSERT INTO `vinculo` (`aluno_id`, `profissional_id`, `solicitante`, `status`) VALUES
@@ -539,7 +624,9 @@ INSERT INTO `vinculo` (`aluno_id`, `profissional_id`, `solicitante`, `status`) V
 (6,	2,	'profissional',	'aprovado'),
 (8,	2,	'aluno',	'aprovado'),
 (9,	2,	'aluno',	'aprovado'),
+(9,	7,	'aluno',	'aprovado'),
+(9,	12,	'profissional',	'espera'),
 (10,	2,	'aluno',	'aprovado'),
 (11,	2,	'aluno',	'aprovado');
 
--- 2018-10-25 02:16:31
+-- 2018-10-29 06:02:54

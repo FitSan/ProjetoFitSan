@@ -96,7 +96,25 @@ $pagina['offset'] = (($pagina['pagina'] - 1) * $pagina['quantidade']);
 $pagina['paginas'] = ceil($pagina['total'] / $pagina['quantidade']);
 
 //referente à consulta
-$query = "select ativ_extras.*, usuario.nome, usuario.sobrenome, usuario.foto from ativ_extras join usuario on usuario.id=ativ_extras.aluno_id where usuario.id= " . mysqliEscaparTexto($_SESSION['id']) . " order by ativ_extras.datahora desc, ativ_extras.titulo limit " . $pagina['quantidade'] . " offset " . $pagina['offset'];
+$query = "
+select
+    ativ_extras.*,
+    usuario.nome,
+    usuario.sobrenome,
+    usuario.foto
+from
+    ativ_extras join
+    usuario on usuario.id=ativ_extras.aluno_id
+where
+    usuario.id= " . mysqliEscaparTexto($_SESSION['id']) . "
+order by
+    ativ_extras.datahora desc,
+    ativ_extras.titulo
+limit
+    ". $pagina['quantidade'] . "
+offset
+    " . $pagina['offset']
+;
 $resultado = mysqli_query($conexao, $query) or die_mysql($query, __FILE__, __LINE__);
 ?>
 

@@ -10,7 +10,7 @@ CREATE DATABASE FitSan;
 
 CREATE TABLE usuario(
 id INT PRIMARY KEY auto_increment,
-datahora TIMESTAMP NOT NULL DEFAULT now(),
+datahora datetime NOT NULL DEFAULT now(),
 nome VARCHAR(255) NOT NULL,
 sobrenome VARCHAR(255) NOT NULL,
 datanasc DATE,
@@ -80,7 +80,7 @@ dados TEXT
 
 CREATE TABLE ativ_extras(
 id INT PRIMARY KEY auto_increment,
-datahora TIMESTAMP NOT NULL,
+datahora datetime NOT NULL,
 titulo VARCHAR(255) NOT NULL,
 texto TEXT NOT NULL,
 visualizacao ENUM('PUBLICO','PRIVADO') NOT NULL DEFAULT 'PRIVADO',
@@ -139,7 +139,7 @@ informacoes_adicionais_id INT REFERENCES informacoes_adicionais(id)
 CREATE TABLE planilha(
 id INT NOT NULL PRIMARY KEY auto_increment,
 titulo VARCHAR(255) NOT NULL,
-datahora TIMESTAMP NOT NULL DEFAULT now()
+datahora datetime NOT NULL DEFAULT now()
 );
 
 

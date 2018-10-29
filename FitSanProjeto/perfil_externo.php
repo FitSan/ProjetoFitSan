@@ -169,7 +169,7 @@ if ($linha = mysqli_fetch_array($resultado)) {
 
                     <?php
                     if (tipoLogado("profissional") && ($linha['tipo'] == 'aluno')) {
-                        $vinculado = dbquery("select count(*) as total from usuario u left join vinculo v on v.aluno_id = u.id where v.profissional_id = ".$_SESSION['id']." and v.aluno_id = ".$linha['id']." and u.status = 'ativado' and u.tipo_id=1");
+                        $vinculado = dbquery("select count(*) as total from usuario u left join vinculo v on v.aluno_id = u.id where v.profissional_id = ".$_SESSION['id']." and v.aluno_id = ".$linha['id']." and v.status = 'aprovado' and u.status = 'ativado' and u.tipo_id=1");
                         $vinculado = ($vinculado ? (intval($vinculado[0]['total']) > 0) : false);
                     } else {
                         $vinculado = null;
@@ -181,6 +181,7 @@ if ($linha = mysqli_fetch_array($resultado)) {
                 <div class="col-md-9">
                             <div class="box box-primary">
                                 <div class="box-body box-profile">
+                                    <br>
                                     <div class="alert alert-success" role="alert">
                                         <h4 class="alert-heading"><?php
                                                     if (estaLogado()) {
@@ -575,16 +576,18 @@ if ($grupo_atual){
                     }
 
                     if (tipoLogado("aluno") && ($linha['tipo'] == 'profissional')) {
-                        $vinculado = dbquery("select count(*) as total from usuario u left join vinculo v on v.profissional_id = u.id where v.aluno_id = ".$_SESSION['id']." and v.profissional_id = ".$linha['id']." and u.status = 'ativado' and u.tipo_id=1");
+                        $vinculado = dbquery("select count(*) as total from usuario u left join vinculo v on v.profissional_id = u.id where v.aluno_id = ".$_SESSION['id']." and v.profissional_id = ".$linha['id']." and v.status = 'aprovado' and u.status = 'ativado' and u.tipo_id=2");
                         $vinculado = ($vinculado ? (intval($vinculado[0]['total']) > 0) : false);
                     } else {
                         $vinculado = null;
                     }
                     if ($vinculado === false){
                         ?>
+
         <div class="col-md-9">
             <div class="box box-primary">
                 <div class="box-body box-profile">
+                    <br>
                     <div class="alert alert-success" role="alert">
                         <h4 class="alert-heading"><?php
                             if (estaLogado()) {
@@ -598,6 +601,7 @@ if ($grupo_atual){
                 </div>
             </div>
         </div>
+
         <?php
                     }
                     if ($vinculado){
