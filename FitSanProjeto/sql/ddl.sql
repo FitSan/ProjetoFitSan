@@ -334,17 +334,22 @@ offset
 -------Fim Planilha-----
 
 
-------Avaliação-----
 CREATE TABLE IF NOT EXISTS `avaliacao` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `data` datetime NOT NULL,
-  `desempenho` text NOT NULL,
-  `frequencia` text NOT NULL,
-  `grupo_cumpriu` text NOT NULL,
-  `grupo_duvida` text NOT NULL,
-  `grupo_dificuldade` text NOT NULL,
-  `caso_sim` text NOT NULL,
-  `consideracoes` text NOT NULL,
+  `desempenho` text COLLATE utf8_unicode_ci,
+  `frequencia` text COLLATE utf8_unicode_ci,
+  `grupo_cumpriu` text COLLATE utf8_unicode_ci,
+  `grupo_duvida` text COLLATE utf8_unicode_ci,
+  `grupo_dificuldade` text COLLATE utf8_unicode_ci,
+  `caso_sim` text COLLATE utf8_unicode_ci,
+  `consideracoes` text COLLATE utf8_unicode_ci,
+`musculatura` text COLLATE utf8_unicode_ci,
+`lesao` text COLLATE utf8_unicode_ci,
+`queimacao` text COLLATE utf8_unicode_ci,
+`caimbras` text COLLATE utf8_unicode_ci,
+`tontura` text COLLATE utf8_unicode_ci,
+`consideracoes_corporal` text COLLATE utf8_unicode_ci,
   `profissional_id` int(11) DEFAULT NULL,
   `aluno_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
