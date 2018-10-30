@@ -33,21 +33,21 @@ $linha = mysqli_fetch_array($retorno);
 
         if (empty($nova_senha && $repita_senha)) {
             $_SESSION['atualizado'] = "Dados conferem!";
-            header('Location:form_conf.php');
+            header('Location:'.URL_SITE.'form_conf.php');
         } else {
 
             if ($nova_senha == $repita_senha) {
                 $senha_hash = password_hash($nova_senha, PASSWORD_BCRYPT);
                 $query_alt = "update usuario set senha = '$senha_hash' where id=$_SESSION[id]";
                 mysqli_query($conexao, $query_alt);
-                header('Location:form_login.php');
+                header('Location:'.URL_SITE.'form_login.php');
             } else {
                 $_SESSION['diver_senha'] = "Dados nao conferem!";
-                header('Location:form_conf.php');
+                header('Location:'.URL_SITE.'form_conf.php');
             }
         }
     } else {
 
         $_SESSION['errosenha'] = "Dados nao conferem!";
-        header('Location:form_conf.php');
+        header('Location:'.URL_SITE.'form_conf.php');
     }

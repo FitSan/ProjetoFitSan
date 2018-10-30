@@ -3,7 +3,7 @@ $pagina = 'Metas';
 include './template/cabecalho.php';
 
 if (!tipoLogado("aluno")){
-    header('Location: pagina1.php');
+    header('Location: '.URL_SITE.'pagina1.php');
     exit;
 }
 
@@ -76,7 +76,7 @@ if (mysqli_num_rows($resultado_all) === 0) {
         }
         ?>        
             <div class="box box-primary ">            
-                <form class="form-inline" role="form" id="form_meta" method="post" action="addMeta.php">
+                <form class="form-inline" role="form" id="form_meta" method="post" action="<?=URL_SITE?>addMeta.php">
                     <div class="box-header with-border">
                         <?php if (!$novaMeta) {
                             ?> 
@@ -207,7 +207,7 @@ if (mysqli_num_rows($resultado_all) === 0) {
             <?php if (!$novaMeta) { ?>
 
                 <div class="box box-primary">
-                    <form role="form" method="post" action="add_dados_meta.php">
+                    <form role="form" method="post" action="<?=URL_SITE?>add_dados_meta.php">
                         <div class="box-header with-border">
                             <h2 class="box-title" style="padding: 7px;"><b>Adicionar dados</b></h2> 
                         </div>

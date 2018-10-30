@@ -19,11 +19,11 @@ $resultado = mysqli_query($conexao, $query);
                                 <?php
                                 if(tipoLogado("aluno")){
                                     ?>
-                                <a href="perfil_externo.php?id=<?= $linha['profissional_id'] ?>"><?= $linha['profissional_nome'] ?></a> 
+                                <a href="<?=URL_SITE?>perfil_externo.php?id=<?= $linha['profissional_id'] ?>"><?= $linha['profissional_nome'] ?></a> 
                                 <?php
                                 }else if($linha['profissional_id']==$_SESSION['id']){
                                 ?>
-                                <a href="perfil.php"><?= $linha['profissional_nome'] ?></a> 
+                                <a href="<?=URL_SITE?>perfil.php"><?= $linha['profissional_nome'] ?></a> 
                                 <?php
                                 }else{
                                 ?>
@@ -55,7 +55,7 @@ $resultado = mysqli_query($conexao, $query);
                            <?php 
                                 }else{
                                   ?>  
-                        <li><img src="upload/dica/<?= $linha_upload['nome_arq'] ?>" height="380" style="padding: 5px;"></li>                  
+                        <li><img src="<?=URL_SITE?>upload/dica/<?= $linha_upload['nome_arq'] ?>" height="380" style="padding: 5px;"></li>                  
 
                            <?php   
                                 }

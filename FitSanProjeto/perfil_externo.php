@@ -44,9 +44,9 @@ if ($linha = mysqli_fetch_array($resultado)) {
                             <?php
                             if (tipoLogado("admin")){
                             } elseif ($_SESSION['id'] == $linha['id']){
-                                ?><a href="form_perfil.php" class="btn btn-primary btn-block"><b>Alterar</b></a><?php
+                                ?><a href="<?=URL_SITE?>form_perfil.php" class="btn btn-primary btn-block"><b>Alterar</b></a><?php
                             } elseif ($linha['status'] === 'aprovado') {
-                                ?><a href="desvincular.php?id=<?= $linha['id'] ?>" class="btn btn-info btn-block"><b>Deixar de seguir</b></a><?php
+                                ?><a href="<?=URL_SITE?>desvincular.php?id=<?= $linha['id'] ?>" class="btn btn-info btn-block"><b>Deixar de seguir</b></a><?php
                             } elseif ($linha['status'] === 'espera') {
                                 if (tipoLogado($linha['solicitante'])) {
                                     ?>   
@@ -55,13 +55,13 @@ if ($linha = mysqli_fetch_array($resultado)) {
                                 } else {
                                     ?>
 
-                                    <a href="status_vinculo.php?id=<?= $linha['id'] ?>&status=aprovado" class="btn btn-success btn-block"><b>Aceitar</b></a>
-                                    <a href="status_vinculo.php?id=<?= $linha['id'] ?>&status=negado" class="btn btn-danger btn-block"><b>Negar</b></a>
+                                    <a href="<?=URL_SITE?>status_vinculo.php?id=<?= $linha['id'] ?>&status=aprovado" class="btn btn-success btn-block"><b>Aceitar</b></a>
+                                    <a href="<?=URL_SITE?>status_vinculo.php?id=<?= $linha['id'] ?>&status=negado" class="btn btn-danger btn-block"><b>Negar</b></a>
                                     <?php
                                 }
                             } else {
                                 ?>
-                                <a href="vincular.php?id=<?= $linha['id'] ?>" class="btn btn-primary btn-block"><b>Seguir</b></a>
+                                <a href="<?=URL_SITE?>vincular.php?id=<?= $linha['id'] ?>" class="btn btn-primary btn-block"><b>Seguir</b></a>
                                 <?php
                             }
                             ?>
@@ -356,11 +356,11 @@ if ($dataanterior){
 <?php if ($paginacao['paginas'] > 1){ ?>
         <div class="box-footer clearfix">
             <ul class="pagination pagination-sm no-margin">
-                <li class="<?php echo (($paginacao['pagina'] == 1) ? 'disabled' : '') ?>"><a href="<?php echo basename(__FILE__) ?>?aba=atividadesExtras&id=<?php echo $_GET['id'] ?>">&laquo;</a></li>
+                <li class="<?php echo (($paginacao['pagina'] == 1) ? 'disabled' : '') ?>"><a href="<?=URL_SITE?><?php echo basename(__FILE__) ?>?aba=atividadesExtras&id=<?php echo $_GET['id'] ?>">&laquo;</a></li>
 <?php for ($pag = 1; $pag <= $paginacao['paginas']; $pag++){ ?>
-                <li class="<?php echo (($paginacao['pagina'] == $pag) ? 'active' : '') ?>"><a href="<?php echo basename(__FILE__) ?>?aba=atividadesExtras&id=<?php echo $_GET['id'] ?>&pagina=<?php echo $pag ?>"><?php echo $pag ?></a></li>
+                <li class="<?php echo (($paginacao['pagina'] == $pag) ? 'active' : '') ?>"><a href="<?=URL_SITE?><?php echo basename(__FILE__) ?>?aba=atividadesExtras&id=<?php echo $_GET['id'] ?>&pagina=<?php echo $pag ?>"><?php echo $pag ?></a></li>
 <?php } ?>
-                <li class="<?php echo (($paginacao['pagina'] == $paginacao['paginas']) ? 'disabled' : '') ?>"><a href="<?php echo basename(__FILE__) ?>?aba=atividadesExtras&id=<?php echo $_GET['id'] ?>&pagina=<?php echo $paginacao['paginas'] ?>">&raquo;</a></li>
+                <li class="<?php echo (($paginacao['pagina'] == $paginacao['paginas']) ? 'disabled' : '') ?>"><a href="<?=URL_SITE?><?php echo basename(__FILE__) ?>?aba=atividadesExtras&id=<?php echo $_GET['id'] ?>&pagina=<?php echo $paginacao['paginas'] ?>">&raquo;</a></li>
             </ul>
         </div>
     <?php } ?>  
@@ -544,11 +544,11 @@ if ($grupo_atual){
 <?php if ($paginacao2['paginas'] > 1){ ?>
         <div class="box-footer clearfix">
             <ul class="pagination pagination-sm no-margin">
-                <li class="<?php echo (($paginacao2['pagina'] == 1) ? 'disabled' : '') ?>"><a href="<?php echo basename(__FILE__) ?>?aba=treinosPlanilha&id=<?php echo $_GET['id'] ?>">&laquo;</a></li>
+                <li class="<?php echo (($paginacao2['pagina'] == 1) ? 'disabled' : '') ?>"><a href="<?=URL_SITE?><?php echo basename(__FILE__) ?>?aba=treinosPlanilha&id=<?php echo $_GET['id'] ?>">&laquo;</a></li>
 <?php for ($pag = 1; $pag <= $paginacao2['paginas']; $pag++){ ?>
-                <li class="<?php echo (($paginacao2['pagina'] == $pag) ? 'active' : '') ?>"><a href="<?php echo basename(__FILE__) ?>?aba=treinosPlanilha&id=<?php echo $_GET['id'] ?>&pagina2=<?php echo $pag ?>"><?php echo $pag ?></a></li>
+                <li class="<?php echo (($paginacao2['pagina'] == $pag) ? 'active' : '') ?>"><a href="<?=URL_SITE?><?php echo basename(__FILE__) ?>?aba=treinosPlanilha&id=<?php echo $_GET['id'] ?>&pagina2=<?php echo $pag ?>"><?php echo $pag ?></a></li>
 <?php } ?>
-                <li class="<?php echo (($paginacao2['pagina'] == $paginacao2['paginas']) ? 'disabled' : '') ?>"><a href="<?php echo basename(__FILE__) ?>?aba=treinosPlanilha&id=<?php echo $_GET['id'] ?>&pagina2=<?php echo $paginacao2['paginas'] ?>">&raquo;</a></li>
+                <li class="<?php echo (($paginacao2['pagina'] == $paginacao2['paginas']) ? 'disabled' : '') ?>"><a href="<?=URL_SITE?><?php echo basename(__FILE__) ?>?aba=treinosPlanilha&id=<?php echo $_GET['id'] ?>&pagina2=<?php echo $paginacao2['paginas'] ?>">&raquo;</a></li>
             </ul>
         </div>
 <?php } ?>
@@ -638,7 +638,7 @@ $resultado = mysqli_query($conexao, $query);
                         <div class="user-block">
                             <img class="img-circle img-bordered-sm" src="<?= htmlspecialchars(!empty($linha['foto']) ? $linha['foto'] : 'img/user-avatar-placeholder.png') ?>" alt="User profile picture">
                             <span class="username">
-                                <a href="perfil_externo.php?id=<?= $linha['profissional_id'] ?>"><?= $linha['profissional_nome'] ?></a> 
+                                <a href="<?=URL_SITE?>perfil_externo.php?id=<?= $linha['profissional_id'] ?>"><?= $linha['profissional_nome'] ?></a> 
                                 <?php
                                 if($linha['profissional_id']==$_GET['id']){
                                 ?>
@@ -660,12 +660,12 @@ $resultado = mysqli_query($conexao, $query);
                                 if($linha_upload['tipo']!='img'){
                         ?>                          
                         <li><video height="380" style="padding: 5px;" controls>
-                                <source src="upload/dica/<?= $linha_upload['nome_arq'] ?>" type="video/mp4">
+                                <source src="<?=URL_SITE?>upload/dica/<?= $linha_upload['nome_arq'] ?>" type="video/mp4">
                             </video></li>
                            <?php 
                                 }else{
                                   ?>  
-                        <li><img src="upload/dica/<?= $linha_upload['nome_arq'] ?>" height="380" style="padding: 5px;"></li>                  
+                        <li><img src="<?=URL_SITE?>upload/dica/<?= $linha_upload['nome_arq'] ?>" height="380" style="padding: 5px;"></li>                  
 
                            <?php   
                                 }

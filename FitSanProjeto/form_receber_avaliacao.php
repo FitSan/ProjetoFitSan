@@ -6,7 +6,7 @@ ini_set('display_errors', true);
 //quando um tipo diferente tentar acessar pelo navegador ele será redirecionado para a pagina 1. 
 
 if (!tipoLogado("aluno")) {
-    header('Location: pagina1.php');
+    header('Location: '.URL_SITE.'pagina1.php');
     exit;
 }
 
@@ -80,7 +80,7 @@ if ($usuarios == null) {
 
                               
                                     
-                                    <a href="http://localhost/FitSan/form_mostrar_avaliacao.php?id_avaliacao=<?php echo $id_avaliacao; ?>">  
+                                    <a href="<?=URL_SITE?>form_mostrar_avaliacao.php?id_avaliacao=<?php echo $id_avaliacao; ?>">  
                                         <button type="button" class="btn btn-primary btn-flat"> Conferir </button>
                                     </a>
 

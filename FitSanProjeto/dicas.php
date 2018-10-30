@@ -21,7 +21,7 @@ $resultado = mysqli_query($conexao, $query);
                         <div class="user-block">
                             <img class="img-circle img-bordered-sm" src="<?= htmlspecialchars(!empty($linha['foto']) ? $linha['foto'] : 'img/user-avatar-placeholder.png') ?>" alt="User profile picture">
                             <span class="username">
-                                <a href="perfil_externo.php?id=<?= $linha['profissional_id'] ?>"><?= $linha['profissional_nome'] ?></a> 
+                                <a href="<?=URL_SITE?>perfil_externo.php?id=<?= $linha['profissional_id'] ?>"><?= $linha['profissional_nome'] ?></a> 
                                 <?php
                                 if($linha['profissional_id']==$_SESSION['id']){
                                 ?>
@@ -43,12 +43,12 @@ $resultado = mysqli_query($conexao, $query);
                                 if($linha_upload['tipo']!='img'){
                         ?>                          
                         <li><video height="380" style="padding: 5px;" controls>
-                                <source src="upload/dica/<?= $linha_upload['nome_arq'] ?>" type="video/mp4">
+                                <source src="<?=URL_SITE?>upload/dica/<?= $linha_upload['nome_arq'] ?>" type="video/mp4">
                             </video></li>
                            <?php 
                                 }else{
                                   ?>  
-                        <li><img src="upload/dica/<?= $linha_upload['nome_arq'] ?>" height="380" style="padding: 5px;"></li>                  
+                        <li><img src="<?=URL_SITE?>upload/dica/<?= $linha_upload['nome_arq'] ?>" height="380" style="padding: 5px;"></li>                  
 
                            <?php   
                                 }

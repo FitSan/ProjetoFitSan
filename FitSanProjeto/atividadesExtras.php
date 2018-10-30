@@ -3,7 +3,7 @@ $pagina = "Atividades Extras";
 require_once './template/cabecalho.php';
 
 if (!tipoLogado("aluno")){
-    header('Location: pagina1.php');
+    header('Location: '.URL_SITE.'pagina1.php');
     exit;
 }
 
@@ -56,7 +56,7 @@ if (($acao == 'incluir') || ($acao == 'alterar')){
             $query1 = "insert into ativ_extras_exercicios ( ativ_extras_id, exercicio ) values ( " . mysqliEscaparTexto($id) . ", " . mysqliEscaparTexto($exercicio) . " )";
             mysqli_query($conexao, $query1) or die_mysql($query1, __FILE__, __LINE__);
         }
-        header('Location: '.basename(__FILE__));
+        header('Location: '.URL_SITE.basename(__FILE__));
         exit();
     }
 } elseif ($acao == 'excluir') {
@@ -66,7 +66,7 @@ if (($acao == 'incluir') || ($acao == 'alterar')){
         $query = "delete from ativ_extras where id= " . mysqliEscaparTexto($id);
         mysqli_query($conexao, $query) or die_mysql($query, __FILE__, __LINE__);
     }
-    header('Location: '.basename(__FILE__));
+    header('Location: '.URL_SITE.basename(__FILE__));
     exit();
 } elseif ($acao == 'visualizacao') {
     if ($id !== null) {
@@ -79,7 +79,7 @@ if (($acao == 'incluir') || ($acao == 'alterar')){
         $query = "update ativ_extras set visualizacao = " . mysqliEscaparTexto($visualizacao) . " where id= " . mysqliEscaparTexto($id);
         mysqli_query($conexao, $query) or die_mysql($query, __FILE__, __LINE__);
     }
-    header('Location: '.basename(__FILE__));
+    header('Location: '.URL_SITE.basename(__FILE__));
     exit();
 }
 
@@ -150,7 +150,7 @@ $resultado = mysqli_query($conexao, $query) or die_mysql($query, __FILE__, __LIN
 <?php } ?>
 
                     <div class="box-body pad">
-                        <form method="post" action="<?php echo basename(__FILE__) ?>?acao=<?= !empty($id) ? ('alterar&id='.$id) : 'incluir' ?>">
+                        <form method="post" action="<?=URL_SITE?><?php echo basename(__FILE__) ?>?acao=<?= !empty($id) ? ('alterar&id='.$id) : 'incluir' ?>">
                             <div class="row">
                                 <div class="col-md-8">
                                     <label>Título</label>
@@ -247,9 +247,9 @@ while ($linha = mysqli_fetch_array($resultado)) {
                             </div>
 
                             <div class="timeline-footer">
-                                <a class="btn btn-primary btn-xs" href="<?php echo basename(__FILE__) ?>?acao=alterar&id=<?= htmlentities($linha['id']) ?>">Atualizar</a>
-                                <a class="btn btn-danger btn-xs" href="<?php echo basename(__FILE__) ?>?acao=excluir&id=<?= htmlentities($linha['id']) ?>">Excluir</a>
-                                <a class="btn btn-xs" href="<?php echo basename(__FILE__) ?>?acao=visualizacao&id=<?= htmlentities($linha['id']) ?>"><?php
+                                <a class="btn btn-primary btn-xs" href="<?=URL_SITE?><?php echo basename(__FILE__) ?>?acao=alterar&id=<?= htmlentities($linha['id']) ?>">Atualizar</a>
+                                <a class="btn btn-danger btn-xs" href="<?=URL_SITE?><?php echo basename(__FILE__) ?>?acao=excluir&id=<?= htmlentities($linha['id']) ?>">Excluir</a>
+                                <a class="btn btn-xs" href="<?=URL_SITE?><?php echo basename(__FILE__) ?>?acao=visualizacao&id=<?= htmlentities($linha['id']) ?>"><?php
                                     if ($linha['visualizacao'] == 'PUBLICO'){
                                         ?><i class="fa fa-unlock-alt"></i><?php
                                     } else {
@@ -276,11 +276,11 @@ if ($dataanterior){
 <?php if ($pagina['paginas'] > 1){ ?>
         <div class="box-footer clearfix">
             <ul class="pagination pagination-sm no-margin">
-                <li class="<?php echo (($pagina['pagina'] == 1) ? 'disabled' : '') ?>"><a href="<?php echo basename(__FILE__) ?>">&laquo;</a></li>
+                <li class="<?php echo (($pagina['pagina'] == 1) ? 'disabled' : '') ?>"><a href="<?=URL_SITE?><?php echo basename(__FILE__) ?>">&laquo;</a></li>
 <?php for ($pag = 1; $pag <= $pagina['paginas']; $pag++){ ?>
-                <li class="<?php echo (($pagina['pagina'] == $pag) ? 'active' : '') ?>"><a href="<?php echo basename(__FILE__) ?>?pagina=<?php echo $pag ?>"><?php echo $pag ?></a></li>
+                <li class="<?php echo (($pagina['pagina'] == $pag) ? 'active' : '') ?>"><a href="<?=URL_SITE?><?php echo basename(__FILE__) ?>?pagina=<?php echo $pag ?>"><?php echo $pag ?></a></li>
 <?php } ?>
-                <li class="<?php echo (($pagina['pagina'] == $pagina['paginas']) ? 'disabled' : '') ?>"><a href="<?php echo basename(__FILE__) ?>?pagina=<?php echo $pagina['paginas'] ?>">&raquo;</a></li>
+                <li class="<?php echo (($pagina['pagina'] == $pagina['paginas']) ? 'disabled' : '') ?>"><a href="<?=URL_SITE?><?php echo basename(__FILE__) ?>?pagina=<?php echo $pagina['paginas'] ?>">&raquo;</a></li>
             </ul>
         </div>
 <?php } ?>

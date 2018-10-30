@@ -25,5 +25,5 @@ leituraNotificacao(
 if (isset($_SERVER['HTTP_REFERER'])){
     header('Location: ' . $_SERVER['HTTP_REFERER']);
 } else {
-    header('Location: vinculos.php');
+    header('Location: '.URL_SITE.'vinculos.php');
 }

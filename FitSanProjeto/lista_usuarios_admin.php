@@ -3,7 +3,7 @@ $pagina = "Usuarios";
 require_once './template/cabecalho.php';
 
 if (!tipoLogado("admin")){
-    header('Location: pagina1.php');
+    header('Location: '.URL_SITE.'pagina1.php');
     exit;
 }
 
@@ -30,7 +30,7 @@ if (($acao == 'status') || ($acao == 'excluir')) {
         $query = "update usuario set status = " . mysqliEscaparTexto($status) . " where id= " . mysqliEscaparTexto($id);
         mysqli_query($conexao, $query) or die_mysql($query, __FILE__, __LINE__);
     }
-    header('Location: '.basename(__FILE__));
+    header('Location: '.URL_SITE.basename(__FILE__));
     exit();
 }
 
@@ -78,13 +78,13 @@ $resultado = mysqli_query($conexao, $query);
                                         <td style="width: 300px"><?= $linha['tipo'] ?></td>
                                         <td style="width: 50px"><?php
                                                 if ($linha['status'] === 'ativado') {
-                                                    ?><a href="<?php echo basename(__FILE__) ?>?acao=status&id=<?= $linha['id'] ?>">Ativado</a><?php
+                                                    ?><a href="<?=URL_SITE?><?php echo basename(__FILE__) ?>?acao=status&id=<?= $linha['id'] ?>">Ativado</a><?php
                                                 } else {
-                                                    ?><a href="<?php echo basename(__FILE__) ?>?acao=status&id=<?= $linha['id'] ?>">Desativado</a><?php
+                                                    ?><a href="<?=URL_SITE?><?php echo basename(__FILE__) ?>?acao=status&id=<?= $linha['id'] ?>">Desativado</a><?php
                                                 }
                                                 ?></td>
                                             <td style="width: 50px">
-                                                <a href="<?php echo basename(__FILE__) ?>?acao=excluir&id=<?= $linha['id'] ?>">Excluir</a>
+                                                <a href="<?=URL_SITE?><?php echo basename(__FILE__) ?>?acao=excluir&id=<?= $linha['id'] ?>">Excluir</a>
                                             </td>
                                 </tr>
                                     <?php

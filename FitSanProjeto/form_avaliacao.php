@@ -6,7 +6,7 @@ ini_set('display_errors', true);
 //quando um tipo diferente tentar acessar pelo navegador ele será redirecionado para a pagina 1. 
 
 if (!tipoLogado("profissional")) {
-    header('Location: pagina1.php');
+    header('Location: '.URL_SITE.'pagina1.php');
     exit;
 }
 ?>
@@ -18,11 +18,11 @@ if (!tipoLogado("profissional")) {
     </section>
     <section class="content">
 
-        <a href="form_historico_avaliacao_profissional.php">
+        <a href="<?=URL_SITE?>form_historico_avaliacao_profissional.php">
             <button type="button" class="btn btn-primary btn-flat">Histórico de avalições enviadas</button>
         </a>
 
-        <form method="post" action="enviar_avaliacao.php">
+        <form method="post" action="<?=URL_SITE?>enviar_avaliacao.php">
             <div class="col-lg-6">
                 <br><strong>SELECIONE O ALUNO PARA SER AVALIADO</strong><select class="form-control select2" name="aluno" style="width: 100%;" >                                  
                     <option value="">(Selecione)</option>

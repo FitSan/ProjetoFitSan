@@ -3,7 +3,7 @@ $pagina = 'Minhas Dicas';
 include './template/cabecalho.php';
 
 if (!tipoLogado('profissional')){
-    header('Location: pagina1.php');
+    header('Location: '.URL_SITE.'pagina1.php');
 }
 
 $query = "select * from dica where profissional_id=$_SESSION[id] order by data_envio desc";
@@ -18,7 +18,7 @@ $resultado = mysqli_query($conexao, $query);
     <section class="content">
         <div class="box box-primary">
             <div class="box-body">
-                <form role="form" method="post" enctype="multipart/form-data" action="enviar_dica.php">
+                <form role="form" method="post" enctype="multipart/form-data" action="<?=URL_SITE?>enviar_dica.php">
                     <?php
                     if (!empty($_SESSION['msg'])) {
                         ?>
@@ -42,18 +42,18 @@ $resultado = mysqli_query($conexao, $query);
                         ou
                         <input type="file" name="video" >-->
                         <div class="fileinput fileinput-new" data-provides="fileinput">
-                            <span class="btn btn-default btn-file"><span><img src="img/upload_img.png" height="40"></span><input type="file" name="imagens[]" multiple="multiple" hidden accept="image/png, image/jpeg"></span>
+                            <span class="btn btn-default btn-file"><span><img src="<?=URL_SITE?>img/upload_img.png" height="40"></span><input type="file" name="imagens[]" multiple="multiple" hidden accept="image/png, image/jpeg"></span>
 <!--                            <span class="fileinput-filename"></span><span class="fileinput-new">No file chosen</span>-->
 <!--                        </div>-->
                             <b style="padding: 5px ">ou</b>
 <!--                        <div class="fileinput fileinput-new" data-provides="fileinput">-->
-                            <span class="btn btn-default btn-file"><span><img src="img/upload_vid.png" height="40"></span><input type="file" name="video" accept="video/*"> </span>
+                            <span class="btn btn-default btn-file"><span><img src="<?=URL_SITE?>img/upload_vid.png" height="40"></span><input type="file" name="video" accept="video/*"> </span>
 <!--                            <span class="fileinput-filename"></span><span class="fileinput-new">No file chosen</span>-->
                         </div>
 <!--                        <input type="file" name="arquivos[]" class="form-control" multiple="multiple" accept="image/png, image/jpeg, video/*">-->
                     </div>    
                     <button type="submit" class="btn btn-primary">Salvar</button>
-                    <a class="btn btn-danger" href="minhas_dicas.php">Cancelar</a>
+                    <a class="btn btn-danger" href="<?=URL_SITE?>minhas_dicas.php">Cancelar</a>
                 </form>
             </div>
         </div>
@@ -64,7 +64,7 @@ $resultado = mysqli_query($conexao, $query);
             <div class="post">   
                 <div class="user-block">
                     <button type="button" class="pull-right btn-box-tool" data-toggle="modal" data-target="#excluir-dica" data-id="<?= $linha['id'] ?>"><i class="fa fa-times" style="font-size:20px"></i></button>
-                    <a href="form_alterarDica.php?id=<?= $linha['id'] ?>"><button type="button" class="pull-right btn-box-tool" ><i class="fa fa-edit" style="font-size:20px"></i></button></a>
+                    <a href="<?=URL_SITE?>form_alterarDica.php?id=<?= $linha['id'] ?>"><button type="button" class="pull-right btn-box-tool" ><i class="fa fa-edit" style="font-size:20px"></i></button></a>
                     <h4><?= date('d/m/Y H:i:s', dataParse($linha['data_envio'])) ?></h4>                
                 </div>
                 <p style="padding: 5px; "><?= nl2br(htmlentities($linha['texto'])) ?></p>            
@@ -81,7 +81,7 @@ $resultado = mysqli_query($conexao, $query);
                        <?php 
                             }else{
                               ?>  
-                    <li><img src="upload/dica/<?= $linha_upload['nome_arq'] ?>" height="400" style="padding: 5px;"></li>                  
+                    <li><img src="<?=URL_SITE?>upload/dica/<?= $linha_upload['nome_arq'] ?>" height="400" style="padding: 5px;"></li>                  
                         
                        <?php   
                             }

@@ -43,7 +43,7 @@ if ($linha = mysqli_fetch_array($resultado)) {
                             </ul>
 
                             <?php if (!tipoLogado("admin")) { ?>
-                                <a href="form_perfil.php" class="btn btn-primary btn-block"><b>Alterar</b></a>
+                                <a href="<?=URL_SITE?>form_perfil.php" class="btn btn-primary btn-block"><b>Alterar</b></a>
                             <?php } ?>
                         </div>
                     </div>
@@ -140,7 +140,7 @@ if ($linha = mysqli_fetch_array($resultado)) {
                                 <hr>
 
                         <?php if (!tipoLogado("admin")) { ?>
-                                    <a href="informacoes_adicionais.php" class="btn btn-primary btn-block"><b>Alterar</b></a>
+                                    <a href="<?=URL_SITE?>informacoes_adicionais.php" class="btn btn-primary btn-block"><b>Alterar</b></a>
                         <?php } ?>
                             </div>                    
                         </div> 
@@ -162,7 +162,7 @@ if ($linha = mysqli_fetch_array($resultado)) {
             <?php while ($linha = mysqli_fetch_array($resultado)) { ?>
                                             <li>                          
                                                 <img class="img-responsive" src=" <?= htmlspecialchars(!empty($linha['foto']) ? $linha['foto'] : 'img/user-avatar-placeholder.png') ?>" style="width: 100px">
-                                                <a href="perfil_externo.php?id=<?= $linha['aluno_id'] ?>"><?= htmlspecialchars($linha['nome']) ?></a>
+                                                <a href="<?=URL_SITE?>perfil_externo.php?id=<?= $linha['aluno_id'] ?>"><?= htmlspecialchars($linha['nome']) ?></a>
                                             </li>
                                 <?php } ?>
                                     </ul>
@@ -334,11 +334,11 @@ if ($dataanterior){
 <?php if ($paginacao['paginas'] > 1){ ?>
         <div class="box-footer clearfix">
             <ul class="pagination pagination-sm no-margin">
-                <li class="<?php echo (($paginacao['pagina'] == 1) ? 'disabled' : '') ?>"><a href="<?php echo basename(__FILE__) ?>?aba=atividadesExtras">&laquo;</a></li>
+                <li class="<?php echo (($paginacao['pagina'] == 1) ? 'disabled' : '') ?>"><a href="<?=URL_SITE?><?php echo basename(__FILE__) ?>?aba=atividadesExtras">&laquo;</a></li>
 <?php for ($pag = 1; $pag <= $paginacao['paginas']; $pag++){ ?>
-                <li class="<?php echo (($paginacao['pagina'] == $pag) ? 'active' : '') ?>"><a href="<?php echo basename(__FILE__) ?>?aba=atividadesExtras&pagina=<?php echo $pag ?>"><?php echo $pag ?></a></li>
+                <li class="<?php echo (($paginacao['pagina'] == $pag) ? 'active' : '') ?>"><a href="<?=URL_SITE?><?php echo basename(__FILE__) ?>?aba=atividadesExtras&pagina=<?php echo $pag ?>"><?php echo $pag ?></a></li>
 <?php } ?>
-                <li class="<?php echo (($paginacao['pagina'] == $paginacao['paginas']) ? 'disabled' : '') ?>"><a href="<?php echo basename(__FILE__) ?>?aba=atividadesExtras&pagina=<?php echo $paginacao['paginas'] ?>">&raquo;</a></li>
+                <li class="<?php echo (($paginacao['pagina'] == $paginacao['paginas']) ? 'disabled' : '') ?>"><a href="<?=URL_SITE?><?php echo basename(__FILE__) ?>?aba=atividadesExtras&pagina=<?php echo $paginacao['paginas'] ?>">&raquo;</a></li>
             </ul>
         </div>
     <?php } ?>  
@@ -517,11 +517,11 @@ if ($grupo_atual){
 <?php if ($paginacao2['paginas'] > 1){ ?>
         <div class="box-footer clearfix">
             <ul class="pagination pagination-sm no-margin">
-                <li class="<?php echo (($paginacao2['pagina'] == 1) ? 'disabled' : '') ?>"><a href="<?php echo basename(__FILE__) ?>?aba=treinosPlanilha">&laquo;</a></li>
+                <li class="<?php echo (($paginacao2['pagina'] == 1) ? 'disabled' : '') ?>"><a href="<?=URL_SITE?><?php echo basename(__FILE__) ?>?aba=treinosPlanilha">&laquo;</a></li>
 <?php for ($pag = 1; $pag <= $paginacao2['paginas']; $pag++){ ?>
-                <li class="<?php echo (($paginacao2['pagina'] == $pag) ? 'active' : '') ?>"><a href="<?php echo basename(__FILE__) ?>?aba=treinosPlanilha&pagina2=<?php echo $pag ?>"><?php echo $pag ?></a></li>
+                <li class="<?php echo (($paginacao2['pagina'] == $pag) ? 'active' : '') ?>"><a href="<?=URL_SITE?><?php echo basename(__FILE__) ?>?aba=treinosPlanilha&pagina2=<?php echo $pag ?>"><?php echo $pag ?></a></li>
 <?php } ?>
-                <li class="<?php echo (($paginacao2['pagina'] == $paginacao2['paginas']) ? 'disabled' : '') ?>"><a href="<?php echo basename(__FILE__) ?>?aba=treinosPlanilha&pagina2=<?php echo $paginacao2['paginas'] ?>">&raquo;</a></li>
+                <li class="<?php echo (($paginacao2['pagina'] == $paginacao2['paginas']) ? 'disabled' : '') ?>"><a href="<?=URL_SITE?><?php echo basename(__FILE__) ?>?aba=treinosPlanilha&pagina2=<?php echo $paginacao2['paginas'] ?>">&raquo;</a></li>
             </ul>
         </div>
 <?php } ?>

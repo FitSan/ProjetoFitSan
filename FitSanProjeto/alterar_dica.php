@@ -43,7 +43,7 @@ $query = "update dica set texto='$dica', profissional_nome='$_SESSION[nome]', pr
 
 if($_FILES['imagens']['size'][0] != 0&&$_FILES['video']['size']!=0){
     $_SESSION['msg'] = "Dica não alterada! Escolha apenas um tipo de upload.";
-    header('Location: form_alterarDica.php?id='.$id);
+    header('Location: '.URL_SITE.'form_alterarDica.php?id='.$id);
 }else if ($_FILES['imagens']['size'][0] != 0) {
     $arquivo = $_FILES['imagens'];
     $numArq = count(array_filter($arquivo['name']));
@@ -88,9 +88,9 @@ if($_FILES['imagens']['size'][0] != 0&&$_FILES['video']['size']!=0){
 
             if (!mysqli_query($conexao, $query)) {
                 $_SESSION['msg'] = "Envio não realizado! Falha na conexão.";
-                header('Location: form_alterarDica.php?id='.$id);
+                header('Location: '.URL_SITE.'form_alterarDica.php?id='.$id);
             } else {
-                header('Location: pagina1.php');
+                header('Location: '.URL_SITE.'pagina1.php');
             }
         }
     } else{
@@ -110,7 +110,7 @@ if($_FILES['imagens']['size'][0] != 0&&$_FILES['video']['size']!=0){
             $msg = "Dica não alterada! Erro no upload.";
         }
         $_SESSION['msg'] = $msg;
-        header('Location: form_alterarDica.php?id='.$id);
+        header('Location: '.URL_SITE.'form_alterarDica.php?id='.$id);
     }
 } else if ($_FILES['video']['size']!=0) {
     $arquivo = $_FILES['video'];
@@ -140,9 +140,9 @@ if($_FILES['imagens']['size'][0] != 0&&$_FILES['video']['size']!=0){
 
         if (!mysqli_query($conexao, $query)) {
             $_SESSION['msg'] = "Dica não alterada! Falha na conexão.";
-            header('Location: form_alterarDica.php?id='.$id);
+            header('Location: '.URL_SITE.'form_alterarDica.php?id='.$id);
         } else {
-            header('Location: pagina1.php');
+            header('Location: '.URL_SITE.'pagina1.php');
         }
     } else {
         if(!in_array($arquivo['type'], $permite)){    
@@ -157,12 +157,12 @@ if($_FILES['imagens']['size'][0] != 0&&$_FILES['video']['size']!=0){
             $msg = "Dica não alterada! Erro no upload do vídeo.";
         }
         $_SESSION['msg'] = $msg;
-        header('Location: form_alterarDica.php?id='.$id);
+        header('Location: '.URL_SITE.'form_alterarDica.php?id='.$id);
     }
 } else {
     if (!trim($dica)&&$quantUploads==0&&$quantUploadsVid==0) {
         $_SESSION['msg'] = "Dica não alterada! Dica vazia.";
-        header('Location: form_alterarDica.php?id='.$id);
+        header('Location: '.URL_SITE.'form_alterarDica.php?id='.$id);
     } else {  
         if(isset($_POST[id_upload])){
             foreach ($_POST['id_upload'] as $id_upload) {
@@ -177,6 +177,6 @@ if($_FILES['imagens']['size'][0] != 0&&$_FILES['video']['size']!=0){
             }
         }
         mysqli_query($conexao, $query);
-        header('Location: pagina1.php');
+        header('Location: '.URL_SITE.'pagina1.php');
     }
 }

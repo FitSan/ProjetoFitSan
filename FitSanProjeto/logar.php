@@ -13,17 +13,17 @@ $resultado = mysqli_fetch_array($retorno);
 
 if ($resultado == null) {  
     $_SESSION['erro'] = "Dados nao conferem!";    
-    header('Location: form_login.php');    
+    header('Location: '.URL_SITE.'form_login.php');    
 }else{
     $confirm = password_verify($senha, $resultado['senha']);
 }
 
 if ($confirm) {
     logar($resultado);
-    header('Location: pagina1.php');    
+    header('Location: '.URL_SITE.'pagina1.php');    
 }else{
     $_SESSION['erro'] = "Senha incorreta!";
-    header('Location: form_login.php');   
+    header('Location: '.URL_SITE.'form_login.php');   
 }
 
 

@@ -67,7 +67,7 @@ if ($peso_final <= $peso_inicial && $tipo == 'GANHAR' || $peso_inicial <= $peso_
 }
 
 if ($erro) {
-    header('Location: metas.php');
+    header('Location: '.URL_SITE.'metas.php');
 } else {
     $verificar_metas = "select * from meta where usuario_id=" . $_SESSION['id'] . " and status='ativa'";
     $resultado = mysqli_query($conexao, $verificar_metas);
@@ -76,15 +76,15 @@ if ($erro) {
         
         if (!mysqli_query($conexao, $query)) {
             $_SESSION['erro'] = "Meta não iniciada! Falha na conexão.";
-            header('Location: metas.php');
+            header('Location: '.URL_SITE.'metas.php');
         } else {
             $meta_id = mysqli_insert_id($conexao);
             $query_dado_meta = "insert into dados_meta (data_add, peso_add, meta_id) values ('$data_inicial', '$peso_inicial', $meta_id)";
             mysqli_query($conexao, $query_dado_meta);
             $_SESSION['info'] = "Meta iniciada!";
-            header('Location: metas.php');
+            header('Location: '.URL_SITE.'metas.php');
         }
-        header('Location: metas.php');
+        header('Location: '.URL_SITE.'metas.php');
     } else {
         $_SESSION['erro'] = 'Já existe meta ativa!';
     }

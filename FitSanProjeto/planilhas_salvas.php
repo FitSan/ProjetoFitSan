@@ -3,7 +3,7 @@ $pagina = "Planilha Salvas";
 require_once './template/cabecalho.php';
 
 if (!tipoLogado("profissional")){
-    header('Location: pagina1.php');
+    header('Location: '.URL_SITE.'pagina1.php');
     exit;
 }
 
@@ -55,7 +55,7 @@ while ($linha = mysqli_fetch_array($resultado)) {
                 
             </div><br>
             <div class="pull-right">
-                <a href="planilha.php" class="btn btn-app" type="button"><i class="fa fa-backward"></i> Voltar </a>
+                <a href="<?=URL_SITE?>planilha.php" class="btn btn-app" type="button"><i class="fa fa-backward"></i> Voltar </a>
             </div>
         </div>
     </div>

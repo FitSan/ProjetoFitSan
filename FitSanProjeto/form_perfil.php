@@ -19,7 +19,7 @@ if ($linha = mysqli_fetch_array($resultado)) {
                 <div class="box-header with-border">
                     <h3 class="box-title">Meu Perfil</h3>
                 </div>
-                <form role="form" method="post" enctype="multipart/form-data" action="alterar_perfil.php">
+                <form role="form" method="post" enctype="multipart/form-data" action="<?=URL_SITE?>alterar_perfil.php">
                     <div class="box-body">
                         <div class="form-group">
                             <label for="nome">Nome</label>

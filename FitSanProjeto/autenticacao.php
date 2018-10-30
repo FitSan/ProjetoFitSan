@@ -73,7 +73,7 @@ function sessaoExpirada() {
 function autenticar() {
     //se NAO estaLogado ou sessaoExpirada 
     if (!estaLogado() || sessaoExpirada()) {
-        header('Location: form_login.php');
+        header('Location: '.URL_SITE.'form_login.php');
     } else {
         return true;
     }
@@ -107,7 +107,7 @@ function verificarMeta() {
     } else {
         $finalizar_meta = "update meta set status='finalizada' where status='ativa' and usuario_id=" . $_SESSION['id'];
         mysqli_query($conexao, $finalizar_meta);
-        criarNotificacao('INFO', 'Sua meta foi finalizada na data ' . date('d M Y', dataParse($linha_meta['data_final'])) . '<br><a href="okMetaNot.php">Ok</a>', null, $_SESSION['id'], null);
+        criarNotificacao('INFO', 'Sua meta foi finalizada na data ' . date('d M Y', dataParse($linha_meta['data_final'])) . '<br><a href="'.URL_SITE.'okMetaNot.php">Ok</a>', null, $_SESSION['id'], null);
     }
 }
 

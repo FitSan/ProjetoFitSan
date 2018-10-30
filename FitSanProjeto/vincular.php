@@ -18,7 +18,7 @@ $query = "insert into vinculo (aluno_id, profissional_id, status, solicitante) v
 mysqli_query($conexao, $query) or die_mysql($query, __FILE__, __LINE__);
 
 criarNotificacao('INFO',
-    'Você tem uma nova solicitação de '. $linha['nome'] . " " . $linha['sobrenome']  . '<br> O que deseja fazer? <a href="status_vinculo.php?id='.$_SESSION['id'].'&status=aprovado">Aceitar</a> <a href="status_vinculo.php?id='.$_SESSION['id'].'&status=negado">Negar</a>',
+    'Você tem uma nova solicitação de '. $linha['nome'] . " " . $linha['sobrenome']  . '<br> O que deseja fazer? <a href="'.URL_SITE.'status_vinculo.php?id='.$_SESSION['id'].'&status=aprovado">Aceitar</a> <a href="status_vinculo.php?id='.$_SESSION['id'].'&status=negado">Negar</a>',
     tipoLogado('aluno') ? $profissional_id : null,
     !tipoLogado('aluno') ? $aluno_id : null,
     ['profissional_id' => $profissional_id, 'aluno_id' => $aluno_id, 'table' => 'vinculo']
@@ -27,5 +27,5 @@ criarNotificacao('INFO',
 if (isset($_SERVER['HTTP_REFERER'])){
     header('Location: ' . $_SERVER['HTTP_REFERER']);
 } else {
-    header('Location: vinculos.php');
+    header('Location: '.URL_SITE.'vinculos.php');
 }

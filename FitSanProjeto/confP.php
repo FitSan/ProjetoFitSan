@@ -8,4 +8,4 @@ $query = "update usuario set nome='$nome', email='$email', senha='$senha' where 
 
 mysqli_query($conexao, $query);
 logar(['email' => $email, 'tipo' => $_SESSION['tipo'], 'nome' => $nome, 'id' => $_SESSION['id']]);
-header('Location: pagina1.php');
+header('Location: '.URL_SITE.'pagina1.php');

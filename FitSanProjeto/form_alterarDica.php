@@ -2,7 +2,7 @@
 $pagina = "Alterar dica";
 include './template/cabecalho.php';
 if (!tipoLogado('profissional')){
-    header('Location: pagina1.php');
+    header('Location: '.URL_SITE.'pagina1.php');
 }
 
 $dica_id = $_GET['id'];
@@ -21,7 +21,7 @@ $linha_dica = mysqli_fetch_array($resultado_dica);
     <section class="content">
         <div class="box box-primary">
             <div class="box-body">
-                <form role="form" method="post" enctype="multipart/form-data" action="alterar_dica.php">
+                <form role="form" method="post" enctype="multipart/form-data" action="<?=URL_SITE?>alterar_dica.php">
                     <?php
                     if (!empty($_SESSION['msg'])) {
                         ?>
@@ -56,12 +56,12 @@ $linha_dica = mysqli_fetch_array($resultado_dica);
                             if ($linha_upload['tipo'] != 'img') {
                                 ?>                 
                             <li><video id="<?= $num ?>" height="300" style="padding: 5px;" onclick="hideUpload(this)">
-                                    <source src="upload/dica/<?= $linha_upload['nome_arq'] ?>" > 
+                                    <source src="<?=URL_SITE?>upload/dica/<?= $linha_upload['nome_arq'] ?>" > 
                                 </video></li>                         
                                 <?php
                             } else {
                                 ?>  
-                                <li><img id="<?= $num ?>" src="upload/dica/<?= $linha_upload['nome_arq'] ?>" height="300" style="padding: 5px;" onclick="hideUpload(this)"></li>
+                                <li><img id="<?= $num ?>" src="<?=URL_SITE?>upload/dica/<?= $linha_upload['nome_arq'] ?>" height="300" style="padding: 5px;" onclick="hideUpload(this)"></li>
 
                                 <?php
                             }
@@ -74,18 +74,18 @@ $linha_dica = mysqli_fetch_array($resultado_dica);
                     </div>
                     <div class="form-group">
                         <div class="fileinput fileinput-new" data-provides="fileinput">
-                            <span class="btn btn-default btn-file"><span><img src="img/upload_img.png" height="40"></span><input type="file" name="imagens[]" multiple="multiple" hidden accept="image/png, image/jpeg"></span>
+                            <span class="btn btn-default btn-file"><span><img src="<?=URL_SITE?>img/upload_img.png" height="40"></span><input type="file" name="imagens[]" multiple="multiple" hidden accept="image/png, image/jpeg"></span>
 <!--                            <span class="fileinput-filename"></span><span class="fileinput-new">No file chosen</span>-->
                             <!--                        </div>-->
                             <b style="padding: 5px ">ou</b>
                             <!--                        <div class="fileinput fileinput-new" data-provides="fileinput">-->
-                            <span class="btn btn-default btn-file"><span><img src="img/upload_vid.png" height="40"></span><input type="file" name="video" accept="video/*"> </span>
+                            <span class="btn btn-default btn-file"><span><img src="<?=URL_SITE?>img/upload_vid.png" height="40"></span><input type="file" name="video" accept="video/*"> </span>
 <!--                            <span class="fileinput-filename"></span><span class="fileinput-new">No file chosen</span>-->
                         </div>
 <!--                        <input type="file" name="arquivos[]" class="form-control" multiple="multiple" accept="image/png, image/jpeg, video/*">-->
                     </div>    
                     <button type="submit" class="btn btn-primary">Salvar</button>
-                    <a class="btn btn-danger" href="minhas_dicas.php">Cancelar</a>
+                    <a class="btn btn-danger" href="<?=URL_SITE?>minhas_dicas.php">Cancelar</a>
                 </form>                
             </div>
         </div>

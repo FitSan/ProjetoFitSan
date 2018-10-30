@@ -35,7 +35,7 @@ if($existe == true){
    
     unset($_SESSION['codigo']);
     
-    header('Location: form_login.php');
+    header('Location: '.URL_SITE.'form_login.php');
     exit();
        
 } else {
@@ -43,11 +43,11 @@ if($existe == true){
      $_SESSION['erroCount'] = "Dados nao conferem!";
      
       unset($_SESSION['codigo']);
-    header('Location: form_recSenha.php');
+    header('Location: '.URL_SITE.'form_recSenha.php');
     
 }
   
-header('Location: form_recSenha.php');
+header('Location: '.URL_SITE.'form_recSenha.php');
 
 
 } else {
@@ -55,5 +55,5 @@ header('Location: form_recSenha.php');
          $_SESSION['erroCount'] = "Dados nao conferem!";
 
             unset($_SESSION['codigo']);
-    header('Location: form_recSenha.php');
+    header('Location: '.URL_SITE.'form_recSenha.php');
 }

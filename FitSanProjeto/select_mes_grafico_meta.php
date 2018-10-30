@@ -19,7 +19,7 @@ $query_meses = "select MAX(data_add) as data_add, EXTRACT(YEAR_MONTH FROM data_a
 $resultado_meses = mysqli_query($conexao, $query_meses) or die_mysql($query_meses, __FILE__, __LINE__);
 ?>
 <div class="box-body">  
-    <form class="form-inline" role="form" method="post" action="<?php echo basename(__FILE__) ?>">
+    <form class="form-inline" role="form" method="post" action="<?=URL_SITE?><?php echo basename(__FILE__) ?>">
         <label style="padding: 4px 3px 4px 0;">Mês: </label>
         <select name="dado_mes" id="dado_mes" class="form-control">
         <?php

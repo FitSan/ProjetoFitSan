@@ -20,7 +20,7 @@ if ($linha = mysqli_fetch_array($resultado)) {
                 <div class="box-header with-border">
                     <h3 class="box-title">Meu Perfil</h3>
                 </div>
-                <form role="form" method="post" enctype="multipart/form-data" action="atualizar_conf.php">
+                <form role="form" method="post" enctype="multipart/form-data" action="<?=URL_SITE?>atualizar_conf.php">
                     <div class="box-body">
 <?php if (!tipoLogado("admin")){ ?>
                          <div class="form-group">
@@ -101,7 +101,7 @@ if ($linha = mysqli_fetch_array($resultado)) {
                                    Salvar 
                         </button> 
 <?php if (!tipoLogado("admin")){ ?>
-                        <a href="desativarP.php" type="button" class="btn btn-danger">Desativar Conta</a>
+                        <a href="<?=URL_SITE?>desativarP.php" type="button" class="btn btn-danger">Desativar Conta</a>
 <?php } ?>
                     </div>
 

@@ -46,16 +46,16 @@ $resultados = mysqli_num_rows($resultado);
                         while ($linha = mysqli_fetch_array($resultado)) {
                             ?>
                             <tr>
-                                <td> <a href="perfil_externo.php?id=<?= $linha['id'] ?>"><?= $linha['nome'] . ' ' . $linha['sobrenome'] ?></td>
+                                <td> <a href="<?=URL_SITE?>perfil_externo.php?id=<?= $linha['id'] ?>"><?= $linha['nome'] . ' ' . $linha['sobrenome'] ?></td>
                                 <td><?= $linha['email'] ?></td>
                                 <?php
                                 if ($linha[$usuario_busca] == $_SESSION['id']) {
                                     ?>
-                                    <td><a href="desvincular.php?id=<?= $linha['id'] ?>"><span class="label label-danger">Deixar de seguir</span></a></td>               
+                                    <td><a href="<?=URL_SITE?>desvincular.php?id=<?= $linha['id'] ?>"><span class="label label-danger">Deixar de seguir</span></a></td>               
                                     <?php
                                 } elseif ($linha['status'] === 'aprovado') {
                                     ?>
-                                    <td><a href="desvincular.php?id=<?= $linha['id'] ?>"><span class="label label-danger">Deixar de seguir</span></a></td>                
+                                    <td><a href="<?=URL_SITE?>desvincular.php?id=<?= $linha['id'] ?>"><span class="label label-danger">Deixar de seguir</span></a></td>                
                                     <?php
                                 } elseif ($linha['status'] === 'espera') {
                                     if (tipoLogado($linha['solicitante'])) {
@@ -64,12 +64,12 @@ $resultados = mysqli_num_rows($resultado);
                                         <?php
                                     } else {
                                         ?>
-                                        <td><a href="status_vinculo.php?id=<?= $linha['id'] ?>&status=aprovado"><span class="label label-success">Aceitar</span></a> <a href="status_vinculo.php?id=<?= $linha['id'] ?>&status=negado"><span class="label label-danger">Negar</span></a></td>                
+                                        <td><a href="<?=URL_SITE?>status_vinculo.php?id=<?= $linha['id'] ?>&status=aprovado"><span class="label label-success">Aceitar</span></a> <a href="status_vinculo.php?id=<?= $linha['id'] ?>&status=negado"><span class="label label-danger">Negar</span></a></td>                
                                         <?php
                                     }
                                 } else {
                                     ?>
-                                    <td><a href="vincular.php?id=<?= $linha['id'] ?>"><span class="label label-primary">Seguir</span></a></td>
+                                    <td><a href="<?=URL_SITE?>vincular.php?id=<?= $linha['id'] ?>"><span class="label label-primary">Seguir</span></a></td>
                                     <?php
                                 }
                                 ?>

@@ -3,7 +3,7 @@ $pagina = "Prescrição de treino";
 require_once './template/cabecalho.php';
 
 if (!tipoLogado("aluno")) {
-    header('Location: pagina1.php');
+    header('Location: '.URL_SITE.'pagina1.php');
     exit;
 }
 
@@ -38,7 +38,7 @@ if ($acao == 'checkin'){
             $query = "insert into planilha_aluno_exercicio ( planilha_feito_id, planilha_tabela_id, exercicio) values (" . mysqliEscaparTexto($id) . ", " . mysqliEscaparTexto($planilha_tabela_id) . ", " . mysqliEscaparTexto($exercicio) . "  )";
             mysqli_query($conexao, $query) or die_mysql($query, __FILE__, __LINE__);
         }
-        header('Location: ' . basename(__FILE__));
+        header('Location: ' .URL_SITE.basename(__FILE__));
         exit();
     }
 } elseif ($acao == 'excluir') {
@@ -48,7 +48,7 @@ if ($acao == 'checkin'){
         $query = "delete from planilha_aluno_feito where id = " . mysqliEscaparTexto($id);
         mysqli_query($conexao, $query) or die_mysql($query, __FILE__, __LINE__);
     }
-    header('Location: '.basename(__FILE__));
+    header('Location: '.URL_SITE.basename(__FILE__));
     exit();
 }
 
@@ -111,7 +111,7 @@ $resultado = dbquery($query);
                 <option value="<?php echo htmlspecialchars($value['id']); ?>"<?php if ($value['id'] == $profissional) echo ' selected="selected"' ?>><?php echo htmlspecialchars($value['nome'] . ' ' . $value['sobrenome']); ?></option>
 <?php } ?>
         </select></form>
-        <div class="box-header"><form class="form-horizontal" action="<?php echo basename(__FILE__) ?>?acao=checkin" method="POST" enctype="multipart/form-data">
+        <div class="box-header"><form class="form-horizontal" action="<?=URL_SITE?><?php echo basename(__FILE__) ?>?acao=checkin" method="POST" enctype="multipart/form-data">
             <h3 class="box-title">Prescrição de treino</h3>
             <br><br>
 <!--            <div class="box-body" >-->
@@ -284,7 +284,7 @@ foreach ($resultado as $linha) {
                     
                 </div>
                 <div class="timeline-footer">
-                    <a href="<?php echo basename(__FILE__) ?>?acao=excluir&id=<?= htmlentities($anterior['planilha_feito_id']) ?>" class="btn btn-social-icon btn-danger"><i class="fa fa-trash-o"></i></a>
+                    <a href="<?=URL_SITE?><?php echo basename(__FILE__) ?>?acao=excluir&id=<?= htmlentities($anterior['planilha_feito_id']) ?>" class="btn btn-social-icon btn-danger"><i class="fa fa-trash-o"></i></a>
                     
                 </div>
             </div>
@@ -350,7 +350,7 @@ if ($grupo_atual){
                     
                 </div>
                 <div class="timeline-footer">
-                    <a href="<?php echo basename(__FILE__) ?>?acao=excluir&id=<?= htmlentities($anterior['planilha_feito_id']) ?>" class="btn btn-social-icon btn-danger"><i class="fa fa-trash-o"></i></a>
+                    <a href="<?=URL_SITE?><?php echo basename(__FILE__) ?>?acao=excluir&id=<?= htmlentities($anterior['planilha_feito_id']) ?>" class="btn btn-social-icon btn-danger"><i class="fa fa-trash-o"></i></a>
                     
                 </div>
             </div>
@@ -366,11 +366,11 @@ if ($grupo_atual){
 <?php if ($paginacao['paginas'] > 1){ ?>
         <div class="box-footer clearfix">
             <ul class="pagination pagination-sm no-margin">
-                <li class="<?php echo (($paginacao['pagina'] == 1) ? 'disabled' : '') ?>"><a href="<?php echo basename(__FILE__) ?>">&laquo;</a></li>
+                <li class="<?php echo (($paginacao['pagina'] == 1) ? 'disabled' : '') ?>"><a href="<?=URL_SITE?><?php echo basename(__FILE__) ?>">&laquo;</a></li>
 <?php for ($pag = 1; $pag <= $paginacao['paginas']; $pag++){ ?>
-                <li class="<?php echo (($paginacao['pagina'] == $pag) ? 'active' : '') ?>"><a href="<?php echo basename(__FILE__) ?>?pagina=<?php echo $pag ?>"><?php echo $pag ?></a></li>
+                <li class="<?php echo (($paginacao['pagina'] == $pag) ? 'active' : '') ?>"><a href="<?=URL_SITE?><?php echo basename(__FILE__) ?>?pagina=<?php echo $pag ?>"><?php echo $pag ?></a></li>
 <?php } ?>
-                <li class="<?php echo (($paginacao['pagina'] == $paginacao['paginas']) ? 'disabled' : '') ?>"><a href="<?php echo basename(__FILE__) ?>?pagina=<?php echo $paginacao['paginas'] ?>">&raquo;</a></li>
+                <li class="<?php echo (($paginacao['pagina'] == $paginacao['paginas']) ? 'disabled' : '') ?>"><a href="<?=URL_SITE?><?php echo basename(__FILE__) ?>?pagina=<?php echo $paginacao['paginas'] ?>">&raquo;</a></li>
             </ul>
         </div>
 <?php } ?>

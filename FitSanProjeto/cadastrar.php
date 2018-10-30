@@ -59,7 +59,7 @@ if ($contSenha < 8) {
     $_SESSION['erro_email'] = "$email ";
     $_SESSION['erro_tipo_usuario'] = "$tipo_usuario ";
 
-    header('Location: form_cadastrar.php');
+    header('Location: '.URL_SITE.'form_cadastrar.php');
 } else {
 
 
@@ -70,7 +70,7 @@ if ($contSenha < 8) {
         $_SESSION['erro_email'] = "$email ";
         $_SESSION['erro_tipo_usuario'] = "$tipo_usuario ";
 
-        header('Location: form_cadastrar.php');
+        header('Location: '.URL_SITE.'form_cadastrar.php');
     } else {
 
         if ($existe || $contEmail == null) {
@@ -83,7 +83,7 @@ if ($contSenha < 8) {
 
 
 
-            header('Location: form_cadastrar.php');
+            header('Location: '.URL_SITE.'form_cadastrar.php');
         } else {
             $query = "insert into usuario (nome, sobrenome, senha, email, tipo_id) values ('$nome', '$sobrenome', '$senha_hash', '$email', '$tipo_usuario')";
 
@@ -92,7 +92,7 @@ if ($contSenha < 8) {
 
             mysqli_query($conexao, $query);
 
-            header('Location: form_login.php');
+            header('Location: '.URL_SITE.'form_login.php');
         }
     }
 }

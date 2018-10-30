@@ -18,19 +18,19 @@ require_once './template/cabecalho.php';
         </ol> 
         <div class="carousel-inner">
             <div class="item active">
-                <img src="img/fitsan2.jpg" style="width: 100%;" alt="Primeiro slide">
+                <img src="<?=URL_SITE?>img/fitsan2.jpg" style="width: 100%;" alt="Primeiro slide">
                 <div class="carousel-caption">
                     Primeiro Slide
                 </div>
             </div>
             <div class="item">
-                <img src="img/fitsan1.jpg" style="width: 100%;" alt="Segundo slide">
+                <img src="<?=URL_SITE?>img/fitsan1.jpg" style="width: 100%;" alt="Segundo slide">
                 <div class="carousel-caption">
                     Segundo Slide
                 </div>
             </div>
             <div class="item">
-                <img src="img/fitsan3.jpg" style="width: 100%;" alt="Terceiro slide">
+                <img src="<?=URL_SITE?>img/fitsan3.jpg" style="width: 100%;" alt="Terceiro slide">
                 <div class="carousel-caption">
                     Terceiro Slide
                 </div>
@@ -50,7 +50,7 @@ require_once './template/cabecalho.php';
         <div class="row justify-content-sm-center my-4">
             <div class="col-sm-6 col-md-4 ">
                 <div class="card mb-5">
-                    <img class="card-img-top img-responsive"  src="img/Planilha.png" alt="Planilha">
+                    <img class="card-img-top img-responsive"  src="<?=URL_SITE?>img/Planilha.png" alt="Planilha">
                     <div class="card-body">
                         <h4 class="card-title">Planilha de Treino</h4>
                         <h6 class="card-subtitle mb-2 text-muted">Profissional faz, o aluno segue.</h6>
@@ -64,7 +64,7 @@ require_once './template/cabecalho.php';
 
             <div class="col-sm-6 col-md-4 ">
                 <div class="card mb-5">
-                    <img class="card-img-top img-responsive"  src="img/avaliacao.png" alt="Avaliacao">
+                    <img class="card-img-top img-responsive"  src="<?=URL_SITE?>img/avaliacao.png" alt="Avaliacao">
                     <div class="card-body">
                         <h4 class="card-title">Avaliações</h4>
                         <h6 class="card-subtitle mb-2 text-muted">Análise individual para cada aluno.</h6>
@@ -78,7 +78,7 @@ require_once './template/cabecalho.php';
 
             <div class="col-sm-6 col-md-4 ">
                 <div class="card mb-5">
-                    <img class="card-img-top img-responsive"  src="img/historico.png" alt="Historico">
+                    <img class="card-img-top img-responsive"  src="<?=URL_SITE?>img/historico.png" alt="Historico">
                     <div class="card-body">
                         <h4 class="card-title">Histórico</h4>
                         <h6 class="card-subtitle mb-2 text-muted">Registre suas atividades.</h6>

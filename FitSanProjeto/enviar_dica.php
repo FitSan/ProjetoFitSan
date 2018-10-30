@@ -12,7 +12,7 @@ $msg = '';
 $diretorio = "upload/dica/";
 if($_FILES['imagens']['size'][0] != 0&&$_FILES['video']['size']!=0){
     $_SESSION['msg'] = "Dica não alterada! Escolha apenas um tipo de upload.";
-    header('Location: minhas_dicas.php');
+    header('Location: '.URL_SITE.'minhas_dicas.php');
 }else if ($_FILES['imagens']['size'][0] != 0) {
     $arquivo = $_FILES['imagens'];
     $numArq = count(array_filter($arquivo['name']));
@@ -47,9 +47,9 @@ if($_FILES['imagens']['size'][0] != 0&&$_FILES['video']['size']!=0){
 
             if (!mysqli_query($conexao, $query)) {
                 $_SESSION['msg'] = "Envio não realizado! Falha na conexão.";
-                header('Location: minhas_dicas.php');
+                header('Location: '.URL_SITE.'minhas_dicas.php');
             } else {
-                header('Location: pagina1.php');
+                header('Location: '.URL_SITE.'pagina1.php');
             }
         }
     } else{
@@ -63,7 +63,7 @@ if($_FILES['imagens']['size'][0] != 0&&$_FILES['video']['size']!=0){
             $msg = "Envio não realizado! Erro no upload.";
         }
         $_SESSION['msg'] = $msg;
-        header('Location: minhas_dicas.php');
+        header('Location: '.URL_SITE.'minhas_dicas.php');
     }
 } else if ($_FILES['video']['size']!=0) {
     $arquivo = $_FILES['video'];
@@ -83,9 +83,9 @@ if($_FILES['imagens']['size'][0] != 0&&$_FILES['video']['size']!=0){
 
         if (!mysqli_query($conexao, $query)) {
             $_SESSION['msg'] = "Envio não realizado! Falha na conexão.";
-            header('Location: minhas_dicas.php');
+            header('Location: '.URL_SITE.'minhas_dicas.php');
         } else {
-            header('Location: pagina1.php');
+            header('Location: '.URL_SITE.'pagina1.php');
         }
     } else {
         if(!in_array($arquivo['type'], $permite)){    
@@ -98,15 +98,15 @@ if($_FILES['imagens']['size'][0] != 0&&$_FILES['video']['size']!=0){
             $msg = "Envio não realizado! Erro no upload do vídeo.";
         }
         $_SESSION['msg'] = $msg;
-        header('Location: minhas_dicas.php');
+        header('Location: '.URL_SITE.'minhas_dicas.php');
     }
 } else {
     if (!trim($dica)) {
         $_SESSION['msg'] = "Envio não realizado! Dica vazia.";
-        header('Location: minhas_dicas.php');
+        header('Location: '.URL_SITE.'minhas_dicas.php');
     } else {
         $query = "insert into dica values (default, '$dica', '$_SESSION[nome]', $_SESSION[id], '$data_envio')";
         mysqli_query($conexao, $query);
-        header('Location: pagina1.php');
+        header('Location: '.URL_SITE.'pagina1.php');
     }
 }

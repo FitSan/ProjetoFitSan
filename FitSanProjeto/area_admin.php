@@ -3,7 +3,7 @@ $pagina = "Area do administrador";
 require_once './template/cabecalho.php';
 
 if (!tipoLogado("admin")){
-    header('Location: pagina1.php');
+    header('Location: '.URL_SITE.'pagina1.php');
     exit;
 }
 ?>
@@ -17,14 +17,14 @@ if (!tipoLogado("admin")){
             <h3 class="box-title">Escolha onde deseja ir</h3>
         </div>
         <div class="box-body">
-            <a href="lista_usuarios_admin.php" class="btn btn-app">
+            <a href="<?=URL_SITE?>lista_usuarios_admin.php" class="btn btn-app">
                 <i class="fa fa-user"></i> Usuarios
             </a>
             
-            <a href="planilha_muscCard.php" class="btn btn-app">
+            <a href="<?=URL_SITE?>planilha_muscCard.php" class="btn btn-app">
                 <i class="fa fa-heart"></i> Músculos/Cárdio
             </a>
-            <a href="planilha_exercicios.php" class="btn btn-app">
+            <a href="<?=URL_SITE?>planilha_exercicios.php" class="btn btn-app">
               <i class="fa fa-bicycle"></i> Exercícios  
             </a>
         </div>

@@ -85,18 +85,18 @@ if ($peso_final <= $peso_inicial && $tipo == 'GANHAR' || $peso_inicial <= $peso_
 
 
 if ($erro) {
-    header('Location: metas.php');
+    header('Location: '.URL_SITE.'metas.php');
 } else {
         $query = "update meta set tipo='$tipo', data_inicial='$data_inicial', data_final='$data_final', peso_inicial='$peso_inicial', peso_final='$peso_final' where usuario_id='".$_SESSION[id]."' and status='ativa'";
         
         if (!mysqli_query($conexao, $query)) {
             $_SESSION['erro'] = "Meta não alterada! Falha na conexão.";
-            header('Location: metas.php');
+            header('Location: '.URL_SITE.'metas.php');
         } else {
             $query_dado_meta = "update dados_meta set data_add=(data_add, peso_add, meta_id) values ('$data_inicial', peso_add='$peso_inicial' where meta_id=  and id=1";
             mysqli_query($conexao, $query_dado_meta);
             $_SESSION['info'] = "Meta alterada!";
-            header('Location: metas.php');
+            header('Location: '.URL_SITE.'metas.php');
         }
 }
 

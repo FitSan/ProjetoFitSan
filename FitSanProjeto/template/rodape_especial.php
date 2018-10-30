@@ -5,7 +5,7 @@
     <div class="pull-right hidden-xs">
         <b>Version</b> 1.0.0
     </div>
-    <strong>Copyright &copy; <?php echo date("Y"); ?> <a href="">FitSan</a>.</strong> Todos os direitos reservados.
+    <strong>Copyright &copy; <?php echo date("Y"); ?> <a href="<?=URL_SITE?>">FitSan</a>.</strong> Todos os direitos reservados.
 </footer>
 
 <!--Modal lista planilha-->
@@ -48,7 +48,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Não</button>
-                <a class="btn btn-primary" href="http://localhost/FitSan/logout.php" role="button">Sim</a>
+                <a class="btn btn-primary" href="<?=URL_SITE?>logout.php" role="button">Sim</a>
 
             </div>
         </div>
@@ -68,7 +68,7 @@
                     <span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title">Insira sua Senha para Atualizar!</h4>
             </div>
-            <form action="./atualizar_conf.php" method="post" >
+            <form action="<?=URL_SITE?>atualizar_conf.php" method="post" >
                 
                 <input type="hidden" id="novo_nome" name="novo_nome" >
                 
@@ -114,7 +114,7 @@
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Não</button>
-                <a class="btn btn-info" href="http://localhost/FitSan/desativarP.php" role="button">Sim</a>
+                <a class="btn btn-info" href="<?=URL_SITE?>desativarP.php" role="button">Sim</a>
 
             </div>
 
@@ -184,7 +184,7 @@
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Não</button>
-                <a class="btn btn-info" href="http://localhost/FitSan/confirmSenha.php" role="button">Sim</a>
+                <a class="btn btn-info" href="<?=URL_SITE?>confirmSenha.php" role="button">Sim</a>
 
             </div>
 
@@ -205,7 +205,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form method="post" action="alterar_dica.php">
+                <form method="post" action="<?=URL_SITE?>alterar_dica.php">
                     <input type="hidden" id="id" name="id">
                     <div class="form-group">
                         <label for="recipient-name" class="col-form-label">Data:</label>
@@ -240,7 +240,7 @@
                 <p> Você tem certeza que deseja excluir sua dica? Deseja continuar?</p>
             </div>
             <div class="modal-footer">                
-                <form method="post" action="excluirDica.php">
+                <form method="post" action="<?=URL_SITE?>excluirDica.php">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Não</button>
                     <input type="hidden" id="id" name="id">
                     <button type="submit" class="btn btn-primary">Sim</button>
@@ -299,7 +299,7 @@
                 <p> Você tem certeza que deseja continuar?</p>
             </div>
             <div class="modal-footer">                
-                <form method="post" action="excluirMeta.php">
+                <form method="post" action="<?=URL_SITE?>excluirMeta.php">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Não</button>
                     <input type="hidden" id="meta_id" name="meta_id">
                     <input type="hidden" id="dado_id" name="dado_id">
@@ -322,7 +322,7 @@
                 <p> Tem certeza que deseja finalizar a meta atual?</p>
             </div>
             <div class="modal-footer">                
-                <form method="post" action="fimMeta.php">
+                <form method="post" action="<?=URL_SITE?>fimMeta.php">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Não</button>
                     <input type="hidden" id="meta_id" name="meta_id">
                     <button type="submit" class="btn btn-primary">Sim</button>
@@ -333,36 +333,36 @@
 </div> 
 
 <!-- jQuery 3 -->
-<script src="bower_components/jquery/dist/jquery.min.js"></script>
+<script src="<?=URL_SITE?>bower_components/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap 3.3.7 -->
-<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="<?=URL_SITE?>bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <!-- FastClick -->
-<script src="bower_components/fastclick/lib/fastclick.js"></script>
+<script src="<?=URL_SITE?>bower_components/fastclick/lib/fastclick.js"></script>
 <!-- AdminLTE App -->
-<script src="dist/js/adminlte.min.js"></script>
+<script src="<?=URL_SITE?>dist/js/adminlte.min.js"></script>
 <!-- Sparkline -->
-<script src="bower_components/jquery-sparkline/dist/jquery.sparkline.min.js"></script>
+<script src="<?=URL_SITE?>bower_components/jquery-sparkline/dist/jquery.sparkline.min.js"></script>
 <!-- jvectormap  -->
-<script src="plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
-<script src="plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+<script src="<?=URL_SITE?>plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
+<script src="<?=URL_SITE?>plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
 <!-- SlimScroll -->
-<script src="bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+<script src="<?=URL_SITE?>bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
 <!-- ChartJS -->
-<script src="bower_components/chart.js/Chart.js"></script>
+<script src="<?=URL_SITE?>bower_components/chart.js/Chart.js"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="dist/js/pages/dashboard2.js"></script>
+<script src="<?=URL_SITE?>dist/js/pages/dashboard2.js"></script>
 <!-- AdminLTE for demo purposes -->
-<script src="dist/js/demo.js"></script>
-<script src="bower_components/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
-<script src="bower_components/bootstrap-datepicker/dist/locales/bootstrap-datepicker.pt-BR.min.js"></script>
-<script src="bower_components/ckeditor/ckeditor.js"></script>
+<script src="<?=URL_SITE?>dist/js/demo.js"></script>
+<script src="<?=URL_SITE?>bower_components/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+<script src="<?=URL_SITE?>bower_components/bootstrap-datepicker/dist/locales/bootstrap-datepicker.pt-BR.min.js"></script>
+<script src="<?=URL_SITE?>bower_components/ckeditor/ckeditor.js"></script>
 <!-- iCheck -->
-<script src="plugins/iCheck/icheck.min.js"></script>
+<script src="<?=URL_SITE?>plugins/iCheck/icheck.min.js"></script>
 
-<script src="bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
-<script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<script src="<?=URL_SITE?>bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="<?=URL_SITE?>bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
 <!-- SlimScroll -->
-<script src="bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+<script src="<?=URL_SITE?>bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
 
 
 <!--CONTROLADOR RODAPÉ DA PLANILHA -->

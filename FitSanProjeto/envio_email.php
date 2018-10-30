@@ -28,7 +28,7 @@ while($linha = mysqli_fetch_array($resultado_email)){
 if($existe == FALSE){
     
     $_SESSION['erroEmail'] = "Dados nao conferem!";
-    header('Location: form_recEmail.php'); 
+    header('Location: '.URL_SITE.'form_recEmail.php'); 
     
 } else {
     
@@ -61,7 +61,7 @@ if (!empty($email)){
     $mail->addReplyTo('plataformafitsan@gmail.com');
     $mail->isHTML();
     $mail->Subject = 'FitSan';
-    $mail->Body = "<a href=\"http://localhost/FitSan/form_recSenha.php?perfil_codigo=$codigo\"> Link </a>;';";
+    $mail->Body = "<a href=\"".URL_SITE."form_recSenha.php?perfil_codigo=$codigo\"> Link </a>;';";
     ?>
   
 
@@ -72,7 +72,7 @@ if (!empty($email)){
     } else {
         
          $_SESSION['sucesso'] = "Dados conferem!";
-      header('Location:http://localhost/FitSan/form_recEmail.php');
+      header('Location:'.URL_SITE.'form_recEmail.php');
     }
  
 }

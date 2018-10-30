@@ -65,7 +65,7 @@ $logar = array(
 if ($foto !== null) $logar['foto'] = $foto;
 logar($logar);
 
-header('Location: perfil.php');
+header('Location: '.URL_SITE.'perfil.php');
 
 // Para dar permissão nas pastas do site pelo linux:
 // Abra um terminal e acesse a pasta

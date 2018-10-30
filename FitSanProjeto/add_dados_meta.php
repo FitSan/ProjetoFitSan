@@ -34,17 +34,17 @@ $diff_fim = $diff_fim->format("%r%a");
 
 if ($data_add == null || $peso_add== null){
     $_SESSION['erro'] = 'Erro! Complete os campos para a inserção dos dados.';
-    header('Location: metas.php');
+    header('Location: '.URL_SITE.'metas.php');
 }else if($diff_fim<0 || $diff_inicio>0){
     $_SESSION['erro']= 'Dado não adicionado! Preencha uma data válida.';
-    header('Location: metas.php');
+    header('Location: '.URL_SITE.'metas.php');
 }else{
     $query = "insert into dados_meta (data_add, peso_add, descricao, meta_id) values ('$data_add', '$peso_add', '$descricao', $meta_id)";
     if (!mysqli_query($conexao, $query)){
        $_SESSION['erro']= 'Dado não adicionado à meta atual! Falha na conexão.';
-       header('Location: metas.php');
+       header('Location: '.URL_SITE.'metas.php');
    }else{
       $_SESSION['info'] = 'Dado adicionado! Meta atualizada.';
-      header('Location: metas.php');
+      header('Location: '.URL_SITE.'metas.php');
    }
 }

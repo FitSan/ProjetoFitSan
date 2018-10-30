@@ -3,7 +3,7 @@ $pagina = "Musculos/Cárdio";
 require_once './template/cabecalho.php';
 
 if (!tipoLogado("admin")){
-    header('Location: pagina1.php');
+    header('Location: '.URL_SITE.'pagina1.php');
     exit;
 }
 
@@ -29,14 +29,14 @@ if (($acao == 'incluir') || ($acao == 'alterar')) {
             $query = "update planilha_grupoMuscuCardio set nome=" . mysqliEscaparTexto($nome) . " where id= " . mysqliEscaparTexto($id);
             mysqli_query($conexao, $query) or die_mysql($query, __FILE__, __LINE__);
         }
-        header('Location: ' . basename(__FILE__));
+        header('Location: '.URL_SITE. basename(__FILE__));
         exit();
     }
 } elseif ($acao == 'excluir') {
     if (empty($erros) && ($id !== null)) {
         $query = "delete from planilha_grupoMuscuCardio where id= " . mysqliEscaparTexto($id);
         mysqli_query($conexao, $query) or die_mysql($query, __FILE__, __LINE__);
-        header('Location: ' . basename(__FILE__));
+        header('Location: '.URL_SITE. basename(__FILE__));
         exit();
     }
 }
@@ -64,7 +64,7 @@ $resultado = mysqli_query($conexao, $query) or die_mysql($query, __FILE__, __LIN
         <div class="box-header">
             <h3 class="box-title">Insira aqui as áreas de atuação </h3>
             <br><br>
-            <form class="form-horizontal" action="<?php echo basename(__FILE__) ?>?acao=<?= !empty($id) ? ('alterar&id=' . $id) : 'incluir' ?>" method="POST" enctype="multipart/form-data">
+            <form class="form-horizontal" action="<?=URL_SITE?><?php echo basename(__FILE__) ?>?acao=<?= !empty($id) ? ('alterar&id=' . $id) : 'incluir' ?>" method="POST" enctype="multipart/form-data">
                 <div class="box-body">
                     <div class="form-group">
                         <label  class="col-sm-1 control-label">Nome: </label>
@@ -76,7 +76,7 @@ $resultado = mysqli_query($conexao, $query) or die_mysql($query, __FILE__, __LIN
                     <div class="box-footer">                        
                         <button type="reset" class="btn btn-default">Limpar</button>                        
                         <button type="submit" class="btn btn-info">Salvar</button>
-                        <a href="area_admin.php" class="btn btn-danger pull-right">Voltar</a><br><br>
+                        <a href="<?=URL_SITE?>area_admin.php" class="btn btn-danger pull-right">Voltar</a><br><br>
 
                     </div>
                 </div>
@@ -95,8 +95,8 @@ $resultado = mysqli_query($conexao, $query) or die_mysql($query, __FILE__, __LIN
                 <tr>
                     <td><input type="checkbox"></td>
                     <td><?= htmlspecialchars($linha['nome']) ?></td>           
-                    <td><a class="" href="<?php echo basename(__FILE__) ?>?acao=alterar&id=<?= htmlentities($linha['id']) ?>" title="Atualizar"><i class="fa fa-edit "></i></a></td>
-                    <td><a class="" href="<?php echo basename(__FILE__) ?>?acao=excluir&id=<?= htmlentities($linha['id']) ?>" title="Excluir"><i class="fa fa-trash-o"></i></a></td>
+                    <td><a class="" href="<?=URL_SITE?><?php echo basename(__FILE__) ?>?acao=alterar&id=<?= htmlentities($linha['id']) ?>" title="Atualizar"><i class="fa fa-edit "></i></a></td>
+                    <td><a class="" href="<?=URL_SITE?><?php echo basename(__FILE__) ?>?acao=excluir&id=<?= htmlentities($linha['id']) ?>" title="Excluir"><i class="fa fa-trash-o"></i></a></td>
                 </tr>
                 <?php
             } 

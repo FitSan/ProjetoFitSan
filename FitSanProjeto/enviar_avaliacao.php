@@ -26,13 +26,13 @@ if($aluno == null){
     
            $_SESSION['semaluno']= "Dados nao conferem!";
 
-        header('Location: form_avaliacao.php');
+        header('Location: '.URL_SITE.'form_avaliacao.php');
 }else {
     if($frequencia == null && $desempenho == null && $cumpriu == null && $duvida == null && $dificuldade == null && $caso_sim == null && $consideracoes == null && $musculatura == null && $lesao == null && $queimacao == null && $caimbras == null && $tontura == null && $consideracoes_corporal == null){
 
         $_SESSION['semnada']= "Dados nao conferem!";
 
-        header('Location: form_avaliacao.php');
+        header('Location: '.URL_SITE.'form_avaliacao.php');
     } else {
         
    $query = "insert into `avaliacao` (`data`, `desempenho`, `frequencia`, `grupo_cumpriu`, `grupo_duvida`, `grupo_dificuldade`, `caso_sim`, `consideracoes`, `musculatura`, `lesao`, `queimacao`, `caimbras`, `tontura`, `consideracoes_corporal`, `profissional_id`, `aluno_id`) values "
@@ -63,10 +63,10 @@ $linha = mysqli_fetch_array($resultado) or die_mysql($query2, __FILE__, __LINE__
 
 criarNotificacao(
         "INFO", 
-        " Você tem uma nova avaliação de " . $linha['nome'] . " " . $linha['sobrenome'] . ". " .PHP_EOL. 'Acesse: " <a href="form_receber_avaliacao.php"> Ver </a>', null, $aluno);
+        " Você tem uma nova avaliação de " . $linha['nome'] . " " . $linha['sobrenome'] . ". " .PHP_EOL. 'Acesse: " <a href="'.URL_SITE.'form_receber_avaliacao.php"> Ver </a>', null, $aluno);
          
 
-            header('Location: pagina1.php'); 
+            header('Location: '.URL_SITE.'pagina1.php'); 
             
     }
             }

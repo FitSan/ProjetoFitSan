@@ -12,26 +12,26 @@ if (tipoLogado('aluno')){
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <!-- Bootstrap 3.3.7 -->
-        <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="<?= URL_SITE ?>bower_components/bootstrap/dist/css/bootstrap.min.css">
         <!-- Font Awesome -->
-        <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
+        <link rel="stylesheet" href="<?= URL_SITE ?>bower_components/font-awesome/css/font-awesome.min.css">
         <!-- Ionicons -->
-        <link rel="stylesheet" href="bower_components/Ionicons/css/ionicons.min.css">
+        <link rel="stylesheet" href="<?= URL_SITE ?>bower_components/Ionicons/css/ionicons.min.css">
         <!-- jvectormap -->
-        <link rel="stylesheet" href="bower_components/jvectormap/jquery-jvectormap.css">
+        <link rel="stylesheet" href="<?= URL_SITE ?>bower_components/jvectormap/jquery-jvectormap.css">
         <!-- Theme style -->
-        <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
+        <link rel="stylesheet" href="<?= URL_SITE ?>dist/css/AdminLTE.min.css">
         <!-- AdminLTE Skins. Choose a skin from the css/skins
              folder instead of downloading all of them to reduce the load. -->
-        <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
+        <link rel="stylesheet" href="<?= URL_SITE ?>dist/css/skins/_all-skins.min.css">
         <!-- iCheck -->
-        <link rel="stylesheet" href="plugins/iCheck/flat/blue.css">
-        <link rel="stylesheet" href="plugins/iCheck/all.css">
+        <link rel="stylesheet" href="<?= URL_SITE ?>plugins/iCheck/flat/blue.css">
+        <link rel="stylesheet" href="<?= URL_SITE ?>plugins/iCheck/all.css">
         <!-- DataTables -->
-        <link rel="stylesheet" href="bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+        <link rel="stylesheet" href="<?= URL_SITE ?>bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
         
-        <link rel="stylesheet" href="bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.css" >
-        <link rel="stylesheet" type="text/css" href="css/estilo.css">
+        <link rel="stylesheet" href="<?= URL_SITE ?>bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.css" >
+        <link rel="stylesheet" type="<?= URL_SITE ?>text/css" href="css/estilo.css">
         
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -63,14 +63,14 @@ if (tipoLogado('aluno')){
     <body class="hold-transition skin-blue sidebar-collapse sidebar-mini">
         <?php
         if (!estaLogado()) {
-            header('Location: form_login.php');
+            header('Location: '.URL_SITE.'form_login.php');
         } else {
             ?>
 
             <div class="wrapper">
                 <header class="main-header">
                     <!-- Logo -->
-                    <a href="http://localhost/FitSan/pagina1.php" class="logo">
+                    <a href="<?= URL_SITE ?>pagina1.php" class="logo">
                         <!-- mini logo for sidebar mini 50x50 pixels -->
                         <span class="logo-mini"><b>F</b>S</span>
                         <!-- logo for regular state and mobile devices -->
@@ -129,7 +129,7 @@ if (tipoLogado('aluno')){
                                         <?php if (!empty($_SESSION['foto'])){ ?>
                                         <img src="<?= htmlspecialchars($_SESSION['foto']) ?>" class="user-image" alt="User Image">
                                         <?php } else { ?>
-                                        <img src="img/user-avatar-placeholder.png" class="user-image" alt="User Image">
+                                        <img src="<?= URL_SITE ?>img/user-avatar-placeholder.png" class="user-image" alt="User Image">
                                         <?php } ?>
                                          <span class="hidden-xs"><?php
                                             if (estaLogado()) {
@@ -143,7 +143,7 @@ if (tipoLogado('aluno')){
                                             <?php if (!empty($_SESSION['foto'])){ ?>
                                             <img src="<?= htmlspecialchars($_SESSION['foto']) ?>" class="img-circle" alt="User Image">
                                             <?php } else { ?>
-                                            <img src="img/user-avatar-placeholder.png" class="img-circle" alt="User Image">
+                                            <img src="<?= URL_SITE ?>img/user-avatar-placeholder.png" class="img-circle" alt="User Image">
                                             <?php } ?>
                                             <p>
                                                 <?php echo exibirName(true); ?>
@@ -155,7 +155,7 @@ if (tipoLogado('aluno')){
                                             <div class="row">
 <?php if (tipoLogado("aluno")) { ?>
                                                 <div class="col-xs-4 text-center">
-                                                        <a href="http://localhost/FitSan/vinculos.php?tipo=<?php echo $_SESSION['tipo'] ?>"> Profissionais</a>
+                                                        <a href="<?= URL_SITE ?>vinculos.php?tipo=<?php echo $_SESSION['tipo'] ?>"> Profissionais</a>
                                                 </div>
                                                 <div class="col-xs-4 text-center">
                                                     <span>&nbsp;</span>
@@ -163,7 +163,7 @@ if (tipoLogado('aluno')){
                                                 <div class="col-xs-4 text-center">
 <?php } elseif (tipoLogado("profissional")) { ?>
                                                 <div class="col-xs-4 text-center">
-                                                        <a href="http://localhost/FitSan/vinculos.php?tipo=<?php echo $_SESSION['tipo'] ?>"> Alunos</a>
+                                                        <a href="<?= URL_SITE ?>vinculos.php?tipo=<?php echo $_SESSION['tipo'] ?>"> Alunos</a>
                                                 </div>
                                                 <div class="col-xs-4 text-center">
                                                     <span>&nbsp;</span>
@@ -172,14 +172,14 @@ if (tipoLogado('aluno')){
 <?php } else { ?>
                                                 <div class="col-xs-12 text-center">
 <?php } ?>
-                                                    <a href="http://localhost/FitSan/form_conf.php">Configuração</a>
+                                                    <a href="<?= URL_SITE ?>form_conf.php">Configuração</a>
                                                 </div>
                                             </div>
                                         </li>
                                         <!-- Menu Footer-->
                                         <li class="user-footer">
                                             <div class="pull-left">
-                                                <a href="http://localhost/FitSan/perfil.php" class="btn btn-default btn-flat">Perfil</a>
+                                                <a href="<?= URL_SITE ?>perfil.php" class="btn btn-default btn-flat">Perfil</a>
                                             </div>
                                             <div class="pull-right">
                                                 <button type="button" class="btn btn-default btn-flat" data-toggle="modal" data-target="#modal-sair">
@@ -197,12 +197,12 @@ if (tipoLogado('aluno')){
 
                 <aside class="main-sidebar">
                     <section class="sidebar">
-                        <a href="http://localhost/FitSan/perfil.php"><div class="user-panel">
+                        <a href="<?= URL_SITE ?>perfil.php"><div class="user-panel">
                             <div class="pull-left image">
                                 <?php if (!empty($_SESSION['foto'])){ ?>
                                 <img src="<?= htmlspecialchars($_SESSION['foto']) ?>" class="img-circle" alt="User Image">
                                 <?php } else { ?>
-                                <img src="img/user-avatar-placeholder.png" class="img-circle" alt="User Image">
+                                <img src="<?=URL_SITE?>img/user-avatar-placeholder.png" class="img-circle" alt="User Image">
                                 <?php } ?>
                             </div>
                             <div class="pull-left info">
@@ -214,7 +214,7 @@ if (tipoLogado('aluno')){
                             </div>
                         </div></a>
                         <!--Inicio formulario pesquisa-->
-                        <form action="busca.php" method="post" class="sidebar-form">
+                        <form action="<?=URL_SITE?>busca.php" method="post" class="sidebar-form">
                             <div class="input-group">
                                 <input type="text" name="busca" class="form-control" placeholder="Busca...">
                                 <span class="input-group-btn">
@@ -228,7 +228,7 @@ if (tipoLogado('aluno')){
                         <!--Inicio Sidebar menu -->
                         <ul class="sidebar-menu" data-widget="tree">
                             <li class="header">NAVEGAÇÀO PRINCIPAL</li>                          
-                            <li><a href="http://localhost/FitSan/pagina1.php"><i class="fa fa-home"></i><span>Home</span></a></li>
+                            <li><a href="<?= URL_SITE ?>pagina1.php"><i class="fa fa-home"></i><span>Home</span></a></li>
                             <?php if (tipoLogado("aluno", "profissional")){ ?>
                             <li class="treeview">
                                 <a href="#">
@@ -240,11 +240,11 @@ if (tipoLogado('aluno')){
                                 <ul class="treeview-menu">
                                     <?php
                                     if (tipoLogado("aluno")){ ?>
-                                        <li><a href="http://localhost/FitSan/metas.php"><i class="fa fa-circle-o"></i> Metas </a></li>
-                                        <li><a href="http://localhost/FitSan/atividadesExtras.php"><i class="fa fa-circle-o"></i> Atividades Extras </a></li>
-                                        <li><a href="http://localhost/FitSan/contato.php"><i class="fa fa-circle-o"></i> Contato </a></li>
+                                        <li><a href="<?= URL_SITE ?>metas.php"><i class="fa fa-circle-o"></i> Metas </a></li>
+                                        <li><a href="<?= URL_SITE ?>atividadesExtras.php"><i class="fa fa-circle-o"></i> Atividades Extras </a></li>
+                                        <li><a href="<?= URL_SITE ?>contato.php"><i class="fa fa-circle-o"></i> Contato </a></li>
                                     <?php } elseif (tipoLogado("profissional")){ ?>
-                                        <li><a href="http://localhost/FitSan/contato.php"><i class="fa fa-circle-o"></i> Contato </a></li>
+                                        <li><a href="<?= URL_SITE ?>contato.php"><i class="fa fa-circle-o"></i> Contato </a></li>
                                     <?php } ?>     
                                 </ul>
                             </li>
@@ -253,18 +253,18 @@ if (tipoLogado('aluno')){
                            
                            <?php if (tipoLogado("aluno")){ ?>
                                 
-                               <li><a href="http://localhost/FitSan/planilha_aluno.php"><i class="fa fa-th-list"></i><span>Planilha</span></a></li>
-                               <li><a href="http://localhost/FitSan/historico.php"><i class="fa fa-history"></i><span>Histórico</span></a></li>
-                               <li><a href="http://localhost/FitSan/form_receber_avaliacao.php"><i class="fa fa-pencil"></i><span>Avaliação</span></a></li>
+                               <li><a href="<?= URL_SITE ?>planilha_aluno.php"><i class="fa fa-th-list"></i><span>Planilha</span></a></li>
+                               <li><a href="<?= URL_SITE ?>historico.php"><i class="fa fa-history"></i><span>Histórico</span></a></li>
+                               <li><a href="<?= URL_SITE ?>form_receber_avaliacao.php"><i class="fa fa-pencil"></i><span>Avaliação</span></a></li>
                            <?php } elseif (tipoLogado("profissional")){ ?>
-                                <li><a href="http://localhost/FitSan/minhas_dicas.php"><i class="fa fa-heartbeat"></i><span>Minhas Dicas</span></a></li>
-                                <li><a href="http://localhost/FitSan/planilha.php"><i class="fa fa-th-list"></i><span>Planilha</span></a></li>
-                                <li><a href="http://localhost/FitSan/form_avaliacao.php"><i class="fa fa-pencil"></i><span>Avaliações</span></a></li>
+                                <li><a href="<?= URL_SITE ?>minhas_dicas.php"><i class="fa fa-heartbeat"></i><span>Minhas Dicas</span></a></li>
+                                <li><a href="<?= URL_SITE ?>planilha.php"><i class="fa fa-th-list"></i><span>Planilha</span></a></li>
+                                <li><a href="<?= URL_SITE ?>form_avaliacao.php"><i class="fa fa-pencil"></i><span>Avaliações</span></a></li>
                            <?php  } elseif (tipoLogado("admin")){ ?>
-                                <li><a href="http://localhost/FitSan/area_admin.php"><i class="fa fa-th-list"></i><span>Área Administrativa</span></a></li>
+                                <li><a href="<?= URL_SITE ?>area_admin.php"><i class="fa fa-th-list"></i><span>Área Administrativa</span></a></li>
                             <?php } ?>
                             <!--                            <li>
-                                                            <a href="http://localhost/FitSan/busca_usuarios.php">
+                                                            <a href="<?= URL_SITE ?>busca_usuarios.php">
                                                                 <i class="fa fa-th"></i> <span>Busca</span>
                                                             </a>
                                                         </li>-->

@@ -3,7 +3,7 @@ $pagina = "Planilha";
 require_once './template/cabecalho.php';
 
 if (!tipoLogado("profissional")){
-    header('Location: pagina1.php');
+    header('Location: '.URL_SITE.'pagina1.php');
     exit;
 }
 
@@ -41,7 +41,7 @@ if (($acao == 'incluir') || ($acao == 'alterar')){
             $query = "update planilha_tabela set grupo = " . mysqliEscaparTexto($grupo) . ", musculo_cardio_id = " . mysqliEscaparTexto($grupo_muscular) . ", exercicio_id = " . mysqliEscaparTexto($exercicio) . ", series = " . mysqliEscaparTexto($series) . ", repeticoes = " . mysqliEscaparTexto($repeticoes) . ", carga = " . mysqliEscaparTexto($carga) . ", intervalo = " . mysqliEscaparTexto($intervalo) . ", tempo = " . mysqliEscaparTexto($tempo) . " where id = " . mysqliEscaparTexto($id) . " and profissional_id = " . mysqliEscaparTexto($_SESSION['id']);
             mysqli_query($conexao, $query) or die_mysql($query, __FILE__, __LINE__);
         }
-        header('Location: ' . basename(__FILE__));
+        header('Location: ' .URL_SITE.basename(__FILE__));
         exit();
     }
 } elseif ($acao == 'excluir') {
@@ -49,7 +49,7 @@ if (($acao == 'incluir') || ($acao == 'alterar')){
         $query = "delete from planilha_tabela where id= " . mysqliEscaparTexto($id) . " and profissional_id = " . mysqliEscaparTexto($_SESSION['id']);
         mysqli_query($conexao, $query) or die_mysql($query, __FILE__, __LINE__);
     }
-    header('Location: ' . basename(__FILE__));
+    header('Location: ' .URL_SITE.basename(__FILE__));
     exit();
 }
 
@@ -111,7 +111,7 @@ $resultado = mysqli_query($conexao, $query) or die_mysql($query, __FILE__, __LIN
                     </ul>
                 </div>
 <?php } ?>
-            <form class="form-horizontal" action="<?php echo basename(__FILE__) ?>?acao=<?= !empty($id) ? ('alterar&id=' . $id) : 'incluir' ?>" method="POST" enctype="multipart/form-data">
+            <form class="form-horizontal" action="<?=URL_SITE?><?php echo basename(__FILE__) ?>?acao=<?= !empty($id) ? ('alterar&id=' . $id) : 'incluir' ?>" method="POST" enctype="multipart/form-data">
             <div class="table" id="adicionar_novo">
                 <div class="col-lg-1">
                  <input type="text" class="form-control" name= "grupo" placeholder="Grupo" value="<?php echo htmlentities($linha_alterar['grupo'])?>">   
@@ -226,8 +226,8 @@ while ($linha = mysqli_fetch_array($resultado)) {
                                 <td><?php echo htmlentities($linha['carga']) ?></td>
                                 <td><?php echo htmlentities($linha['intervalo']) ?></td>
                                 <td><?php echo htmlentities($linha['tempo']) ?></td>
-                                <td><a class=" " href="<?php echo basename(__FILE__) ?>?acao=alterar&id=<?= htmlentities($linha['id']) ?>" title="Atualizar"><i class="fa fa-edit"></i></a></td>
-                                <td><a class=" " href="<?php echo basename(__FILE__) ?>?acao=excluir&id=<?= htmlentities($linha['id']) ?>" title="Excluir"><i class="fa fa-trash-o"></i></a></td>
+                                <td><a class=" " href="<?=URL_SITE?><?php echo basename(__FILE__) ?>?acao=alterar&id=<?= htmlentities($linha['id']) ?>" title="Atualizar"><i class="fa fa-edit"></i></a></td>
+                                <td><a class=" " href="<?=URL_SITE?><?php echo basename(__FILE__) ?>?acao=excluir&id=<?= htmlentities($linha['id']) ?>" title="Excluir"><i class="fa fa-trash-o"></i></a></td>
                             </tr>
 <?php
 }
@@ -252,8 +252,8 @@ if ($grupo_id){
 
         </div>
         <div class="pull-right">
-            <a href="planilha_exercicios.php" class="btn btn-app"><span class="badge bg-aqua">Novos</span><i class="fa fa-bicycle"></i> Exercícios </a>  
-            <a href="planilhas_salvas.php" class="btn btn-app"><span class="badge bg-aqua">Histórico</span><i class="fa fa-calendar"></i> Planilhas </a>               
+            <a href="<?=URL_SITE?>planilha_exercicios.php" class="btn btn-app"><span class="badge bg-aqua">Novos</span><i class="fa fa-bicycle"></i> Exercícios </a>  
+            <a href="<?=URL_SITE?>planilhas_salvas.php" class="btn btn-app"><span class="badge bg-aqua">Histórico</span><i class="fa fa-calendar"></i> Planilhas </a>               
         </div>
     </div>
 </div>

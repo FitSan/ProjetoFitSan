@@ -83,7 +83,7 @@ if (($acao == 'incluir') || ($acao == 'alterar')) {
         }
     }
     //header('Location: ' . basename(__FILE__));
-    header('Location: perfil.php');
+    header('Location: '.URL_SITE.'perfil.php');
     exit();
 }
 
@@ -96,7 +96,7 @@ $resultado = mysqli_query($conexao, $query) or die_mysql($query, __FILE__, __LIN
         <h1>Alterar Informações Adicionais</h1>
     </section>
     <section class="content">
-        <form method="post" action="<?php echo basename(__FILE__) ?>?acao=<?= !empty($linha_alterar['id']) ? 'alterar' : 'incluir' ?>">
+        <form method="post" action="<?=URL_SITE?><?php echo basename(__FILE__) ?>?acao=<?= !empty($linha_alterar['id']) ? 'alterar' : 'incluir' ?>">
             <div class="box box-primary">
                 <h3 class="box-title">Minhas Informações</h3>
             <div class="box-body">

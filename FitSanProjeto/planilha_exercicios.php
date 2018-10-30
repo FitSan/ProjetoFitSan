@@ -3,7 +3,7 @@ $pagina = "Novos Exercícios";
 require_once './template/cabecalho.php';
 
 if (tipoLogado("aluno")) {
-    header('Location: pagina1.php');
+    header('Location: '.URL_SITE.'pagina1.php');
     exit;
 }
 
@@ -70,7 +70,7 @@ if (($acao == 'incluir') || ($acao == 'alterar')) {
                 mysqli_query($conexao, $query) or die_mysql($query, __FILE__, __LINE__);
             }
         }
-        header('Location: ' . basename(__FILE__));
+        header('Location: ' .URL_SITE.basename(__FILE__));
         exit();
     }
 } elseif ($acao == 'excluir') {
@@ -82,7 +82,7 @@ if (($acao == 'incluir') || ($acao == 'alterar')) {
     if (empty($erros) && ($id !== null)) {
         $query = "delete from planilha_exercicio where id= " . mysqliEscaparTexto($id);
         mysqli_query($conexao, $query) or die_mysql($query, __FILE__, __LINE__);
-        header('Location: ' . basename(__FILE__));
+        header('Location: ' .URL_SITE.basename(__FILE__));
         exit();
     }
 }
@@ -140,7 +140,7 @@ $resultado = mysqli_query($conexao, $query) or die_mysql($query, __FILE__, __LIN
                 </div>
 <?php } ?>
 
-            <form class="form-horizontal" action="<?php echo basename(__FILE__) ?>?acao=<?= !empty($id) ? ('alterar&id=' . $id) : 'incluir' ?>" method="POST" enctype="multipart/form-data">
+            <form class="form-horizontal" action="<?=URL_SITE?><?php echo basename(__FILE__) ?>?acao=<?= !empty($id) ? ('alterar&id=' . $id) : 'incluir' ?>" method="POST" enctype="multipart/form-data">
                 <div class="box-body">
                     <div class="form-group">
                         <label  class="col-sm-1 control-label">Nome: </label>
@@ -186,7 +186,7 @@ $resultado = mysqli_query($conexao, $query) or die_mysql($query, __FILE__, __LIN
                     <div class="box-footer">                        
                         <button type="reset" class="btn btn-default">Limpar</button>                        
                         <button type="submit" class="btn btn-info">Salvar</button>
-                        <a href="planilha.php" class="btn btn-danger pull-right">Voltar</a><br><br>
+                        <a href="<?=URL_SITE?>planilha.php" class="btn btn-danger pull-right">Voltar</a><br><br>
 
                     </div>
                 </div>
@@ -215,7 +215,7 @@ while ($linha = mysqli_fetch_array($resultado)) {
     <?php if (!empty($linha['foto'])) { ?>
                                     <a href="<?= htmlspecialchars($linha['foto']) ?>" rel="lightbox"><img class="profile-user-img img-responsive" style="margin: 0;margin-bottom: 2px" src="<?= htmlspecialchars($linha['foto']) ?>" alt="User profile picture"></a>
                         <?php } else { ?>
-                                    <img class="profile-user-img img-responsive" style="margin: 0;margin-bottom: 2px" src="img/user-avatar-placeholder.png" alt="User profile picture">
+                                    <img class="profile-user-img img-responsive" style="margin: 0;margin-bottom: 2px" src="<?=URL_SITE?>img/user-avatar-placeholder.png" alt="User profile picture">
                         <?php } ?>
                             </td>
                             <td><?= htmlentities($linha['nome']) ?></td>
@@ -223,13 +223,13 @@ while ($linha = mysqli_fetch_array($resultado)) {
                             <td><p><?= nl2br(htmlentities($linha['descricao'])) ?></p></td>
                             <td><?php
                             if (tipoLogado("admin") || (tipoLogado("profissional") && ($linha['profissional_id'] == $_SESSION['id']))){
-                                ?><a class=" " href="<?php echo basename(__FILE__) ?>?acao=alterar&id=<?= htmlentities($linha['id']) ?>" title="Atualizar"><i class="fa fa-edit"></i></a><?php
+                                ?><a class=" " href="<?=URL_SITE?><?php echo basename(__FILE__) ?>?acao=alterar&id=<?= htmlentities($linha['id']) ?>" title="Atualizar"><i class="fa fa-edit"></i></a><?php
                             } else {
                                 ?><span title="Atualizar"><i class="fa fa-edit"></i></span><?php
                             } ?></td>
                             <td><?php
                             if (tipoLogado("admin") || (tipoLogado("profissional") && ($linha['profissional_id'] == $_SESSION['id']))){
-                                ?><a class=" " href="<?php echo basename(__FILE__) ?>?acao=excluir&id=<?= htmlentities($linha['id']) ?>" title="Excluir"><i class="fa fa-trash-o"></i></a><?php
+                                ?><a class=" " href="<?=URL_SITE?><?php echo basename(__FILE__) ?>?acao=excluir&id=<?= htmlentities($linha['id']) ?>" title="Excluir"><i class="fa fa-trash-o"></i></a><?php
                             } else {
                                 ?><span title="Excluir"><i class="fa fa-trash-o"></i></span><?php
                             } ?></td>
@@ -248,11 +248,11 @@ if ($pagina['total'] > 1) {
         <?php if ($pagina['paginas'] > 1) { ?>
             <div class="box-footer clearfix">
                 <ul class="pagination pagination-sm no-margin">
-                    <li class="<?php echo (($pagina['pagina'] == 1) ? 'disabled' : '') ?>"><a href="<?php echo basename(__FILE__) ?>">&laquo;</a></li>
+                    <li class="<?php echo (($pagina['pagina'] == 1) ? 'disabled' : '') ?>"><a href="<?=URL_SITE?><?php echo basename(__FILE__) ?>">&laquo;</a></li>
         <?php for ($pag = 1; $pag <= $pagina['paginas']; $pag++) { ?>
-                        <li class="<?php echo (($pagina['pagina'] == $pag) ? 'active' : '') ?>"><a href="<?php echo basename(__FILE__) ?>?pagina=<?php echo $pag ?>"><?php echo $pag ?></a></li>
+                        <li class="<?php echo (($pagina['pagina'] == $pag) ? 'active' : '') ?>"><a href="<?=URL_SITE?><?php echo basename(__FILE__) ?>?pagina=<?php echo $pag ?>"><?php echo $pag ?></a></li>
         <?php } ?>
-                    <li class="<?php echo (($pagina['pagina'] == $pagina['paginas']) ? 'disabled' : '') ?>"><a href="<?php echo basename(__FILE__) ?>?pagina=<?php echo $pagina['paginas'] ?>">&raquo;</a></li>
+                    <li class="<?php echo (($pagina['pagina'] == $pagina['paginas']) ? 'disabled' : '') ?>"><a href="<?=URL_SITE?><?php echo basename(__FILE__) ?>?pagina=<?php echo $pagina['paginas'] ?>">&raquo;</a></li>
                 </ul>
             </div>
 <?php } ?>

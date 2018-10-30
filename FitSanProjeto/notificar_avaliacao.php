@@ -20,4 +20,4 @@ criarNotificacao('INFO',
 );
 
 
- header('Location: form_login.php');
+ header('Location: '.URL_SITE.'form_login.php');

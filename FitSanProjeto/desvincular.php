@@ -22,5 +22,5 @@ mysqli_query($conexao, $query);
 if (isset($_SERVER['HTTP_REFERER'])){
     header('Location: ' . $_SERVER['HTTP_REFERER']);
 } else {
-    header('Location: buscar.php');
+    header('Location: '.URL_SITE.'buscar.php');
 }
