@@ -6,11 +6,16 @@ if (isset($_POST['meta_id'])) {
 } else {
     $query_meta = "select *, MONTH(data_final) as mes_final from meta where usuario_id = " . $_SESSION['id'] . " and status='ativa'";
 }
-
 $resultado_meta = mysqli_query($conexao, $query_meta) or die_mysql($query_meta, __FILE__, __LINE__);
 $linha_meta = mysqli_fetch_array($resultado_meta);
-
-$query_meses = "select MAX(data_add) as data_add, MONTH(data_add) as meses from dados_meta where meta_id= " . (!empty($linha_meta['id']) ? $linha_meta['id'] : 0) . " group by meses order by meses desc";
+$query_anos = "select EXTRACT(YEAR FROM data_add) as anos from dados_meta join meta on dados_meta.meta_id = meta.id where meta.id=".$linha_meta['id']." group by anos";
+$resultado_anos = mysqli_query($conexao, $query_anos);
+if(mysqli_num_rows($resultado_anos)>1){
+    $anos = true;
+}else{
+    $anos = false;
+}
+$query_meses = "select MAX(data_add) as data_add, EXTRACT(YEAR_MONTH FROM data_add) as meses from dados_meta where meta_id= " . (!empty($linha_meta['id']) ? $linha_meta['id'] : 0) . " group by meses order by meses desc";
 $resultado_meses = mysqli_query($conexao, $query_meses) or die_mysql($query_meses, __FILE__, __LINE__);
 ?>
 <div class="box-body">  
@@ -20,7 +25,7 @@ $resultado_meses = mysqli_query($conexao, $query_meses) or die_mysql($query_mese
         <?php
         while ($linha_meses = mysqli_fetch_array($resultado_meses)) {
             ?>
-            <option value="<?= $linha_meses['meses'] ?>"><?= date('M', dataParse($linha_meses['data_add'])) ?></option>
+            <option value="<?= $linha_meses['meses'] ?>"><?= ($anos) ? date('M - Y', dataParse($linha_meses['data_add'])) : date('M', dataParse($linha_meses['data_add']))?></option>
                 <?php
             }
             ?>  

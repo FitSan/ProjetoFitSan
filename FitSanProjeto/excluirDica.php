@@ -16,5 +16,9 @@ mysqli_query($conexao, $query);
 
 $query_up_del = "delete from upload_dica where dica_id = $id_dica";
 mysqli_query($conexao, $query_up_del);
-?>
-<script>history.go(-1)</script>
+
+if (isset($_SERVER['HTTP_REFERER'])){
+    header('Location: ' . $_SERVER['HTTP_REFERER']);
+} else {
+    header('Location: vinculos.php');
+}

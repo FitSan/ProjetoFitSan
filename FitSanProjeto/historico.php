@@ -177,7 +177,9 @@ if ($dataanterior){
                 <div class="tab-pane<?php if ($aba == 'pesosMedidas') echo ' active'; ?>" id="pesosMedidas">
 
                     <!-- Post -->
-                    Postar históricos de peso e medidas.
+                    <?php
+                        include_once 'metas_hist.php';
+                    ?>
                     <!-- /.post -->
 
                 </div>

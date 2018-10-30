@@ -15,10 +15,10 @@ $linha_meta = mysqli_fetch_array($resultado_meta);
 if (isset($_POST['dado_mes'])) {
     $mes_dado = $_POST['dado_mes'];
 } else {
-    $query_mes_dado = "select MAX(MONTH(data_add)) as mes from dados_meta where meta_id= $linha_meta[id]";
+    $query_mes_dado = "select EXTRACT(YEAR_MONTH FROM data_add) as meses from dados_meta where meta_id= $linha_meta[id] group by meses order by meses desc";
     $resultado_mes_dado = mysqli_query($conexao, $query_mes_dado);
     $linha_mes_dado = mysqli_fetch_array($resultado_mes_dado);
-    $mes_dado = $linha_mes_dado['mes'];
+    $mes_dado = $linha_mes_dado['meses'];
 }
 //echo $query_meta;
 //$ultimo_dado = array();
@@ -29,7 +29,7 @@ if (isset($_POST['dado_mes'])) {
 //$query_anual = "select data_add, peso_add, sum(peso_add) as pesoTotal, MONTH(data_add) as mes, count(id) as quant_dados from dados_meta where meta_id = ".$linha_meta['id'];
 //$resultado_anual = mysqli_query($conexao, $query_anual);
 
-$query_mensal = "select dados_meta.data_add, dados_meta.peso_add, meta.peso_final from dados_meta join meta on dados_meta.meta_id=meta.id where MONTH(data_add) = $mes_dado and meta_id=" . $linha_meta['id'] . " order by dados_meta.data_add asc";
+$query_mensal = "select dados_meta.data_add, dados_meta.peso_add, meta.peso_final from dados_meta join meta on dados_meta.meta_id=meta.id where EXTRACT(YEAR_MONTH FROM data_add) = $mes_dado and meta_id=" . $linha_meta['id'] . " order by dados_meta.data_add asc";
 $resultado_mensal = mysqli_query($conexao, $query_mensal);
 //echo $query_mensal;
 
@@ -47,7 +47,7 @@ while ($linha_mensal = mysqli_fetch_array($resultado_mensal)) {
     $meta[] = $linha_meta['peso_final'];
 }
 
-$query_meses = "select data_add, MONTH(data_add) as meses from dados_meta where meta_id= " . $linha_meta['id'] . " group by meses order by meses desc";
+$query_meses = "select data_add, EXTRACT(YEAR_MONTH FROM data_add) as meses from dados_meta where meta_id= " . $linha_meta['id'] . " group by meses order by meses desc";
 $resultado_meses = mysqli_query($conexao, $query_meses);
 ?>
 <canvas id="chartMensal"></canvas>

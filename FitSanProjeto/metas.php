@@ -36,6 +36,7 @@ if (mysqli_num_rows($resultado_all) === 0) {
         <h1><?= $pagina ?></h1>
     </section>    
     <section class="content">
+        <div class="col-md-12">
         <?php
         if (!empty($_SESSION['erro'])) {
             ?>
@@ -73,8 +74,7 @@ if (mysqli_num_rows($resultado_all) === 0) {
             <?php
             unset($_SESSION['erro_peso']);
         }
-        ?>
-        <div class="col-md-12">
+        ?>        
             <div class="box box-primary ">            
                 <form class="form-inline" role="form" id="form_meta" method="post" action="addMeta.php">
                     <div class="box-header with-border">
