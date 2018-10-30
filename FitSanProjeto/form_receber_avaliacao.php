@@ -40,7 +40,7 @@ if (isset($_GET['notificacao'])){
             </div>
 <?php
 $usuarios = array();
-$query = "select * from `avaliacao`  where aluno_id=" . $_SESSION['id'];
+$query = "select * from avaliacao  where aluno_id=" . $_SESSION['id'];
 $retorno = mysqli_query($conexao, $query);
 while ($linhas = mysqli_fetch_array($retorno)) {
     array_push($usuarios, $linhas);
@@ -52,10 +52,10 @@ if ($usuarios == null) {
             } else {
 
                 foreach ($usuarios as $usuario) {
-                    ?>
+                 
 
-                    <?php
-                    $sql = "select * from `usuario` where id=" . $usuario['profissional_id'];
+                    
+                    $sql = "select * from usuario where id=" . $usuario['profissional_id'];
                     $retorno_usuario = mysqli_query($conexao, $sql);
                     $linha = (mysqli_fetch_array($retorno_usuario));
 

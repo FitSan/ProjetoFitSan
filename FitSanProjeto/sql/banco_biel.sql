@@ -134,7 +134,7 @@ select * from `avaliacao`;
 
 
 insert into `avaliacao` (`data`, `desempenho`, `frequencia`, `grupo_cumpriu`, `grupo_duvida`, `grupo_dificuldade`, `caso_sim`, `consideracoes`, `musculatura`, `lesao`, `queimacao`, `caimbras`, `tontura`, `consideracoes_corporal`, `profissional_id`, `aluno_id`) values
-            ('2018-10-05 00:32:33', 'fff', 'vvchg', 'hghg', 'jkkk', 'dfghj', 'xcvbn', 'cccc', 'zzz', 'sasas', 'asasa', 'asasa', 'asasas', 'asasasas', 13, 15);
+            ('2018-10-05 00:32:33', 'fff', 'vvchg', 'hghg', 'jkkk', 'dfghj', 'xcvbn', 'cccc', 'zzz', 'sasas', 'asasa', 'asasa', 'asasas', 'asasasas', 1, 3);
 
 -- --------------------------------------------------------
 
@@ -858,6 +858,37 @@ select * from `avaliacao` ORDER BY DATA where aluno_id=13   ;
 select * from `avaliacao` inner join `notificacao` on `avaliacao`.aluno_id=`notificacao`.aluno_id where `notificacao`.lido='L'  and `avaliacao`.aluno_id =15;
 
 select * from `avaliacao` outer join `notificacao`.lido='N' where  `avaliacao`.aluno_id=15; 
+
+
+
+
+
+
+
+
+select * from avaliacao;
+
+
+select * from notificacao;
+select * from usuario;
+select * from avaliacao;
+
+select * from vinculo;
+
+select * from usuario join vinculo on usuario.id=vinculo.aluno_id  where profissional_id=2 and vinculo.status='aprovado';
+
+select * from usuario where id=;
+
+select * from avaliacao inner join notificacao on avaliacao.aluno_id=notificacao.aluno_id where notificacao.lido='L'  and avaliacao.aluno_id ='3';
+
+
+
+
+
+
+
+
+
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

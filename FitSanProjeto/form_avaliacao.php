@@ -28,7 +28,7 @@ if (!tipoLogado("profissional")) {
                     <option value="">(Selecione)</option>
                     <?php
                     $usuarios = array();
-                    $query = "select * from usuario join vinculo on usuario.id=vinculo.aluno_id where profissional_id=$_SESSION[id]";
+                    $query = "select * from usuario join vinculo on usuario.id=vinculo.aluno_id  where profissional_id=$_SESSION[id] and vinculo.status='aprovado'";
                     $retorno = mysqli_query($conexao, $query);
                     while ($linha = mysqli_fetch_array($retorno)) {
                         array_push($usuarios, $linha);
