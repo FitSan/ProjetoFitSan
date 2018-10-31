@@ -180,7 +180,7 @@ if ($linha = mysqli_fetch_array($resultado)) {
                 <!-- Inicio do histórico publico-->
                 
                 <?php if (tipoLogado("aluno")){
-                       $aba = (!empty($_GET['aba']) ? $_GET['aba'] : 'timeline');
+                       $aba = (!empty($_GET['aba']) ? $_GET['aba'] : 'atividadesExtras');
                 ?>
                                 
                 <!-- inicio do perfil aluno -->                
@@ -188,20 +188,20 @@ if ($linha = mysqli_fetch_array($resultado)) {
                 <div class="col-md-9">
                     <div class="nav-tabs-custom">
                         <ul class="nav nav-tabs">
-                            <li<?php if ($aba == 'timeline') echo ' class="active"'; ?>><a href="#timeline" data-toggle="tab">Linha do tempo</a></li> 
+<!--                            <li<?php if ($aba == 'timeline') echo ' class="active"'; ?>><a href="#timeline" data-toggle="tab">Linha do tempo</a></li> -->
                             <li<?php if ($aba == 'atividadesExtras') echo ' class="active"'; ?>><a href="#atividadesExtras" data-toggle="tab">Atividades Extras</a></li>
                             <li<?php if ($aba == 'pesosMedidas') echo ' class="active"'; ?>><a href="#pesosMedidas" data-toggle="tab">Pesos e Medidas</a></li>
                             <li<?php if ($aba == 'treinosPlanilha') echo ' class="active"'; ?>><a href="#treinosPlanilha" data-toggle="tab">Treinos da Planilha</a></li>
                             <li<?php if ($aba == 'avaliacoes') echo ' class="active"'; ?>><a href="#avaliacoes" data-toggle="tab">Avaliações</a></li>
                         </ul>
                         <div class="tab-content">
-                            <div class="tab-pane<?php if ($aba == 'timeline') echo ' active'; ?>" id="timeline">
-                               <!-- Post -->
+<!--                            <div class="tab-pane<?php if ($aba == 'timeline') echo ' active'; ?>" id="timeline">
+                                Post 
                                
                                Linha do Tempo
                                
-                               <!-- /.post -->
-                            </div>
+                                /.post 
+                            </div>-->
                             
                             <div class="tab-pane<?php if ($aba == 'atividadesExtras') echo ' active'; ?>" id="atividadesExtras">
                                 <!-- Post -->
@@ -552,25 +552,25 @@ if ($grupo_atual){
                 <?php } 
                 
                  if (tipoLogado("profissional")){ 
-                     $aba = (!empty($_GET['aba']) ? $_GET['aba'] : 'timeline');
+                     $aba = (!empty($_GET['aba']) ? $_GET['aba'] : 'dicas');
 //                     
                      ?>
                 
                 <div class="col-md-9">
                             <div class="nav-tabs-custom">
                                 <ul class="nav nav-tabs ">
-                                    <li<?php if ($aba == 'timeline') echo ' class="active"'; ?>><a href="#timeline" data-toggle="tab">Linha do tempo</a></li>                    
+<!--                                    <li<?php if ($aba == 'timeline') echo ' class="active"'; ?>><a href="#timeline" data-toggle="tab">Linha do tempo</a></li>                    -->
                                     <li<?php if ($aba == 'dicas') echo ' class="active"'; ?>><a href="#dicas" data-toggle="tab">Dicas</a></li>
 
                                 </ul>
                                 <div class="tab-content">
-                                    <div class="tab-pane<?php if ($aba == 'timeline') echo ' active'; ?>" id="timeline">
+<!--                                    <div class="tab-pane<?php if ($aba == 'timeline') echo ' active'; ?>" id="timeline">
                                         
-                                        <!-- post -->
+                                         post 
                                         PostarLinha do tempo
-                                        <!-- /.post -->
+                                         /.post 
                                         
-                                    </div>
+                                    </div>-->
                             <div class="tab-pane<?php if ($aba == 'dicas') echo ' active'; ?>" id="dicas">
                                 <!-- Post -->
                                 <?php 

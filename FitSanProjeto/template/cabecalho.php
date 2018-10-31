@@ -32,6 +32,13 @@ if (tipoLogado('aluno')){
         
         <link rel="stylesheet" href="<?= URL_SITE ?>bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.css" >
         <link rel="stylesheet" type="<?= URL_SITE ?>text/css" href="css/estilo.css">
+        <link rel="apple-touch-icon" sizes="180x180" href="<?= URL_SITE ?>img/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="<?= URL_SITE ?>img/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="<?= URL_SITE ?>img/favicon-16x16.png">
+        <link rel="manifest" href="<?= URL_SITE ?>img/site.webmanifest">
+        <link rel="mask-icon" href="<?= URL_SITE ?>img/safari-pinned-tab.svg" color="#5bbad5">
+        <meta name="msapplication-TileColor" content="#00aba9">
+        <meta name="theme-color" content="#ffffff">
         
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -202,7 +209,7 @@ if (tipoLogado('aluno')){
                                 <?php if (!empty($_SESSION['foto'])){ ?>
                                 <img src="<?= htmlspecialchars($_SESSION['foto']) ?>" class="img-circle" style="height: 35px; width: 35px;" alt="User Image">
                                 <?php } else { ?>
-5                               <img src="<?=URL_SITE?>img/user-avatar-placeholder.png" class="img-circle"  style="height: 35px; width: 35px;" alt="User Image">
+                               <img src="<?=URL_SITE?>img/user-avatar-placeholder.png" class="img-circle"  style="height: 35px; width: 35px;" alt="User Image">
                                 <?php } ?>
                             </div>
                             <div class="pull-left info">
