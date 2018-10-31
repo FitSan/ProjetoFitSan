@@ -5,7 +5,7 @@
     <div class="pull-right hidden-xs">
         <b>Version</b> 1.0.0
     </div>
-    <strong>Copyright &copy; <?php echo date("Y"); ?> <a href="<?=URL_SITE?>">FitSan</a>.</strong> Todos os direitos reservados.
+    <strong>Copyright &copy; <?php echo date("Y"); ?> <a href="<?=URL_SITE?>pagina1.php">FitSan</a>.</strong> Todos os direitos reservados.
 </footer>
 
 <!--Modal lista planilha-->

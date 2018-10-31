@@ -94,7 +94,7 @@ $resultado = mysqli_query($conexao, $query);
                     
             </div>
     </section>
-</div>
+<!--</div>-->
 	
 
 <?php

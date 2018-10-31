@@ -45,8 +45,14 @@ require_once './template/cabecalho.php';
     </div>
 
     <br>
+    
+    
+    
 
     <section class="content">
+        
+        <?php if (tipoLogado("aluno")){ ?>
+        
         <div class="row justify-content-sm-center my-4">
             <div class="col-sm-6 col-md-4 ">
                 <div class="card mb-5">
@@ -54,11 +60,52 @@ require_once './template/cabecalho.php';
                     <div class="card-body">
                         <h4 class="card-title">Planilha de Treino</h4>
                         <h6 class="card-subtitle mb-2 text-muted">Profissional faz, o aluno segue.</h6>
-                        <p class="card-text">Estou fazendo o teste de alguma coisa.</p>
-                        <a href="#" class="card-link">Encontre novos vínculos.</a>
-                        <a href="#" class="card-link">Complete seu perfil</a>                  
+<!--                        <p class="card-text">Estou fazendo o teste de alguma coisa.</p>-->
+                        <a href="<?=URL_SITE?>planilha_aluno.php" class="card-link">Verifique sua planilha. |</a>
+                        <a href="<?=URL_SITE?>form_perfil.php" class="card-link"> Complete seu perfil.</a>
                     </div>
-                    <div class="card-footer text-muted">Nao sei ainda</div>
+                </div>
+            </div>
+         
+            <div class="col-sm-6 col-md-4 ">
+                <div class="card mb-5">
+                    <img class="card-img-top img-responsive"  src="<?=URL_SITE?>img/avaliacao.png" alt="Avaliacao">
+                    <div class="card-body">
+                     <h4 class="card-title">Avaliações</h4>
+                     <h6 class="card-subtitle mb-2 text-muted">Análise individual para cada aluno.</h6>
+                     <a href="<?=URL_SITE?>form_receber_avaliacao.php" class="card-link">Confira suas avaliações. |</a>
+                     <a href="<?=URL_SITE?>informacoes_adicionais.php" class="card-link"> Preencha as informações adicionais.</a> 
+                    </div>
+                </div>  
+            </div> 
+            
+            <div class="col-sm-6 col-md-4 ">
+                <div class="card mb-5">
+                    <img class="card-img-top img-responsive"  src="<?=URL_SITE?>img/historico.png" alt="Historico">
+                    <div class="card-body">
+                    <h4 class="card-title">Histórico</h4>
+                    <h6 class="card-subtitle mb-2 text-muted">Suas atividades em um lugar só.</h6>
+                    <a href="<?=URL_SITE?>historico.php" class="card-link">Verifique seu histórico. |</a>
+                    <a href="<?=URL_SITE?>metas.php" class="card-link"> Realize suas metas.</a>  
+                    </div>
+                </div> 
+            </div>
+            
+        </div>
+        
+        <?php } ?>
+        
+         <?php if (!tipoLogado("aluno")){ ?>
+        
+        <div class="row justify-content-sm-center my-4">
+            <div class="col-sm-6 col-md-4 ">
+                <div class="card mb-5">
+                    <img class="card-img-top img-responsive"  src="<?=URL_SITE?>img/Planilha.png" alt="Planilha">
+                    <div class="card-body">
+                        <h4 class="card-title">Planilha de Treino</h4>
+                        <h6 class="card-subtitle mb-2 text-muted">Profissional faz, o aluno segue.</h6>
+                        <a href="<?=URL_SITE?>planilha.php" class="card-link">Crie planilhas para seus alunos.</a>
+                    </div>
                 </div> 
             </div>
 
@@ -68,11 +115,8 @@ require_once './template/cabecalho.php';
                     <div class="card-body">
                         <h4 class="card-title">Avaliações</h4>
                         <h6 class="card-subtitle mb-2 text-muted">Análise individual para cada aluno.</h6>
-                        <p class="card-text">Estou fazendo o teste de alguma coisa.</p>
-                        <a href="#" class="card-link">Encontre novos vínculos.</a>
-                        <a href="#" class="card-link">Complete seu perfil</a>                  
+                        <a href="<?=URL_SITE?>form_avaliacao.php" class="card-link">Realize suas avaliações.</a>           
                     </div>
-                    <div class="card-footer text-muted">Nao sei ainda</div>
                 </div> 
             </div>
 
@@ -80,16 +124,16 @@ require_once './template/cabecalho.php';
                 <div class="card mb-5">
                     <img class="card-img-top img-responsive"  src="<?=URL_SITE?>img/historico.png" alt="Historico">
                     <div class="card-body">
-                        <h4 class="card-title">Histórico</h4>
-                        <h6 class="card-subtitle mb-2 text-muted">Registre suas atividades.</h6>
-                        <p class="card-text">Estou fazendo o teste de alguma coisa.</p>
-                        <a href="#" class="card-link">Encontre novos vínculos.</a>
-                        <a href="#" class="card-link">Complete seu perfil</a>                  
+                        <h4 class="card-title">Dicas</h4>
+                        <h6 class="card-subtitle mb-2 text-muted">Crie dicas para seus alunos.</h6>
+                        <a href="<?=URL_SITE?>minhas_dicas.php" class="card-link">Que tal criar novas dicas?</a>
                     </div>
-                    <div class="card-footer text-muted">Nao sei ainda</div>
                 </div> 
             </div>
         </div>
+        
+        <?php } ?>
+        
     </section>
     
      <div class="nav-tabs-custom">
