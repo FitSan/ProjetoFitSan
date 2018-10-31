@@ -30,7 +30,7 @@ if ($linha = mysqli_fetch_array($resultado)) {
                 <div class="col-md-3">
                     <div class="box box-primary">
                         <div class="box-body box-profile">
-                            <img class="profile-user-img img-responsive img-circle" src="<?= htmlspecialchars(!empty($linha['foto']) ? $linha['foto'] : 'img/user-avatar-placeholder.png') ?>" alt="User profile picture">
+                            <img class="profile-user-img img-responsive img-circle" src="<?= htmlspecialchars(!empty($linha['foto']) ? $linha['foto'] : 'img/user-avatar-placeholder.png') ?>" style="height: 150px; width: 150px;" alt="User profile picture">
                             <h3 class="profile-username text-center"><?= $linha['nome'] ?> <?= $linha['sobrenome'] ?></h3>
                             <p class="text-muted text-center"><?= $linha['email'] ?></p>
                             <ul class="list-group list-group-unbordered">
@@ -499,7 +499,7 @@ foreach ($resultado as $linha) {
                 
 
                 <div class="timeline-body">
-                    
+                    <div class="table-responsive">
                     <table class="table table-striped planilha dataTable">
                         <tr>
                             <th>Exercício</th>
@@ -526,7 +526,7 @@ foreach ($resultado as $linha) {
 if ($grupo_atual){
 ?>
                     </table>
-                    
+                    </div>
                    
                     
                 </div>

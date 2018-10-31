@@ -200,9 +200,9 @@ if (tipoLogado('aluno')){
                         <a href="<?= URL_SITE ?>perfil.php"><div class="user-panel">
                             <div class="pull-left image">
                                 <?php if (!empty($_SESSION['foto'])){ ?>
-                                <img src="<?= htmlspecialchars($_SESSION['foto']) ?>" class="img-circle" alt="User Image">
+                                <img src="<?= htmlspecialchars($_SESSION['foto']) ?>" class="img-circle" style="height: 35px; width: 35px;" alt="User Image">
                                 <?php } else { ?>
-                                <img src="<?=URL_SITE?>img/user-avatar-placeholder.png" class="img-circle" alt="User Image">
+5                               <img src="<?=URL_SITE?>img/user-avatar-placeholder.png" class="img-circle"  style="height: 35px; width: 35px;" alt="User Image">
                                 <?php } ?>
                             </div>
                             <div class="pull-left info">

@@ -172,7 +172,7 @@ $resultado = mysqli_query($conexao, $query) or die_mysql($query, __FILE__, __LIN
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-xs-4 col-sm-6">
+                                            <div class="col-md-6 col-xs-6 col-sm-6 ">
                                                 <input type="checkbox" class="flat-red" name="exercicios[]" value="Futebol"<?php if (in_array('Futebol', $linha_alterar['exercicios'])) echo ' checked' ?>> Futebol
                                                 <br><br><input type="checkbox" class="flat-red" name="exercicios[]" value="Karatê"<?php if (in_array('Karatê', $linha_alterar['exercicios'])) echo ' checked' ?>> Karatê
                                                 <br><br><input type="checkbox" class="flat-red" name="exercicios[]" value="Basquete"<?php if (in_array('Basquete', $linha_alterar['exercicios'])) echo ' checked' ?>> Basquete
@@ -181,7 +181,7 @@ $resultado = mysqli_query($conexao, $query) or die_mysql($query, __FILE__, __LIN
                                                 <br><br><input type="checkbox" class="flat-red" name="exercicios[]" value="Corrida"<?php if (in_array('Corrida', $linha_alterar['exercicios'])) echo ' checked' ?>> Corrida
                                             </div>
                                             
-                                            <div class="col-xs-4 col-sm-6">
+                                            <div class="col-md-6 col-xs-6 col-sm-6">
                                                 <input type="checkbox" class="flat-red" name="exercicios[]" value="Caminhada"<?php if (in_array('Caminhada', $linha_alterar['exercicios'])) echo ' checked' ?>> Caminhada
                                                 <br><br><input type="checkbox" class="flat-red" name="exercicios[]" value="Ping-Pong"<?php if (in_array('Ping-Pong', $linha_alterar['exercicios'])) echo ' checked' ?>> Ping-Pong
                                                 <br><br><input type="checkbox" class="flat-red" name="exercicios[]" value="Skate"<?php if (in_array('Skate', $linha_alterar['exercicios'])) echo ' checked' ?>> Skate
@@ -234,7 +234,7 @@ while ($linha = mysqli_fetch_array($resultado)) {
     if ($resultado2 = mysqli_query($conexao, $query2)){
         while ($linha2 = mysqli_fetch_array($resultado2)){
 ?>
-                                <span class="label label-info"><?= htmlspecialchars($linha2['exercicio']) ?></span>
+                                <span class="label label-info col-md-2 col-xs-4 col-sm-3 pull-right pull-right"><?= htmlspecialchars($linha2['exercicio']) ?></span>
 <?php
         }
         mysqli_free_result($resultado2);
@@ -242,7 +242,7 @@ while ($linha = mysqli_fetch_array($resultado)) {
 ?>
                             </h3>
 
-                            <div class="timeline-body">
+                            <br><div class="timeline-body">
                                 <?= nl2br(htmlentities($linha['texto'])) ?>
                             </div>
 

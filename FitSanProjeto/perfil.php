@@ -27,7 +27,8 @@ if ($linha = mysqli_fetch_array($resultado)) {
 
                     <div class="box box-primary">
                         <div class="box-body box-profile">
-                            <img class="profile-user-img img-responsive img-circle" src="<?= htmlspecialchars(!empty($linha['foto']) ? $linha['foto'] : 'img/user-avatar-placeholder.png') ?>" alt="User profile picture">
+                            
+                            <img class="profile-user-img img-responsive img-circle" style="height: 150px; width: 150px;" src="<?= htmlspecialchars(!empty($linha['foto']) ? $linha['foto'] : 'img/user-avatar-placeholder.png') ?>" alt="User profile picture">
 
                             <h3 class="profile-username text-center"><?= htmlspecialchars($linha['nome']) ?> <?= htmlspecialchars($linha['sobrenome']) ?></h3>
 
@@ -305,7 +306,7 @@ where
     if ($resultado2 = mysqli_query($conexao, $query2)){
         while ($linha2 = mysqli_fetch_array($resultado2)){
 ?>
-                                <span class="label label-info"><?= htmlspecialchars($linha2['exercicio']) ?></span>
+                                <span class="label label-info col-md-2 col-xs-4 col-sm-3 pull-right "><?= htmlspecialchars($linha2['exercicio']) ?></span>
 <?php
         }
         mysqli_free_result($resultado2);
@@ -472,7 +473,7 @@ foreach ($resultado as $linha) {
                 
 
                 <div class="timeline-body">
-                    
+                    <div class="table-responsive">
                     <table class="table table-striped planilha dataTable">
                         <tr>
                             <th>Exercício</th>
@@ -499,7 +500,7 @@ foreach ($resultado as $linha) {
 if ($grupo_atual){
 ?>
                     </table>
-                    
+                    </div>
                    
                     
                 </div>

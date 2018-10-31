@@ -300,7 +300,7 @@ where
 
 
                                     <div class="timeline-body">
-
+                                        <div class="table-responsive">
                                         <table class="table table-striped planilha dataTable">
                                             <tr>
                                                 <th>Exercício</th>
@@ -327,6 +327,7 @@ where
                                     if ($grupo_atual) {
                                         ?>
                                     </table>
+                                        </div>
 
 
 
