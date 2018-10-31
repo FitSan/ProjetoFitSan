@@ -32,10 +32,11 @@ $resultados = mysqli_num_rows($resultado);
                 <h3 class="box-title">Meus <?= $pagina ?></h3>
             </div>
             <div class="box-body">
-
+                <div class="table-responsive">
                 <table id="meus" class="table table-bordered table-striped">
                     <thead>
                         <tr>
+                            
                             <th>Nome</th> 
                             <th>E-mail</th>                                
                             <th>Status</th>                         
@@ -46,30 +47,31 @@ $resultados = mysqli_num_rows($resultado);
                         while ($linha = mysqli_fetch_array($resultado)) {
                             ?>
                             <tr>
-                                <td> <a href="<?=URL_SITE?>perfil_externo.php?id=<?= $linha['id'] ?>"><?= $linha['nome'] . ' ' . $linha['sobrenome'] ?></td>
-                                <td><?= $linha['email'] ?></td>
+                                
+                                <td style="width: 300px"> <a href="<?=URL_SITE?>perfil_externo.php?id=<?= $linha['id'] ?>"><?= $linha['nome'] . ' ' . $linha['sobrenome'] ?></td>
+                                <td style="width: 300px"><?= $linha['email'] ?></td>
                                 <?php
                                 if ($linha[$usuario_busca] == $_SESSION['id']) {
                                     ?>
-                                    <td><a href="<?=URL_SITE?>desvincular.php?id=<?= $linha['id'] ?>"><span class="label label-danger">Deixar de seguir</span></a></td>               
+                                    <td style="width: 100px"><a href="<?=URL_SITE?>desvincular.php?id=<?= $linha['id'] ?>"><span class="label label-danger">Deixar de seguir</span></a></td>               
                                     <?php
                                 } elseif ($linha['status'] === 'aprovado') {
                                     ?>
-                                    <td><a href="<?=URL_SITE?>desvincular.php?id=<?= $linha['id'] ?>"><span class="label label-danger">Deixar de seguir</span></a></td>                
+                                    <td style="width: 100px"><a href="<?=URL_SITE?>desvincular.php?id=<?= $linha['id'] ?>"><span class="label label-danger">Deixar de seguir</span></a></td>                
                                     <?php
                                 } elseif ($linha['status'] === 'espera') {
                                     if (tipoLogado($linha['solicitante'])) {
                                         ?>
-                                        <td><span class="label label-warning">Aguardando...</span></td>                
+                                        <td style="width: 100px"><span class="label label-warning">Aguardando...</span></td>                
                                         <?php
                                     } else {
                                         ?>
-                                        <td><a href="<?=URL_SITE?>status_vinculo.php?id=<?= $linha['id'] ?>&status=aprovado"><span class="label label-success">Aceitar</span></a> <a href="status_vinculo.php?id=<?= $linha['id'] ?>&status=negado"><span class="label label-danger">Negar</span></a></td>                
+                                        <td style="width: 100px"><a href="<?=URL_SITE?>status_vinculo.php?id=<?= $linha['id'] ?>&status=aprovado"><span class="label label-success">Aceitar</span></a> <a href="status_vinculo.php?id=<?= $linha['id'] ?>&status=negado"><span class="label label-danger">Negar</span></a></td>                
                                         <?php
                                     }
                                 } else {
                                     ?>
-                                    <td><a href="<?=URL_SITE?>vincular.php?id=<?= $linha['id'] ?>"><span class="label label-primary">Seguir</span></a></td>
+                                    <td style="width: 100px"><a href="<?=URL_SITE?>vincular.php?id=<?= $linha['id'] ?>"><span class="label label-primary">Seguir</span></a></td>
                                     <?php
                                 }
                                 ?>
@@ -79,6 +81,7 @@ $resultados = mysqli_num_rows($resultado);
                         ?>
                     </tbody>
                 </table>
+                </div>
                 <?php
                 if ($resultados == 0) {
                     if (tipoLogado('aluno')){

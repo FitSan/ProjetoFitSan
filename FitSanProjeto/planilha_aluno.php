@@ -310,15 +310,21 @@ foreach ($resultado as $linha) {
 ?>            
         <li>
             <i class="fa fa-thumbs-o-up bg-blue"></i>
-
+            
             <div class="timeline-item">
                 <span class="time"><i class="fa fa-clock-o"></i> <?= date('H:i:s', dataParse($linha['datahora'])) ?></span>
-
-                <h3 class="timeline-header"><strong><?php echo htmlspecialchars($linha['grupo']); ?></strong> - por <?php echo htmlspecialchars($linha['profissional_nome'] . ' ' . $linha['profissional_sobrenome']); ?></h3>
+                
+                <h3 class="timeline-header">
+                    
+                    <strong>
+                        <?php echo htmlspecialchars($linha['grupo']); ?>
+                    </strong> 
+                    - por <?php echo htmlspecialchars($linha['profissional_nome'] . ' ' . $linha['profissional_sobrenome']); ?>
+                </h3>
                 
 
                 <div class="timeline-body">
-                    
+                    <div class="table-responsive">
                     <table class="table table-striped planilha dataTable">
                         <tr>
                             <th>Exercício</th>
@@ -345,7 +351,7 @@ foreach ($resultado as $linha) {
 if ($grupo_atual){
 ?>
                     </table>
-                    
+                    </div>
                    
                     
                 </div>
@@ -354,6 +360,7 @@ if ($grupo_atual){
                     
                 </div>
             </div>
+            
         </li> 
         <?php
 }

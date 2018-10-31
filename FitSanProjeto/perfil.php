@@ -27,7 +27,8 @@ if ($linha = mysqli_fetch_array($resultado)) {
 
                     <div class="box box-primary">
                         <div class="box-body box-profile">
-                            <img class="profile-user-img img-responsive img-circle" src="<?= htmlspecialchars(!empty($linha['foto']) ? $linha['foto'] : 'img/user-avatar-placeholder.png') ?>" alt="User profile picture">
+                            
+                            <img class="profile-user-img img-responsive img-circle" style="height: 150px; width: 150px;" src="<?= htmlspecialchars(!empty($linha['foto']) ? $linha['foto'] : 'img/user-avatar-placeholder.png') ?>" alt="User profile picture">
 
                             <h3 class="profile-username text-center"><?= htmlspecialchars($linha['nome']) ?> <?= htmlspecialchars($linha['sobrenome']) ?></h3>
 
@@ -179,7 +180,7 @@ if ($linha = mysqli_fetch_array($resultado)) {
                 <!-- Inicio do histórico publico-->
                 
                 <?php if (tipoLogado("aluno")){
-                       $aba = (!empty($_GET['aba']) ? $_GET['aba'] : 'timeline');
+                       $aba = (!empty($_GET['aba']) ? $_GET['aba'] : 'atividadesExtras');
                 ?>
                                 
                 <!-- inicio do perfil aluno -->                
@@ -187,20 +188,20 @@ if ($linha = mysqli_fetch_array($resultado)) {
                 <div class="col-md-9">
                     <div class="nav-tabs-custom">
                         <ul class="nav nav-tabs">
-                            <li<?php if ($aba == 'timeline') echo ' class="active"'; ?>><a href="#timeline" data-toggle="tab">Linha do tempo</a></li> 
+<!--                            <li<?php if ($aba == 'timeline') echo ' class="active"'; ?>><a href="#timeline" data-toggle="tab">Linha do tempo</a></li> -->
                             <li<?php if ($aba == 'atividadesExtras') echo ' class="active"'; ?>><a href="#atividadesExtras" data-toggle="tab">Atividades Extras</a></li>
                             <li<?php if ($aba == 'pesosMedidas') echo ' class="active"'; ?>><a href="#pesosMedidas" data-toggle="tab">Pesos e Medidas</a></li>
                             <li<?php if ($aba == 'treinosPlanilha') echo ' class="active"'; ?>><a href="#treinosPlanilha" data-toggle="tab">Treinos da Planilha</a></li>
                             <li<?php if ($aba == 'avaliacoes') echo ' class="active"'; ?>><a href="#avaliacoes" data-toggle="tab">Avaliações</a></li>
                         </ul>
                         <div class="tab-content">
-                            <div class="tab-pane<?php if ($aba == 'timeline') echo ' active'; ?>" id="timeline">
-                               <!-- Post -->
+<!--                            <div class="tab-pane<?php if ($aba == 'timeline') echo ' active'; ?>" id="timeline">
+                                Post 
                                
                                Linha do Tempo
                                
-                               <!-- /.post -->
-                            </div>
+                                /.post 
+                            </div>-->
                             
                             <div class="tab-pane<?php if ($aba == 'atividadesExtras') echo ' active'; ?>" id="atividadesExtras">
                                 <!-- Post -->
@@ -305,7 +306,7 @@ where
     if ($resultado2 = mysqli_query($conexao, $query2)){
         while ($linha2 = mysqli_fetch_array($resultado2)){
 ?>
-                                <span class="label label-info"><?= htmlspecialchars($linha2['exercicio']) ?></span>
+                                <span class="label label-info col-md-2 col-xs-4 col-sm-3 pull-right "><?= htmlspecialchars($linha2['exercicio']) ?></span>
 <?php
         }
         mysqli_free_result($resultado2);
@@ -472,7 +473,7 @@ foreach ($resultado as $linha) {
                 
 
                 <div class="timeline-body">
-                    
+                    <div class="table-responsive">
                     <table class="table table-striped planilha dataTable">
                         <tr>
                             <th>Exercício</th>
@@ -499,7 +500,7 @@ foreach ($resultado as $linha) {
 if ($grupo_atual){
 ?>
                     </table>
-                    
+                    </div>
                    
                     
                 </div>
@@ -551,25 +552,25 @@ if ($grupo_atual){
                 <?php } 
                 
                  if (tipoLogado("profissional")){ 
-                     $aba = (!empty($_GET['aba']) ? $_GET['aba'] : 'timeline');
+                     $aba = (!empty($_GET['aba']) ? $_GET['aba'] : 'dicas');
 //                     
                      ?>
                 
                 <div class="col-md-9">
                             <div class="nav-tabs-custom">
                                 <ul class="nav nav-tabs ">
-                                    <li<?php if ($aba == 'timeline') echo ' class="active"'; ?>><a href="#timeline" data-toggle="tab">Linha do tempo</a></li>                    
+<!--                                    <li<?php if ($aba == 'timeline') echo ' class="active"'; ?>><a href="#timeline" data-toggle="tab">Linha do tempo</a></li>                    -->
                                     <li<?php if ($aba == 'dicas') echo ' class="active"'; ?>><a href="#dicas" data-toggle="tab">Dicas</a></li>
 
                                 </ul>
                                 <div class="tab-content">
-                                    <div class="tab-pane<?php if ($aba == 'timeline') echo ' active'; ?>" id="timeline">
+<!--                                    <div class="tab-pane<?php if ($aba == 'timeline') echo ' active'; ?>" id="timeline">
                                         
-                                        <!-- post -->
+                                         post 
                                         PostarLinha do tempo
-                                        <!-- /.post -->
+                                         /.post 
                                         
-                                    </div>
+                                    </div>-->
                             <div class="tab-pane<?php if ($aba == 'dicas') echo ' active'; ?>" id="dicas">
                                 <!-- Post -->
                                 <?php 
