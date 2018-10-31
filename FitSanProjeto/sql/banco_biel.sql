@@ -877,11 +877,12 @@ select * from vinculo;
 
 select * from usuario join vinculo on usuario.id=vinculo.aluno_id  where profissional_id=2 and vinculo.status='aprovado';
 
-select * from usuario where id=;
 
-select * from avaliacao inner join notificacao on avaliacao.aluno_id=notificacao.aluno_id where notificacao.lido='L'  and avaliacao.aluno_id ='3';
+/*Não está pegando as avaliações com as notificações lidas*/
+select distinct avaliacao.* from avaliacao inner join notificacao on avaliacao.aluno_id=notificacao.aluno_id where avaliacao.aluno_id ='3'  group by notificacao.lido HAVING notificacao.lido = 'L' and avaliacao.aluno_id ='3'   order by avaliacao.`data` desc;
 
 
+select distinct avaliacao.* from avaliacao inner join notificacao on avaliacao.aluno_id=notificacao.aluno_id where  avaliacao.aluno_id ='3' and notificacao.lido = 'N' ;
 
 
 

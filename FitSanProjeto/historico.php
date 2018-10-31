@@ -366,7 +366,7 @@ where
 
             <?php
             $usuarios = array();
-            $query = "select * from avaliacao inner join notificacao on avaliacao.aluno_id=notificacao.aluno_id where notificacao.lido='L'  and avaliacao.aluno_id =" . $_SESSION['id'];
+            $query = "select distinct avaliacao.* from avaliacao inner join notificacao on avaliacao.aluno_id=notificacao.aluno_id where notificacao.lido='L'  and avaliacao.aluno_id =" . $_SESSION['id']." order by avaliacao.`data` desc";
             $retorno = mysqli_query($conexao, $query);
             while ($linhas = mysqli_fetch_array($retorno)) {
                 array_push($usuarios, $linhas);
@@ -384,34 +384,32 @@ where
                     $sql = "select * from usuario where id=" . $usuario['profissional_id'];
                     $retorno_usuario = mysqli_query($conexao, $sql);
                     $linha_usuario = (mysqli_fetch_array($retorno_usuario));
-                    
-                    
-                    
-                  
-                    
+
+
+                    $id_avaliacao = $usuario['id'];
                     ?>
                     <ul class="timeline timeline-inverse">
                         <li class="time-label">
                             <span class="bg-red">
-                                <?= date('d/m/Y', dataParse($usuario['data'])) ?>
+                                <?= date('d/m/Y', dataParse($usuario['data'])); ?>
                             </span>
                         </li>    
                         <li>
-                            <i class="fa fa-thumbs-o-up bg-blue"></i>
 
                             <div class="timeline-item">             
-                                
-
-                                <h3 class="timeline-header"><strong>Avaliação do profissional <?php echo  $usuario['nome'];?></strong></h3>
 
 
-                                <div class="timeline-body">
+                                <div class="timeline-body" align="center">
 
-                                    <table class="table table-striped planilha dataTable">
+                                    <table class="table table-striped planilha dataTable" >
+
+                                        <h3 class="timeline-header">Avaliação do profissional <strong><?php echo htmlspecialchars($linha_usuario['nome']) ?> <?= htmlspecialchars($linha_usuario['sobrenome']); ?></strong></h3>
 
 
-
-
+                                        <a href="<?= URL_SITE ?>form_mostrar_avaliacao.php?id_avaliacao=<?php echo $id_avaliacao; ?>">  
+                                            <button type="button" class="btn btn-primary btn-flat"> Conferir </button>
+                                        </a>
+                                        
                                     </table>
                                 </div>
                             </div>
