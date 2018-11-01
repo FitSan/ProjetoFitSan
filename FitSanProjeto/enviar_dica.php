@@ -9,7 +9,11 @@ $data_envio = $now->format('Y-m-d H:i:s');
 $dica = $_POST['dica'];
 
 $msg = '';
-$diretorio = "upload/dica/";
+$uploaddir = '/uploads/dicas/';
+$dir = (rtrim(dirname(__FILE__), '\\/') . $uploaddir); // Obtém a pasta do arquivo do site
+if (!@is_writable($dir))
+    mkdir($dir, 0777, true); // Cria a pasta de uploads se não existir
+
 if($_FILES['imagens']['size'][0] != 0&&$_FILES['video']['size']!=0){
     $_SESSION['msg'] = "Dica não alterada! Escolha apenas um tipo de upload.";
     header('Location: '.URL_SITE.'minhas_dicas.php');
@@ -20,7 +24,7 @@ if($_FILES['imagens']['size'][0] != 0&&$_FILES['video']['size']!=0){
     $type = 'img';
 
     $permite = array('image/jpeg', 'image/png');
-    $maxSize = 1024 * 1024 * 2; //2 megabytes
+    $maxSize = 1024 * 1024 * 5; //2 megabytes
     $maxNum = 6; //6 imagens permitidas OPINIÕES
     
     $arqSize = $maxSize * $numArq;
@@ -42,7 +46,7 @@ if($_FILES['imagens']['size'][0] != 0&&$_FILES['video']['size']!=0){
         for ($i = 0; $i < $numArq; $i++) {
             $extensao = @end(explode('.', $arquivo['name'][$i]));
             $novo_nome = md5(rand()) . $extensao;
-            move_uploaded_file($arquivo['tmp_name'][$i], $diretorio . $novo_nome);
+            move_uploaded_file($arquivo['tmp_name'][$i], $dir . $novo_nome);
             $query = "insert into upload_dica values (default, '$novo_nome', '$type', $dica_id)";
 
             if (!mysqli_query($conexao, $query)) {
@@ -78,7 +82,7 @@ if($_FILES['imagens']['size'][0] != 0&&$_FILES['video']['size']!=0){
         $extensao = @end(explode('.', $arquivo['name']));
         $novo_nome = md5(rand()) . $extensao;
 
-        move_uploaded_file($arquivo['tmp_name'], $diretorio . $novo_nome);
+        move_uploaded_file($arquivo['tmp_name'], $dir . $novo_nome);
         $query = "insert into upload_dica values (default, '$novo_nome', '$type', $dica_id)";
 
         if (!mysqli_query($conexao, $query)) {
