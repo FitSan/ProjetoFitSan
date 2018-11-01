@@ -50,6 +50,7 @@ $resultado = mysqli_query($conexao, $query);
                         <h3 class="box-title">Gerencie os usuários</h3>
                     </div>
                     <div class="box-body">
+                        <div class="table-responsive">
                         <table id="example2" class="table table-bordered table-hover">
                             <thead>
                                 <tr>
@@ -95,6 +96,7 @@ $resultado = mysqli_query($conexao, $query);
                     </div>
                 </div>
             </div>
+        </div>
         </div>
     </section>
 <!--</div>-->

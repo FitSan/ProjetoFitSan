@@ -122,7 +122,7 @@ require_once './template/cabecalho.php';
 
             <div class="col-sm-6 col-md-4 ">
                 <div class="card mb-5">
-                    <img class="card-img-top img-responsive"  src="<?=URL_SITE?>img/dicas.png" alt="Historico">
+                    <img class="card-img-top img-responsive"  src="<?=URL_SITE?>img/dicas.png" alt="Dicas">
                     <div class="card-body">
                         <h4 class="card-title">Dicas</h4>
                         <h6 class="card-subtitle mb-2 text-muted">Crie dicas para seus alunos.</h6>
