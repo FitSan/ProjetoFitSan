@@ -367,7 +367,8 @@ where
 
             <?php
             $usuarios = array();
-            $query = "select distinct avaliacao.* from avaliacao inner join notificacao on avaliacao.aluno_id=notificacao.aluno_id where notificacao.lido='L'  and avaliacao.aluno_id =" . $_SESSION['id']." order by avaliacao.`data` desc";
+            $query = "select distinct notificacao.lido, avaliacao.* from avaliacao inner join notificacao on avaliacao.aluno_id=notificacao.aluno_id where avaliacao.aluno_id =".$_SESSION['id']." HAVING notificacao.lido = 'L' order by avaliacao.`data` desc";
+
             $retorno = mysqli_query($conexao, $query);
             while ($linhas = mysqli_fetch_array($retorno)) {
                 array_push($usuarios, $linhas);

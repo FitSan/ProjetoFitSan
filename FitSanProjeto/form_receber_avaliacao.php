@@ -40,7 +40,7 @@ if (isset($_GET['notificacao'])){
             </div>
 <?php
 $usuarios = array();
-$query = "select * from avaliacao  where aluno_id=" . $_SESSION['id'];
+$query = "select * from avaliacao  where aluno_id=" . $_SESSION['id']." order by avaliacao.`data` desc";
 $retorno = mysqli_query($conexao, $query);
 while ($linhas = mysqli_fetch_array($retorno)) {
     array_push($usuarios, $linhas);
