@@ -31,7 +31,7 @@ if (tipoLogado('aluno')){
         <link rel="stylesheet" href="<?= URL_SITE ?>bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
         
         <link rel="stylesheet" href="<?= URL_SITE ?>bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.css" >
-        <link rel="stylesheet" type="<?= URL_SITE ?>text/css" href="css/estilo.css">
+        <link rel="stylesheet" type="text/css" href="<?= URL_SITE ?>css/estilo.css">
         <link rel="apple-touch-icon" sizes="180x180" href="<?= URL_SITE ?>img/apple-touch-icon.png">
         <link rel="icon" type="image/png" sizes="32x32" href="<?= URL_SITE ?>img/favicon-32x32.png">
         <link rel="icon" type="image/png" sizes="16x16" href="<?= URL_SITE ?>img/favicon-16x16.png">

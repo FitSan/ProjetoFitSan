@@ -69,19 +69,19 @@ $resultado = mysqli_query($conexao, $query);
                 </div>
                 <p style="padding: 5px; "><?= nl2br(htmlentities($linha['texto'])) ?></p>            
 
-                <div id="uploads"><ul><?php
+                <div id="uploads" style="max-height: 500px;"><ul><?php
                         $query_dica = "select * from upload_dica where dica_id = $linha[id]";
                         $resultado_upload = mysqli_query($conexao, $query_dica);
                         while ($linha_upload = mysqli_fetch_array($resultado_upload)) {
                             if($linha_upload['tipo']!='img'){
                     ?>                          
-                    <li><video height="400" style="padding: 5px;" controls>
-                            <source src="upload/dica/<?= $linha_upload['nome_arq'] ?>" type="video/mp4">
+                    <li><video height="70%" style="padding: 5px;" controls>
+                            <source src="<?=URL_SITE?>uploads/dicas/<?= $linha_upload['nome_arq'] ?>" type="video/mp4">
                         </video></li>
                        <?php 
                             }else{
                               ?>  
-                    <li><img src="<?=URL_SITE?>upload/dica/<?= $linha_upload['nome_arq'] ?>" height="400" style="padding: 5px;"></li>                  
+                    <li><img src="<?=URL_SITE?>uploads/dicas/<?= $linha_upload['nome_arq'] ?>" height="80%" style="padding: 5px;"></li>                  
                         
                        <?php   
                             }

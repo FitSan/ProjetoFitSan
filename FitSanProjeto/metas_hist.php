@@ -29,7 +29,7 @@ if (mysqli_num_rows($retorno_all) === 0) { ?>
                 <i class="fa fa-thumbs-o-up bg-blue"></i>
 
                 <div class="timeline-item">               
-
+                    <span class="time"><?='<b>Peso inicial: '. $linha['peso_inicial'].'kg  |  Meta: '.$linha['peso_final'] .'kg</b>'?></span>
                     <h3 class="timeline-header"><strong><?= date('d M Y', dataParse($linha['data_inicial'])) . ' - ' . date('d M Y', dataParse($linha['data_final'])) ?></strong> <b class="label label-danger"><?php echo htmlentities($linha['tipo']) ?></b></h3>
 
 
@@ -58,7 +58,7 @@ if (mysqli_num_rows($retorno_all) === 0) { ?>
 
                                 <tr>
                                     <td><?= ($anos) ? date('M/Y', dataParse($linha_meta['data_add'])) : date('M', dataParse($linha_meta['data_add'])) ?></td>
-                                    <td><?= ($linha_max['peso_inicial_dif'] == 0) ? '<b>Medida inicial: </b>' . $linha['peso_inicial'] . 'kg' : $linha_max['peso_inicial_dif'] . 'kg' ?></td>
+                                    <td><?=($linha_max['peso_inicial_dif']>0)?'+':'' ?><?= ($linha_max['peso_inicial_dif'] == 0) ? '<b>Medida inicial: </b>' . $linha['peso_inicial'] . 'kg' : $linha_max['peso_inicial_dif'] . 'kg' ?></td>
                                     <td><?= ($linha_max['meta_dif'] == 0) ? '<b>Meta alcançada</b>' : $linha_max['meta_dif'] . 'kg' ?></td>
                                 </tr>
 

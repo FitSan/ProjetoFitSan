@@ -122,7 +122,7 @@ require_once './template/cabecalho.php';
 
             <div class="col-sm-6 col-md-4 ">
                 <div class="card mb-5">
-                    <img class="card-img-top img-responsive"  src="<?=URL_SITE?>img/historico.png" alt="Historico">
+                    <img class="card-img-top img-responsive"  src="<?=URL_SITE?>img/dicas.png" alt="Historico">
                     <div class="card-body">
                         <h4 class="card-title">Dicas</h4>
                         <h6 class="card-subtitle mb-2 text-muted">Crie dicas para seus alunos.</h6>
@@ -136,7 +136,7 @@ require_once './template/cabecalho.php';
         
     </section>
     
-     <div class="nav-tabs-custom">
+    <div class="box box-default">
         <div class="row">
             <div class="col-12 text-center my-5">
                 <h1 class="display-3">
@@ -148,25 +148,14 @@ require_once './template/cabecalho.php';
                 <p>Estamos felizes por tê-lo aqui, aproveite nossa plataforma.</p>
             </div>
         
-     
-        
+        </div>
+     </div>    
         
 
 <!--Dicas-->
-
-
-<div class="col-md-12">
-    <div class="nav-tabs-custom">
-        <ul class="nav nav-tabs">
-            <li class="active"><a href="#dicas" data-toggle="tab"> Dicas de Profissionais </a></li>
-        </ul>
+<div style="margin: 0 auto; width: 80%;">      
         <?php include 'dicas_all.php'; ?>  
-    </div>
-</div> 
-
-        </div> 
-     </div>
-
+</div>  
 
 
 
