@@ -14,6 +14,7 @@ while ($linha = mysqli_fetch_array($resultado)) {
     <div class="box box-widget">
         <div class="box-header with-border">
             <div class="user-block">
+                
                 <img class="img-circle img-bordered-sm" src="<?= htmlspecialchars(!empty($linha['foto']) ? $linha['foto'] : 'img/user-avatar-placeholder.png') ?>" alt="User profile picture">
                 <span class="username">
                     <?php
@@ -32,13 +33,14 @@ while ($linha = mysqli_fetch_array($resultado)) {
                                 }
                                 if($linha['profissional_id']==$_SESSION['id']){
                                 ?>
-                               
+                                
                                 
                                 <button type="button" class="pull-right btn-box-tool" data-toggle="modal" data-target="#excluir-dica" data-id="<?= $linha['id'] ?>"><i class="fa fa-times"></i></button>
                                 <?php
                                 }
                                 ?>
                     <!--Fim do icone x-->
+                    <i style="font-size: 15px;">postou a dica</i> <b><?= $linha['titulo'] ?></b><i style="font-size: 15px;">.</i>
                 </span>
                 <span class="description"><?= date('d/m/Y H:i:s', dataParse($linha['data_envio'])) ?></span>
             </div>

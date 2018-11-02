@@ -2,7 +2,7 @@
 require_once './autenticacao.php';
 
 $id_dica=$_POST['id'];
-$diretorio= "upload/dica/";
+$diretorio= "uploads/dicas/";
 
 $query_up = "select * from upload_dica where dica_id = $id_dica";
 $resultado = mysqli_query($conexao, $query_up);

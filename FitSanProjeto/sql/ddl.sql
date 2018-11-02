@@ -63,11 +63,14 @@ primary key (`aluno_id`, `profissional_id`)
 create table `dica`(
 `id` int primary key auto_increment,
 `texto` TEXT not null,
+`titulo` varchar(255) not null,
 `profissional_nome` varchar(255),
 `profissional_id` int references `usuario`(`id`),
 `data_envio` varchar(20)
 );
 
+alter table dica add column titulo varchar(255) not null
+alter table dica change titulo titulo varchar(255) not null after texto
 select * from dica;
 
 create table `upload_dica`(

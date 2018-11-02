@@ -34,8 +34,8 @@ $linha_dica = mysqli_fetch_array($resultado_dica);
                     }
                     ?>
                     <div class="form-group">
-                        <label for="nome">Profissional</label>
-                        <input name="nome" class="form-control" id="nome" type="text" value="<?= $_SESSION['nome'] ?>" readonly>
+                        <label for="titulo">Titulo</label>
+                        <input name="titulo" class="form-control" id="titulo" type="text" value="<?= $linha_dica['titulo']?>">
                     </div>
                     <div class="form-group">
                         <input name="id" value="<?= $linha_dica['id'] ?>" hidden>           
@@ -55,13 +55,13 @@ $linha_dica = mysqli_fetch_array($resultado_dica);
                                 <?php
                             if ($linha_upload['tipo'] != 'img') {
                                 ?>                 
-                            <li><video id="<?= $num ?>" height="300" style="padding: 5px;" onclick="hideUpload(this)">
-                                    <source src="<?=URL_SITE?>upload/dica/<?= $linha_upload['nome_arq'] ?>" > 
+                            <li><video id="<?= $num ?>" height="300" style="padding: 5px;" controls>
+                                    <source src="<?=URL_SITE?>uploads/dicas/<?= $linha_upload['nome_arq'] ?>" > 
                                 </video></li>                         
                                 <?php
                             } else {
                                 ?>  
-                                <li><img id="<?= $num ?>" src="<?=URL_SITE?>upload/dica/<?= $linha_upload['nome_arq'] ?>" height="300" style="padding: 5px;" onclick="hideUpload(this)"></li>
+                                <li><img id="<?= $num ?>" src="<?=URL_SITE?>uploads/dicas/<?= $linha_upload['nome_arq'] ?>" height="300" style="padding: 5px;"></li>
 
                                 <?php
                             }
@@ -75,14 +75,9 @@ $linha_dica = mysqli_fetch_array($resultado_dica);
                     <div class="form-group">
                         <div class="fileinput fileinput-new" data-provides="fileinput">
                             <span class="btn btn-default btn-file"><span><img src="<?=URL_SITE?>img/upload_img.png" height="40"></span><input type="file" name="imagens[]" multiple="multiple" hidden accept="image/png, image/jpeg"></span>
-<!--                            <span class="fileinput-filename"></span><span class="fileinput-new">No file chosen</span>-->
-                            <!--                        </div>-->
                             <b style="padding: 5px ">ou</b>
-                            <!--                        <div class="fileinput fileinput-new" data-provides="fileinput">-->
                             <span class="btn btn-default btn-file"><span><img src="<?=URL_SITE?>img/upload_vid.png" height="40"></span><input type="file" name="video" accept="video/*"> </span>
-<!--                            <span class="fileinput-filename"></span><span class="fileinput-new">No file chosen</span>-->
                         </div>
-<!--                        <input type="file" name="arquivos[]" class="form-control" multiple="multiple" accept="image/png, image/jpeg, video/*">-->
                     </div>    
                     <button type="submit" class="btn btn-primary">Salvar</button>
                     <a class="btn btn-danger" href="<?=URL_SITE?>minhas_dicas.php">Cancelar</a>
