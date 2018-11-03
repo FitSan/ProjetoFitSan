@@ -107,6 +107,7 @@ INSERT INTO `ativ_extras_exercicios` (`id`, `ativ_extras_id`, `exercicio`) VALUE
 DROP TABLE IF EXISTS `avaliacao`;
 CREATE TABLE IF NOT EXISTS `avaliacao` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `status` enum('lido', 'nao_lido') default 'nao_lido',
   `data` datetime NOT NULL,
   `desempenho` text COLLATE utf8_unicode_ci,
   `frequencia` text COLLATE utf8_unicode_ci,
@@ -127,7 +128,10 @@ CREATE TABLE IF NOT EXISTS `avaliacao` (
 ) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 select * from `avaliacao`;
---
+ 
+update avaliacao set status="lido" where id=30;
+
+select * from avaliacao  where aluno_id="3" and status="nao_lido" order by avaliacao.`data` desc;
 -- Extraindo dados da tabela `avaliacao`
 --
 
@@ -787,7 +791,9 @@ CREATE TABLE IF NOT EXISTS `usuario` (
   UNIQUE KEY `email` (`email`)
 ) ENGINE=MyISAM AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
+select * from usuario;
+
+update usuario set status='ativado' where id=4; 
 -- Extraindo dados da tabela `usuario`
 --
 

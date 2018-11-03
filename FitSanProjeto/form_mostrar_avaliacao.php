@@ -9,6 +9,10 @@ $id_avaliacao = $_GET['id_avaliacao'];
 $query = "select * from `avaliacao` where id= $id_avaliacao";
 $resultado = mysqli_query($conexao, $query);
 $linha = (mysqli_fetch_array($resultado));
+
+$lendo = "update avaliacao set status='lido' where id=$id_avaliacao";
+$consequência = mysqli_query($conexao, $lendo);
+
 ?>
 <style>
 

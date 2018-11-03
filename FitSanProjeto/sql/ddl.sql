@@ -339,6 +339,7 @@ offset
 
 CREATE TABLE IF NOT EXISTS `avaliacao` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `status` enum('lido', 'nao_lido') default 'nao_lido',
   `data` datetime NOT NULL,
   `desempenho` text COLLATE utf8_unicode_ci,
   `frequencia` text COLLATE utf8_unicode_ci,
