@@ -60,6 +60,19 @@ create table `vinculo`(
 primary key (`aluno_id`, `profissional_id`)
 );
 
+drop table `chat`;
+create table `chat`(
+ `id` int primary key auto_increment,
+ `aluno_id` int references `usuario`(`id`),
+ `profissional_id` int references `usuario`(`id`),
+ `origem` enum('aluno', 'profissional') not null,
+ `status` enum('lido', 'pendente') not null,
+ `datahora` datetime not null default now(),
+ `mensagem` text not null
+);
+select * from `chat`;
+
+
 create table `dica`(
 `id` int primary key auto_increment,
 `texto` TEXT not null,
@@ -359,7 +372,7 @@ CREATE TABLE IF NOT EXISTS `avaliacao` (
   PRIMARY KEY (`id`)
 );
 
-
+alter table `avaliacao` add column `status` enum('lido', 'nao_lido') default 'nao_lido';
 
 select * from `usuario`;
 

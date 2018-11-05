@@ -3,7 +3,7 @@
 </div>
 <footer class="main-footer">
     <div class="pull-right hidden-xs">
-        <b>Version</b> 1.0.0
+        <b>Version</b> 1.0.1
     </div>
     <strong>Copyright &copy; <?php echo date("Y"); ?> <a href="<?=URL_SITE?>pagina1.php">FitSan</a>.</strong> Todos os direitos reservados.
 </footer>

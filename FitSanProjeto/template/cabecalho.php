@@ -100,7 +100,6 @@ if (tipoLogado('aluno')){
                                         <li class="header">Você tem  <?= totalNotificacao() ?> notificações</li>
                                         <!--   fazer notificação ficar no plural quando tiver numeros acima de 1-->
                                         <li>
-                                            <!-- inner menu: contains the actual data -->
                                             <?php
                                             $notificacao = consultarNotificacao(); //carrega a notificação
                                             if ($notificacao) {
@@ -159,30 +158,30 @@ if (tipoLogado('aluno')){
                                         </li>
                                         <!-- Menu Body -->
                                         <li class="user-body">
-                                            <div class="row">
-<?php if (tipoLogado("aluno")) { ?>
-                                                <div class="col-xs-4 text-center">
-                                                        <a href="<?= URL_SITE ?>vinculos.php?tipo=<?php echo $_SESSION['tipo'] ?>"> Profissionais</a>
-                                                </div>
-                                                <div class="col-xs-4 text-center">
-                                                    <span>&nbsp;</span>
-                                                </div>
-                                                <div class="col-xs-4 text-center">
-<?php } elseif (tipoLogado("profissional")) { ?>
-                                                <div class="col-xs-4 text-center">
-                                                        <a href="<?= URL_SITE ?>vinculos.php?tipo=<?php echo $_SESSION['tipo'] ?>"> Alunos</a>
-                                                </div>
-                                                <div class="col-xs-4 text-center">
-                                                    <span>&nbsp;</span>
-                                                </div>
-                                                <div class="col-xs-4 text-center">
-<?php } else { ?>
-                                                <div class="col-xs-12 text-center">
-<?php } ?>
-                                                    <a href="<?= URL_SITE ?>form_conf.php">Configuração</a>
-                                                </div>
-                                            </div>
-                                        </li>
+                                                <div class="row">
+                                                    <?php if (tipoLogado("aluno")) { ?>
+                                                        <div class="col-xs-4 text-center">
+                                                            <a href="<?= URL_SITE ?>vinculos.php?tipo=<?php echo $_SESSION['tipo'] ?>"> Profissionais</a>
+                                                        </div>
+                                                        <div class="col-xs-4 text-center">
+                                                            <span>&nbsp;</span>
+                                                        </div>
+                                                        <div class="col-xs-4 text-center">
+                                                        <?php } elseif (tipoLogado("profissional")) { ?>
+                                                            <div class="col-xs-4 text-center">
+                                                                <a href="<?= URL_SITE ?>vinculos.php?tipo=<?php echo $_SESSION['tipo'] ?>"> Alunos</a>
+                                                            </div>
+                                                            <div class="col-xs-4 text-center">
+                                                                <span>&nbsp;</span>
+                                                            </div>
+                                                            <div class="col-xs-4 text-center">
+                                                            <?php } else { ?>
+                                                                <div class="col-xs-12 text-center">
+                                                                <?php } ?>
+                                                                <a href="<?= URL_SITE ?>form_conf.php">Configuração</a>
+                                                            </div>
+                                                        </div>
+                                                        </li>
                                         <!-- Menu Footer-->
                                         <li class="user-footer">
                                             <div class="pull-left">
@@ -214,10 +213,6 @@ if (tipoLogado('aluno')){
                             </div>
                             <div class="pull-left info">
                                 <p><?php echo exibirName(true); ?></p>
-                                
-                                <!--caso queira por se o usuario esta online ou nao.-->
-                                <!--<a href="#"><i class="fa fa-circle text-success"></i> Online</a>-->
-                                
                             </div>
                         </div></a>
                         <!--Inicio formulario pesquisa-->
@@ -234,47 +229,23 @@ if (tipoLogado('aluno')){
                         <!--Final formulario pesquisa-->
                         <!--Inicio Sidebar menu -->
                         <ul class="sidebar-menu" data-widget="tree">
-                            <li class="header">NAVEGAÇÀO PRINCIPAL</li>                          
-                            <li><a href="<?= URL_SITE ?>pagina1.php"><i class="fa fa-home"></i><span>Home</span></a></li>
-                            <?php if (tipoLogado("aluno", "profissional")){ ?>
-                            <li class="treeview">
-                                <a href="#">
-                                    <i class="fa fa-id-badge"></i><span>Área Pessoal</span>
-                                    <span class="pull-right-container">
-                                       <i class="fa fa-angle-left pull-right"></i> 
-                                    </span>
-                                </a>
-                                <ul class="treeview-menu">
-                                    <?php
-                                    if (tipoLogado("aluno")){ ?>
-                                        <li><a href="<?= URL_SITE ?>metas.php"><i class="fa fa-circle-o"></i> Metas </a></li>
-                                        <li><a href="<?= URL_SITE ?>atividadesExtras.php"><i class="fa fa-circle-o"></i> Atividades Extras </a></li>
-                                        <li><a href="<?= URL_SITE ?>contato.php"><i class="fa fa-circle-o"></i> Contato </a></li>
-                                    <?php } elseif (tipoLogado("profissional")){ ?>
-                                        <li><a href="<?= URL_SITE ?>contato.php"><i class="fa fa-circle-o"></i> Contato </a></li>
-                                    <?php } ?>     
-                                </ul>
-                            </li>
-                            
-                            <?php } ?> 
-                           
-                           <?php if (tipoLogado("aluno")){ ?>
-                                
-                               <li><a href="<?= URL_SITE ?>planilha_aluno.php"><i class="fa fa-th-list"></i><span>Planilha</span></a></li>
-                               <li><a href="<?= URL_SITE ?>historico.php"><i class="fa fa-history"></i><span>Histórico</span></a></li>
-                               <li><a href="<?= URL_SITE ?>form_receber_avaliacao.php"><i class="fa fa-pencil"></i><span>Avaliação</span></a></li>
-                           <?php } elseif (tipoLogado("profissional")){ ?>
-                                <li><a href="<?= URL_SITE ?>minhas_dicas.php"><i class="fa fa-heartbeat"></i><span>Minhas Dicas</span></a></li>
-                                <li><a href="<?= URL_SITE ?>planilha.php"><i class="fa fa-th-list"></i><span>Planilha</span></a></li>
-                                <li><a href="<?= URL_SITE ?>form_avaliacao.php"><i class="fa fa-pencil"></i><span>Avaliações</span></a></li>
-                           <?php  } elseif (tipoLogado("admin")){ ?>
-                                <li><a href="<?= URL_SITE ?>area_admin.php"><i class="fa fa-th-list"></i><span>Área Administrativa</span></a></li>
-                            <?php } ?>
-                            <!--                            <li>
-                                                            <a href="<?= URL_SITE ?>busca_usuarios.php">
-                                                                <i class="fa fa-th"></i> <span>Busca</span>
-                                                            </a>
-                                                        </li>-->
+                                <li class="header">NAVEGAÇÀO PRINCIPAL</li>                          
+                                <li><a href="<?= URL_SITE ?>pagina1.php"><i class="fa fa-home"></i><span>Home</span></a></li>
+                                <?php if (tipoLogado("aluno")) { ?>
+                                    <li><a href="<?= URL_SITE ?>atividadesExtras.php"><i class="fa fa-pagelines"></i><span> Atividades Extras </span></a></li>
+                                    <li><a href="<?= URL_SITE ?>planilha_aluno.php"><i class="fa fa-th-list"></i><span>Planilha</span></a></li>
+                                    <li><a href="<?= URL_SITE ?>metas.php"><i class="fa fa-line-chart"></i><span> Metas </span></a></li>
+                                    <li><a href="<?= URL_SITE ?>form_receber_avaliacao.php"><i class="fa fa-pencil"></i><span>Avaliação</span></a></li>
+                                    <li><a href="<?= URL_SITE ?>historico.php"><i class="fa fa-history"></i><span>Histórico</span></a></li>
+                                    <li><a href="<?= URL_SITE ?>mensagens.php"><i class="fa fa fa-weixin"></i><span>Mensagens</span></a></li>
+                                <?php } elseif (tipoLogado("profissional")) { ?>
+                                    <li><a href="<?= URL_SITE ?>minhas_dicas.php"><i class="fa fa-heartbeat"></i><span>Minhas Dicas</span></a></li>
+                                    <li><a href="<?= URL_SITE ?>planilha.php"><i class="fa fa-th-list"></i><span>Planilha</span></a></li>
+                                    <li><a href="<?= URL_SITE ?>form_avaliacao.php"><i class="fa fa-pencil"></i><span>Avaliações</span></a></li>
+                                    <li><a href="<?= URL_SITE ?>mensagens.php"><i class="fa fa-weixin"></i><span>Mensagens</span></a></li>
+                                <?php } elseif (tipoLogado("admin")) { ?>
+                                    <li><a href="<?= URL_SITE ?>area_admin.php"><i class="fa fa-th-list"></i><span>Área Administrativa</span></a></li>
+                                <?php } ?>
                         </ul>
                     </section>
                 </aside>        

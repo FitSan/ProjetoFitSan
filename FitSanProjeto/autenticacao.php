@@ -225,21 +225,46 @@ function mysqliEscaparTexto($valor, $tipo = null) {
 }
 
 function criarNotificacao($status, $texto, $profissional_id = null, $aluno_id = null, $dados = null) {
-    if ($dados !== null)
-        $dados = serialize($dados);
-    $sql = "insert into notificacao (data, lido, status, texto, profissional_id, aluno_id, dados) value (now(),'N', " . mysqliEscaparTexto($status) . ", " . mysqliEscaparTexto($texto) . ", " . mysqliEscaparTexto($profissional_id) . ", " . mysqliEscaparTexto($aluno_id) . ", " . mysqliEscaparTexto($dados) . ")";
-    global $conexao; //importar variavel de fora da função.
-    if (!$conexao)
-        die('deu erro');
-    if (mysqli_query($conexao, $sql)) {
-        return mysqli_insert_id($conexao);
+    if ($dados !== null) $dados = serialize($dados);
+    if ($ret = dbquery("
+        insert into notificacao (
+            data, 
+            lido, 
+            status, 
+            texto, 
+            profissional_id, 
+            aluno_id, 
+            dados
+        ) value (
+            now(),
+            'N', 
+            " . mysqliEscaparTexto($status) . ", 
+            " . mysqliEscaparTexto($texto) . ", 
+            " . mysqliEscaparTexto($profissional_id) . ", 
+            " . mysqliEscaparTexto($aluno_id) . ", 
+            " . mysqliEscaparTexto($dados) . "
+        )
+    ", 'id')) {
+        return $ret;
     } else {
         return null;
     }
 }
 
 function consultarNotificacao($lido = null) {
-    $sql = "select n.*, p.nome AS prof_nome, p.sobrenome AS prof_sobrenome, a.nome AS al_nome, a.sobrenome AS al_sobrenome from notificacao n left join usuario p on p.id = n.profissional_id left join usuario a on a.id = n.aluno_id where ";
+    $sql = "
+        select 
+            n.*, 
+            p.nome AS prof_nome, 
+            p.sobrenome AS prof_sobrenome, 
+            a.nome AS al_nome, 
+            a.sobrenome AS al_sobrenome 
+        from 
+            notificacao n left join 
+            usuario p on p.id = n.profissional_id left join 
+            usuario a on a.id = n.aluno_id 
+        where 
+    ";
     if ($lido !== null)
         $sql .= "lido = '" . mysqliEscaparTexto($lido) . "' and (";
     else
@@ -249,13 +274,14 @@ function consultarNotificacao($lido = null) {
     } else {
         $sql .= "aluno_id = " . mysqliEscaparTexto($_SESSION['id']);
     }
-    $sql .= " or (profissional_id is null and aluno_id is null)) order by data, id";
-    global $conexao; //importar variavel de fora da função.
+    $sql .= " or (profissional_id is null and aluno_id is null))
+        order by
+            data,
+            id
+    ";
     $retorno = array();
-    if (!$conexao)
-        return $retorno;
-    if ($resultado = mysqli_query($conexao, $sql)) {
-        while ($linha = mysqli_fetch_array($resultado)) {
+    if ($resultado = dbquery($sql)) {
+        foreach ($resultado as $linha) {
             $linha['texto'] = preg_replace_callback('{(href=["\'][^"\']+)(["\'])}i', function ($match) use ($linha) {//Adicionando código da notificação em todos os links do texto
                 return ($match[1] . ((strpos($match[0], '?') !== false) ? '&' : '?') . 'notificacao=' . $linha['id'] . $match[2]);
             }, $linha['texto']);
@@ -268,7 +294,13 @@ function consultarNotificacao($lido = null) {
 }
 
 function totalNotificacao($lido = null) {
-    $sql = "select count(id) as total from  notificacao where ";
+    $sql = "
+        select
+            count(id) as total
+            from
+            notificacao
+        where
+    ";
     if ($lido !== null)
         $sql .= "lido = '" . mysqliEscaparTexto($lido) . "' and (";
     else
@@ -278,16 +310,13 @@ function totalNotificacao($lido = null) {
     } else {
         $sql .= "aluno_id = " . mysqliEscaparTexto($_SESSION['id']);
     }
-    $sql .= " or (profissional_id is null and aluno_id is null)) order by data, id";
-    global $conexao; //importar variavel de fora da função.
-    if (!$conexao)
-        return 0;
-    if ($resultado = mysqli_query($conexao, $sql)) {
-        if ($linha = mysqli_fetch_array($resultado)) {
-            return intval($linha['total']);
-        } else {
-            return 0;
-        }
+    $sql .= " or (profissional_id is null and aluno_id is null))
+        order by
+            data,
+            id
+    ";
+    if ($resultado = dbquery($sql, 'col', 'total')) {
+        return intval($resultado);
     } else {
         return 0;
     }
@@ -300,9 +329,7 @@ function leituraNotificacao($id, $lido = null, $dados = null) {
     if ($dados !== null) {
         $where[] = "dados = " . mysqliEscaparTexto(serialize($dados));
     }
-    $sql = "update notificacao set lido = " . mysqliEscaparTexto($lido) . " where " . implode(' and ', $where);
-    global $conexao; //importar variavel de fora da função.
-    return mysqli_query($conexao, $sql) or die_mysql($sql, __FILE__, __LINE__);
+    return dbquery("update notificacao set lido = " . mysqliEscaparTexto($lido) . " where " . implode(' and ', $where), false);
 }
 
 //Esta função levará $ _SERVER ['REQUEST_URI'] e construirá uma trilha atual com base no caminho atual do usuário
@@ -341,46 +368,139 @@ function breadcrumbs($separator = ' &raquo; ', $home = 'Home') {
     return implode($separator, $breadcrumbs);
 }
 
-//function listar_usuario_para_avaliacao() {
-//    $usuarios = array();
-//    $query = "select * from usuario join vinculo on usuario.id=vinculo.aluno_id where profissional_id=$_SESSION[id]";
-//    $retorno = mysqli_query($conexao, $query);
-//    while ($linha = mysqli_fetch_array($retorno)) {
-//        array_push($usuarios, $linha);
-//    }
-//    return $usuarios;
-//}
-// Faz uma consula ao bancon usando um array com os parâmetros
+// Faz uma consula ao banco usando um array com os parâmetros
+//    dbquery($query[, $saida = true[[, $col = 0], $row = 0]])
 // 
 //    Parâmetros:
-//       $query => a query que será executada
-//       $saida => se deve retornar um array com o conteúdo ou apenas a saida da consulta
+//       $query => a query que será executada. A query pode ser uma SQL ou um array conforme o modelo abaixo:
+//          array(
+//             // Coloque os campos
+//             'select' => array(
+//                'a.campo_da_tabela1',
+//                'b.campo_da_tabela_2'
+//             ),
+//             // Coloque as tabelas
+//             'from' => array(
+//                'tabela1 a',
+//                'tabela2 b',
+//                'tabela1 c join tabela2 d on d.id = c.id_d'
+//             ),
+//             // Coloque as condições
+//             'where' => array(
+//                'b.campo_fk = a.campo_id',
+//                'a.campo_da_tabela_3 = valor',
+//                'c.campo_da_tabela_4 = valor or d.campo_da_tabela_4 = valor',
+//             ),
+//             // Coloque os campos para agrupar
+//             'group' => array(
+//                'b.campo_fk',
+//                'a.campo_da_tabela_3',
+//             ),
+//             // Coloque os campos para ordenar
+//             'order' => array(
+//                'b.campo_fk asc',
+//                'a.campo_da_tabela_3 desc',
+//             ),
+//             // Coloque as condições pós consulta
+//             'having' => array(
+//                'b.campo_fk = a.campo_id',
+//                'a.campo_da_tabela_3 = valor',
+//             ),
+//             // Coloque outras instrucões aqui
+//             'outro' => array(
+//                'limit 1',
+//                'offset 0',
+//             ),
+//          )
+//       $saida => a forma como deve retornar a consulta conforme o valor usado abaixo:
+//          true => retorna um array com o conteúdo (padrão)
+//          false => retorna a saida da consulta diretamente
+//          'row' => retorna apenas a linha indicada no parâmetro seguinte
+//          'col' => retorna apenas a linha e coluna indicadas nos parâmetros seguintes
+//          'id' => retorna apenas o último id (primary key) adicionado na tabela (apenas para INSERT INTO)
 // 
-//    Ex. 1: select campo_da_tabela1, campo_da_tabela_2 from tabela where campo_da_tabela_3 = valor;
-//       array(
-//          'select' => 'campo_da_tabela1, campo_da_tabela_2',
-//          'from' => 'tabela',
-//          'where' => 'campo_da_tabela_3 = valor',
-//       )
-//    
-//    Ex. 2: select a.campo_da_tabela1, b.campo_da_tabela_2 from tabela1 a, tabela2 b where b.campo_fk = a.campo_id and a.campo_da_tabela_3 = valor;
-//    array(
-//       'select' => array(
-//          'a.campo_da_tabela1',
-//          'b.campo_da_tabela_2'
-//       ),
-//       'from' => array(
-//          'tabela1 a',
-//          'tabela2 b'
-//       ),
-//       'where' => array(
-//          'b.campo_fk = a.campo_id',
-//          'a.campo_da_tabela_3 = valor',
-//       )
-//    )
+//      Se $saida for 'row'
+//          $row => posição (linha) onde o ítem se encontra na lista, se não for informado será retornado o primeiro (informe somente int)
 // 
-function dbquery($query, $saida = true) {
+//      Se $saida for 'col'
+//          $col => posição (coluna) ou nome do campo onde do ítem, se não for informado será retornado o primeiro (informe int ou string)
+//          $row => posição (linha) onde o ítem se encontra na lista, se não for informado será retornado o primeiro (informe somente int)
+// 
+//    Exemplos de $query com array:
+// 
+//      1: select campo_da_tabela1, campo_da_tabela_2 from tabela where campo_da_tabela_3 = valor;
+//         array(
+//            'select' => 'campo_da_tabela1, campo_da_tabela_2',
+//            'from' => 'tabela',
+//            'where' => 'campo_da_tabela_3 = valor',
+//         )
+//      
+//      2: select a.campo_da_tabela1, b.campo_da_tabela_2 from tabela1 a, tabela2 b where b.campo_fk = a.campo_id and a.campo_da_tabela_3 = valor;
+//        array(
+//           'select' => array(
+//              'a.campo_da_tabela1',
+//              'b.campo_da_tabela_2'
+//           ),
+//           'from' => array(
+//              'tabela1 a',
+//              'tabela2 b'
+//           ),
+//           'where' => array(
+//              'b.campo_fk = a.campo_id',
+//              'a.campo_da_tabela_3 = valor',
+//           )
+//        )
+// 
+//    Exemplos de chamada da função:
+// 
+//      Supondo que exista a tabela:
+//          CREATE TABLE tabela (
+//              id INT PRIMARY KEY AUTO_INCREMENT,
+//              campo VARCHAR(5) NOT NULL,
+//          );
+// 
+//      1: Consultando dados da tabela
+//          dbquery("SELECT * FROM tabela")
+//          dbquery("SELECT * FROM tabela", true)
+// 
+//          Isto deve retornar algo como:
+//              array(
+//                  array('id' => 1, 'campo' => 'valor'),
+//              )
+// 
+//      2: Inserindo na tabela com um retorno direto
+//          dbquery("INSERT INTO tabela (campo) VALUE ('valor')", false)
+// 
+//          Isto deve retornar algo como:
+//              int(0) ou int(1) ou resource(...)
+// 
+//      3: Consultando na tabela e pegar apenas uma determinada linha
+//          dbquery("SELECT * FROM tabela", 'row')
+//          dbquery("SELECT * FROM tabela", 'row', 1)
+// 
+//          Isto deve retornar algo como:
+//              array('id' => 1, 'campo' => 'valor')
+// 
+//      4: Consultando na tabela e pegando apenas o valor de um determinado campo e de uma determinada linha
+//          dbquery("SELECT count(*) as total FROM tabela", 'col')
+// 
+//          Isto deve retornar algo como:
+//              int(10)
+//
+//          dbquery("SELECT * FROM tabela", 'col', 1)
+//          dbquery("SELECT * FROM tabela", 'col', 1, 2)
+//          dbquery("SELECT * FROM tabela", 'col', 'campo')
+//          dbquery("SELECT * FROM tabela", 'col', 'campo', 2)
+// 
+//          Isto deve retornar algo como:
+//              string(5) 'valor'
+// 
+function dbquery() {
     global $conexao;
+
+    $args = func_get_args();
+    $query = array_shift($args);
+
     if (is_array($query)) {
         $sql = ("select " . trim(is_array($query['select']) ? implode(', ', $query['select']) : $query['select']) . " ");
         if (isset($query['from']))
@@ -399,14 +519,39 @@ function dbquery($query, $saida = true) {
         $sql = $query;
     }
     $res = mysqli_query($conexao, $sql) or die_mysql($sql, __FILE__, __LINE__);
-    if ($saida) {
-        $ret = array();
-        while ($row = mysqli_fetch_array($res)) $ret[] = $row;
-    } else {
-        $ret = $res;
+
+    if (($saida = array_shift($args)) === null) $saida = true;
+    if ($saida === 'id') {
+        if ($ret = mysqli_insert_id($conexao)) return $ret;
     }
-    mysqli_free_result($res);
-    return $ret;
+    if (!$saida) return $res;
+
+    if (is_resource($res) || ($res instanceof mysqli_result)){
+        $ret = array();
+        while ($row = mysqli_fetch_array($res)) $ret[] = array_change_key_case($row, CASE_LOWER);
+        mysqli_free_result($res);
+    }
+
+    if ($saida === true) return $ret;
+
+    switch ($saida){
+        case 'row':
+            if (($row = array_shift($args)) !== null) $row = 0;
+            return isset($ret[$row]) ? $ret[$row] : null;
+        case 'col':
+            if (($col = array_shift($args)) !== null) $col = 0;
+            if (($row = array_shift($args)) !== null) $row = 0;
+            $item = (isset($ret[$row]) ? $ret[$row] : array());
+            if (is_string($col)) return isset($item[$col]) ? $item[$col] : null;
+            $item = array_values($item);
+            return isset($ret[$row][$col]) ? $ret[$row][$col] : null;
+        case 'id':
+            $ret = mysqli_insert_id($conexao);
+            return ($ret ? $ret : $res);
+        default:
+            return $ret;
+    }
+
 }
 
 // Encerra o processo mostrando a mensagem de erro
@@ -502,8 +647,12 @@ function url_current() {
 //          --> O retorno disso será semelhante à: http://localhost/FitSan/planilha.php
 //
 function url_adjust($url, $params) {
-    if (!is_array($url))
-        $url = parse_url($url);
+    if ($url === null){
+        $url = url_current();
+    } elseif ($url === false){
+        $url = URL_SITE;
+    }
+    if (!is_array($url)) $url = parse_url($url);
 
     $params = array_merge(array(
         'scheme' => true,
@@ -606,6 +755,7 @@ function url_adjust($url, $params) {
     }
 
     return $ret;
+
 }
 
 // Adiciona e/ou remove parâmetros da URL
@@ -644,3 +794,15 @@ function url_param_add($url, $query, $value = null) {
         'pass' => true,
     ));
 }
+
+
+
+//function listar_usuario_para_avaliacao() {
+//    $usuarios = array();
+//    $query = "select * from usuario join vinculo on usuario.id=vinculo.aluno_id where profissional_id=$_SESSION[id]";
+//    $retorno = mysqli_query($conexao, $query);
+//    while ($linha = mysqli_fetch_array($retorno)) {
+//        array_push($usuarios, $linha);
+//    }
+//    return $usuarios;
+//}
