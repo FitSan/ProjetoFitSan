@@ -1,5 +1,5 @@
 <?php
-$pagina = "Contato";
+$pagina = "Mensagens";
 require_once './template/cabecalho.php';
 
 if (!tipoLogado("aluno", "profissional")){
@@ -40,7 +40,7 @@ if ($acao == 'incluir'){
             )
         ");
         criarNotificacao('INFO',
-            'Você tem uma nova mensagem de ' . $_SESSION['nome'] . " " . $_SESSION['sobrenome']  . '<br><a href="'.URL_SITE.'contato.php?id='.$_SESSION['id'].'">Lêr</a>',
+            'Você tem uma nova mensagem de ' . $_SESSION['nome'] . " " . $_SESSION['sobrenome']  . '<br><a href="'.URL_SITE.'mensagens.php?id='.$_SESSION['id'].'">Lêr</a>',
             tipoLogado('aluno') ? $usuario : null,
             tipoLogado('profissional') ? $usuario : null,
             [
@@ -140,6 +140,8 @@ offset
     " . $pagina['offset']
 ;
 $resultado = dbquery($query);
+
+
 ?>
 
 <div class="content-wrapper">
@@ -176,6 +178,7 @@ $resultado = dbquery($query);
             <div class="box box-solid">
                 <div class="box-header with-border">
                     <h3 class="box-title">Mensagem</h3>
+               
                     <div class="box-tools">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                 </button>
@@ -199,7 +202,16 @@ $resultado = dbquery($query);
                 <div class="box-header with-border">
                     <h3 class="box-title">Conteúdo</h3>
                     <div class="box-body"><br>
-                    <?php if (!empty($resultado)){ ?>
+                    <?php if (!empty($resultado)){ 
+                        
+                        if (isset($_GET['notificacao'])) {
+                            echo leituraNotificacao($_GET['notificacao']);
+                            echo '<script>window.location = ' . json_encode(url_param_add(url_current(), 'notificacao', null)) . ';</script>';
+                            exit;
+                        }
+                        ?>
+                        
+                        
                     <ul class="timeline timeline-inverse">
                         <?php
                             $dataanterior = '';
