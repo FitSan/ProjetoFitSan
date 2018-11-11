@@ -527,11 +527,11 @@
     // Get the checkbox    
     if (check.checked === true) {
         document.getElementById(up).style.display = "none";   
-        document.getElementById(label).innerHTML="+";
+        document.getElementById(label).innerHTML="<i class='fa fa-plus-circle'></i>";
 //        $(label' b').text('+');
 	}else{
             document.getElementById(up).style.display = "inline";
-            document.getElementById(label).innerHTML="x";
+            document.getElementById(label).innerHTML="<i class='fa fa-minus-circle'></i>";
 //            $(label' b').text('X');
         }
   }
