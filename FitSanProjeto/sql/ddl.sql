@@ -11,6 +11,7 @@ create table `usuario`(
 `senha` varchar(255) not null,
 `email` varchar(255) not null unique,
 `tipo_id` integer references tipo_usuario(id),
+`codigo` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
 `status` enum('ativado', 'desativado', 'excluido') default 'ativado'
 );
 

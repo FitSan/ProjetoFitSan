@@ -3,6 +3,17 @@
 require_once './autenticacao.php';
 include './bancodedados/conectar.php';
 
+require_once './PHPMailer-6.0.5/src/PHPMailer.php';
+require_once './PHPMailer-6.0.5/src/Exception.php';
+require_once './PHPMailer-6.0.5/src/SMTP.php';
+require_once './PHPMailer-6.0.5/src/POP3.php';
+require_once './PHPMailer-6.0.5/src/OAuth.php';
+require_once './PHPMailer-6.0.5/src/class.phpmailer.php';
+require_once './PHPMailer-6.0.5/src/class.smtp.php';
+require_once './PHPMailer-6.0.5/src/PHPMailerAutoload.php';
+
+
+
 $nome = (!empty($_POST['nome']) ? $_POST['nome'] : null);
 $sobrenome = (!empty($_POST['sobrenome']) ? $_POST['sobrenome'] : null);
 $datanasc = (!empty($_POST['dataNasc']) ? $_POST['dataNasc'] : null);
@@ -31,7 +42,7 @@ function tratar_nome($nome) {
 $nome = tratar_nome($nome);
 $sobrenome = tratar_nome($sobrenome);
 $size = strlen($nome);
-$nome = substr($nome,0, $size-1);
+$nome = substr($nome, 0, $size - 1);
 $senha_hash = password_hash($senha, PASSWORD_BCRYPT);
 
 $query_usuario = "select email from usuario";
@@ -59,7 +70,7 @@ if ($contSenha < 8) {
     $_SESSION['erro_email'] = "$email ";
     $_SESSION['erro_tipo_usuario'] = "$tipo_usuario ";
 
-    header('Location: '.URL_SITE.'form_cadastrar.php');
+    header('Location: ' . URL_SITE . 'form_cadastrar.php');
 } else {
 
 
@@ -70,7 +81,7 @@ if ($contSenha < 8) {
         $_SESSION['erro_email'] = "$email ";
         $_SESSION['erro_tipo_usuario'] = "$tipo_usuario ";
 
-        header('Location: '.URL_SITE.'form_cadastrar.php');
+        header('Location: ' . URL_SITE . 'form_cadastrar.php');
     } else {
 
         if ($existe || $contEmail == null) {
@@ -78,21 +89,52 @@ if ($contSenha < 8) {
             $_SESSION['erro_nome'] = "$nome ";
             $_SESSION['erro_sobrenome'] = "$sobrenome ";
             $_SESSION['erro_senha'] = "$senha ";
-             $_SESSION['erro_confsenha'] = "$confsenha ";
-             $_SESSION['erro_tipo_usuario'] = "$tipo_usuario ";
+            $_SESSION['erro_confsenha'] = "$confsenha ";
+            $_SESSION['erro_tipo_usuario'] = "$tipo_usuario ";
 
 
 
-            header('Location: '.URL_SITE.'form_cadastrar.php');
+            header('Location: ' . URL_SITE . 'form_cadastrar.php');
         } else {
-            $query = "insert into usuario (nome, sobrenome, senha, email, tipo_id) values ('$nome', '$sobrenome', '$senha_hash', '$email', '$tipo_usuario')";
+            $query = "insert into usuario (nome, sobrenome, senha, email, tipo_id, status) values ('$nome', '$sobrenome', '$senha_hash', '$email', '$tipo_usuario', 'desativado')";
 
 
-            //echo $query;
+
+if (!empty($email)){ 
+    
+
+       
+    $mail = new PHPMailer();
+    $mail->isSMTP();
+    $mail->Host = 'smtp.gmail.com';
+    $mail->SMTPAuth = TRUE;
+    $mail->SMTPDebug = 1;
+    $mail->SMTPAutoTLS = FALSE;
+    $mail->SMTPSecure = 'ssl';
+    $mail->Username = 'plataformafitsan@gmail.com';
+    $mail->Password = 'NaStiF321';
+    $mail->Port = 465;
+    $mail->addAddress($email);
+    $mail->setFrom($email);
+    $mail->addReplyTo('plataformafitsan@gmail.com');
+    $mail->isHTML();
+    $mail->Subject = 'FitSan';
+    $mail->Body = "<a href=\"".URL_SITE."validar_conta.php?perfil_email=$email\"> CLIQUE AQUI PARA ATIVAR SUA CONTA !</a>;';";
+    ?>
+  
+
+<?php
+    if (!$mail->send()){
+        echo 'Não foi possível enviar a mensagem';
+        echo 'Erro: ' . $mail->ErrorInfo;
+    } 
+ 
+}
+            
 
             mysqli_query($conexao, $query);
-
-            header('Location: '.URL_SITE.'form_login.php');
+            $_SESSION['cadastrado'] = "Sucesso";
+            header('Location: ' . URL_SITE . 'form_login.php');
         }
     }
 }

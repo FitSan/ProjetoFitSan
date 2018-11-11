@@ -72,7 +72,7 @@ ini_set('display_errors', true);
 
                     <?php if (!empty($_SESSION['erroCount'])) {
                         ?> <div class="alert alert-danger">
-                            <strong>A senha deve conter do mínimo 8 caracteres</strong>.
+                            <strong>A senha deve conter no mínimo 8 caracteres</strong>.
                         </div> <?php
                         unset($_SESSION['erroCount']);
                     }

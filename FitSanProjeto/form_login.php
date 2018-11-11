@@ -36,6 +36,18 @@ require_once './autenticacao.php';
             <!-- /.login-logo -->
             <div class="login-box-body">
                 <p class="login-box-msg">LOGIN</p>
+                                <?php
+                if(!empty($_SESSION['cadastrado'])) {
+                    
+                  ?> <div class="alert alert-info">
+                <strong>Cadastro feito com Sucesso. Verifique seu email para ativar a conta!</strong>.
+                </div> <?php ;
+                 
+                    unset($_SESSION['cadastrado']);
+                }
+                ?>
+                
+        
 
                 <form action="<?=URL_SITE?>logar.php" method="post">
 
@@ -61,6 +73,7 @@ require_once './autenticacao.php';
                     unset($_SESSION['erro']);
                 }
                 ?>
+                    
 
                         
                         <br>

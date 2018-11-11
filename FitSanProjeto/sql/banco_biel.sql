@@ -793,7 +793,9 @@ CREATE TABLE IF NOT EXISTS `usuario` (
 
 select * from usuario;
 
-update usuario set status='ativado' where id=4; 
+select * from usuario where email ='gabriel.pg@aluno.ifsc.edu.br' ;
+
+update usuario set status='ativado' where email ='gabriel.pg@aluno.ifsc.edu.br' ;
 -- Extraindo dados da tabela `usuario`
 --
 

@@ -40,7 +40,7 @@ if($existe == true){
        
 } else {
     
-     $_SESSION['erroCount'] = "Dados nao conferem!";
+     $_SESSION['erroCodigo'] = "Dados nao conferem!";
      
       unset($_SESSION['codigo']);
     header('Location: '.URL_SITE.'form_recSenha.php');
