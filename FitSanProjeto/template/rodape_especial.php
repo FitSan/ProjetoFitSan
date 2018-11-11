@@ -857,5 +857,41 @@
         }
     }
 </script>-->
+<script>
+    function showFormLink() {
+        var check = document.getElementById('check_link');
+    // Get the checkbox    
+    if (check.checked === true) {
+        document.getElementById('form_link').style.visibility = "hidden";  
+	}else{
+            document.getElementById('form_link').style.visibility = "visible";
+        }
+  }
+</script>
+    <script>
+        var slideIndex = 1;
+
+        // Next/previous controls
+        function plusSlides(n, dica) {
+          showSlides(slideIndex += n, dica);
+        }
+
+        // Thumbnail image controls
+
+        function showSlides(n, dica) {
+          var i;
+          var slides = document.getElementById(dica).getElementsByClassName("mySlides");
+          if (n > slides.length) {
+            slideIndex = 1
+          }
+          if (n < 1) {
+            slideIndex = slides.length
+          }
+          for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+          }
+          slides[slideIndex - 1].style.display = "block";
+        }
+    </script>
 </body>
 </html>

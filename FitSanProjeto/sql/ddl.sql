@@ -75,8 +75,8 @@ select * from `chat`;
 
 create table `dica`(
 `id` int primary key auto_increment,
-`texto` TEXT not null,
-`titulo` varchar(255) not null,
+`texto` TEXT,
+`titulo` varchar(255),
 `profissional_nome` varchar(255),
 `profissional_id` int references `usuario`(`id`),
 `data_envio` varchar(20)
@@ -84,14 +84,22 @@ create table `dica`(
 
 alter table dica add column titulo varchar(255) not null
 alter table dica change titulo titulo varchar(255) not null after texto
+
+alter table dica change titulo titulo varchar(255) after texto
+alter table dica change texto texto TEXT
 select * from dica;
 
 create table `upload_dica`(
  `id` int primary key auto_increment,
-`nome_arq` varchar(40) not null,
+`nome_arq` varchar(255) not null,
 `tipo` char(3) not null, 
 `dica_id` int references `dica`(`id`)
 );
+
+alter table upload_dica change nome_arq nome_arq varchar(255) not null
+select * from dica;
+
+truncate table dica
 
 select * from notificacao;
 

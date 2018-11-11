@@ -603,28 +603,48 @@ where
                                     <!-- /.box-header -->
                                     <div class="box-body" >
                                         <p> <?= nl2br(htmlentities($linha['texto'])) ?> </p> 
-                                        <div id="uploads" style="max-height: 500px;">
-                                            <ul><?php
+                                            <?php
                                                 $query_dica = "select * from upload_dica where dica_id = $linha[id]";
                                                 $resultado_upload = mysqli_query($conexao, $query_dica);
-                                                while ($linha_upload = mysqli_fetch_array($resultado_upload)) {
-                                                    if ($linha_upload['tipo'] != 'img') {
-                                                        ?>                          
-                                                        <li><video height="70%" style="padding: 5px; min-height: 200px;" controls>
-                                                                <source src="<?= URL_SITE ?>uploads/dicas/<?= $linha_upload['nome_arq'] ?>" type="video/mp4">
-                                                            </video></li>
-                                                        <?php
-                                                    } else {
-                                                        ?>  
-                                                        <li><img src="<?= URL_SITE ?>uploads/dicas/<?= $linha_upload['nome_arq'] ?>" height="80%" style="padding: 5px;"></li>                  
+                                                if (mysqli_num_rows($resultado_upload)>0){
+                                                    $count = 0;
+                                                    while ($linha_upload = mysqli_fetch_array($resultado_upload)) {                
+                                                        if ($linha_upload['tipo'] != 'img') {
+                                                            if ($linha_upload['tipo'] == 'vid') {
+                                                                ?> 
+                                                                <div class="embed-container"><iframe  src="<?= $linha_upload['nome_arq'] ?>" frameborder="0" allowfullscreen></iframe>                                  
+                                                                    <?php
+                                                                } else {
+                                                                    ?>
+                                                                    <div><a href="<?= $linha_upload['nome_arq'] ?>"  target="_blank"><?= $linha_upload['nome_arq'] ?></a>
+                                                                        <?php
+                                                                    }
+                                                                    $img = false;
+                                                                } else {
+                                                                    $count += 1;
+                                                                    $img = true;
+                                                                    $id = $linha['id'];
+                                                                    if ($count == 1) {
+                                                                        ?>
+                                                                        <div class="wrap" id="<?= $id ?>">
+                                                                            <section class="container galery-container">
+                                                                            <?php }
+                                                                            ?>  
+                                                                            <div class="mySlides" <?=($count>1) ? ' style="display: none;"' : '' ?>><img class="imgslide img img-responsive " src="<?= URL_SITE ?>uploads/dicas/<?= $linha_upload['nome_arq'] ?>" style="padding: 5px; margin: 0 auto;"></div>                
 
-                                                        <?php
-                                                    }
-                                                }
-                                                ?>
-                                            </ul>
-                                        </div>
-                                    </div>
+                                                                            <?php
+                                                                        }
+                                                                    } if ($img) {                                
+                                                                        if ($count > 1) {
+                                                                            ?>
+                                                                            <a class="prev" onclick="plusSlides(-1, <?=$id ?>)">&#10094;</a>
+                                                                            <a class="next" onclick="plusSlides(1, <?=$id ?>)">&#10095;</a>
+                                                                        <?php } ?>
+                                                                    </section>
+                                                                <?php } ?>                                                
+                                                            </div>
+                                                        <?php } ?>                 
+                                                    </div>
                                     <!-- /.box-body -->
 
                                 </div>
