@@ -33,8 +33,8 @@
  height: 100%; 
 }
 
-@media only screen and (max-width: 2500px) {
-.embed-container, .galery-container {
+@media only screen and (max-width: 5000px) {
+.embed-container, .galery-container, .wrap{
  width: 80%; 
  margin: 0 auto;
 }
@@ -43,10 +43,11 @@
  max-height: 500px;
 }
 .wrap {
+    height: 100vh;
     max-height: 500px;
 }
 }
-@media only screen and (max-width: 1000px) {
+@media only screen and (max-width: 800px) {
 .embed-container, .galery-container{
  width: 100%; 
 }
@@ -55,6 +56,7 @@
   max-height: 250px;
 }
 .wrap, .galery-container {
+    width: 100%;
     height: 250px;
 }
 }
@@ -82,19 +84,18 @@
 }
 
 
-.galery-container {
- position: relative;
- overflow: hidden;
+.galery-container { 
+ position: relative;  
+ overflow: hidden;  
  height: 100%;
- height: 100vh;
  padding: 2px;
 } 
 
 /* Hide the images by default */
 .mySlides {
   position: relative;
-  top: 50%;
-  transform: translateY(-50%);
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 /* Next & previous buttons */
@@ -123,4 +124,3 @@
 .prev:hover, .next:hover {
   background-color: rgba(0,0,0,0.8);
 }
-

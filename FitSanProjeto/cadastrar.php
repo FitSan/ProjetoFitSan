@@ -68,7 +68,7 @@ if ($contSenha < 8) {
     $_SESSION['erro_sobrenome'] = $sobrenome;
     $_SESSION['erro_email'] = $email;
     $_SESSION['erro_tipo_usuario'] = $tipo_usuario;
-    header('Location: ' . URL_SITE . 'form_cadastrar.php');
+    header('Location: '.URL_SITE.'form_cadastrar.php');
 } else {
     if ($senha != $confsenha) {
         $_SESSION['errosenha'] = "Dados nao conferem!";
@@ -76,7 +76,7 @@ if ($contSenha < 8) {
         $_SESSION['erro_sobrenome'] = $sobrenome;
         $_SESSION['erro_email'] = $email;
         $_SESSION['erro_tipo_usuario'] = $tipo_usuario;
-        header('Location: ' . URL_SITE . 'form_cadastrar.php');
+        header('Location: '.URL_SITE.'form_cadastrar.php');
     } else {
         if ($existe || $contEmail == null) {
             $_SESSION['erroemail'] = "Dados nao conferem!";
@@ -85,7 +85,7 @@ if ($contSenha < 8) {
             $_SESSION['erro_senha'] = $senha;
             $_SESSION['erro_confsenha'] = $confsenha;
             $_SESSION['erro_tipo_usuario'] = $tipo_usuario;
-            header('Location: ' . URL_SITE . 'form_cadastrar.php');
+            header('Location: '.URL_SITE.'form_cadastrar.php');
         } else {
             $query = "insert into usuario (nome, sobrenome, senha, email, tipo_id, status, datahora) values (".mysqliEscaparTexto($nome).",".mysqliEscaparTexto($sobrenome).",".mysqliEscaparTexto($senha_hash).",".mysqliEscaparTexto($email).",".mysqliEscaparTexto($tipo_usuario).", 'desativado', now())";
             if (dbquery($query, false)){
@@ -112,7 +112,7 @@ if ($contSenha < 8) {
                         $_SESSION['erroemail'] .= 'Erro: ' . $mail->ErrorInfo;
                     }
                 }
-                header('Location: ' . URL_SITE . 'form_login.php');
+                header('Location: '.URL_SITE.'form_login.php');
             } else {
                 $_SESSION['erroemail'] = "Usuário não cadastrado!";
                 $_SESSION['erro_nome'] = $nome;
@@ -120,7 +120,7 @@ if ($contSenha < 8) {
                 $_SESSION['erro_senha'] = $senha;
                 $_SESSION['erro_confsenha'] = $confsenha;
                 $_SESSION['erro_tipo_usuario'] = $tipo_usuario;
-                header('Location: ' . URL_SITE . 'form_cadastrar.php');
+                header('Location: '.URL_SITE.'form_cadastrar.php');
             }
         }
     }
