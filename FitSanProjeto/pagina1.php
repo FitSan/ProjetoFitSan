@@ -54,7 +54,7 @@ require_once './template/cabecalho.php';
         <?php if (tipoLogado("aluno")){ ?>
         
         <div class="row justify-content-sm-center my-4">
-            <div class="col-sm-6 col-md-4 ">
+            <div class="col-xs-12 col-sm-4 col-md-4">
                 <div class="card mb-5">
                     <img class="card-img-top img-responsive"  src="<?=URL_SITE?>img/Planilha.png" style="width: 100%;"  alt="Planilha">
                     <div class="card-body">
@@ -67,7 +67,7 @@ require_once './template/cabecalho.php';
                 </div>
             </div>
          
-            <div class="col-sm-6 col-md-4 ">
+            <div class="col-xs-12 col-sm-4 col-md-4">
                 <div class="card mb-5">
                     <img class="card-img-top img-responsive"  src="<?=URL_SITE?>img/avaliacao.png" style="width: 100%;" alt="Avaliacao">
                     <div class="card-body">
@@ -79,7 +79,7 @@ require_once './template/cabecalho.php';
                 </div>  
             </div> 
             
-            <div class="col-sm-6 col-md-4 ">
+            <div class="col-xs-12 col-sm-4 col-md-4">
                 <div class="card mb-5">
                     <img class="card-img-top img-responsive"  src="<?=URL_SITE?>img/historico.png" style="width: 100%;" alt="Historico">
                     <div class="card-body">
