@@ -2,7 +2,7 @@ create database `FitSan`;
 
 create table `usuario`(
 `id` int primary key auto_increment,
-`datahora` datetime not null default now(),
+`datahora` datetime not null,
 `nome` varchar(255) not null,
 `sobrenome` varchar(255) not null,
 `datanasc` date,
@@ -75,7 +75,7 @@ create table `chat`(
  `profissional_id` int references `usuario`(`id`),
  `origem` enum('aluno', 'profissional') not null,
  `status` enum('lido', 'pendente') not null,
- `datahora` datetime not null default now(),
+ `datahora` datetime not null,
  `mensagem` text not null
 );
 select * from `chat`;
@@ -210,7 +210,7 @@ TRUNCATE TABLE ativ_extras_exercicios;
 create table `planilha`(
 `id` int not null primary key auto_increment,
 `titulo` varchar(255) not null,
-`datahora` datetime not null default now()
+`datahora` datetime not null
 );
 
 ALTER TABLE planilha ADD datahora datetime not null default now() after titulo;
