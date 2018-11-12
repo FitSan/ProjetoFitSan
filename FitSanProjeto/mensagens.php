@@ -69,31 +69,24 @@ if (tipoLogado("profissional")){
     $campo_destino = 'profissional';
 }
 
-if ($destinatario){
-    $query = "select
-        u.*
-    from
-        usuario u
-    where
-        u.status = 'ativado' and
-        u.id = " . mysqliEscaparTexto($destinatario) . "
-    order by
-        u.nome
-    ";
-} else {
-    $query = "select
-        u.*
-    from
-        vinculo v join
-        usuario u on u.id = v.{$campo_destino}_id
-    where
-        u.status = 'ativado' and
-        v.status = 'aprovado' and
-        v.{$campo_origem}_id = " . mysqliEscaparTexto($_SESSION['id']) . "
-    order by
-        u.nome
-    ";
-}
+$query = "select
+    u.*,
+    (select count(c.id) from chat c where c.aluno_id = v.aluno_id and c.profissional_id = v.profissional_id) as mensagens
+from
+    vinculo v join
+    usuario u on u.id = v.{$campo_destino}_id
+where
+    u.status = 'ativado' and
+    v.status = 'aprovado' and
+    v.{$campo_origem}_id = " . mysqliEscaparTexto($_SESSION['id']) . "
+order by
+    case
+        when u.id = " . mysqliEscaparTexto($destinatario) . " then 2
+        when mensagens > 0 then 1
+        else 0
+    end desc,
+    u.nome
+";
 $usuarios = dbquery($query);
 if (empty($usuarios)) $usuarios = array();
 
@@ -106,6 +99,7 @@ $query['from'] = "
 ";
 $query['where'] = array(
     "c.{$campo_origem}_id = " . mysqliEscaparTexto($_SESSION['id']),
+    "c.{$campo_destino}_id = " . mysqliEscaparTexto($destinatario),
 );
 
 //referente à paginação
@@ -150,16 +144,9 @@ $resultado = dbquery($query);
     </section><br>
     <div class="row">
         <div class="col-md-3">
-            <form action="" method="GET"><select class="form-control"name="destinatario" onchange="this.form.submit();" onkeyup="this.form.submit();">
-                <option value="">(Selecione um destinatário)</option>
-<?php foreach ($usuarios as $value){ ?>
-                <option value="<?php echo htmlspecialchars($value['id']); ?>"<?php if ($value['id'] == $destinatario) echo ' selected="selected"' ?>><?php echo htmlspecialchars($value['nome'] . ' ' . $value['sobrenome']); ?></option>
-<?php } ?>
-        </select></form>    
             <div class="box box-solid">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Destinatários</h3>
-                    
+                    <h3 class="box-title">Destinatários com mensagem</h3>
                     <div class="box-tools">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                         </button>
@@ -167,8 +154,33 @@ $resultado = dbquery($query);
                 </div>
                 <div class="box-body no-padding">
                     <ul class="nav nav-pills nav-stacked">
-                        <?php foreach ($usuarios as $value){ ?>
-                        <li  value="<?php echo htmlspecialchars($value['id']); ?>"><a href="#"><?php echo htmlspecialchars($value['nome'] . ' ' . $value['sobrenome']); ?></a></li>
+                        <?php foreach ($usuarios as $value){ if (!$value['mensagens'] && ($value['id'] != $destinatario)) continue; ?>
+                        <li value="<?php echo htmlspecialchars($value['id']); ?>"><a href="<?=url_param_add(null, array('destinatario' => $value['id'])) ?>"><?php
+                        if ($value['id'] == $destinatario) echo '<strong>';
+                        echo htmlspecialchars($value['nome'] . ' ' . $value['sobrenome']);
+                        if ($value['id'] == $destinatario) echo '</strong>';
+                        ?><span class="badge bg-aqua"><?php echo htmlspecialchars($value['mensagens']); ?></span></a></li>
+                        <?php } ?>      
+                        
+                    </ul>
+                </div>
+            </div>
+            <div class="box box-solid collapsed-box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Destinatários novos</h3>
+                    <div class="box-tools">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="box-body no-padding">
+                    <ul class="nav nav-pills nav-stacked">
+                        <?php foreach ($usuarios as $value){ if ($value['mensagens'] || ($value['id'] == $destinatario)) continue; ?>
+                        <li value="<?php echo htmlspecialchars($value['id']); ?>"><a href="<?=url_param_add(null, array('destinatario' => $value['id'])) ?>"><?php
+                        if ($value['id'] == $destinatario) echo '<strong>';
+                        echo htmlspecialchars($value['nome'] . ' ' . $value['sobrenome']);
+                        if ($value['id'] == $destinatario) echo '</strong>';
+                        ?></a></li>
                         <?php } ?>      
                         
                     </ul>
@@ -200,7 +212,11 @@ $resultado = dbquery($query);
         <div class="col-md-9">
             <div class="box box-primary">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Conteúdo</h3>
+<?php if ($destinatario){ ?>
+                    <h3 class="box-title">Conversa entre <?php echo htmlspecialchars($_SESSION['nome'] . ' ' . $_SESSION['sobrenome']) ?> e <?php echo htmlspecialchars($usuarios[0]['nome'] . ' ' . $usuarios[0]['sobrenome']) ?></h3>
+<?php } else { ?>
+                    <h3 class="box-title">Seleção</h3>
+<?php } ?>
                     <div class="box-body"><br>
                     <?php if (!empty($resultado)){ 
                         
@@ -276,6 +292,8 @@ $resultado = dbquery($query);
         </div>
 <?php } ?>
 
+<?php } elseif (!$destinatario){ ?>
+<div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12" align="center"><h3><b>Selecione um destinatário ao lado.</b></h3></div>
 <?php } else { ?>
 <div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12" align="center"><h3><b>Não foi enviada nenhuma mensagem ainda.</b></h3></div>
 <?php } ?>

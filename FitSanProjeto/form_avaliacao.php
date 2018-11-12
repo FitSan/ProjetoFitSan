@@ -1,7 +1,6 @@
 <?php
 $pagina = "Alterar Informações adicionais";
 require_once './template/cabecalho.php';
-ini_set('display_errors', true);
 
 //quando um tipo diferente tentar acessar pelo navegador ele será redirecionado para a pagina 1. 
 

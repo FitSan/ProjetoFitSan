@@ -332,6 +332,41 @@
     </div>
 </div> 
 
+<!--Modal upload imagem -->
+<div class="modal fade" id="modal-upload-imagem">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Upload de imagem</h4>
+            </div>
+            <div class="modal-body">
+                <form id="modal-upload-imagem-enviar" role="form" method="post" enctype="multipart/form-data" action="<?=URL_SITE?>upload-imagem.php?modo=upload" target="modal-upload-imagem-iframe">
+                    <label for="modal-upload-imagem-input">Foto</label>
+                    <input type="file" class="form-control" id="modal-upload-imagem-input" name="imagem">
+                    <button type="submit" class="btn btn-primary">Upload</button>
+                </form>
+                <form id="modal-upload-imagem-recortar" role="form" method="post" action="<?=URL_SITE?>upload-imagem.php?modo=crop" target="modal-upload-imagem-iframe">
+                    <label for="modal-upload-imagem-input">Recortar</label>
+                    <input type="hidden" id="modal-upload-imagem-link" name="imagem">
+                    <input type="hidden" id="modal-upload-imagem-x" name="x" />
+                    <input type="hidden" id="modal-upload-imagem-y" name="y" />
+                    <input type="hidden" id="modal-upload-imagem-w" name="w" />
+                    <input type="hidden" id="modal-upload-imagem-h" name="h" />
+                    <img id="modal-upload-imagem-img">
+                    <button type="submit" class="btn btn-primary">Recortar</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Cancelar</button>
+                <a class="btn btn-primary" href="#" role="button">Selecionar</a>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
 <!-- jQuery 3 -->
 <script src="<?=URL_SITE?>bower_components/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap 3.3.7 -->
@@ -364,6 +399,22 @@
 <!-- SlimScroll -->
 <script src="<?=URL_SITE?>bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
 
+<script>
+(function ($) {
+    var ua, nav, rv;
+    ua = window.navigator.userAgent;
+    if ((nav = ua.indexOf('MSIE ')) > 0){
+        $.ismsie = parseInt(ua.substring(nav + 5, ua.indexOf('.', nav)), 10);
+    } else if ((nav = ua.indexOf('Trident/')) > 0) {
+        rv = ua.indexOf('rv:');
+        $.ismsie = parseInt(ua.substring(rv + 3, ua.indexOf('.', rv)), 10);
+    } else if ((nav = ua.indexOf('Edge/')) > 0){
+        $.ismsie = parseInt(ua.substring(nav + 5, ua.indexOf('.', nav)), 10);
+    } else {
+        $.ismsie = false;
+    }
+})(jQuery);
+</script>
 
 <!--CONTROLADOR RODAPÉ DA PLANILHA -->
 <script>
@@ -845,6 +896,119 @@
   modal.find('.modal-title').text('Dado ' + data);
   modal.find('.modal-body #desc').text(desc);
 })
+</script>
+
+<script src="<?= URL_SITE ?>js/jquery.Jcrop.js"></script>
+<script>
+    $(function(){
+        var modal = $('#modal-upload-imagem');
+        var frmupload = modal.find('#modal-upload-imagem-enviar');
+        var frmrecort = modal.find('#modal-upload-imagem-recortar');
+        var botao = modal.find('.modal-footer .btn-primary');
+        var crop = false;
+
+        function crop_ativar(){
+            if (crop) return;
+            crop_desativar();
+            crop = frmrecort.find('#modal-upload-imagem-img').Jcrop({
+                aspectRatio: 1,
+                onSelect: function (c){
+                    $('#modal-upload-imagem-x').val(c.x);
+                    $('#modal-upload-imagem-y').val(c.y);
+                    $('#modal-upload-imagem-w').val(c.w);
+                    $('#modal-upload-imagem-h').val(c.h);
+                }
+            });
+        }
+
+        function crop_desativar(){
+            if (!crop) return;
+            //crop.destroy();
+            //crop = false;
+        }
+
+        function enviar(form, success, error, done){
+            var dados = {
+                url: form.attr('action'),
+                type: form.attr('method'),
+                contentType: 'application/x-www-form-urlencoded',
+                processData: true,
+                dataType: 'json',
+                cache: false
+            };
+            if ($.isFunction(success)) dados.success = success;
+            if ($.isFunction(error)) dados.error = error;
+            if ($.isFunction(done)) dados.complete = done;
+            if (form.attr('enctype') == 'multipart/form-data'){
+                dados.enctype = form.attr('enctype');
+                dados.data = new FormData();
+                form.find('input[name], select[name], textarea[name], button[name]').each(function (){
+                    var field = $(this); var name = field.attr('name'), value = field.val(), type = field.attr('type');
+                    switch (type ? type.toLowerCase() : ''){
+                        case 'radio': case 'checkbox':
+                            if (field.is(':checked')) dados.data.append(name, value);
+                            break;
+                        case 'file':
+                            if (this.files){
+                                $.each(this.files, function(i, file){dados.data.append(name, file);});
+                                dados.contentType = dados.processData = false;
+                            }
+                            break;
+                        default:
+                            dados.data.append(name, value);
+                    }
+                });
+            } else {
+                dados.data = form.serialize();
+            }
+            return $.ajax(dados);
+        }
+
+        modal.on('shown.bs.modal', function(e){
+            parente = (e.relatedTarget ? $(e.relatedTarget) : false);
+            botao.find('.btn-primary').attr('disabled', true).toggleClass('disabled', true);
+            frmupload.show().find('.btn-primary').attr('disabled', false).toggleClass('disabled', false);
+            frmrecort.hide().find('.btn-primary').attr('disabled', true).toggleClass('disabled', true);
+            crop_desativar();
+        });
+ 
+        frmupload.on('submit', function(e){
+            e.preventDefault();
+            enviar(frmupload,
+                function(result){
+                    console.info(result);
+                    if (result.tipo != 'ok'){
+                        alert(result.mensagem);
+                        return;
+                    }
+                    frmrecort.find('#modal-upload-imagem-link').val(result.path);
+                    frmrecort.find('#modal-upload-imagem-img').attr('src', result.url);
+                    frmupload.hide().find('.btn-primary').attr('disabled', true).toggleClass('disabled', true);
+                    frmrecort.show().find('.btn-primary').attr('disabled', false).toggleClass('disabled', false);
+                    crop_ativar();
+                }
+            );
+            return false;
+        });
+
+        frmrecort.on('submit', function(e){
+            e.preventDefault();
+            enviar(frmrecort,
+                function(result){
+                    console.info(result);
+                    if (result.tipo != 'ok'){
+                        alert(result.mensagem);
+                        return;
+                    }
+                    frmrecort.hide().find('.btn-primary').attr('disabled', true).toggleClass('disabled', true);
+                    botao.find('.btn-primary').attr('disabled', false).toggleClass('disabled', false);
+                    crop_desativar();
+                }
+            );
+            return false;
+        });
+
+    });
 </script>
 <!--<script>
     function showCheckGrafico(meta_id){

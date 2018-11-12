@@ -52,6 +52,7 @@ if ($linha = mysqli_fetch_array($resultado)) {
                         </div>
                         <div class="form-group">
                             <label for="foto">Foto</label>
+                            <a data-toggle="modal" data-target="#modal-upload-imagem" id="modal-upload-imagem-button" title="Upload de imagem"><i class="fa fa-upload"></i></a>
                             <?php if (!empty($linha['foto'])) { ?>
                                 <img class="profile-user-img img-responsive" style="margin: 0;margin-bottom: 2px" src="<?= htmlspecialchars($linha['foto']) ?>" alt="User profile picture">
                                 <label for="fotoremover"><input type="checkbox" class="flat-red" id="fotoremover" name="fotoremover" value="1"> Remover foto atual</label>

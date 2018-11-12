@@ -105,7 +105,7 @@ $resultado = dbquery($query);
         <h1>Prescrição de Treino</h1>
     </section><br>
     <div class="box"><br>
-        <form action="" method="GET"><select class="select2-dropdown"name="profissional" onchange="this.form.submit();" onkeyup="this.form.submit();">
+        <form action="" method="GET"><select class="form-control" name="profissional" onchange="this.form.submit();" onkeyup="this.form.submit();">
                 <option value="">(Selecione um profissional)</option>
 <?php foreach ($profissionais as $value){ ?>
                 <option value="<?php echo htmlspecialchars($value['id']); ?>"<?php if ($value['id'] == $profissional) echo ' selected="selected"' ?>><?php echo htmlspecialchars($value['nome'] . ' ' . $value['sobrenome']); ?></option>

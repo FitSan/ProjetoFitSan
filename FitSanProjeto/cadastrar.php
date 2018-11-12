@@ -63,78 +63,65 @@ $contSenha = strlen($senha); //contando o número de caracteres da senha
 
 
 if ($contSenha < 8) {
-
     $_SESSION['erroCount'] = "Dados nao conferem!";
-    $_SESSION['erro_nome'] = "$nome";
-    $_SESSION['erro_sobrenome'] = "$sobrenome ";
-    $_SESSION['erro_email'] = "$email ";
-    $_SESSION['erro_tipo_usuario'] = "$tipo_usuario ";
-
+    $_SESSION['erro_nome'] = $nome;
+    $_SESSION['erro_sobrenome'] = $sobrenome;
+    $_SESSION['erro_email'] = $email;
+    $_SESSION['erro_tipo_usuario'] = $tipo_usuario;
     header('Location: ' . URL_SITE . 'form_cadastrar.php');
 } else {
-
-
     if ($senha != $confsenha) {
         $_SESSION['errosenha'] = "Dados nao conferem!";
-        $_SESSION['erro_nome'] = "$nome";
-        $_SESSION['erro_sobrenome'] = "$sobrenome ";
-        $_SESSION['erro_email'] = "$email ";
-        $_SESSION['erro_tipo_usuario'] = "$tipo_usuario ";
-
+        $_SESSION['erro_nome'] = $nome;
+        $_SESSION['erro_sobrenome'] = $sobrenome;
+        $_SESSION['erro_email'] = $email;
+        $_SESSION['erro_tipo_usuario'] = $tipo_usuario;
         header('Location: ' . URL_SITE . 'form_cadastrar.php');
     } else {
-
         if ($existe || $contEmail == null) {
             $_SESSION['erroemail'] = "Dados nao conferem!";
-            $_SESSION['erro_nome'] = "$nome ";
-            $_SESSION['erro_sobrenome'] = "$sobrenome ";
-            $_SESSION['erro_senha'] = "$senha ";
-            $_SESSION['erro_confsenha'] = "$confsenha ";
-            $_SESSION['erro_tipo_usuario'] = "$tipo_usuario ";
-
-
-
+            $_SESSION['erro_nome'] = $nome;
+            $_SESSION['erro_sobrenome'] = $sobrenome;
+            $_SESSION['erro_senha'] = $senha;
+            $_SESSION['erro_confsenha'] = $confsenha;
+            $_SESSION['erro_tipo_usuario'] = $tipo_usuario;
             header('Location: ' . URL_SITE . 'form_cadastrar.php');
         } else {
-            $query = "insert into usuario (nome, sobrenome, senha, email, tipo_id, status) values ('$nome', '$sobrenome', '$senha_hash', '$email', '$tipo_usuario', 'desativado')";
-
-
-
-if (!empty($email)){ 
-    
-
-       
-    $mail = new PHPMailer();
-    $mail->isSMTP();
-    $mail->Host = 'smtp.gmail.com';
-    $mail->SMTPAuth = TRUE;
-    $mail->SMTPDebug = 1;
-    $mail->SMTPAutoTLS = FALSE;
-    $mail->SMTPSecure = 'ssl';
-    $mail->Username = 'plataformafitsan@gmail.com';
-    $mail->Password = 'NaStiF321';
-    $mail->Port = 465;
-    $mail->addAddress($email);
-    $mail->setFrom($email);
-    $mail->addReplyTo('plataformafitsan@gmail.com');
-    $mail->isHTML();
-    $mail->Subject = 'FitSan';
-    $mail->Body = "<a href=\"".URL_SITE."validar_conta.php?perfil_email=$email\"> CLIQUE AQUI PARA ATIVAR SUA CONTA !</a>;';";
-    ?>
-  
-
-<?php
-    if (!$mail->send()){
-        echo 'Não foi possível enviar a mensagem';
-        echo 'Erro: ' . $mail->ErrorInfo;
-    } 
- 
-}
-            
-
-            mysqli_query($conexao, $query);
-            $_SESSION['cadastrado'] = "Sucesso";
-            header('Location: ' . URL_SITE . 'form_login.php');
+            $query = "insert into usuario (nome, sobrenome, senha, email, tipo_id, status, datahora) values (".mysqliEscaparTexto($nome).",".mysqliEscaparTexto($sobrenome).",".mysqliEscaparTexto($senha_hash).",".mysqliEscaparTexto($email).",".mysqliEscaparTexto($tipo_usuario).", 'desativado', now())";
+            if (dbquery($query, false)){
+                $_SESSION['cadastrado'] = "Sucesso";
+                if (!empty($email)){ 
+                    $mail = new PHPMailer();
+                    $mail->isSMTP();
+                    $mail->Host = EMAIL_HOST;
+                    $mail->SMTPAuth = EMAIL_AUTH;
+                    $mail->SMTPDebug = 0;
+                    $mail->SMTPAutoTLS = EMAIL_AUTOTLS;
+                    $mail->SMTPSecure = EMAIL_SECURE;
+                    $mail->Username = EMAIL_USERNAME;
+                    $mail->Password = EMAIL_PASSWORD;
+                    $mail->Port = EMAIL_PORT;
+                    $mail->addAddress($email);
+                    $mail->setFrom(EMAIL);
+                    $mail->addReplyTo(EMAIL);
+                    $mail->isHTML();
+                    $mail->Subject = 'FitSan';
+                    $mail->Body = "<a href=\"".URL_SITE."validar_conta.php?perfil_email=".urlencode($email)."\"> CLIQUE AQUI PARA ATIVAR SUA CONTA !</a>";
+                    if (!$mail->send()){
+                        $_SESSION['erroemail'] = 'Não foi possível enviar a mensagem'.PHP_EOL;
+                        $_SESSION['erroemail'] .= 'Erro: ' . $mail->ErrorInfo;
+                    }
+                }
+                header('Location: ' . URL_SITE . 'form_login.php');
+            } else {
+                $_SESSION['erroemail'] = "Usuário não cadastrado!";
+                $_SESSION['erro_nome'] = $nome;
+                $_SESSION['erro_sobrenome'] = $sobrenome;
+                $_SESSION['erro_senha'] = $senha;
+                $_SESSION['erro_confsenha'] = $confsenha;
+                $_SESSION['erro_tipo_usuario'] = $tipo_usuario;
+                header('Location: ' . URL_SITE . 'form_cadastrar.php');
+            }
         }
     }
 }

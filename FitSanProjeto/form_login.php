@@ -2,8 +2,8 @@
 $pagina = "Login";
 require_once './autenticacao.php';
 ?>
-
-<html>
+<!DOCTYPE html>
+<html lang="pt-br">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -41,7 +41,7 @@ require_once './autenticacao.php';
                     
                   ?> <div class="alert alert-info">
                 <strong>Cadastro feito com Sucesso. Verifique seu email para ativar a conta!</strong>.
-                </div> <?php ;
+                </div> <?php
                  
                     unset($_SESSION['cadastrado']);
                 }
@@ -68,7 +68,7 @@ require_once './autenticacao.php';
                     
                   ?> <div class="alert alert-danger">
                 <strong>Dados não Conferem!</strong>.
-                </div> <?php ;
+                </div> <?php
                  
                     unset($_SESSION['erro']);
                 }

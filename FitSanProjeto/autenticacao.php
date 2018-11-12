@@ -5,6 +5,7 @@ session_start();
 
 error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING & ~E_STRICT & ~E_DEPRECATED); // Definindo para mostrar todos os erros exceto notificações, avisos, interoperabilidade e obsoletos. 
 
+ini_set('display_errors', true);
 ini_set('default_charset', 'utf-8');
 ini_set('default_mimetype', 'text/html');
 
@@ -297,22 +298,28 @@ function totalNotificacao($lido = null) {
     $sql = "
         select
             count(id) as total
-            from
+        from
             notificacao
         where
-    ";
-    if ($lido !== null)
-        $sql .= "lido = '" . mysqliEscaparTexto($lido) . "' and (";
-    else
-        $sql .= "lido = 'N' and (";
-    if (tipoLogado('profissional')) {
-        $sql .= "profissional_id = " . mysqliEscaparTexto($_SESSION['id']);
+            lido = ";
+    if ($lido !== null){
+        $sql .= mysqliEscaparTexto($lido);
     } else {
-        $sql .= "aluno_id = " . mysqliEscaparTexto($_SESSION['id']);
+        $sql .= "'N'";
     }
-    $sql .= " or (profissional_id is null and aluno_id is null))
+    $sql .= " and
+            (
+                ";
+    if (tipoLogado('profissional')) {
+        $sql .= "profissional_id";
+    } else {
+        $sql .= "aluno_id";
+    }
+    $sql .= " = " . mysqliEscaparTexto($_SESSION['id']) . " or
+                (profissional_id is null and aluno_id is null)
+            )
         order by
-            data,
+            `data`,
             id
     ";
     if ($resultado = dbquery($sql, 'col', 'total')) {
@@ -536,15 +543,15 @@ function dbquery() {
 
     switch ($saida){
         case 'row':
-            if (($row = array_shift($args)) !== null) $row = 0;
+            if (($row = array_shift($args)) === null) $row = 0;
             return isset($ret[$row]) ? $ret[$row] : null;
         case 'col':
-            if (($col = array_shift($args)) !== null) $col = 0;
-            if (($row = array_shift($args)) !== null) $row = 0;
+            if (($col = array_shift($args)) === null) $col = 0;
+            if (($row = array_shift($args)) === null) $row = 0;
             $item = (isset($ret[$row]) ? $ret[$row] : array());
             if (is_string($col)) return isset($item[$col]) ? $item[$col] : null;
             $item = array_values($item);
-            return isset($ret[$row][$col]) ? $ret[$row][$col] : null;
+            return isset($item[$col]) ? $item[$col] : null;
         case 'id':
             $ret = mysqli_insert_id($conexao);
             return ($ret ? $ret : $res);

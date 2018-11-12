@@ -15,10 +15,16 @@ create table `usuario`(
 `status` enum('ativado', 'desativado', 'excluido') default 'ativado'
 );
 
+
+select * from usuario;
+alter table `usuario` add `codigo` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL;
+
 alter table usuario change column status status enum('ativado', 'desativado', 'excluido') default 'ativado';
 
 ALTER TABLE usuario ADD codigo varchar(255);
 ALTER TABLE usuario ADD status enum('ativado', 'desativado', 'excluido');
+
+update usuario set status='ativado' where email ='$email';
 
 
 -- Criando campo na tabela usuario depois do campo id com valor padrao
@@ -62,6 +68,7 @@ primary key (`aluno_id`, `profissional_id`)
 );
 
 drop table `chat`;
+
 create table `chat`(
  `id` int primary key auto_increment,
  `aluno_id` int references `usuario`(`id`),
@@ -86,8 +93,8 @@ create table `dica`(
 alter table dica add column titulo varchar(255) not null
 alter table dica change titulo titulo varchar(255) not null after texto
 
-alter table dica change titulo titulo varchar(255) after texto
-alter table dica change texto texto TEXT
+alter table dica change titulo titulo varchar(255) after texto;
+alter table dica change texto texto TEXT;
 select * from dica;
 
 create table `upload_dica`(
@@ -97,7 +104,7 @@ create table `upload_dica`(
 `dica_id` int references `dica`(`id`)
 );
 
-alter table upload_dica change nome_arq nome_arq varchar(255) not null
+alter table upload_dica change nome_arq nome_arq varchar(255) not null;
 select * from dica;
 
 truncate table dica
@@ -271,7 +278,7 @@ create table `planilha_aluno`(
 `planilha_id` int references `planilha`(`id`)
 );
 
-create table `planilha_aluno_feito` (
+create table `planilha_aluno_feito`(
 `id` int primary key auto_increment,
 `planilha_aluno_id` int references `planilha_aluno`(`id`),
 `datahora` datetime not null

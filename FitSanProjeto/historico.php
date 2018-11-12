@@ -77,8 +77,7 @@ from
     ativ_extras join
     usuario on usuario.id=ativ_extras.aluno_id
 where
-    usuario.id= " . mysqliEscaparTexto($_SESSION['id']) . " and
-    ativ_extras.visualizacao = 'PUBLICO'
+    usuario.id= " . mysqliEscaparTexto($_SESSION['id']) . "
 order by
     ativ_extras.datahora desc
 limit

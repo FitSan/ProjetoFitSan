@@ -3,7 +3,8 @@ require_once 'autenticacao.php';
 if (tipoLogado('aluno')){
     verificarMeta();
 }
-?>  
+?>
+<!DOCTYPE html>
 <html lang="pt-br">
     <head>
         <meta charset="utf-8">
@@ -40,12 +41,11 @@ if (tipoLogado('aluno')){
         <meta name="msapplication-TileColor" content="#00aba9">
         <meta name="theme-color" content="#ffffff">
         
-        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-        <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-        <![endif]-->
+        <!--Recorte de imagens-->
+        <link href="<?= URL_SITE ?>css/jquery.Jcrop.css" rel="stylesheet" type="text/css" />
+        
+        
+        
 
         <!-- Google Font -->
         <link rel="stylesheet"
@@ -206,9 +206,9 @@ if (tipoLogado('aluno')){
                         <a href="<?= URL_SITE ?>perfil.php"><div class="user-panel">
                             <div class="pull-left image">
                                 <?php if (!empty($_SESSION['foto'])){ ?>
-                                <img src="<?= htmlspecialchars($_SESSION['foto']) ?>" class="img-circle" style="height: 35px; width: 35px;" alt="User Image">
+                                <img src="<?= htmlspecialchars($_SESSION['foto']) ?>" class="img-circle"  alt="User Image">
                                 <?php } else { ?>
-                               <img src="<?=URL_SITE?>img/user-avatar-placeholder.png" class="img-circle"  style="height: 35px; width: 35px;" alt="User Image">
+                               <img src="<?=URL_SITE?>img/user-avatar-placeholder.png" class="img-circle"   alt="User Image">
                                 <?php } ?>
                             </div>
                             <div class="pull-left info">

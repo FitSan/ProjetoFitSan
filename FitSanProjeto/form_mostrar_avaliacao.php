@@ -1,7 +1,6 @@
 <?php
 $pagina = " Avaliações ";
 require_once './template/cabecalho.php';
-ini_set('display_errors', true);
 
 
 $id_avaliacao = $_GET['id_avaliacao'];

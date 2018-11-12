@@ -1,10 +1,6 @@
 <?php
 include './autenticacao.php';
 
-
-
-ini_set('display_errors', true);
-
 if (!tipoLogado("admin")){
 $atu_email = (!empty($_POST['novo_email']) ? $_POST['novo_email'] : null);
 }
