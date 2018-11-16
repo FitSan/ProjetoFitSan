@@ -1,6 +1,7 @@
 <?php
 $pagina = 'Metas';
-include './template/cabecalho.php';
+require_once './template/cabecalho.php';
+require_once './template/menu.php';
 
 if (!tipoLogado("aluno")){
     header('Location: '.URL_SITE.'pagina1.php');

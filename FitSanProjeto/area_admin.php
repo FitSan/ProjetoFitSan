@@ -1,13 +1,13 @@
 <?php
 $pagina = "Area do administrador";
 require_once './template/cabecalho.php';
+require_once './template/menu.php';
 
 if (!tipoLogado("admin")){
     header('Location: '.URL_SITE.'pagina1.php');
     exit;
 }
 ?>
-
 <div class="content-wrapper">
     <div class="box-header">
         <h1>Area do administrador</h1>
@@ -30,9 +30,7 @@ if (!tipoLogado("admin")){
         </div>
         <div class="box-footer">        
     </div>
-    </div>   
-</div>
-
+    </div>  
 <?php
 require_once './template/rodape_especial.php';
 ?>

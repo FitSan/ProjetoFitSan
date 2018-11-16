@@ -1,6 +1,7 @@
 <?php
 $pagina = "Usuarios";
 require_once './template/cabecalho.php';
+require_once './template/menu.php';
 
 if (!tipoLogado("admin")){
     header('Location: '.URL_SITE.'pagina1.php');

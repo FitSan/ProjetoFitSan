@@ -1,29 +1,20 @@
 <?php
 $pagina = " Avaliações ";
 require_once './template/cabecalho.php';
+require_once './template/menu.php';
 
 //quando um tipo diferente tentar acessar pelo navegador ele será redirecionado para a pagina 1. 
 
 if (!tipoLogado("aluno")) {
-    header('Location: '.URL_SITE.'pagina1.php');
+    header('Location: ' . URL_SITE . 'pagina1.php');
     exit;
 }
 
-if (isset($_GET['notificacao'])){
+if (isset($_GET['notificacao'])) {
     echo leituraNotificacao($_GET['notificacao']);
-    echo '<script>window.location = ' . json_encode(url_param_add(url_current(), 'notificacao', null)). ';</script>';
+    echo '<script>window.location = ' . json_encode(url_param_add(url_current(), 'notificacao', null)) . ';</script>';
     exit;
 }
-
-//tem q ter isso aqui amiguinho
-//leituraNotificacao(
-//    isset($_GET['notificacao']) ? $_GET['notificacao'] : null,
-//    null,
-//    ['profissional_id' => $profissional_id, 'aluno_id' => $aluno_id, 'table' => 'vinculo']
-//);
-//
-//echo $linha[data]  ;
-//exit;
 ?>
 
 
@@ -37,23 +28,23 @@ if (isset($_GET['notificacao'])){
             <div class="box box-primary">
 
             </div>
-<?php
-$usuarios = array();
-$query = "select * from avaliacao  where aluno_id=" . $_SESSION['id']." and status='nao_lido' order by avaliacao.`data` desc";
-$retorno = mysqli_query($conexao, $query);
-while ($linhas = mysqli_fetch_array($retorno)) {
-    array_push($usuarios, $linhas);
-}
-if ($usuarios == null) {
-    ?>
+            <?php
+            $usuarios = array();
+            $query = "select * from avaliacao  where aluno_id=" . $_SESSION['id'] . " and status='nao_lido' order by avaliacao.`data` desc";
+            $retorno = mysqli_query($conexao, $query);
+            while ($linhas = mysqli_fetch_array($retorno)) {
+                array_push($usuarios, $linhas);
+            }
+            if ($usuarios == null) {
+                ?>
                 <div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12" align="center"><h3><b>Você não possui nenhuma avaliação!</b></h3></div>
                 <?php
             } else {
 
                 foreach ($usuarios as $usuario) {
-                 
 
-                    
+
+
                     $sql = "select * from usuario where id=" . $usuario['profissional_id'];
                     $retorno_usuario = mysqli_query($conexao, $sql);
                     $linha = (mysqli_fetch_array($retorno_usuario));
@@ -75,32 +66,25 @@ if ($usuarios == null) {
 
                                 <span class="time"><i class="calendar-table"></i> <?= date('d/m/Y', dataParse($usuario['data'])) ?></span>
 
-                                <h3 class="timeline-header">Avaliação do profissional <br> <strong><?php echo htmlspecialchars($linha['nome'])?> <?= htmlspecialchars($linha['sobrenome']); ?></strong></h3>
-
-                              
-                                    
-                                    <a href="<?=URL_SITE?>form_mostrar_avaliacao.php?id_avaliacao=<?php echo $id_avaliacao; ?>">  
-                                        <button type="button" class="btn btn-primary btn-flat"> Conferir </button>
-                                    </a>
+                                <h3 class="timeline-header">Avaliação do profissional <br> <strong><?php echo htmlspecialchars($linha['nome']) ?> <?= htmlspecialchars($linha['sobrenome']); ?></strong></h3>
 
 
-                                
 
-
+                                <a href="<?= URL_SITE ?>form_mostrar_avaliacao.php?id_avaliacao=<?php echo $id_avaliacao; ?>">  
+                                    <button type="button" class="btn btn-primary btn-flat"> Conferir </button>
+                                </a>
                             </div>
                         </div>
                     </div>
-
-
-
-        <?php
-    }
-}
-?> 
+                    <?php
+                }
+            }
+            ?> 
 
         </form>
     </section>
-    <!--</div>-->
 
-<?php
-require_once './template/rodape_especial.php';
+
+    <?php
+    require_once './template/rodape_especial.php';
+    

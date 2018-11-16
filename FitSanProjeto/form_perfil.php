@@ -2,6 +2,7 @@
 $pagina = "Meu Perfil";
 
 require_once './template/cabecalho.php';
+require_once './template/menu.php';
 
 
 $query = "select * from usuario where id='" . $_SESSION['id'] . "'";

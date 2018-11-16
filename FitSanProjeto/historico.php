@@ -1,6 +1,7 @@
 <?php
 $pagina = "Histórico";
 require_once './template/cabecalho.php';
+require_once './template/menu.php';
 ?>
 <div class="content-wrapper">
     <section class="content-header">

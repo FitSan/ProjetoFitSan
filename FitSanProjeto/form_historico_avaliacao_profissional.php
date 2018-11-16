@@ -1,6 +1,7 @@
 <?php
-$pagina = " Avaliações ";
+$pagina = " Lista de Avaliações ";
 require_once './template/cabecalho.php';
+require_once './template/menu.php';
 
 //quando um tipo diferente tentar acessar pelo navegador ele será redirecionado para a pagina 1. 
 

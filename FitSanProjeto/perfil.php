@@ -1,7 +1,7 @@
 <?php
 $pagina = "Meu Perfil";
-
 require_once './template/cabecalho.php';
+require_once './template/menu.php';
 
 
 $query = "select * from usuario where id=" . $_SESSION['id'];
@@ -14,9 +14,7 @@ if ($linha = mysqli_fetch_array($resultado)) {
             <h1>
                 Meu perfil
             </h1>
-            <ol class="breadcrumb">
-                <li> <?= breadcrumbs() ?></li>
-            </ol>
+            
         </section> 
 
         <section class="content">

@@ -1,6 +1,7 @@
 <?php
 $pagina = "Planilha";
 require_once './template/cabecalho.php';
+require_once './template/menu.php';
 
 if (!tipoLogado("profissional")){
     header('Location: '.URL_SITE.'pagina1.php');

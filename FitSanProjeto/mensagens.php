@@ -1,6 +1,7 @@
 <?php
 $pagina = "Mensagens";
 require_once './template/cabecalho.php';
+require_once './template/menu.php';
 
 if (!tipoLogado("aluno", "profissional")){
     header('Location: '.URL_SITE.'pagina1.php');
