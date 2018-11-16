@@ -1057,5 +1057,19 @@
           slides[slideIndex - 1].style.display = "block";
         }
     </script>
+<script>
+    $('.mes_hist').change(function () {
+        var mes = $(this).val();
+        var meta_id = $(this).attr("name");
+        $.ajax({
+            url: "chart_meta_hist.php",
+            method: "POST",
+            data: {mes: mes, meta_id: meta_id},
+            success: function (data) {
+                $("#div"+meta_id).html(data);
+            }
+        });
+    });
+</script>
 </body>
 </html>

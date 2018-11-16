@@ -13,8 +13,7 @@ if(!mysqli_query($conexao, $query)){
     $query_info = "select * from meta where id= $id_meta";
     $resultado = mysqli_query($conexao, $query_info);
     $linha = mysqli_fetch_array($resultado);
-    criarNotificacao('INFO', 'Você finalizou sua meta em '.date('d M Y', dataParse($linha['data_final'])) . '<br><a href="'.URL_SITE.'okMetaNot.php">Ok</a>', null, $_SESSION['id'], null);
-    //IR PARA HISTÓRICO DE META AO CLICAR EM OK   - -- -- - TALVEZ BOTÃO PUBLICAR
+    criarNotificacao('INFO', 'Você finalizou sua meta em '.date('d M Y', dataParse($linha['data_final'])) . '<br><a href="'.URL_SITE.'okMetaNot.php">Ver</a>', null, $_SESSION['id'], null);
     $_SESSION['info'] = 'Meta finalizada!';
     header('Location: '.URL_SITE.'metas.php');
 }

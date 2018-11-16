@@ -411,8 +411,11 @@ create table `meta`(
 `peso_inicial` decimal(6,3) not null,
 `peso_final` decimal(6,3) not null,
 `status` ENUM ('ativa', 'finalizada') not null default 'ativa',
+`visualizacao` ENUM('PUBLICO','PRIVADO') not null default 'PRIVADO',
 `usuario_id` int references `usuario`(`id`)
 ); 
+
+alter table meta add column visualizacao enum('PUBLICO', 'PRIVADO') not null default 'PRIVADO' after status
 
 create table `dados_meta`(
 `id` int primary key auto_increment,

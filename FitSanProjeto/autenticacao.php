@@ -108,7 +108,7 @@ function verificarMeta() {
     } else {
         $finalizar_meta = "update meta set status='finalizada' where status='ativa' and usuario_id=" . $_SESSION['id'];
         mysqli_query($conexao, $finalizar_meta);
-        criarNotificacao('INFO', 'Sua meta foi finalizada na data ' . date('d M Y', dataParse($linha_meta['data_final'])) . '<br><a href="'.URL_SITE.'okMetaNot.php">Ok</a>', null, $_SESSION['id'], null);
+        criarNotificacao('INFO', 'Sua meta foi finalizada na data ' . date('d M Y', dataParse($linha_meta['data_final'])) . '<br><a href="'.URL_SITE.'okMetaNot.php">Ver</a>', null, $_SESSION['id'], null);
     }
 }
 

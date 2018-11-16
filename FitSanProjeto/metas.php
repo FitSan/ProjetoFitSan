@@ -151,7 +151,7 @@ if (mysqli_num_rows($resultado_all) === 0) {
                             </div>
                             <div class="form-group" style="padding: 5px;">
                                 <label style="padding: 4px 3px 4px 0;">Peso atual:</label> 
-                                <div class="input-group">                                                               
+                                <div class="form-group">                                                               
                                     <input type="number" class="form-control" id="peso_inicial" name="peso_inicial" step="0.001" min="0" value="<?= ($novaMeta) ? '' : $linha['peso_inicial'] ?>" <?= $novaMeta ? '' : 'readonly' ?>>
                                 </div>
                                 <?php
@@ -167,7 +167,7 @@ if (mysqli_num_rows($resultado_all) === 0) {
                             </div>
                             <div class="form-group" style="padding: 5px;">
                                 <label style="padding: 4px 3px 4px 0;">Meta de peso:</label> 
-                                <div class="input-group">                                                      
+                                <div class="form-group">                                                      
                                     <input type="number" class="form-control" id="peso_final" name="peso_final" step="0.001" min="0" value="<?= ($novaMeta) ? '' : $linha['peso_final'] ?>" <?= $novaMeta ? '' : 'readonly' ?>>
                                 </div>
                                 <?php
