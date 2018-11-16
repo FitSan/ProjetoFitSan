@@ -66,7 +66,7 @@ if (mysqli_num_rows($retorno_all) === 0) {
                                     <th>Avanço meta</th>
                                 </tr>                      
                                 <?php
-                                $query_dados = "select EXTRACT(YEAR_MONTH FROM data_add) as month, MAX(dados_meta.data_add) as max_data_add, dados_meta.data_add from meta join dados_meta on meta.id = dados_meta.meta_id"
+                                $query_dados = "select EXTRACT(YEAR_MONTH FROM data_add) as month, MAX(dados_meta.data_add) as max_data_add from meta join dados_meta on meta.id = dados_meta.meta_id"
                                     . " where meta.id=" . $linha['id'] . " group by EXTRACT(YEAR_MONTH FROM data_add)";
                                 $resultado_dados = mysqli_query($conexao, $query_dados);
                                 while ($linha_dados = mysqli_fetch_array($resultado_dados)) {
@@ -93,7 +93,7 @@ if (mysqli_num_rows($retorno_all) === 0) {
                                     ?>
 
                                     <tr>
-                                        <td><?= ($anos) ? date('M/Y', dataParse($linha_dados['data_add'])) : date('M', dataParse($linha_dados['data_add'])) ?></td>
+                                        <td><?= ($anos) ? date('M/Y', dataParse($linha_dados['max_data_add'])) : date('M', dataParse($linha_dados['max_data_add'])) ?></td>
                                         <td><?= ($peso_inicial_dif > 0) ? '+' : '' ?><?= ($peso_inicial_dif == 0) ? '<b style="color: orange">' .'0kg' : $peso_inicial_dif . 'kg' ?><?=($peso_inicial_dif == 0) ? '</b>' : '' ?></td>
                                         <td><?= ($meta_dif == 0) ? '<i class="fa fa-check" style="font-size: 18px; color: green;"></i>' : $meta_dif . 'kg' ?></td>
                                     </tr>
