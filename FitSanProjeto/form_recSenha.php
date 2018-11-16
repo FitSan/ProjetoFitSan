@@ -73,9 +73,8 @@ require_once './template/cabecalho.php';
         </div>
 
 
-    </script>
-</body>
-</html>
+     <?php
+            include_once './template/rodape.php';
 
 
 
