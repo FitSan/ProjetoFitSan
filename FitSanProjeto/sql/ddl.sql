@@ -2,7 +2,7 @@ create database `FitSan`;
 
 create table `usuario`(
 `id` int primary key auto_increment,
-`datahora` datetime not null,
+`datahora` datetime not null default now(),
 `nome` varchar(255) not null,
 `sobrenome` varchar(255) not null,
 `datanasc` date,
@@ -75,7 +75,7 @@ create table `chat`(
  `profissional_id` int references `usuario`(`id`),
  `origem` enum('aluno', 'profissional') not null,
  `status` enum('lido', 'pendente') not null,
- `datahora` datetime not null,
+ `datahora` datetime not null default now(),
  `mensagem` text not null
 );
 select * from `chat`;
@@ -113,7 +113,7 @@ select * from notificacao;
 
 CREATE TABLE `notificacao`(
 `id` INT primary key AUTO_INCREMENT,
-`data` datetime NOT NULL,
+`data` datetime NOT NULL default now(),
 `lido` ENUM('N', 'L') NOT NULL,
 `status` ENUM('OK', 'ERRO', 'INFO') NOT NULL,
 `texto` TEXT NOT NULL,
@@ -131,7 +131,7 @@ DROP TABLE ativ_extras_exercicios;
 
 create table `ativ_extras`(
 `id` int primary key auto_increment,
-`datahora` datetime not null,
+`datahora` datetime not null default now(),
 `titulo` varchar(255) not null,
 `texto` text not null,
 `visualizacao` ENUM('PUBLICO','PRIVADO') not null default 'PRIVADO',
@@ -210,7 +210,7 @@ TRUNCATE TABLE ativ_extras_exercicios;
 create table `planilha`(
 `id` int not null primary key auto_increment,
 `titulo` varchar(255) not null,
-`datahora` datetime not null
+`datahora` datetime not null default now()
 );
 
 ALTER TABLE planilha ADD datahora datetime not null default now() after titulo;
@@ -281,7 +281,7 @@ create table `planilha_aluno`(
 create table `planilha_aluno_feito`(
 `id` int primary key auto_increment,
 `planilha_aluno_id` int references `planilha_aluno`(`id`),
-`datahora` datetime not null
+`datahora` datetime not null default now()
 );
 
 create table `planilha_aluno_exercicio`(

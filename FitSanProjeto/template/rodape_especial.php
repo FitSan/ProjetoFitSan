@@ -367,6 +367,46 @@
     <!-- /.modal-dialog -->
 </div>
 
+<!--Modal upload imagem -->
+<div class="modal fade" id="modal-upload-imagem">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Upload de imagem</h4>
+            </div>
+            <div class="modal-body">
+                <form id="modal-upload-imagem-enviar" role="form" method="post" enctype="multipart/form-data" action="<?=URL_SITE?>upload-imagem.php?modo=upload">
+                    <label for="modal-upload-imagem-input">Foto</label>
+                    <input type="file" class="form-control" id="modal-upload-imagem-input" name="imagem">
+                    <button type="submit" class="btn btn-primary">Upload</button>
+                </form>
+                <form id="modal-upload-imagem-recortar" role="form" method="post" action="<?=URL_SITE?>upload-imagem.php?modo=crop">
+                    <label for="modal-upload-imagem-input">Recortar</label>
+                    <input type="hidden" id="modal-upload-imagem-link" name="imagem">
+                    <input type="hidden" id="modal-upload-imagem-x" name="x" />
+                    <input type="hidden" id="modal-upload-imagem-y" name="y" />
+                    <input type="hidden" id="modal-upload-imagem-w" name="w" />
+                    <input type="hidden" id="modal-upload-imagem-h" name="h" />
+                    <img id="modal-upload-imagem-img" src="">
+                    <img id="modal-upload-imagem-miniatura" src="">
+                    <button type="submit" class="btn btn-primary">Recortar</button>
+                </form>
+                <div id="modal-upload-imagem-final">
+                    <label for="modal-upload-imagem-input">Pronto</label>
+                    <img id="modal-upload-imagem-pronta" src="">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Cancelar</button>
+                <a class="btn btn-primary" href="#" role="button">Selecionar</a>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
 <!-- jQuery 3 -->
 <script src="<?=URL_SITE?>bower_components/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap 3.3.7 -->
@@ -904,27 +944,32 @@
         var modal = $('#modal-upload-imagem');
         var frmupload = modal.find('#modal-upload-imagem-enviar');
         var frmrecort = modal.find('#modal-upload-imagem-recortar');
+        var frmfim = modal.find('#modal-upload-imagem-final');
         var botao = modal.find('.modal-footer .btn-primary');
-        var crop = false;
-
+        var img = frmrecort.find('#modal-upload-imagem-img');
+        var mnt = frmrecort.find('#modal-upload-imagem-miniatura');
+        var imgfim = frmfim.find('#modal-upload-imagem-pronta');
+        //var imgvazio = imgfim.attr('src');
+        var crop = false, parente = null;
         function crop_ativar(){
-            if (crop) return;
+            //if (crop) return;
             crop_desativar();
-            crop = frmrecort.find('#modal-upload-imagem-img').Jcrop({
+            crop = $.Jcrop(mnt, {
                 aspectRatio: 1,
+                cornerHandles: false,
                 onSelect: function (c){
-                    $('#modal-upload-imagem-x').val(c.x);
-                    $('#modal-upload-imagem-y').val(c.y);
-                    $('#modal-upload-imagem-w').val(c.w);
-                    $('#modal-upload-imagem-h').val(c.h);
+                    $('#modal-upload-imagem-x').val(Math.round(c.x * img.width() / mnt.width()));
+                    $('#modal-upload-imagem-y').val(Math.round(c.y * img.height() / mnt.height()));
+                    $('#modal-upload-imagem-w').val(Math.round(c.w * img.width() / mnt.width()));
+                    $('#modal-upload-imagem-h').val(Math.round(c.h * img.height() / mnt.height()));
                 }
             });
         }
 
         function crop_desativar(){
             if (!crop) return;
-            //crop.destroy();
-            //crop = false;
+            crop.destroy();
+            crop = false;
         }
 
         function enviar(form, success, error, done){
@@ -969,6 +1014,9 @@
             botao.find('.btn-primary').attr('disabled', true).toggleClass('disabled', true);
             frmupload.show().find('.btn-primary').attr('disabled', false).toggleClass('disabled', false);
             frmrecort.hide().find('.btn-primary').attr('disabled', true).toggleClass('disabled', true);
+            frmfim.hide();
+            modal.find(':input').val('');
+            //modal.find('img').attr('src', ''); //imgvazio);
             crop_desativar();
         });
  
@@ -976,15 +1024,15 @@
             e.preventDefault();
             enviar(frmupload,
                 function(result){
-                    console.info(result);
                     if (result.tipo != 'ok'){
                         alert(result.mensagem);
                         return;
                     }
                     frmrecort.find('#modal-upload-imagem-link').val(result.path);
-                    frmrecort.find('#modal-upload-imagem-img').attr('src', result.url);
                     frmupload.hide().find('.btn-primary').attr('disabled', true).toggleClass('disabled', true);
                     frmrecort.show().find('.btn-primary').attr('disabled', false).toggleClass('disabled', false);
+                    img.attr('src', result.url);
+                    mnt.attr('src', result.url);
                     crop_ativar();
                 }
             );
@@ -995,16 +1043,43 @@
             e.preventDefault();
             enviar(frmrecort,
                 function(result){
-                    console.info(result);
                     if (result.tipo != 'ok'){
                         alert(result.mensagem);
                         return;
                     }
+                    imgfim.attr('src', result.url).data('caminho', result.path);
                     frmrecort.hide().find('.btn-primary').attr('disabled', true).toggleClass('disabled', true);
                     botao.find('.btn-primary').attr('disabled', false).toggleClass('disabled', false);
+                    frmfim.show();
                     crop_desativar();
                 }
             );
+            return false;
+        });
+
+        botao.on('click', function(e){
+            e.preventDefault();
+            var id, obj, dst;
+            id = parente.data('input');
+            if (!id || !id.length){
+                alert('Não foi possível selecionar a imagem.');
+                return false;
+            }
+            obj = $('#' + id);
+            if (!obj.length){
+                alert('Não foi possível selecionar a imagem.');
+                return false;
+            }
+            id = imgfim.data('caminho');
+            if (!id || !id.length){
+                alert('Não foi possível selecionar a imagem.');
+                return false;
+            }
+            obj.val(id);
+            dst = obj.next('img');
+            if (!dst.length) dst = $('<img class="profile-user-img img-responsive" style="margin: 0;margin-bottom: 2px" alt="User profile picture">').insertAfter(obj);
+            dst.attr('src', imgfim.attr('src'));
+            modal.modal('hide');
             return false;
         });
 

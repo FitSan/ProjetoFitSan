@@ -14,6 +14,12 @@ $id = (!empty($_GET['id']) ? $_GET['id'] : null);
 $destinatario = (!empty($_GET['destinatario']) ? $_GET['destinatario'] : null); 
 $erros = array();
 
+if (isset($_GET['notificacao'])) {
+    echo leituraNotificacao($_GET['notificacao']);
+    echo '<script>window.location = ' . json_encode(url_param_add(url_current(), 'notificacao', null)) . ';</script>';
+    exit;
+}
+
 //referente a inclusão/alteração no banco.
 if ($acao == 'incluir'){
     if (!empty($_POST)) {
@@ -72,7 +78,9 @@ if (tipoLogado("profissional")){
 
 $query = "select
     u.*,
-    (select count(c.id) from chat c where c.aluno_id = v.aluno_id and c.profissional_id = v.profissional_id) as mensagens
+    (select count(c.id) from chat c where c.aluno_id = v.aluno_id and c.profissional_id = v.profissional_id) as mensagens,
+    (select count(c.id) from chat c where c.aluno_id = v.aluno_id and c.profissional_id = v.profissional_id and status = 'lido') as lidos,
+    (select count(c.id) from chat c where c.aluno_id = v.aluno_id and c.profissional_id = v.profissional_id and status = 'pendente') as pendentes
 from
     vinculo v join
     usuario u on u.id = v.{$campo_destino}_id
@@ -160,7 +168,7 @@ $resultado = dbquery($query);
                         if ($value['id'] == $destinatario) echo '<strong>';
                         echo htmlspecialchars($value['nome'] . ' ' . $value['sobrenome']);
                         if ($value['id'] == $destinatario) echo '</strong>';
-                        ?><span class="badge bg-aqua"><?php echo htmlspecialchars($value['mensagens']); ?></span></a></li>
+                        ?><span class="badge bg-aqua"><?php echo htmlspecialchars($value['pendentes']); ?></span></a></li>
                         <?php } ?>      
                         
                     </ul>
@@ -219,20 +227,17 @@ $resultado = dbquery($query);
                     <h3 class="box-title">Seleção</h3>
 <?php } ?>
                     <div class="box-body"><br>
-                    <?php if (!empty($resultado)){ 
-                        
-                        if (isset($_GET['notificacao'])) {
-                            echo leituraNotificacao($_GET['notificacao']);
-                            echo '<script>window.location = ' . json_encode(url_param_add(url_current(), 'notificacao', null)) . ';</script>';
-                            exit;
-                        }
-                        ?>
+                    <?php if (!empty($resultado)){ ?>
                         
                         
                     <ul class="timeline timeline-inverse">
                         <?php
-                            $dataanterior = '';
+                            $dataanterior = ''; $pendentes = array();
                             foreach ($resultado as $linha) {
+                                if (
+                                    ($linha['status'] == 'pendente') &&
+                                    ($linha['origem'] != getTipo())
+                                ) $pendentes[] = $linha['id'];
                             $dataatual = date('d/m/Y', dataParse($linha['datahora']));
                             if ($dataanterior != $dataatual){
                                 ?> 
@@ -270,12 +275,19 @@ $resultado = dbquery($query);
         <?php
 }
         ?>
+                                
+                                            
         <li>
             <i class="fa fa-clock-o bg-gray"></i>
         </li>
-                    </div>
-    </ul>
-                
+
+
+                        </div>
+                        </ul>
+                        <div class="pull-right">
+                            <a href="<?=url_param_add(null) ?>" class="btn btn-primary"><i class="fa fa-refresh"></i> Atualizar</a>
+                        </div>  
+
                     
                         
                         
@@ -293,7 +305,12 @@ $resultado = dbquery($query);
         </div>
 <?php } ?>
 
-<?php } elseif (!$destinatario){ ?>
+<?php
+    if ($pendentes){
+        dbquery("update chat set status = 'lido' where id in (" . implode(',', $pendentes) . ");");
+    }
+
+} elseif (!$destinatario){ ?>
 <div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12" align="center"><h3><b>Selecione um destinatário ao lado.</b></h3></div>
 <?php } else { ?>
 <div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12" align="center"><h3><b>Não foi enviada nenhuma mensagem ainda.</b></h3></div>

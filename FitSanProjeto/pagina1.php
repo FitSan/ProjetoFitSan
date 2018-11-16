@@ -88,7 +88,7 @@ require_once './template/menu.php';
         <?php if (!tipoLogado("aluno")) { ?>
 
             <div class="row justify-content-sm-center my-4">
-                <div class="col-sm-6 col-md-4 ">
+                <div class="col-xs-12 col-sm-4 col-md-4">
                     <div class="card mb-5">
                         <img class="card-img-top img-responsive"  src="<?= URL_SITE ?>img/Planilha.png" alt="Planilha">
                         <div class="card-body">
@@ -99,7 +99,7 @@ require_once './template/menu.php';
                     </div> 
                 </div>
 
-                <div class="col-sm-6 col-md-4 ">
+                <div class="col-xs-12 col-sm-4 col-md-4">
                     <div class="card mb-5">
                         <img class="card-img-top img-responsive"  src="<?= URL_SITE ?>img/avaliacao.png" alt="Avaliacao">
                         <div class="card-body">
@@ -110,7 +110,7 @@ require_once './template/menu.php';
                     </div> 
                 </div>
 
-                <div class="col-sm-6 col-md-4 ">
+                <div class="col-xs-12 col-sm-4 col-md-4">
                     <div class="card mb-5">
                         <img class="card-img-top img-responsive"  src="<?= URL_SITE ?>img/dicas.png" alt="Dicas">
                         <div class="card-body">
