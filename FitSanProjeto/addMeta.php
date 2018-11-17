@@ -36,7 +36,7 @@ if (!$erro){
     $diff = $data_inicio->diff($data_fim);
     $diff = $diff->format("%r%a");
     
-    if($diff_agora>0){
+    if($diff_agora>=0){
         $_SESSION['erro_data'] = 'Escolha uma data final posterior à atual';
         $erro = true;
     }else if ($diff <= 0) {

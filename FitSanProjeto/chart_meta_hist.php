@@ -2,13 +2,13 @@
 require_once './autenticacao.php';
 
 if(isset($_POST['meta_id'])){
-    $query_meta_id = "select *, MONTH(data_final) as mes_final from meta where id=" . $_POST['meta_id'];
+    $query_meta_id = "select *, MONTH(data_final) as mes_final from meta where id=" . mysqliEscaparTexto($_POST['meta_id']);
 }else{
-    $query_meta_id = "select *, MONTH(data_final) as mes_final from meta where id=" . $linha['id'];
+    $query_meta_id = "select *, MONTH(data_final) as mes_final from meta where id=" . htmlspecialchars($linha['id']);
 }
 $resultado_meta_id = mysqli_query($conexao, $query_meta_id);
 $linha_meta_id = mysqli_fetch_array($resultado_meta_id);
-$query_anos = "select EXTRACT(YEAR FROM data_add) as anos from dados_meta join meta on dados_meta.meta_id = meta.id where meta.id=" . $linha_meta_id['id'] . " group by anos";
+$query_anos = "select EXTRACT(YEAR FROM data_add) as anos from dados_meta join meta on dados_meta.meta_id = meta.id where meta.id=" . htmlspecialchars($linha_meta_id['id']) . " group by anos";
 $resultado_anos = mysqli_query($conexao, $query_anos);
 if (mysqli_num_rows($resultado_anos) > 1) {
     $anos = true;
@@ -20,17 +20,17 @@ $pesos = array();
 $meta = array();
 
 if (!empty($_POST['mes'])) {
-    $query_meta = "select dados_meta.data_add, dados_meta.peso_add, meta.peso_final from dados_meta join meta on dados_meta.meta_id=meta.id where EXTRACT(YEAR_MONTH FROM data_add) ='". $_POST['mes']."' and meta_id=" . $linha_meta_id['id'] . " order by dados_meta.data_add asc";
+    $query_meta = "select dados_meta.data_add, dados_meta.peso_add, meta.peso_final from dados_meta join meta on dados_meta.meta_id=meta.id where EXTRACT(YEAR_MONTH FROM data_add) ='". $_POST['mes']."' and meta_id=" . htmlspecialchars($linha_meta_id['id']) . " order by dados_meta.data_add asc";
     $resultado_meta = mysqli_query($conexao, $query_meta);
     while ($linha_meta = mysqli_fetch_array($resultado_meta)) {
         if (mysqli_num_rows($resultado_meta) == 1) {
             $datas[] = '';
-            $pesos[] = $linha_meta['peso_add'];
-            $meta[] = $linha_meta_id['peso_final'];
+            $pesos[] = htmlspecialchars($linha_meta['peso_add']);
+            $meta[] = htmlspecialchars($linha_meta_id['peso_final']);
         }
-        $datas[] = ($linha_meta['data_add'] == $linha_meta_id['data_final']) ? 'Fim: ' . date('d/M', dataParse($linha_meta['data_add'])) : date('d/M', dataParse($linha_meta['data_add']));
-        $pesos[] = $linha_meta['peso_add'];
-        $meta[] = $linha_meta_id['peso_final'];
+        $datas[] = (htmlspecialchars($linha_meta['data_add']) == htmlspecialchars($linha_meta_id['data_final'])) ? 'Fim: ' . date('d/M', dataParse(htmlspecialchars($linha_meta['data_add']))) : date('d/M', dataParse(htmlspecialchars($linha_meta['data_add'])));
+        $pesos[] = htmlspecialchars($linha_meta['peso_add']);
+        $meta[] = htmlspecialchars($linha_meta_id['peso_final']);
         
     }
 } else {
@@ -53,7 +53,7 @@ if (!empty($_POST['mes'])) {
                     mes
                 ) as d on meta.id = d.meta_id
             where 
-                meta.id=$linha_meta_id[id]
+                meta.id=".htmlspecialchars($linha_meta_id['id'])."
             order by
                 mes
             ";
@@ -61,16 +61,16 @@ if (!empty($_POST['mes'])) {
     while ($linha_meta = mysqli_fetch_array($resultado_meta)) {
         if (mysqli_num_rows($resultado_meta) === 1) {
             $datas[] = '';
-            $pesos[] = round(numeroParse($linha_meta['pesoMedia']), 3);
-            $meta[] = numeroParse($linha_meta['peso_final']);
+            $pesos[] = round(numeroParse(htmlspecialchars($linha_meta['pesoMedia'])), 3);
+            $meta[] = numeroParse(htmlspecialchars($linha_meta['peso_final']));
         }
-        $datas[] = ($anos) ? date('M/Y', dataParse($linha_meta['data_add'])) : date('M', dataParse($linha_meta['data_add']));
-        $pesos[] = round(numeroParse($linha_meta['pesoMedia']), 3); // Este cálculo nao é necessário se usar o AVG no SQL
-        $meta[] = numeroParse($linha_meta['peso_final']);
+        $datas[] = ($anos) ? date('M/Y', dataParse(htmlspecialchars($linha_meta['data_add']))) : date('M', dataParse(htmlspecialchars($linha_meta['data_add'])));
+        $pesos[] = round(numeroParse(htmlspecialchars($linha_meta['pesoMedia'])), 3); 
+        $meta[] = numeroParse(htmlspecialchars($linha_meta['peso_final']));
     }
 }
 ?>
-<canvas id="<?= $linha_meta_id['id'].'chart' ?>" style="margin: 0 auto;"></canvas>
+<canvas id="<?= htmlspecialchars($linha_meta_id['id']).'chart' ?>" style="margin: 0 auto;" class="chart_hist"></canvas>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 <script>
     var ctx = document.getElementById('<?= $linha_meta_id['id'].'chart' ?>').getContext('2d');

@@ -20,62 +20,62 @@ while ($linha = mysqli_fetch_array($resultado)) {
                     <?php
                     if (tipoLogado("aluno")) {
                         ?>
-                        <a href="<?= URL_SITE ?>perfil_externo.php?id=<?= $linha['profissional_id'] ?>"><?= $linha['profissional_nome'] ?></a> 
+                    <a href="<?= URL_SITE ?>perfil_externo.php?id=<?= htmlspecialchars($linha['profissional_id']) ?>"><?= $linha['profissional_nome'] ?></a> 
                         <?php
-                    } else if ($linha['profissional_id'] == $_SESSION['id']) {
+                    } else if (htmlspecialchars($linha['profissional_id']) == $_SESSION['id']) {
                         ?>
-                        <a href="<?= URL_SITE ?>perfil.php"><?= $linha['profissional_nome'] ?></a> 
+                        <a href="<?= URL_SITE ?>perfil.php"><?= htmlspecialchars($linha['profissional_nome']) ?></a> 
                         <?php
                     } else {
                         ?>
-                        <?= $linha['profissional_nome'] ?>
+                        <?= htmlspecialchars($linha['profissional_nome']) ?>
                         <?php
                     }
-                    if ($linha['profissional_id'] == $_SESSION['id'] || tipoLogado('admin')) {
+                    if (htmlspecialchars($linha['profissional_id']) == $_SESSION['id'] || tipoLogado('admin')) {
                         ?>
 
 
-                        <button type="button" class="pull-right btn-box-tool" data-toggle="modal" data-target="#excluir-dica" data-id="<?= $linha['id'] ?>"><i class="fa fa-times"></i></button>
+                        <button type="button" class="pull-right btn-box-tool" data-toggle="modal" data-target="#excluir-dica" data-id="<?= htmlspecialchars($linha['id']) ?>"><i class="fa fa-times"></i></button>
                         <?php
                     }
                     ?>
                     <!--Fim do icone x-->
-                    <i style="font-size: 15px;"> <?= (empty($linha['titulo'])) ? 'postou uma dica</i>' : 'postou a dica </i><b>' . $linha['titulo'] . '</b>' ?><i style="font-size: 15px;">.</i>
+                    <i style="font-size: 15px;"> <?= (empty(htmlspecialchars($linha['titulo']))) ? 'postou uma dica</i>' : 'postou a dica </i><b>' . htmlspecialchars($linha['titulo']) . '</b>' ?><i style="font-size: 15px;">.</i>
                 </span>
-                <span class="description"><?= date('d/m/Y H:i:s', dataParse($linha['data_envio'])) ?></span>
+                <span class="description"><?= date('d/m/Y H:i:s', dataParse(htmlspecialchars($linha['data_envio']))) ?></span>
             </div>
         </div>
         <!-- /.box-header -->
         <div class="box-body" >
             <p> <?= nl2br(htmlentities($linha['texto'])) ?> </p> 
             <?php
-            $query_dica = "select * from upload_dica where dica_id = $linha[id]";
+            $query_dica = "select * from upload_dica where dica_id = ".htmlspecialchars($linha[id]);
             $resultado_upload = mysqli_query($conexao, $query_dica);            
             if (mysqli_num_rows($resultado_upload)>0){
                 $count = 0;
                 while ($linha_upload = mysqli_fetch_array($resultado_upload)) {                
-                    if ($linha_upload['tipo'] != 'img') {
-                        if ($linha_upload['tipo'] == 'vid') {
+                    if (htmlspecialchars($linha_upload['tipo']) != 'img') {
+                        if (htmlspecialchars($linha_upload['tipo']) == 'vid') {
                             ?> 
-                            <div class="embed-container"><iframe  src="<?= $linha_upload['nome_arq'] ?>" frameborder="0" allowfullscreen></iframe>                                  
+                            <div class="embed-container"><iframe  src="<?= htmlspecialchars($linha_upload['nome_arq']) ?>" frameborder="0" allowfullscreen></iframe>                                  
                                 <?php
                             } else {
                                 ?>
-                                <div><a href="<?= $linha_upload['nome_arq'] ?>"  target="_blank"><?= $linha_upload['nome_arq'] ?></a>
+                                <div><a href="<?= htmlspecialchars($linha_upload['nome_arq']) ?>"  target="_blank"><?= htmlspecialchars($linha_upload['nome_arq']) ?></a>
                                     <?php
                                 }
                                 $img = false;
                             } else {
                                 $count += 1;
                                 $img = true;
-                                $id = $linha['id'];
+                                $id = htmlspecialchars($linha['id']);
                                 if ($count == 1) {
                                     ?>
                                     <div class="wrap" id="<?= $id ?>">
                                         <section class="container galery-container">
                                         <?php }
                                         ?>  
-                                        <div class="mySlides" <?=($count>1) ? ' style="display: none;"' : '' ?>><img class="imgslide img img-responsive " src="<?= URL_SITE ?>uploads/dicas/<?= $linha_upload['nome_arq'] ?>" style="padding: 5px; margin: 0 auto;"></div>                
+                                        <div class="mySlides" <?=($count>1) ? ' style="display: none;"' : '' ?>><img class="imgslide img img-responsive " src="<?= URL_SITE ?>uploads/dicas/<?= htmlspecialchars($linha_upload['nome_arq']) ?>" style="padding: 5px; margin: 0 auto;"></div>                
 
                                         <?php
                                     }

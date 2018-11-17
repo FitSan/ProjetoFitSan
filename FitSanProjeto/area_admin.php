@@ -31,9 +31,6 @@ if (!tipoLogado("admin")){
         <div class="box-footer">        
     </div>
     </div>
-    <div style="margin: 0 auto; width: 80%;">      
-        <?php include 'dicas_all.php'; ?>  
-    </div> 
 <?php
 require_once './template/rodape_especial.php';
 ?>

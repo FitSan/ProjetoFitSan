@@ -99,7 +99,7 @@ function calculaidade($datanasc) {
 }
 
 function verificarMeta() {
-    $sql_meta = "select * from meta where status='ativa' and usuario_id=" . $_SESSION['id'] . " and data_final<CURRENT_DATE()";
+    $sql_meta = "select * from meta where status='ativa' and usuario_id=" . $_SESSION['id'] . " and data_final<=CURRENT_DATE()";
     global $conexao;
     $resultado_meta = mysqli_query($conexao, $sql_meta);
     $linha_meta = mysqli_fetch_array($resultado_meta);
