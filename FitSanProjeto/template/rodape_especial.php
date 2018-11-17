@@ -341,41 +341,6 @@
                 <h4 class="modal-title">Upload de imagem</h4>
             </div>
             <div class="modal-body">
-                <form id="modal-upload-imagem-enviar" role="form" method="post" enctype="multipart/form-data" action="<?=URL_SITE?>upload-imagem.php?modo=upload" target="modal-upload-imagem-iframe">
-                    <label for="modal-upload-imagem-input">Foto</label>
-                    <input type="file" class="form-control" id="modal-upload-imagem-input" name="imagem">
-                    <button type="submit" class="btn btn-primary">Upload</button>
-                </form>
-                <form id="modal-upload-imagem-recortar" role="form" method="post" action="<?=URL_SITE?>upload-imagem.php?modo=crop" target="modal-upload-imagem-iframe">
-                    <label for="modal-upload-imagem-input">Recortar</label>
-                    <input type="hidden" id="modal-upload-imagem-link" name="imagem">
-                    <input type="hidden" id="modal-upload-imagem-x" name="x" />
-                    <input type="hidden" id="modal-upload-imagem-y" name="y" />
-                    <input type="hidden" id="modal-upload-imagem-w" name="w" />
-                    <input type="hidden" id="modal-upload-imagem-h" name="h" />
-                    <img id="modal-upload-imagem-img">
-                    <button type="submit" class="btn btn-primary">Recortar</button>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Cancelar</button>
-                <a class="btn btn-primary" href="#" role="button">Selecionar</a>
-            </div>
-        </div>
-        <!-- /.modal-content -->
-    </div>
-    <!-- /.modal-dialog -->
-</div>
-
-<!--Modal upload imagem -->
-<div class="modal fade" id="modal-upload-imagem">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Upload de imagem</h4>
-            </div>
-            <div class="modal-body">
                 <form id="modal-upload-imagem-enviar" role="form" method="post" enctype="multipart/form-data" action="<?=URL_SITE?>upload-imagem.php?modo=upload">
                     <label for="modal-upload-imagem-input">Foto</label>
                     <input type="file" class="form-control" id="modal-upload-imagem-input" name="imagem">

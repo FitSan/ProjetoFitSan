@@ -20,7 +20,7 @@ if (($acao == 'incluir') || ($acao == 'alterar')) {
         $nome = (!empty($_POST['nome']) ? $_POST['nome'] : null);
         $descricao = (!empty($_POST['descricao']) ? $_POST['descricao'] : null);
         $musculo_cardio_id = (!empty($_POST['musculo_cardio_id']) ? $_POST['musculo_cardio_id'] : null);
-
+        $fotoremover = !empty($_POST['fotoremover']);
         if (!empty($_FILES['foto']['name'])) {
             $uploaddir = '/uploads/exercicios/';
             $dir = (rtrim(dirname(__FILE__), '\\/') . $uploaddir); // Obtém a pasta do arquivo do site
@@ -43,6 +43,21 @@ if (($acao == 'incluir') || ($acao == 'alterar')) {
             if (!@is_readable($_FILES['foto']['tmp_name']))
                 die('Upload não encontrado'); // Para se não foi encontrado o arquivo temporário
             move_uploaded_file($_FILES['foto']['tmp_name'], $caminho) or die('Upload não copiado'); // Move o arquivo enviado para a pasta de uploads
+        } elseif ($fotoremover){
+            $foto = null;
+            $sql = "select p.* from planilha_exercicio p where id = " . mysqliEscaparTexto($id);
+            if ($retorno = mysqli_query($conexao, $sql)){
+                if ($resultado = mysqli_fetch_array($retorno)){
+                    if ($url = $resultado['foto']){
+                        $file = (rtrim(dirname(__FILE__), '\\/') . '/uploads/exercicios/' . basename($url));
+                        if (!@file_exists($file)){
+                            $foto = false;
+                        } elseif (@unlink($file)){
+                            $foto = false;
+                        }
+                    }
+                }
+            }
         } else {
             $foto = null;
         }
@@ -66,8 +81,8 @@ if (($acao == 'incluir') || ($acao == 'alterar')) {
         } else {
             $query = "update planilha_exercicio set nome=" . mysqliEscaparTexto($nome) . ", descricao= " . mysqliEscaparTexto($descricao) . ", musculo_cardio_id= " . mysqliEscaparTexto($musculo_cardio_id) . " where id= " . mysqliEscaparTexto($id);
             mysqli_query($conexao, $query) or die_mysql($query, __FILE__, __LINE__);
-            if ($foto) {
-                $query = "update planilha_exercicio set foto= " . mysqliEscaparTexto($foto) . " where id= " . mysqliEscaparTexto($id);
+            if ($foto !== null) {
+                $query = "update planilha_exercicio set foto= " . mysqliEscaparTexto($foto ? $foto : null) . " where id= " . mysqliEscaparTexto($id);
                 mysqli_query($conexao, $query) or die_mysql($query, __FILE__, __LINE__);
             }
         }
@@ -179,7 +194,9 @@ $resultado = mysqli_query($conexao, $query) or die_mysql($query, __FILE__, __LIN
                         <div class="col-sm-10">
 <?php if (!empty($linha_alterar['foto'])) { ?>
                                 <img class="profile-user-img img-responsive" style="margin: 0;margin-bottom: 2px" src="<?= htmlspecialchars($linha_alterar['foto']) ?>" alt="User profile picture">
-<?php } ?>
+                                <label for="fotoremover"><input type="checkbox" class="flat-red" id="fotoremover" name="fotoremover" value="1"> Remover foto atual</label>
+                           
+                                    <?php } ?>
                             <input type="file" class="form-control" id="foto" name="foto">
                         </div>
                     </div>

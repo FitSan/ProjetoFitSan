@@ -68,6 +68,7 @@ primary key (`aluno_id`, `profissional_id`)
 );
 
 drop table `chat`;
+truncate table `chat`;
 
 create table `chat`(
  `id` int primary key auto_increment,
@@ -659,3 +660,6 @@ ALTER TABLE `FitSan`.`vinculo` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_
 ----------------------------------------------------------------
 
 
+truncate table notificacao;
+truncate table `chat`;
+select * from `chat`;

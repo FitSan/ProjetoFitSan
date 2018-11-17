@@ -14,11 +14,19 @@ $id = (!empty($_GET['id']) ? $_GET['id'] : null);
 $destinatario = (!empty($_GET['destinatario']) ? $_GET['destinatario'] : null); 
 $erros = array();
 
-if (isset($_GET['notificacao'])) {
-    echo leituraNotificacao($_GET['notificacao']);
-    echo '<script>window.location = ' . json_encode(url_param_add(url_current(), 'notificacao', null)) . ';</script>';
-    exit;
+if (tipoLogado("profissional")){
+    $campo_origem = 'profissional';
+    $campo_destino = 'aluno';
+} else {
+    $campo_origem = 'aluno';
+    $campo_destino = 'profissional';
 }
+
+//if (isset($_GET['notificacao'])) {
+//    echo leituraNotificacao($_GET['notificacao']);
+//    echo '<script>window.location = ' . json_encode(url_param_add(url_current(), 'notificacao', null)) . ';</script>';
+//    exit;
+//}
 
 //referente a inclusão/alteração no banco.
 if ($acao == 'incluir'){
@@ -53,6 +61,7 @@ if ($acao == 'incluir'){
             [
                 'aluno_id' => (tipoLogado("aluno") ? $_SESSION['id'] : $usuario),
                 'profissional_id' => (tipoLogado("profissional") ? $_SESSION['id'] : $usuario),
+                'destinatario' => $usuario,
                 'table' => 'chat',
             ]
         );
@@ -68,19 +77,11 @@ if ($acao == 'incluir'){
     exit();
 }
 
-if (tipoLogado("profissional")){
-    $campo_origem = 'profissional';
-    $campo_destino = 'aluno';
-} else {
-    $campo_origem = 'aluno';
-    $campo_destino = 'profissional';
-}
-
 $query = "select
     u.*,
     (select count(c.id) from chat c where c.aluno_id = v.aluno_id and c.profissional_id = v.profissional_id) as mensagens,
-    (select count(c.id) from chat c where c.aluno_id = v.aluno_id and c.profissional_id = v.profissional_id and status = 'lido') as lidos,
-    (select count(c.id) from chat c where c.aluno_id = v.aluno_id and c.profissional_id = v.profissional_id and status = 'pendente') as pendentes
+    (select count(c.id) from chat c where c.origem = " . mysqliEscaparTexto($campo_destino) . " and c.aluno_id = v.aluno_id and c.profissional_id = v.profissional_id and c.status = 'lido') as lidos,
+    (select count(c.id) from chat c where c.origem = " . mysqliEscaparTexto($campo_destino) . " and c.aluno_id = v.aluno_id and c.profissional_id = v.profissional_id and c.status = 'pendente') as pendentes
 from
     vinculo v join
     usuario u on u.id = v.{$campo_destino}_id
@@ -98,6 +99,29 @@ order by
 ";
 $usuarios = dbquery($query);
 if (empty($usuarios)) $usuarios = array();
+
+// Leitura da mensagem
+if ($destinatario){
+    $x = dbquery("
+    update chat c set
+        status = 'lido'
+    where
+        c.status <> 'lido' and
+        c.origem = " . mysqliEscaparTexto($campo_destino) . " and
+        c.{$campo_origem}_id = " . mysqliEscaparTexto($_SESSION['id']) . " and
+        c.{$campo_destino}_id = " . mysqliEscaparTexto($destinatario) . "
+    ;", 'affected');
+    $y = leituraNotificacao(null, null, [
+        'aluno_id' => (tipoLogado("aluno") ? $_SESSION['id'] : $destinatario),
+        'profissional_id' => (tipoLogado("profissional") ? $_SESSION['id'] : $destinatario),
+        'destinatario' => $_SESSION['id'],
+        'table' => 'chat',
+    ]);
+    if ($x || $y){
+        header('Location: '.url_param_add(null));
+        exit();
+    }
+}
 
 //monta o sql de consulta
 $query = array();
@@ -308,9 +332,9 @@ $resultado = dbquery($query);
 <?php } ?>
 
 <?php
-    if ($pendentes){
-        dbquery("update chat set status = 'lido' where id in (" . implode(',', $pendentes) . ");");
-    }
+    //if ($pendentes){
+        //dbquery("update chat set status = 'lido' where id in (" . implode(',', $pendentes) . ");");
+    //}
 
 } elseif (!$destinatario){ ?>
 <div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12" align="center"><h3><b>Selecione um destinatário ao lado.</b></h3></div>

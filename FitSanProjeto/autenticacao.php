@@ -336,7 +336,7 @@ function leituraNotificacao($id, $lido = null, $dados = null) {
     if ($dados !== null) {
         $where[] = "dados = " . mysqliEscaparTexto(serialize($dados));
     }
-    return dbquery("update notificacao set lido = " . mysqliEscaparTexto($lido) . " where " . implode(' and ', $where), false);
+    return dbquery("update notificacao set lido = " . mysqliEscaparTexto($lido) . " where " . implode(' and ', $where), 'affected');
 }
 
 //Esta função levará $ _SERVER ['REQUEST_URI'] e construirá uma trilha atual com base no caminho atual do usuário
@@ -531,6 +531,9 @@ function dbquery() {
     if ($saida === 'id') {
         if ($ret = mysqli_insert_id($conexao)) return $ret;
     }
+    if ($saida === 'affected') {
+        if (($ret = mysqli_affected_rows($conexao)) != -1) return $ret;
+    }
     if (!$saida) return $res;
 
     if (is_resource($res) || ($res instanceof mysqli_result)){
@@ -555,6 +558,9 @@ function dbquery() {
         case 'id':
             $ret = mysqli_insert_id($conexao);
             return ($ret ? $ret : $res);
+        case 'affected':
+            $ret = mysqli_affected_rows($conexao);
+            return (($ret != -1) ? $ret : $res);
         default:
             return $ret;
     }

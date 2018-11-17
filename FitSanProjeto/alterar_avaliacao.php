@@ -1,6 +1,7 @@
 <?php
 $pagina = "Alterar Informações adicionais";
 require_once './template/cabecalho.php';
+require_once './template/menu.php';
 
 $id_avaliacao = $_GET['id_avaliacao'];
 
