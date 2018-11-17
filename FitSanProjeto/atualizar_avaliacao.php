@@ -3,6 +3,12 @@ date_default_timezone_set('America/Sao_Paulo');
 
 require_once './autenticacao.php';
 
+
+$id_avaliacao = $_SESSION['update'] ;
+$usuario_passado = $_SESSION['usuario_passado'];
+
+  unset($_SESSION['update']);
+
 $now = new DateTime();
 $data_envio = $now->format('Y-m-d H:i:s');
 
@@ -35,19 +41,27 @@ if($aluno == null){
         header('Location: '.URL_SITE.'form_avaliacao.php');
     } else {
         
-   $query = "insert into `avaliacao` (`data`, `desempenho`, `frequencia`, `grupo_cumpriu`, `grupo_duvida`, `grupo_dificuldade`, `caso_sim`, `consideracoes`, `musculatura`, `lesao`, `queimacao`, `caimbras`, `tontura`, `consideracoes_corporal`, `profissional_id`, `aluno_id`) values "
+        if($usuario_passado==$aluno){
+   $query = "update avaliacao set `data`='$data_envio', desempenho='$desempenho', frequencia='$frequencia',  grupo_cumpriu='$cumpriu', grupo_duvida='$duvida', grupo_dificuldade='$dificuldade', caso_sim='$caso_sim', consideracoes='$consideracoes', musculatura='$musculatura', lesao='$lesao', queimacao='$queimacao', caimbras='$caimbras',  tontura='$tontura', consideracoes_corporal= '$consideracoes_corporal' where avaliacao.id =$id_avaliacao";
+  } else {
+  
+         $query = "insert into `avaliacao` (`data`, `desempenho`, `frequencia`, `grupo_cumpriu`, `grupo_duvida`, `grupo_dificuldade`, `caso_sim`, `consideracoes`, `musculatura`, `lesao`, `queimacao`, `caimbras`, `tontura`, `consideracoes_corporal`, `profissional_id`, `aluno_id`) values "
            . "('$data_envio', '$desempenho', '$frequencia', '$cumpriu', '$duvida', '$dificuldade', '$caso_sim', '$consideracoes', '$musculatura', '$lesao', '$queimacao', '$caimbras', '$tontura', '$consideracoes_corporal', '$_SESSION[id]', '$aluno')";
-
+     
+         $queryy = "delete from avaliacao where avaliacao.aluno_id=$usuario_passado and id =$id_avaliacao ";
+  }
 
 
            
-            mysqli_query($conexao, $query);          
+            mysqli_query($conexao, $query);        
+                 mysqli_query($conexao, $queryy);    
   
 $query2 = "select * from usuario where id = " . mysqliEscaparTexto($_SESSION['id']) . " and status = 'ativado'";
 $resultado = mysqli_query($conexao, $query2) or die_mysql($query2, __FILE__, __LINE__);
 $linha = mysqli_fetch_array($resultado) or die_mysql($query2, __FILE__, __LINE__);
 
-$_SESSION['mandou_avaliacao']= "Dados conferem!";
+ $_SESSION['atualizacao_avaliacao']= "Dados conferem!";
+
 //criarNotificacao('INFO',
 //    'Você tem uma Avaliação de '. $linha['nome'] . " " . $linha['sobrenome']  . "<br> <a href='form_receber_avaliacao.php'> Ver </a>",
 //  tipoLogado('aluno') ? $profissional_id : null,

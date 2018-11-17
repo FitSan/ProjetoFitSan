@@ -396,9 +396,22 @@ select * from `avaliacao` join vinculo on usuario.id=vinculo.aluno_id where prof
 
 select * from `avaliacao` ;
 
+delete from avaliacao where id ='3'; 
 
+delete from avaliacao where id =18 and avaliacao.aluno_id=5;
 
-update usuario set status='ativado' where id = 16
+update usuario set status='ativado' where id = 16;
+
+select * from avaliacao where id = '5';
+
+  Select usuario.id, usuario.nome, usuario.email from usuario inner join avaliacao on avaliacao.aluno_id = usuario.id  where avaliacao.id = 10;
+               
+   insert into `avaliacao` (`data`, `desempenho`, `frequencia`, `grupo_cumpriu`, `grupo_duvida`, `grupo_dificuldade`, `caso_sim`, `consideracoes`, `musculatura`, `lesao`, `queimacao`, `caimbras`, `tontura`, `consideracoes_corporal`, `profissional_id`, `aluno_id`) values "
+           . "('$data_envio', '$desempenho', '$frequencia', '$cumpriu', '$duvida', '$dificuldade', '$caso_sim', '$consideracoes', '$musculatura', '$lesao', '$queimacao', '$caimbras', '$tontura', '$consideracoes_corporal', '$_SESSION[id]', '$aluno');
+
+update avaliacao set `data`='$data_envio', desempenho='$desempenho', frequencia='$frequencia',  grupo_cumpriu='$cumpriu', grupo_duvida='$duvida', grupo_dificuldade='$dificuldade', caso_sim='$caso_sim', consideracoes='$consideracoes', musculatura='$musculatura', lesao='$lesao', queimacao='$queimacao', caimbras='$caimbras',  tontura='$tontura', consideracoes_corporal= '$consideracoes_corporal' where avaliacao.id =;
+
+update avaliacao set `data`='2018-11-16 17:37:11.000', desempenho='bomm', frequencia='dsfadf',  grupo_cumpriu='asdfa', grupo_duvida='adfa', grupo_dificuldade='asdf', caso_sim='adsf', consideracoes='asdfas', musculatura='asdf', lesao='asdf', queimacao='asdfadf', caimbras='asdfas',  tontura='sadfasdf', consideracoes_corporal= 'asdfad' where avaliacao.id =10 and aluno_id=;
 
 
 

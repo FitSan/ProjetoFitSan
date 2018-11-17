@@ -65,7 +65,22 @@ if (!tipoLogado("profissional")) {
                         unset($_SESSION['semnada']);
                     }
                     ?>
+                    
+                                                            <?php if (!empty($_SESSION['mandou_avaliacao'])) {
+                        ?> <div class="alert alert-success">
+                            <strong>Avalição enviada com sucesso.No histórico você pode exluir ou modificar sua avaliação.</strong>.
+                        </div> <?php
+                        unset($_SESSION['mandou_avaliacao']);
+                    }
+                    ?>
 
+                                                                                <?php if (!empty($_SESSION['atualizacao_avaliacao'])) {
+                        ?> <div class="alert alert-success">
+                            <strong>Avalição atualizada com sucesso.</strong>.
+                        </div> <?php
+                        unset($_SESSION['atualizacao_avaliacao']);
+                    }
+                    ?>
                     <ul class="nav nav-tabs">
 
                         <li class="active" ><a href="#performance" data-toggle="tab"> Performance </a></li>
@@ -79,47 +94,47 @@ if (!tipoLogado("profissional")) {
                                 <div class="col-lg-6">
                                     <br>Desempenho do aluno com as atividades <select class="form-control select2" name="desempenho" style="width: 100%;">                                  
                                         <option value="">(Selecione)</option>
-                                        <option value="bom">Bom</option>
-                                        <option value="excelente">Excelente</option>
-                                        <option value="médio">Médio</option>
-                                        <option value="mal">Mal</option>
-                                        <option value="péssimo">péssimo</option>
+                                        <option value="Bom">Bom</option>
+                                        <option value="Excelente">Excelente</option>
+                                        <option value="Médio">Médio</option>
+                                        <option value="Mal">Mal</option>
+                                        <option value="Péssimo">péssimo</option>
 
                                     </select> </div>
                                 <div class="col-lg-6">
                                     <br>Frequência do aluno com as atividades <select class="form-control select2" name="frequencia" style="width: 100%;">                                  
                                         <option value="">(Selecione)</option>
-                                        <option value="boa">Boa</option>
-                                        <option value="excelente">Excelente</option>
-                                        <option value="média">Média</option>
-                                        <option value="má">Má</option>
-                                        <option value="péssima">péssima</option>
+                                        <option value="Boa">Boa</option>
+                                        <option value="Excelente">Excelente</option>
+                                        <option value="Média">Média</option>
+                                        <option value="Má">Má</option>
+                                        <option value="Péssima">péssima</option>
                                     </select> </div>
 
                                 <div class="col-lg-6">
                                     <br>Cumpriu com os objetivos estipulados? <select class="form-control select2" name="grupo_cumpriu" style="width: 100%;">                                  
                                         <option value="">(Selecione)</option>
-                                        <option value="sim">Sim</option>
-                                        <option value="não">Não</option>
-                                        <option value="as vezes">As Vezes</option>
+                                        <option value="Sim">Sim</option>
+                                        <option value="Não">Não</option>
+                                        <option value="As vezes">As Vezes</option>
                                     </select> </div>
 
                                 <div class="col-lg-6">
                                     <br>O aluno tira dúvida com o professor? <select class="form-control select2" name="grupo_duvida" style="width: 100%;">                                  
                                         <option value="">(Selecione)</option>
-                                        <option value="sim">Sim</option>
-                                        <option value="não">Não</option>
-                                        <option value="as vezes">As Vezes</option>
+                                        <option value="Sim">Sim</option>
+                                        <option value="Não">Não</option>
+                                        <option value="As vezes">As Vezes</option>
 
                                     </select> </div>
 
-                                <ul class="nav nav-tabs"></ul>
+                            
 
                                 <div class="col-lg-6">
                                     <br>Apresentou algum tipo de dificuldade em uma determinada atividade?<select class="form-control select2" name="grupo_dificuldade" style="width: 100%;">                                  
                                         <option value="">(Selecione)</option>
-                                        <option value="sim">Sim</option>
-                                        <option value="não">Não</option>  
+                                        <option value="Sim">Sim</option>
+                                        <option value="Não">Não</option>  
 
                                     </select> </div>
 
@@ -129,7 +144,7 @@ if (!tipoLogado("profissional")) {
                                 </div>
 
                                 <hr>
-                                <ul class="nav nav-tabs"></ul>
+                               
 
                                 <div class="col-lg-6">
                                     <br> <strong>Considerações gerais</strong> <textarea name="consideracoes" class="form-control" rows="5" placeholder="Escreva aqui"></textarea> 
@@ -145,33 +160,33 @@ if (!tipoLogado("profissional")) {
                                 <div class="col-lg-6">
                                     <br>O aluno desenvolveu musculatura ? <select class="form-control select2" name="musculatura" style="width: 100%;">                                  
                                         <option value="">(Selecione)</option>
-                                        <option value="sim Pouca">Sim (Pouca)</option>
-                                        <option value="sim Muita">Sim (Muita)</option>
-                                        <option value="não">Não</option>             
+                                        <option value="Sim Pouca">Sim (Pouca)</option>
+                                        <option value="Sim Muita">Sim (Muita)</option>
+                                        <option value="Não">Não</option>             
                                     </select> </div>
                                 <div class="col-lg-6">
                                     <br>O aluno sofreu alguma lesão? <select class="form-control select2" name="lesao" style="width: 100%;">                                  
                                         <option value="">(Selecione)</option>
-                                        <option value="sim">Sim</option>
-                                        <option value="nao">Não</option> 
+                                        <option value="Sim">Sim</option>
+                                        <option value="Não">Não</option> 
                                     </select> </div>
                                 <div class="col-lg-6">
                                     <br>O aluno já sentiu queimação? <select class="form-control select2" name="queimacao" style="width: 100%;">                                  
                                         <option value="">(Selecione)</option>
-                                        <option value="sim">Sim</option>
-                                        <option value="nao">Não</option> 
+                                        <option value="Sim">Sim</option>
+                                        <option value="Não">Não</option> 
                                     </select> </div>
                                 <div class="col-lg-6">
                                     <br>O aluno já sentiu caimbras? <select class="form-control select2" name="caimbras" style="width: 100%;">                                  
                                         <option value="">(Selecione)</option>
-                                        <option value="sim">Sim</option>
-                                        <option value="nao">Não</option> 
+                                        <option value="Sim">Sim</option>
+                                        <option value="Não">Não</option> 
                                     </select> </div>
                                 <div class="col-lg-6">
                                     <br>O aluno perdeu seu equilíbrio por causa de tontura? <select class="form-control select2" name="tontura" style="width: 100%;">                                  
                                         <option value="">(Selecione)</option>
-                                        <option value="sim">Sim</option>
-                                        <option value="nao">Não</option> 
+                                        <option value="Sim">Sim</option>
+                                        <option value="Não">Não</option> 
                                     </select> </div>
 
                                 <hr>

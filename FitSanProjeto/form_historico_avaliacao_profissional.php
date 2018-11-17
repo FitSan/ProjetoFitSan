@@ -66,8 +66,13 @@ if (!tipoLogado("profissional")) {
                                         <button type="button" class="btn btn-primary btn-flat"> Conferir </button>
                                     </a>
 
-
+                                <a href="<?=URL_SITE?>excluir_avaliacao.php?id_avaliacao=<?php echo $id_avaliacao;?>">  
+                                        <button type="button" class="btn btn-primary btn-flat"> Excluir </button>
+                                    </a>
                                 
+                                   <a href="<?=URL_SITE?>alterar_avaliacao.php?id_avaliacao=<?php echo $id_avaliacao;?>">  
+                                        <button type="button" class="btn btn-primary btn-flat"> Alterar </button>
+                                    </a>
 
 
                             </div>
