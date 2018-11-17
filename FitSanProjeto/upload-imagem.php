@@ -32,18 +32,21 @@ if (!@is_writable($tempdir)) mkdir($tempdir, 0777, true);
 
 switch ($modo){
     case 'crop':
-	require_once('php/m2brimagem.class.php');
-        $arquivo = $_POST['imagem'];
+        require_once('php/m2brimagem.class.php');
+        $temp = $_POST['imagem'];
+        $info = pathinfo($arquivo);
+        $arquivo = str_replace('.temp.', '.', $temp);
+        $temp = ($tempdir . $temp);
         $caminho = ($tempdir . $arquivo);
         $url = ($tempurl . $arquivo);
-	$oImg = new m2brimagem($caminho);
-	if ($oImg->valida() != 'OK'){
+        $oImg = new m2brimagem($temp);
+        if ($oImg->valida() != 'OK'){
             $erro = 'Imagem inválida.';
             break;
-	}
-        if (!empty($_POST['redim'])) $oImg->redimensiona('500', '', '');
+        }
         $oImg->posicaoCrop($_POST['x'], $_POST['y']);
         $oImg->redimensiona($_POST['w'], $_POST['h'], 'crop');
+        if ($_POST['w'] > 256) $oImg->redimensiona('256', '', '');
         $oImg->grava($caminho);
         break;
     default:
@@ -60,6 +63,8 @@ switch ($modo){
             break;
         }
         $arquivo = strtolower(preg_replace('{[^a-z0-9_\-\.]+}i', '_', $_FILES['imagem']['name']));
+        $info = pathinfo($arquivo);
+        $arquivo = ($info['filename'] . '.temp.' . $info['extension']);
         $caminho = ($tempdir . $arquivo);
         $url = ($tempurl . $arquivo);
         if (!move_uploaded_file($_FILES['imagem']['tmp_name'], $caminho)){

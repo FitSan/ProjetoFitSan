@@ -6,6 +6,7 @@ if ($tipo == 'aluno') {
     $pagina = "Alunos";
 }
 require_once './template/cabecalho.php';
+require_once './template/menu.php';
 
 //$pagina = "Vínculos";
 

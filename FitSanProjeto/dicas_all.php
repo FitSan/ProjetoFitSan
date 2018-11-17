@@ -31,7 +31,7 @@ while ($linha = mysqli_fetch_array($resultado)) {
                         <?= $linha['profissional_nome'] ?>
                         <?php
                     }
-                    if ($linha['profissional_id'] == $_SESSION['id']) {
+                    if ($linha['profissional_id'] == $_SESSION['id'] || tipoLogado('admin')) {
                         ?>
 
 

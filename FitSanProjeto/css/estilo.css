@@ -124,3 +124,7 @@
 .prev:hover, .next:hover {
   background-color: rgba(0,0,0,0.8);
 }
+
+#modal-upload-imagem #modal-upload-imagem-recortar {position:relative;}
+#modal-upload-imagem #modal-upload-imagem-img {position:absolute;visibility:hidden;opacity:0;}
+#modal-upload-imagem #modal-upload-imagem-miniatura {position:relative;max-width:100%;height:auto;}

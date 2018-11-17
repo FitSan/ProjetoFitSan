@@ -1,9 +1,7 @@
 <?php
-require_once './template/cabecalho.php'; 
 $pagina = 'Configurar Perfil';
-
-require_once './template/cabecalho.php';
-
+require_once './template/cabecalho.php'; 
+require_once './template/menu.php';
 
 $query = "select * from usuario where id='" . $_SESSION['id'] . "'";
 $resultado = mysqli_query($conexao, $query) or die_mysql($query, __FILE__, __LINE__);

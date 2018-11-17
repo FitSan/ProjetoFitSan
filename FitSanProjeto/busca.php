@@ -1,6 +1,7 @@
 <?php
 $pagina = "Busca";
 require_once './template/cabecalho.php';
+require_once './template/menu.php';
 
 if (isset($_POST['busca'])){
     $busca = $_POST['busca'];

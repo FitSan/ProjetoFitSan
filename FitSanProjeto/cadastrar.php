@@ -1,7 +1,7 @@
 <?php
 
 require_once './autenticacao.php';
-include './bancodedados/conectar.php';
+
 
 require_once './PHPMailer-6.0.5/src/PHPMailer.php';
 require_once './PHPMailer-6.0.5/src/Exception.php';
