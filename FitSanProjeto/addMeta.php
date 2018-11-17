@@ -69,7 +69,7 @@ if ($peso_final <= $peso_inicial && $tipo == 'GANHAR' || $peso_inicial <= $peso_
 if ($erro) {
     header('Location: '.URL_SITE.'metas.php');
 } else {
-    $verificar_metas = "select * from meta where usuario_id=" . $_SESSION['id'] . " and status='ativa'";
+    $verificar_metas = "select * from meta where usuario_id=" . $_SESSION['id'] . " and status='ativa'";//aqui vai
     $resultado = mysqli_query($conexao, $verificar_metas);
     if (mysqli_fetch_array($resultado) == null) {
         $query = "insert into meta (tipo, data_inicial, data_final, peso_inicial, peso_final, usuario_id) values ('$tipo', '$data_inicial', '$data_final', '$peso_inicial', '$peso_final', '$_SESSION[id]')";

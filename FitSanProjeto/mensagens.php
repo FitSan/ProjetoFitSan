@@ -47,7 +47,7 @@ if ($acao == 'incluir'){
             )
         ");
         criarNotificacao('INFO',
-            'Você tem uma nova mensagem de ' . $_SESSION['nome'] . " " . $_SESSION['sobrenome']  . '<br><a href="'.URL_SITE.'mensagens.php?id='.$_SESSION['id'].'">Lêr</a>',
+            'Você tem uma nova mensagem de ' . $_SESSION['nome'] . " " . $_SESSION['sobrenome']  . '<br><a href="'.URL_SITE.'mensagens.php?destinatario='.$_SESSION['id'].'">Lêr</a>',
             tipoLogado('aluno') ? $usuario : null,
             tipoLogado('profissional') ? $usuario : null,
             [
@@ -196,6 +196,7 @@ $resultado = dbquery($query);
                 </div>
             </div>
             
+<?php if ($destinatario){ ?>
             <div class="box box-solid">
                 <div class="box-header with-border">
                     <h3 class="box-title">Mensagem</h3>
@@ -217,6 +218,7 @@ $resultado = dbquery($query);
                     </div>
                 </div>
             </div>
+<?php } ?>
     </div>
         <div class="col-md-9">
             <div class="box box-primary">

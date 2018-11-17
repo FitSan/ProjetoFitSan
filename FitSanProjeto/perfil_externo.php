@@ -429,9 +429,9 @@ if ($dataanterior){
                                                                             <th>Avanço meta</th>
                                                                         </tr>                      
                                                                         <?php
-                                                                        $query_meta = "select EXTRACT(YEAR_MONTH FROM data_add) as month, MAX(dados_meta.data_add) as max_data_add, dados_meta.data_add from meta join dados_meta on meta.id = dados_meta.meta_id"
-                                                                            . " where meta.id=" . $linha['id'] . " group by EXTRACT(YEAR_MONTH FROM data_add)";
-                                                                        $resultado_meta = mysqli_query($conexao, $query_meta);
+                                                                        $query_dados = "select EXTRACT(YEAR_MONTH FROM data_add) as month, MAX(dados_meta.data_add) as max_data_add from meta join dados_meta on meta.id = dados_meta.meta_id"
+                                                                     . " where meta.id=" . $linha['id'] . " group by EXTRACT(YEAR_MONTH FROM data_add)";
+                                                                        $resultado_meta = mysqli_query($conexao, $query_dados);
                                                                         while ($linha_meta = mysqli_fetch_array($resultado_meta)) {
                                                                             $query_max = "select peso_add - meta.peso_inicial as peso_inicial_dif, peso_add - meta.peso_final as meta_dif from dados_meta join meta on dados_meta.meta_id = meta.id where data_add='$linha_meta[max_data_add]' and meta_id=$linha[id]";
                                                                             $resultado_max = mysqli_query($conexao, $query_max);
@@ -456,7 +456,7 @@ if ($dataanterior){
                                                                             ?>
 
                                                                             <tr>
-                                                                                <td><?= ($anos) ? date('M/Y', dataParse($linha_meta['data_add'])) : date('M', dataParse($linha_meta['data_add'])) ?></td>
+                                                                                <td><?= ($anos) ? date('M/Y', dataParse($linha_dados['max_data_add'])) : date('M', dataParse($linha_dados['max_data_add'])) ?></td>                                      
                                                                                 <td><?= ($peso_inicial_dif > 0) ? '+' : '' ?><?= ($peso_inicial_dif == 0) ? '<b style="color: blue">' .'0kg' : $peso_inicial_dif . 'kg' ?><?=($peso_inicial_dif == 0) ? '</b>' : '' ?></td>
                                                                                 <td><?= ($meta_dif == 0) ? '<i class="fa fa-check" style="font-size: 18px; color: green;"></i>' : $meta_dif . 'kg' ?></td>
                                                                             </tr>
