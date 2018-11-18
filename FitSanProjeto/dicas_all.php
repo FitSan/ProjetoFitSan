@@ -82,8 +82,8 @@ while ($linha = mysqli_fetch_array($resultado)) {
                                 } if ($img) {                                
                                     if ($count > 1) {
                                         ?>
-                                        <a class="prev" onclick="plusSlides(-1, <?=$id ?>)">&#10094;</a>
-                                        <a class="next" onclick="plusSlides(1, <?=$id ?>)">&#10095;</a>
+                                        <a class="menos_img" onclick="plusSlides(-1, <?=$id ?>)">&#10094;</a>
+                                        <a class="mais_img" onclick="plusSlides(1, <?=$id ?>)">&#10095;</a>
                                     <?php } ?>
                                 </section>
                             <?php } ?>                                                

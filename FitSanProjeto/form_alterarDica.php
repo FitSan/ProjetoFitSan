@@ -12,6 +12,16 @@ $dica_id = $_GET['id'];
 $query_dica = "select * from dica where id = $dica_id";
 $resultado_dica = mysqli_query($conexao, $query_dica);
 $linha_dica = mysqli_fetch_array($resultado_dica);
+
+$query_verificar = "select * from dica where id=".mysqliEscaparTexto($dica_id)." and profissional_id=".$_SESSION['id'];
+$resultado_verificar = mysqli_query($conexao, $query_verificar);
+if(mysqli_num_rows($resultado_verificar)==0){
+    $query_verificar2 = "select MAX(id) as max_id from dica where profissional_id=".$_SESSION['id'];
+    $resultado_verificar2 = mysqli_query($conexao, $query_verificar2);
+    $linha_verificar2 = mysqli_fetch_array($resultado_verificar2);    
+    header('Location: ' . URL_SITE . 'alterar_dica.php?erro=1');
+}
+
 ?>
 
 <div class="content-wrapper" onload="viewUpload()">

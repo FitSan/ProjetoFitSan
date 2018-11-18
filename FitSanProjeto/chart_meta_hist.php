@@ -4,11 +4,11 @@ require_once './autenticacao.php';
 if(isset($_POST['meta_id'])){
     $query_meta_id = "select *, MONTH(data_final) as mes_final from meta where id=" . mysqliEscaparTexto($_POST['meta_id']);
 }else{
-    $query_meta_id = "select *, MONTH(data_final) as mes_final from meta where id=" . htmlspecialchars($linha['id']);
+    $query_meta_id = "select *, MONTH(data_final) as mes_final from meta where id=" . $linha['id'];
 }
 $resultado_meta_id = mysqli_query($conexao, $query_meta_id);
 $linha_meta_id = mysqli_fetch_array($resultado_meta_id);
-$query_anos = "select EXTRACT(YEAR FROM data_add) as anos from dados_meta join meta on dados_meta.meta_id = meta.id where meta.id=" . htmlspecialchars($linha_meta_id['id']) . " group by anos";
+$query_anos = "select EXTRACT(YEAR FROM data_add) as anos from dados_meta join meta on dados_meta.meta_id = meta.id where meta.id=" . $linha_meta_id['id'] . " group by anos";
 $resultado_anos = mysqli_query($conexao, $query_anos);
 if (mysqli_num_rows($resultado_anos) > 1) {
     $anos = true;

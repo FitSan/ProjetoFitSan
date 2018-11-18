@@ -90,7 +90,7 @@ require_once './template/menu.php';
             <div class="row justify-content-sm-center my-4">
                 <div class="col-xs-12 col-sm-4 col-md-4">
                     <div class="card mb-5">
-                        <img class="card-img-top img-responsive"  src="<?= URL_SITE ?>img/Planilha.png" alt="Planilha">
+                        <img class="card-img-top img-responsive"  src="<?= URL_SITE ?>img/Planilha.png" alt="Planilha" style="width: 100%">
                         <div class="card-body">
                             <h4 class="card-title">Planilha de Treino</h4>
                             <h6 class="card-subtitle mb-2 text-muted">Profissional faz, o aluno segue.</h6>
@@ -101,7 +101,7 @@ require_once './template/menu.php';
 
                 <div class="col-xs-12 col-sm-4 col-md-4">
                     <div class="card mb-5">
-                        <img class="card-img-top img-responsive"  src="<?= URL_SITE ?>img/avaliacao.png" alt="Avaliacao">
+                        <img class="card-img-top img-responsive"  src="<?= URL_SITE ?>img/avaliacao.png" alt="Avaliacao" style="width: 100%">
                         <div class="card-body">
                             <h4 class="card-title">Avaliações</h4>
                             <h6 class="card-subtitle mb-2 text-muted">Análise individual para cada aluno.</h6>
@@ -112,7 +112,7 @@ require_once './template/menu.php';
 
                 <div class="col-xs-12 col-sm-4 col-md-4">
                     <div class="card mb-5">
-                        <img class="card-img-top img-responsive"  src="<?= URL_SITE ?>img/dicas.png" alt="Dicas">
+                        <img class="card-img-top img-responsive"  src="<?= URL_SITE ?>img/dicas.png" alt="Dicas" style="width: 100%">
                         <div class="card-body">
                             <h4 class="card-title">Dicas</h4>
                             <h6 class="card-subtitle mb-2 text-muted">Crie dicas para seus alunos.</h6>
@@ -143,10 +143,9 @@ require_once './template/menu.php';
 
 
     <!--Dicas-->
-    <div style="margin: 0 auto; width: 80%;">      
-        <?php include 'dicas_all.php'; ?>  
+    <div style="margin: 0 auto; width: 80%;" id="content">      
     </div>  
-
+    <div id='loading' style="margin: 0 auto; width: 50px;"></div>
     <?php
     include './template/rodape_especial.php';
     ?>

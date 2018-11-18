@@ -38,10 +38,10 @@ include_once './template/menu.php';
           shuffle($video_array);
           $video = $video_array[0];
           ?>
-
-          <iframe width='560' height='315' src='<?php echo $video_array[rand(0, (count($video_array) - 1))]; ?>
-                                               ' frameborder='0'  allowfullscreen></iframe>
-
+          <div class="div_erro404">
+          <div class="embed-container erro_404"><iframe width='560' height='315' src='<?php echo $video_array[rand(0, (count($video_array) - 1))]; ?>
+                                               ' frameborder='0'  allowfullscreen></iframe></div>
+          </div>   
           </div>
         <!-- /.error-content -->
       </div>

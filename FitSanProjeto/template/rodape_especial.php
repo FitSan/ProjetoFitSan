@@ -1111,5 +1111,39 @@
         });
     });
 </script>
+<script type="text/javascript">
+        //variavel para controle de registros retornados
+        var pagina = 0;
+        //function carrega
+        function carrega(){
+            $('#loading').html("<img class='img img-responsive' src='img/loader.gif'/>").fadeIn('fast');
+            $.ajax({
+                type: "POST",
+                url: "loadAjax.php",
+                data: "page="+pagina,//variavel passada via post 
+                cache: false,
+                success: function(html){
+                    $('#loading').fadeOut('fast');
+                    $("#content").append(html);//mostra resultado na div content
+                },
+                error:function(html){
+                    $('#loading').html("erro...").fadeIn('fast');
+                }
+            });
+        };
+        //chama minha funcao ao carregar a pagina
+        $(document).ready(function(){
+            carrega();
+        });
+        //funcao de controle do scroll da pagina, na qual ela chega ao fim é acionada chamando
+        //minha function carrega novamente para trazer mais dados dinamicamente
+        $(window).scroll(function(){
+             
+            if($(window).scrollTop() + $(window).height() >= $(document).height()){
+                pagina += 1;
+                carrega();
+            };
+        });
+    </script>
 </body>
 </html>

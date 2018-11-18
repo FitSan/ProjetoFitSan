@@ -18,7 +18,7 @@ if (mysqli_num_rows($retorno_all) === 0) {
 } else {
     while ($linha = mysqli_fetch_array($retorno_all)) {
         setlocale(LC_ALL, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
-        $query_meses = "select MAX(data_add) as data_add, EXTRACT(YEAR_MONTH FROM data_add) as meses from dados_meta where meta_id= " . htmlspecialchars($linha['id']) . " group by meses order by meses desc";
+        $query_meses = "select MAX(data_add) as data_add, EXTRACT(YEAR_MONTH FROM data_add) as meses from dados_meta where meta_id= " . $linha['id'] . " group by meses order by meses desc";
         $resultado_meses = mysqli_query($conexao, $query_meses) or die_mysql($query_meses, __FILE__, __LINE__);
         ?>
         <ul class="timeline timeline-inverse col-12">
@@ -70,16 +70,16 @@ if (mysqli_num_rows($retorno_all) === 0) {
                                     . " where meta.id=" . htmlspecialchars($linha['id']) . " group by EXTRACT(YEAR_MONTH FROM data_add)";
                                 $resultado_dados = mysqli_query($conexao, $query_dados);
                                 while ($linha_dados = mysqli_fetch_array($resultado_dados)) {
-                                    $query_max = "select (peso_add - meta.peso_inicial) as peso_inicial_dif, peso_add - meta.peso_final as meta_dif from dados_meta join meta on dados_meta.meta_id = meta.id where data_add='".htmlspecialchars($linha_dados['max_data_add'])."' and meta_id=$linha[id]";
+                                    $query_max = "select (peso_add - meta.peso_inicial) as peso_inicial_dif, peso_add - meta.peso_final as meta_dif from dados_meta join meta on dados_meta.meta_id = meta.id where data_add='".$linha_dados['max_data_add']."' and meta_id=$linha[id]";
                                     $resultado_max = mysqli_query($conexao, $query_max);
                                     $linha_max = mysqli_fetch_array($resultado_max);
-                                    $explode = explode('.', htmlspecialchars($linha_max['meta_dif']));
+                                    $explode = explode('.', $linha_max['meta_dif']);
                                     if ($explode[1]!==0){
                                        $meta_dif = $explode[0];
                                     }else{
                                         $meta_dif = htmlspecialchars($linha_max['meta_dif']);
                                     }
-                                    $explode = explode('.', htmlspecialchars($linha_max['peso_inicial_dif']));
+                                    $explode = explode('.', $linha_max['peso_inicial_dif']);
                                     if ($explode[1]!==0){
                                        $peso_inicial_dif = $explode[0];
                                     }else{
