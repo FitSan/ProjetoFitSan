@@ -2,8 +2,6 @@
 
 require_once './autenticacao.php';
 
-ini_set("display_errors", true);
-
 $email = $_POST['e-mail'];
 $senha = $_POST['senha'];
 

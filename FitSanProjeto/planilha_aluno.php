@@ -10,14 +10,14 @@ if (!tipoLogado("aluno")) {
 
 if (isset($_GET['notificacao'])){
     echo leituraNotificacao($_GET['notificacao']);
-    echo '<script>window.location = ' . json_encode(url_param_add(url_current(), 'notificacao', null)). ';</script>';
+    echo '<script>window.location = ' . json_encode(url_param_add(null, 'notificacao', null)). ';</script>';
     exit;
 }
 
 // Iniciando variaveis
-$acao = (!empty($_GET['acao']) ? $_GET['acao'] : 'consultar'); //obtendo ação
+$acao = (!empty($_GET['acao']) ? $_GET['acao'] : null); //obtendo ação
 $id = (!empty($_GET['id']) ? $_GET['id'] : null); //obtendo id de alteração
-$profissional = (!empty($_GET['profissional']) ? $_GET['profissional'] : ''); //obtendo profissional atual
+$profissional = (!empty($_GET['profissional']) ? $_GET['profissional'] : null); //obtendo profissional atual
 $erros = array();
 
 //referente a inclusão/alteração no banco.
@@ -31,7 +31,7 @@ if ($acao == 'checkin'){
         foreach ((array)$ativ_feita as $check){
             list($planilha_aluno_id, $planilha_tabela_id, $exercicio, $grupo) = explode('|', $check, 4);
             if ($anterior != $grupo){
-                $query = "insert into planilha_aluno_feito ( planilha_aluno_id, datahora) values (" . mysqliEscaparTexto($planilha_aluno_id) . ", now() )";
+                $query = "insert into planilha_aluno_feito ( planilha_aluno_id, datahora) values (" . mysqliEscaparTexto($planilha_aluno_id) . ", ".mysqliEscaparTexto(time(), 'datetime')." )";
                 mysqli_query($conexao, $query) or die_mysql($query, __FILE__, __LINE__);
                 $id = mysqli_insert_id($conexao);
                 $anterior = $grupo;
@@ -39,7 +39,7 @@ if ($acao == 'checkin'){
             $query = "insert into planilha_aluno_exercicio ( planilha_feito_id, planilha_tabela_id, exercicio) values (" . mysqliEscaparTexto($id) . ", " . mysqliEscaparTexto($planilha_tabela_id) . ", " . mysqliEscaparTexto($exercicio) . "  )";
             mysqli_query($conexao, $query) or die_mysql($query, __FILE__, __LINE__);
         }
-        header('Location: ' .URL_SITE.basename(__FILE__));
+        header('Location: ' .url_param_add(null, array('acao' => null, 'id' => null)));
         exit();
     }
 } elseif ($acao == 'excluir') {
@@ -49,7 +49,7 @@ if ($acao == 'checkin'){
         $query = "delete from planilha_aluno_feito where id = " . mysqliEscaparTexto($id);
         mysqli_query($conexao, $query) or die_mysql($query, __FILE__, __LINE__);
     }
-    header('Location: '.URL_SITE.basename(__FILE__));
+    header('Location: '.url_param_add(null, array('acao' => null, 'id' => null)));
     exit();
 }
 
@@ -107,12 +107,12 @@ $resultado = dbquery($query);
     </section><br>
     <div class="box"><br>
         <form action="" method="GET"><select class="form-control" name="profissional" onchange="this.form.submit();" onkeyup="this.form.submit();">
-                <option value="">(Selecione um profissional)</option>
+            <option value="">(Selecione um profissional)</option>
 <?php foreach ($profissionais as $value){ ?>
-                <option value="<?php echo htmlspecialchars($value['id']); ?>"<?php if ($value['id'] == $profissional) echo ' selected="selected"' ?>><?php echo htmlspecialchars($value['nome'] . ' ' . $value['sobrenome']); ?></option>
+            <option value="<?php echo htmlspecialchars($value['id']); ?>"<?php if ($value['id'] == $profissional) echo ' selected="selected"' ?>><?php echo htmlspecialchars($value['nome'] . ' ' . $value['sobrenome']); ?></option>
 <?php } ?>
         </select></form>
-        <div class="box-header"><form class="form-horizontal" action="<?=URL_SITE?><?php echo basename(__FILE__) ?>?acao=checkin" method="POST" enctype="multipart/form-data">
+        <div class="box-header"><form class="form-horizontal" action="<?=url_param_add(null, array('acao' => 'checkin', 'profissional' => $profissional)) ?>" method="POST" enctype="multipart/form-data">
             <h3 class="box-title">Prescrição de treino</h3>
             <br><br>
 <!--            <div class="box-body" >-->

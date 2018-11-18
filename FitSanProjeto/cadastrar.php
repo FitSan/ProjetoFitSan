@@ -87,7 +87,7 @@ if ($contSenha < 8) {
             $_SESSION['erro_tipo_usuario'] = $tipo_usuario;
             header('Location: '.URL_SITE.'form_cadastrar.php');
         } else {
-            $query = "insert into usuario (nome, sobrenome, senha, email, tipo_id, status, datahora) values (".mysqliEscaparTexto($nome).",".mysqliEscaparTexto($sobrenome).",".mysqliEscaparTexto($senha_hash).",".mysqliEscaparTexto($email).",".mysqliEscaparTexto($tipo_usuario).", 'desativado', now())";
+            $query = "insert into usuario (nome, sobrenome, senha, email, tipo_id, status, datahora) values (".mysqliEscaparTexto($nome).",".mysqliEscaparTexto($sobrenome).",".mysqliEscaparTexto($senha_hash).",".mysqliEscaparTexto($email).",".mysqliEscaparTexto($tipo_usuario).", 'desativado', ".mysqliEscaparTexto(time(), 'datetime').")";
             if (dbquery($query, false)){
                 $_SESSION['cadastrado'] = "Sucesso";
                 if (!empty($email)){ 

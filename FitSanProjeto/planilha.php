@@ -42,7 +42,7 @@ if (($acao == 'incluir') || ($acao == 'alterar')){
             $query = "update planilha_tabela set grupo = " . mysqliEscaparTexto($grupo) . ", musculo_cardio_id = " . mysqliEscaparTexto($grupo_muscular) . ", exercicio_id = " . mysqliEscaparTexto($exercicio) . ", series = " . mysqliEscaparTexto($series) . ", repeticoes = " . mysqliEscaparTexto($repeticoes) . ", carga = " . mysqliEscaparTexto($carga) . ", intervalo = " . mysqliEscaparTexto($intervalo) . ", tempo = " . mysqliEscaparTexto($tempo) . " where id = " . mysqliEscaparTexto($id) . " and profissional_id = " . mysqliEscaparTexto($_SESSION['id']);
             mysqli_query($conexao, $query) or die_mysql($query, __FILE__, __LINE__);
         }
-        header('Location: ' .URL_SITE.basename(__FILE__));
+        header('Location: ' .url_param_add(null, array('acao' => null, 'id' => null)));
         exit();
     }
 } elseif ($acao == 'excluir') {
@@ -50,7 +50,7 @@ if (($acao == 'incluir') || ($acao == 'alterar')){
         $query = "delete from planilha_tabela where id= " . mysqliEscaparTexto($id) . " and profissional_id = " . mysqliEscaparTexto($_SESSION['id']);
         mysqli_query($conexao, $query) or die_mysql($query, __FILE__, __LINE__);
     }
-    header('Location: ' .URL_SITE.basename(__FILE__));
+    header('Location: ' .url_param_add(null, array('acao' => null, 'id' => null)));
     exit();
 }
 
@@ -112,7 +112,7 @@ $resultado = mysqli_query($conexao, $query) or die_mysql($query, __FILE__, __LIN
                     </ul>
                 </div>
 <?php } ?>
-            <form class="form-horizontal" action="<?=URL_SITE?><?php echo basename(__FILE__) ?>?acao=<?= !empty($id) ? ('alterar&id=' . $id) : 'incluir' ?>" method="POST" enctype="multipart/form-data">
+            <form class="form-horizontal" action="<?=url_param_add(null, array('acao' => (!empty($id) ? 'alterar' : 'incluir'), 'id' => $id)) ?>" method="POST" enctype="multipart/form-data">
             <div class="table" id="adicionar_novo">
                 <div class="col-lg-1">
                  <input type="text" class="form-control" name= "grupo" placeholder="Grupo" value="<?php echo htmlentities($linha_alterar['grupo'])?>">   

@@ -44,7 +44,7 @@ function enviarPlanilha(){
             criarNotificacao("OK", "Uma planilha foi enviada à você.".PHP_EOL.'Acesse <a href="'.URL_SITE.'planilha_aluno.php?id='.$id.'">'.htmlspecialchars($titulo).'</a>', null, $aluno);
         }
     } else {
-        $query = "update planilha set datahora = now()";
+        $query = "update planilha set datahora = " . mysqliEscaparTexto(time(), 'datetime');
         if (!empty($titulo)) $query .= ", titulo = " . mysqliEscaparTexto($titulo);
         $query .= " where id = " . mysqliEscaparTexto($id);
         if (!mysqli_query($conexao, $query)) return array('status' => 'error', 'mensagem' => ('ERRO: '.mysqli_error($conexao).PHP_EOL.$query.PHP_EOL.print_r(debug_backtrace(), true)));

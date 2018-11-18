@@ -1,6 +1,4 @@
 <?php
-
-date_default_timezone_set('America/Sao_Paulo');
 require_once 'autenticacao.php';
 
 $id = mysqli_escape_string($conexao, $_POST['id']); // TODO: escape de caracteres estranhos dentro do id mudar todos que tenham post ou get.

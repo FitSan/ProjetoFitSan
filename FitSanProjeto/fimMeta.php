@@ -25,7 +25,7 @@ if ($diff_add < 0) {
     $_SESSION['erro_data'] = 'Meta não pode ser finalizada! Meta possui dados posteriores a data de hoje!';
     header('Location: ' . URL_SITE . 'metas.php');
 } else {
-    $query = "update meta set status='finalizada', data_final=now() where id=$id_meta";
+    $query = "update meta set status='finalizada', data_final=".mysqliEscaparTexto(time(), 'datetime')." where id=$id_meta";
     if (!mysqli_query($conexao, $query)) {
         $_SESSION['erro'] = 'Meta não finalizada! Falha na conexão.';
         header('Location: ' . URL_SITE . 'metas.php');

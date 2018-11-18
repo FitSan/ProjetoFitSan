@@ -9,10 +9,20 @@ ini_set('display_errors', true);
 ini_set('default_charset', 'utf-8');
 ini_set('default_mimetype', 'text/html');
 
-date_default_timezone_set('America/Sao_Paulo') or date_default_timezone_set('Brazil/East') or date_default_timezone_set('Etc/GMT-3');
+date_default_timezone_set('America/Sao_Paulo') or
+    date_default_timezone_set('Brazil/East') or
+    date_default_timezone_set('Etc/GMT-3')
+;
 setlocale(LC_ALL, 'pt_BR.iso-8859-1', 'pt_BR.utf-8', 'pt_BR', 'Portuguese_Brazil.1252', 'portuguese', 'ptb_ptb', 'ptb');
 
 require_once './bancodedados/conectar.php';
+
+$conexao = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_BASE, DB_PORT);
+mysqli_query($conexao, "SET NAMES 'utf8mb4' COLLATE 'utf8mb4_unicode_ci'");
+mysqli_query($conexao, "SET time_zone = '".date_default_timezone_get()."'") or
+    mysqli_query($conexao, "SET time_zone = '".date('e')."'") or
+    mysqli_query($conexao, "SET @@global.time_zone = '".date('P')."'")
+;
 
 /**
  * 
@@ -99,7 +109,7 @@ function calculaidade($datanasc) {
 }
 
 function verificarMeta() {
-    $sql_meta = "select * from meta where status='ativa' and usuario_id=" . $_SESSION['id'] . " and data_final<=CURRENT_DATE()";
+    $sql_meta = "select * from meta where status='ativa' and usuario_id=" . $_SESSION['id'] . " and data_final<=".mysqliEscaparTexto(time(), 'datetime');
     global $conexao;
     $resultado_meta = mysqli_query($conexao, $sql_meta);
     $linha_meta = mysqli_fetch_array($resultado_meta);
@@ -237,7 +247,7 @@ function criarNotificacao($status, $texto, $profissional_id = null, $aluno_id = 
             aluno_id, 
             dados
         ) value (
-            now(),
+            " . mysqliEscaparTexto(time(), 'datetime') . ",
             'N', 
             " . mysqliEscaparTexto($status) . ", 
             " . mysqliEscaparTexto($texto) . ", 

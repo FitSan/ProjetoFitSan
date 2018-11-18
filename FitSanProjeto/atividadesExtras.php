@@ -44,7 +44,7 @@ if (($acao == 'incluir') || ($acao == 'alterar')){
     }
     if (empty($erros) && !empty($titulo) && !empty($texto) && !empty($exercicios)) {
         if ($id === null) {
-            $query = "insert into ativ_extras ( datahora, titulo , texto, aluno_id) values ( now(), " . mysqliEscaparTexto($titulo) . ", " . mysqliEscaparTexto($texto) . ", " . mysqliEscaparTexto($_SESSION['id']) . " )";
+            $query = "insert into ativ_extras ( datahora, titulo , texto, aluno_id) values ( ".mysqliEscaparTexto(time(), 'datetime').", " . mysqliEscaparTexto($titulo) . ", " . mysqliEscaparTexto($texto) . ", " . mysqliEscaparTexto($_SESSION['id']) . " )";
             mysqli_query($conexao, $query) or die_mysql($query, __FILE__, __LINE__);
             $id = mysqli_insert_id($conexao);
         } else {

@@ -663,3 +663,7 @@ ALTER TABLE `FitSan`.`vinculo` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_
 truncate table notificacao;
 truncate table `chat`;
 select * from `chat`;
+
+
+SELECT * FROM mysql.time_zone_name WHERE Name LIKE '%Brazil%';
+SET time_zone='America/Sao_Paulo';
