@@ -1132,9 +1132,41 @@
                 }
             });
         };
+        function carregaBusca(){
+        $('#loading_busca_user').html("<img class='img img-responsive' src='img/loader.gif'/>").fadeIn('fast');
+        $('#loading_busca_dica').html("<img class='img img-responsive' src='img/loader.gif'/>").fadeIn('fast');
+            $.ajax({
+                type: "POST",
+                url: "loadBusca.php",
+                data: "page="+pagina,//variavel passada via post 
+                cache: false,
+                success: function(html){
+                    $('#loading_busca_user').fadeOut('fast');
+                    $("#content_busca_user").append(html);//mostra resultado na div content
+                },
+                error:function(html){
+                    $('#loading_busca_user').html("erro...").fadeIn('fast');
+                }
+            });
+            $.ajax({
+                type: "POST",
+                url: "loadBuscaDica.php",
+                data: "page="+pagina,//variavel passada via post 
+                cache: false,
+                success: function(html){
+                    $('#loading_busca_dica').fadeOut('fast');
+                    $("#content_busca_dica").append(html);//mostra resultado na div content
+                },
+                error:function(html){
+                    $('#loading_busca_dica').html("erro...").fadeIn('fast');
+                }
+            });
+        };
+        
         //chama minha funcao ao carregar a pagina
         $(document).ready(function(){
             carrega();
+            carregaBusca();
         });
         //funcao de controle do scroll da pagina, na qual ela chega ao fim é acionada chamando
         //minha function carrega novamente para trazer mais dados dinamicamente
@@ -1143,6 +1175,7 @@
             if($(window).scrollTop() + $(window).height() >= $(document).height()){
                 pagina += 1;
                 carrega();
+                carregaBusca();
             };
         });
     </script>
