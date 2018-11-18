@@ -454,7 +454,7 @@ $_SESSION['usuario_passado'] = $update_usuario[id];
                                         }
                                         ?>
                                         <?php
-                                        if ($update['musculatura'] == 'Sim (Pouca)') {
+                                        if ($update['musculatura'] == 'Sim(Pouca)' ) {
                                             ?>
                                             <option value="<?= $update['musculatura'] ?>"><?= $update['musculatura'] ?></option>
                                             <option value="">(Nulo)</option>                                           
@@ -466,7 +466,7 @@ $_SESSION['usuario_passado'] = $update_usuario[id];
                                         }
                                         ?>
                                         <?php
-                                        if ($update['musculatura'] == 'Sim (Muita)') {
+                                        if ($update['musculatura'] == 'Sim(Muita)' ) {
                                             ?>
                                             <option value="<?= $update['musculatura'] ?>"><?= $update['musculatura'] ?></option>
                                             <option value="">(Nulo)</option>                                           

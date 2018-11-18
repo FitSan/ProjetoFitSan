@@ -5,6 +5,8 @@ require_once './template/menu.php';
 
 
 $id_avaliacao = $_GET['id_avaliacao'];
+$nome_aluno = $_GET['nome_aluno'];
+$sobrenome_aluno = $_GET['sobrenome_aluno'];
 
 $query = "select * from `avaliacao` where id= $id_avaliacao";
 $resultado = mysqli_query($conexao, $query);
@@ -20,13 +22,29 @@ $consequência = mysqli_query($conexao, $lendo);
 
 <div class="content-wrapper">
     <section class="content-header">
-        <h1> Avaliação  </h1>
+        <h1> Avaliação do aluno <strong><?php echo $nome_aluno ;echo  $sobrenome_aluno ;?></strong></h1>
+        
+
     </section>
     <section class="content">
         <form method="post" action="">
 
             <div class="box box-primary" align="center">
-
+                
+                                <a href="<?=URL_SITE?>excluir_avaliacao.php?id_avaliacao=<?php echo $id_avaliacao;?>">  
+                                        <button type="button" class="btn btn-primary btn-flat"> Excluir </button>
+                                    </a>
+                                
+                                   <a href="<?=URL_SITE?>alterar_avaliacao.php?id_avaliacao=<?php echo $id_avaliacao;?>">  
+                                        <button type="button" class="btn btn-primary btn-flat"> Alterar </button>
+                                    </a>
+                <?php
+                if($linha[desempenho] == null && $linha[frequencia] == null && $linha[grupo_cumpriu] == null  && $linha[grupo_duvida] == null && $linha[grupo_dificuldade] == null && $linha[consideracoes] == null){
+                    
+                }else {
+                                       
+                                   
+                ?>
                 <div class="nav-tabs-custom"  >
                     <h2>Avaliação da Performance</h2>
                     <div class="box-body">           
@@ -61,14 +79,22 @@ $consequência = mysqli_query($conexao, $lendo);
                             <?php
                             if ($linha[consideracoes] != null) {
                                 ?>
-                                <br> <strong>Considerações gerais</strong> <font color="red" ><h5><?= $linha[consideracoes] ?></h5></font>
+                                <br> <strong>Considerações gerais</strong> <font color="red" ><h5><textarea name="consideracoes_corporal"   cols="80" rows="10" disabled ><?= $linha[consideracoes] ?></textarea></h5></font>
                             <?php } ?>
 
                         </div>
 
                     </div>
                 </div>
+                
+<?php 
+}
+if($linha[musculatura] == null && $linha[lesao] == null && $linha[queimacao] == null && $linha[caimbras] == null && $linha[tontura] == null && $linha[consideracoes_corporal] == null ){
+    
+} else {
+    
 
+?>
                 <div class="nav-tabs-custom"  >
                     <h2>Avaliação Corporal</h2>
                     <div class="box-body">           
@@ -102,7 +128,7 @@ $consequência = mysqli_query($conexao, $lendo);
                             <?php
                             if ($linha[consideracoes_corporal] != null) {
                                 ?>
-                                <br> <strong>Considerações gerais</strong> <font color="red" ><h5><?= $linha[consideracoes_corporal] ?></h5></font>
+                                <br> <strong>Considerações gerais</strong> <font color="red" ><h5><textarea name="consideracoes_corporal"   cols="80" rows="10" disabled > <?= $linha[consideracoes_corporal] ?></textarea></h5></font>
                             <?php } ?>
 
                         </div>
@@ -110,7 +136,10 @@ $consequência = mysqli_query($conexao, $lendo);
                     </div>
                 </div>
 
+<?php
 
+                            }
+                            ?>
 
 
 

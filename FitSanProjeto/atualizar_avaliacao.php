@@ -74,7 +74,7 @@ criarNotificacao(
         " Você tem uma nova avaliação de " . $linha['nome'] . " " . $linha['sobrenome'] . ". " .PHP_EOL. 'Acesse: " <a href="'.URL_SITE.'form_receber_avaliacao.php"> Ver </a>', null, $aluno);
          
 
-            header('Location: '.URL_SITE.'form_avaliacao.php'); 
+            header('Location: '.URL_SITE.'form_historico_avaliacao_profissional.php'); 
             
     }
             }

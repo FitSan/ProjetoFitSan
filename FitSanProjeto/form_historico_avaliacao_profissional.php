@@ -47,6 +47,10 @@ if (!tipoLogado("profissional")) {
                  
                 $id_avaliacao = $usuario['id'];   
                 
+                 $nome_aluno = $linha['nome'];
+                 
+                 $sobrenome_aluno = $linha['sobrenome'];
+                
                 ?>
 
                     <div class="nav-tabs-custom" align="center">
@@ -63,17 +67,11 @@ if (!tipoLogado("profissional")) {
 
                               
                                     
-                                    <a href="<?=URL_SITE?>form_mostrar_avaliacao.php?id_avaliacao=<?php echo $id_avaliacao; ?>">  
+                                    <a href="<?=URL_SITE?>form_mostrar_avaliacao.php?id_avaliacao='<?php echo$id_avaliacao;?>' & nome_aluno=<?php echo $nome_aluno; ?> & sobrenome_aluno=<?php echo $sobrenome_aluno; ?>">  
                                         <button type="button" class="btn btn-primary btn-flat"> Conferir </button>
                                     </a>
 
-                                <a href="<?=URL_SITE?>excluir_avaliacao.php?id_avaliacao=<?php echo $id_avaliacao;?>">  
-                                        <button type="button" class="btn btn-primary btn-flat"> Excluir </button>
-                                    </a>
-                                
-                                   <a href="<?=URL_SITE?>alterar_avaliacao.php?id_avaliacao=<?php echo $id_avaliacao;?>">  
-                                        <button type="button" class="btn btn-primary btn-flat"> Alterar </button>
-                                    </a>
+
 
 
                             </div>

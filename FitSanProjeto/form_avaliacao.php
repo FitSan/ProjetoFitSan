@@ -146,14 +146,15 @@ if (!tipoLogado("profissional")) {
                             </div>   
 
                         </div>
+                        <hr>
                         <div class="tab-pane" id="avaliacao_corporal">
 
                             <div class="box-body">           
                                 <div class="col-lg-6">
                                     <br>O aluno desenvolveu musculatura ? <select class="form-control select2" name="musculatura" style="width: 100%;">                                  
                                         <option value="">(Selecione)</option>
-                                        <option value="Sim Pouca">Sim (Pouca)</option>
-                                        <option value="Sim Muita">Sim (Muita)</option>
+                                        <option value="Sim(Pouca)">Sim (Pouca)</option>
+                                        <option value="Sim(Muita)">Sim (Muita)</option>
                                         <option value="Não">Não</option>             
                                     </select> </div>
                                 <div class="col-lg-6">
@@ -182,10 +183,11 @@ if (!tipoLogado("profissional")) {
                                     </select> </div>
 
                                 <hr>
-
+                                <br>
+                                <br>
 
                                 <div class="col-lg-6">
-                                    <br> <strong>Considerações gerais </strong> <textarea name="consideracoes_corporal" class="form-control" rows="5" placeholder="Escreva aqui"></textarea> 
+                                    <br> <strong>Considerações gerais </strong> <textarea name="consideracoes_corporal" class="form-control"  cols="5" rows="5"  placeholder="Escreva aqui"></textarea> 
 
                                 </div>
 
