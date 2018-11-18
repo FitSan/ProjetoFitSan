@@ -392,13 +392,13 @@ where
                                                         ?></a></h3>
 
 
-                                                        <div class="timeline-body col-md-12 col-sm-12 col-xs-12">
-                                                            <div class="col-sm-7 col-md-8 col-xs-12" id="<?= 'div'.$linha['id']?>">                            
+                                                        <div class="timeline-body col-md-12 col-sm-12 col-xs-12" style="overflow-x: auto; white-space: nowrap;">
+                                                            <div class="col-sm-7 col-md-8 col-xs-12 chart_historico" id="<?= 'div'.$linha['id']?>">                            
                                                                 <?php
                                                                     include 'chart_meta_hist.php';
                                                                 ?>
                                                             </div>
-                                                            <div class="col-sm-5 col-md-4 col-xs-12" style="overflow-x: auto; white-space: nowrap;">
+                                                            <div class="col-sm-5 col-md-4 col-xs-12">
 
                                                                     <select name="<?= $linha['id']?>" id="<?= 'mes_hist'.$linha['id']?>" class="form-control mes_hist" >
                                                                         <option value="">Filtre por mês</option>
