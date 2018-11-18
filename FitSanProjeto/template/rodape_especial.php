@@ -656,9 +656,9 @@
             mensagem = $('<div class="alert"></div>').text(msg).addClass('alert-' + type).appendTo(lista.find('.modal-body'));
         }
         lista.on('shown.bs.modal', function(e){
-            if (e.relatedTarget){
-                botao.data('id', $(e.relatedTarget).data('id'));
-            }
+            var id = false;
+            if (e.relatedTarget) id = $(e.relatedTarget).data('id') || false;
+            botao.data('id', id);
             $.ajax({
                 url: 'ajax.php',
                 method: 'POST',
@@ -681,8 +681,9 @@
                       checkboxClass: 'icheckbox_flat-blue',
                       radioClass: 'iradio_flat-blue'
                     });
-                    botao.attr('disabled', !result.len).toggleClass('disabled', !result.len);
-                    if (!result.len){
+                    var ativo = ((result.len > 0) || id);
+                    botao.attr('disabled', !ativo).toggleClass('disabled', !ativo);
+                    if (!ativo){
                         alert2('Não há nada para enviar', 'danger');
                         return;
                     }

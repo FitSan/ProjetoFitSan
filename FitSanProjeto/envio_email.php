@@ -19,7 +19,7 @@ $linha = mysqli_fetch_array($resultado_email);
 $existe = (intval($linha['total']) > 0);
 if (!$existe) {
     $_SESSION['erroEmail'] = "Dados nao conferem!";
-    header('Location: ' . URL_SITE . 'form_recEmail.php');
+    //header('Location: ' . URL_SITE . 'form_recEmail.php');
 } else {
     $codigo = uniqid();
     // Criar um campo para guardar a data de criação deste código e, na
@@ -29,9 +29,12 @@ if (!$existe) {
     $retorno = mysqli_query($conexao, $sql);
     if (!empty($email)) {
         $mail = new PHPMailer();
+        $mail->isSMTP();
+        //$mail->isSendmail();
+        //$mail->isMail();
         $mail->Host = EMAIL_HOST;
         $mail->SMTPAuth = EMAIL_AUTH;
-        $mail->SMTPDebug = 0;
+        $mail->SMTPDebug = 1;
         $mail->SMTPAutoTLS = EMAIL_AUTOTLS;
         $mail->SMTPSecure = EMAIL_SECURE;
         $mail->Username = EMAIL_USERNAME;
@@ -49,6 +52,8 @@ if (!$existe) {
         } else {
             $_SESSION['sucesso'] = "Dados conferem!";
         }
+var_dump($email);
+var_dump($mail);
     }
-    header('Location:' . URL_SITE . 'form_recEmail.php');
+    //header('Location:' . URL_SITE . 'form_recEmail.php');
 }

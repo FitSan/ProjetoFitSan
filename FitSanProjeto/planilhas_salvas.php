@@ -60,7 +60,7 @@ while ($linha = mysqli_fetch_array($resultado)) {
             </div>
         </div>
     </div>
-</div>
+<!--</div>-->
 
 <?php
 require_once './template/rodape_especial.php';

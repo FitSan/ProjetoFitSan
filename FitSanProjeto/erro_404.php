@@ -35,8 +35,6 @@ include_once './template/menu.php';
               'https://www.youtube.com/embed/OuJYEKEUDEQ',
               'https://www.youtube.com/embed/SRq7XtDW0wg',
               'https://www.youtube.com/embed/f3SLMdf4PbM');
-          shuffle($video_array);
-          $video = $video_array[0];
           ?>
           <div class="div_erro404">
           <div class="embed-container erro_404"><iframe width='560' height='315' src='<?php echo $video_array[rand(0, (count($video_array) - 1))]; ?>
