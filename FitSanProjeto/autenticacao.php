@@ -287,8 +287,8 @@ function consultarNotificacao($lido = null) {
     }
     $sql .= " or (profissional_id is null and aluno_id is null))
         order by
-            data,
-            id
+            data desc,
+            id desc
     ";
     $retorno = array();
     if ($resultado = dbquery($sql)) {
