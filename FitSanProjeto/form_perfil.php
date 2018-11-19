@@ -52,18 +52,30 @@ if ($linha = mysqli_fetch_array($resultado)) {
                             </div>
                         </div>
                          <div class="form-group">
-                            <label for="foto">Foto</label>
-                            <a data-toggle="modal" data-target="#modal-upload-imagem" id="modal-upload-imagem-button" title="Upload de imagem" data-input="foto-sel"><i class="fa fa-upload"></i></a>
-                            <input type="hidden" id="foto-sel" name="foto-sel" value="">
-                            <?php if (!empty($linha['foto'])) { ?>
-                                <img class="profile-user-img img-responsive" style="margin: 0;margin-bottom: 2px" src="<?= htmlspecialchars($linha['foto']) ?>" alt="User profile picture">
+                             <label for="foto">Foto</label><br>
+                             
+                            <div class="pull-left ">
+                                     <a class="btn btn-file btn-app">
+                                         <i class="fa fa-mobile" ></i>
+                                         <input  type="file" name="foto" id="foto"> Celular </a>
+
+                                     <a class="btn btn-file btn-app" data-toggle="modal" data-target="#modal-upload-imagem" id="modal-upload-imagem-button" title="Upload de imagem" data-input="foto-sel">
+                                         <i class="fa fa-cloud-upload"></i> Upload </a>
+                                         <input type="hidden" id="foto-sel" name="foto-sel" value="">
+                            </div>
+                                <br><br><br><br><?php if (!empty($linha['foto'])) { ?>
+                               <img class="profile-user-img img-responsive" style="margin: 0;margin-bottom: 2px" src="<?= htmlspecialchars($linha['foto']) ?>" alt="User profile picture">
                                 <label for="fotoremover"><input type="checkbox" class="flat-red" id="fotoremover" name="fotoremover" value="1"> Remover foto atual</label>
                             <?php } ?>
-                            <input type="file" class="form-control" id="foto" name="foto">
+                             
+                                <br>
+                            
                         </div>
                     </div>
 
                     <button type="submit" class="btn btn-primary">Salvar</button>
+                    
+                    
 
 
                 </form>
