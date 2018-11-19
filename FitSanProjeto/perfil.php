@@ -191,7 +191,7 @@ if ($linha = mysqli_fetch_array($resultado)) {
                                 <li<?php if ($aba == 'atividadesExtras') echo ' class="active"'; ?>><a href="#atividadesExtras" data-toggle="tab">Atividades Extras</a></li>
                                 <li<?php if ($aba == 'pesosMedidas') echo ' class="active"'; ?>><a href="#pesosMedidas" data-toggle="tab">Pesos e Medidas</a></li>
                                 <li<?php if ($aba == 'treinosPlanilha') echo ' class="active"'; ?>><a href="#treinosPlanilha" data-toggle="tab">Treinos da Planilha</a></li>
-                                <li<?php if ($aba == 'avaliacoes') echo ' class="active"'; ?>><a href="#avaliacoes" data-toggle="tab">Avaliações</a></li>
+<!--                                <li<?php if ($aba == 'avaliacoes') echo ' class="active"'; ?>><a href="#avaliacoes" data-toggle="tab">Avaliações</a></li>-->
                             </ul>
                             <div class="tab-content">
         <!--                            <div class="tab-pane<?php if ($aba == 'timeline') echo ' active'; ?>" id="timeline">
@@ -640,13 +640,13 @@ where
                             <!-- /.post -->
                         </div>
 
-                        <div class="tab-pane<?php if ($aba == 'avaliacoes') echo ' active'; ?>" id="avaliacoes">
-                            <!-- Post -->
+<!--                        <div class="tab-pane<?php if ($aba == 'avaliacoes') echo ' active'; ?>" id="avaliacoes">
+                             Post 
 
                             Postar avaliações
 
-                            <!-- /.post -->
-                        </div>
+                             /.post 
+                        </div>-->
 
                     </div>
                 </div>

@@ -318,8 +318,9 @@ if (mysqli_num_rows($resultado_all) === 0) {
             </div>
         <?php }
         ?>
-        <div class="clearfix"></div>
+       
     </section>
+     <div class="clearfix"></div>
 
     <?php
     include './template/rodape_especial.php';
