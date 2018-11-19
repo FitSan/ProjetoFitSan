@@ -1,14 +1,14 @@
 <h3>Histótico Metas - pesos e medidas</h3>
 <?php
 if(isset($_GET['privado'])){
-    $query_view = "update meta set visualizacao='PRIVADO' where id='".mysqliEscaparTexto($_GET['privado'])."'";
+    $query_view = "update meta set visualizacao='PRIVADO' where id=".mysqliEscaparTexto($_GET['privado']);
     mysqli_query($conexao, $query_view);
 }
 if(isset($_GET['publico'])){
-    $query_view = "update meta set visualizacao='PUBLICO' where id='".mysqliEscaparTexto($_GET['publico'])."'";
+    $query_view = "update meta set visualizacao='PUBLICO' where id=".mysqliEscaparTexto($_GET['publico']);
     mysqli_query($conexao, $query_view);
 }
-$query_all_meta = "select * from meta where status = 'finalizada' and usuario_id=" . $_SESSION['id'] . " order by data_final desc";
+$query_all_meta = "select * from meta where status = 'finalizada' and usuario_id=" . mysqliEscaparTexto($_SESSION['id']) . " order by data_final desc";
 $retorno_all = mysqli_query($conexao, $query_all_meta);
 $linha_all = array();
 if (mysqli_num_rows($retorno_all) === 0) {

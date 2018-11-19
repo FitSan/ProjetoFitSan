@@ -1,7 +1,7 @@
 <?php
 require_once './autenticacao.php';
 if (isset($_POST['meta_id'])) {
-    $where = " meta.id=" . mysqli_real_escape_string($_POST['meta_id']);
+    $where = " meta.id=" . mysqliEscaparTexto($_POST['meta_id']);
 } else {
     $where = " meta.usuario_id = " . $_SESSION['id'] . " and meta.status='ativa'";
 }
