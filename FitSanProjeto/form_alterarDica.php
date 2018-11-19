@@ -9,18 +9,12 @@ if (!tipoLogado('profissional')) {
 
 $dica_id = $_GET['id'];
 
-$query_dica = "select * from dica where id = $dica_id";
+$query_dica = "select * from dica where id=".mysqliEscaparTexto($dica_id)." and profissional_id=".$_SESSION['id'];
 $resultado_dica = mysqli_query($conexao, $query_dica);
-$linha_dica = mysqli_fetch_array($resultado_dica);
 
-$query_verificar = "select * from dica where id=".mysqliEscaparTexto($dica_id)." and profissional_id=".$_SESSION['id'];
-$resultado_verificar = mysqli_query($conexao, $query_verificar);
-if(mysqli_num_rows($resultado_verificar)==0){
-    $query_verificar2 = "select MAX(id) as max_id from dica where profissional_id=".$_SESSION['id'];
-    $resultado_verificar2 = mysqli_query($conexao, $query_verificar2);
-    $linha_verificar2 = mysqli_fetch_array($resultado_verificar2);    
-    header('Location: ' . URL_SITE . 'alterar_dica.php?erro=1');
-}
+
+if(mysqli_num_rows($resultado_dica)>0){
+    $linha_dica = mysqli_fetch_array($resultado_dica);
 
 ?>
 
@@ -130,3 +124,7 @@ if(mysqli_num_rows($resultado_verificar)==0){
 <?php
 include './template/rodape_especial.php';
 
+}else{
+    $_SESSION['msg'] = 'Não altere a URL! Essa dica não corresponde a suas postagens!';
+    header('Location: ' . URL_SITE . 'minhas_dicas.php');        
+}

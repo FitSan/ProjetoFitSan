@@ -47,7 +47,7 @@ require_once './template/menu.php';
             <div class="row justify-content-sm-center my-4">
                 <div class="col-xs-12 col-sm-4 col-md-4">
                     <div class="card mb-5">
-                        <img class="card-img-top img-responsive"  src="<?= URL_SITE ?>img/Planilha.png" style="width: 100%;"  alt="Planilha">
+                        <img class="card-img-top img-responsive"  src="<?= URL_SITE ?>img/planilha2.png" style="width: 100%;"  alt="Planilha">
                         <div class="card-body">
                             <h4 class="card-title">Planilha de Treino</h4>
                             <h6 class="card-subtitle mb-2 text-muted">Profissional faz, o aluno segue.</h6>
@@ -90,7 +90,7 @@ require_once './template/menu.php';
             <div class="row justify-content-sm-center my-4">
                 <div class="col-xs-12 col-sm-4 col-md-4">
                     <div class="card mb-5">
-                        <img class="card-img-top img-responsive"  src="<?= URL_SITE ?>img/Planilha.png" alt="Planilha" style="width: 100%">
+                        <img class="card-img-top img-responsive"  src="<?= URL_SITE ?>img/planilha2.png" alt="Planilha" style="width: 100%">
                         <div class="card-body">
                             <h4 class="card-title">Planilha de Treino</h4>
                             <h6 class="card-subtitle mb-2 text-muted">Profissional faz, o aluno segue.</h6>
