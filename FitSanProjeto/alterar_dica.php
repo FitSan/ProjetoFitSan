@@ -1,16 +1,16 @@
 <?php
 require_once 'autenticacao.php';
 
-$id = mysqli_escape_string($conexao, $_POST['id']); // TODO: escape de caracteres estranhos dentro do id mudar todos que tenham post ou get.
+$id = $_POST['id'];
 $dica = $_POST['dica'];
 $titulo = (!empty($_POST['titulo']) ? $_POST['titulo'] : null);
 $link = (!empty($_POST['link_video']) ? $_POST['link_video'] : null);
 
 
-if (mysqliEscaparTexto($_GET['erro'])) {
-    $_SESSION['msg'] = 'Não altere a URL! Essa dica não corresponde a suas postagens!';
-    header('Location: ' . URL_SITE . 'minhas_dicas.php');
-} else {
+//if (!empty($_GET['erro'])) {
+//    $_SESSION['msg'] = 'Não altere a URL! Essa dica não corresponde a suas postagens!';
+//    header('Location: ' . URL_SITE . 'minhas_dicas.php');
+//} else {
 
 //$data_envio = $_POST['data_envio'];
     $now = new DateTime();
@@ -30,7 +30,7 @@ if (mysqliEscaparTexto($_GET['erro'])) {
     $quantUploadsVid = 0;
     $msg = '';
 
-    $query_dica = "select id from upload_dica where dica_id=$id and tipo='img'";
+    $query_dica = "select id from upload_dica where dica_id= ".mysqliEscaparTexto($id)." and tipo='img'";
     $resultado_dica = mysqli_query($conexao, $query_dica);
     $quantUploads = mysqli_num_rows($resultado_dica);
 
@@ -38,7 +38,7 @@ if (mysqliEscaparTexto($_GET['erro'])) {
         $quantUploads = 0;
     }
     if ($quantUploads == 0) {
-        $query_dica_vid = "select * from upload_dica where dica_id=$id and tipo='vid' or tipo='url'";
+        $query_dica_vid = "select * from upload_dica where dica_id=".mysqliEscaparTexto($id)." and tipo='vid' or tipo='url'";
         $resultado_dica_vid = mysqli_query($conexao, $query_dica_vid);
         $linha_vid = mysqli_fetch_array($resultado_dica_vid);
         $quantUploadsVid = mysqli_num_rows($resultado_dica_vid);
@@ -53,7 +53,7 @@ if (mysqliEscaparTexto($_GET['erro'])) {
         $quantUploads = $quantUploads - $excluidos;
     }
 
-    $query = "update dica set texto='$dica', titulo='$titulo', profissional_nome='" . exibirName(true) . "', profissional_id=$_SESSION[id], data_envio='$data_envio' where id=$id";
+    $query = "update dica set texto=".mysqliEscaparTexto($dica).", titulo=".mysqliEscaparTexto($titulo).", profissional_nome=".mysqliEscaparTexto(exibirName(true)).", profissional_id=".mysqliEscaparTexto($_SESSION[id]).", data_envio=".mysqliEscaparTexto($data_envio)." where id=".mysqliEscaparTexto($id);
 
     if ($_FILES['imagens']['size'][0] != 0 && $link != null) {
         $_SESSION['msg'] = "Dica não alterada! Escolha apenas um tipo de upload.";
@@ -83,13 +83,13 @@ if (mysqliEscaparTexto($_GET['erro'])) {
         if (!$Error) {
             if (isset($_POST[id_upload])) {
                 foreach ($_POST['id_upload'] as $id_upload) {
-                    $query_upload = "select * from upload_dica where id=$id_upload";
+                    $query_upload = "select * from upload_dica where id=".mysqliEscaparTexto($id_upload);
                     $resultado = mysqli_query($conexao, $query_upload);
                     $linha_up = mysqli_fetch_array($resultado);
                     if (is_file($diretorio . $linha_up['nome_arq'])) {
                         unlink($diretorio . $linha_up['nome_arq']);
                     }
-                    $query_del_up = "delete from upload_dica where id = $id_upload";
+                    $query_del_up = "delete from upload_dica where id = ".mysqliEscaparTexto($id_upload);
                     mysqli_query($conexao, $query_del_up);
                 }
             }
@@ -98,7 +98,7 @@ if (mysqliEscaparTexto($_GET['erro'])) {
                 $extensao = @end(explode('.', $arquivo['name'][$i]));
                 $novo_nome = md5(rand()) . $extensao;
                 move_uploaded_file($arquivo['tmp_name'][$i], $diretorio . $novo_nome);
-                $query = "insert into upload_dica values (default, '$novo_nome', '$type', $id)";
+                $query = "insert into upload_dica values (default, ".mysqliEscaparTexto($novo_nome).", ".mysqliEscaparTexto($type).", ".mysqliEscaparTexto($id).")";
 
                 if (!mysqli_query($conexao, $query)) {
                     $_SESSION['msg'] = "Envio não realizado! Falha na conexão.";
@@ -146,13 +146,13 @@ if (mysqliEscaparTexto($_GET['erro'])) {
         }
         if (!$erro && $quantUploads == 0) {
             if ($video && $type == 'vid') {
-                $query_vid = "update upload_dica set nome_arq='$video_url', tipo='$type' where id=$linha_vid[id] and dica_id= $id";
+                $query_vid = "update upload_dica set nome_arq=".mysqliEscaparTexto($video_url).", tipo=".mysqliEscaparTexto($type)." where id=$linha_vid[id] and dica_id= ".mysqliEscaparTexto($id);
             } else if (!$video && $type == 'vid') {
-                $query_vid = "insert into upload_dica values (default, '$video_url', '$type', $id)";
+                $query_vid = "insert into upload_dica values (default, ".mysqliEscaparTexto($video_url).", ".mysqliEscaparTexto($type).", ".mysqliEscaparTexto($id).")";
             } else if ($video && $type == 'url') {
-                $query_vid = "update upload_dica set nome_arq='$link', tipo='$type' where id=$linha_vid[id] and dica_id= $id";
+                $query_vid = "update upload_dica set nome_arq=".mysqliEscaparTexto($link).", tipo=".mysqliEscaparTexto($type)." where id=$linha_vid[id] and dica_id= ".mysqliEscaparTexto($id);
             } else if (!$video && $type = 'url') {
-                $query_vid = "insert into upload_dica values (default, '$link', '$type', $id)";
+                $query_vid = "insert into upload_dica values (default, ".mysqliEscaparTexto($link).", ".mysqliEscaparTexto($type).", ".mysqliEscaparTexto($id).")";
             }
             if (!mysqli_query($conexao, $query_vid)) {
                 $_SESSION['msg'] = "Dica não alterada! Falha na conexão.";
@@ -160,13 +160,13 @@ if (mysqliEscaparTexto($_GET['erro'])) {
             } else {
                 if (isset($_POST[id_upload]) && !$video) {
                     foreach ($_POST['id_upload'] as $id_upload) {
-                        $query_upload = "select * from upload_dica where id=$id_upload";
+                        $query_upload = "select * from upload_dica where id=".mysqliEscaparTexto($id_upload);
                         $resultado = mysqli_query($conexao, $query_upload);
                         $linha_up = mysqli_fetch_array($resultado);
                         if (is_file($diretorio . $linha_up['nome_arq'])) {
                             unlink($diretorio . $linha_up['nome_arq']);
                         }
-                        $query_del_up = "delete from upload_dica where id = $id_upload";
+                        $query_del_up = "delete from upload_dica where id = ".mysqliEscaparTexto($id_upload);
                         mysqli_query($conexao, $query_del_up);
                     }
                 }
@@ -193,7 +193,7 @@ if (mysqliEscaparTexto($_GET['erro'])) {
         } else {
             if (isset($_POST[id_upload])) {
                 foreach ($_POST['id_upload'] as $id_upload) {
-                    $query_upload = "select * from upload_dica where id=$id_upload";
+                    $query_upload = "select * from upload_dica where id=".mysqliEscaparTexto($id_upload);
                     $resultado = mysqli_query($conexao, $query_upload);
                     $linha_up = mysqli_fetch_array($resultado);
                     if ($linha_up['type'] == 'img') {
@@ -201,7 +201,7 @@ if (mysqliEscaparTexto($_GET['erro'])) {
                             unlink($diretorio . $linha_up['nome_arq']);
                         }
                     }
-                    $query_del_up = "delete from upload_dica where id = $id_upload";
+                    $query_del_up = "delete from upload_dica where id = ".mysqliEscaparTexto($id_upload);
                     mysqli_query($conexao, $query_del_up);
                 }
             }
@@ -276,4 +276,4 @@ if (mysqliEscaparTexto($_GET['erro'])) {
         return "//player.vimeo.com/video/{$id}{$query}";
     }
 
-}
+//}
