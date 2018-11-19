@@ -95,7 +95,7 @@ if ($contSenha < 8) {
                     $mail->isSMTP();
                     $mail->Host = EMAIL_HOST;
                     $mail->SMTPAuth = EMAIL_AUTH;
-                    $mail->SMTPDebug = 0;
+                    $mail->SMTPDebug = (DEPURACAO ? 1 : 0);
                     $mail->SMTPAutoTLS = EMAIL_AUTOTLS;
                     $mail->SMTPSecure = EMAIL_SECURE;
                     $mail->Username = EMAIL_USERNAME;
@@ -110,6 +110,11 @@ if ($contSenha < 8) {
                     if (!$mail->send()){
                         $_SESSION['erroemail'] = 'Não foi possível enviar a mensagem'.PHP_EOL;
                         $_SESSION['erroemail'] .= 'Erro: ' . $mail->ErrorInfo;
+                        if (DEPURACAO && @ob_start()){
+                            var_dump($email);
+                            var_dump($mail);
+                            $_SESSION['erroEmail'] .= ob_get_clean();
+                        }
                     }
                 }
                 header('Location: '.URL_SITE.'form_login.php');

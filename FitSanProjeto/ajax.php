@@ -33,7 +33,7 @@ function enviarPlanilha(){
     if (empty($alunos)) return array('status' => 'error', 'mensagem' => 'Alunos está vazio');
     if (!$id){
         if (empty($titulo)) return array('status' => 'error', 'mensagem' => 'Título está vazio');
-        $query = "insert into planilha ( titulo ) values (" . mysqliEscaparTexto($titulo) . " )";
+        $query = "insert into planilha ( titulo, datahora ) values (" . mysqliEscaparTexto($titulo) . ", " . mysqliEscaparTexto(time(), 'datetime') . ")";
         if (!mysqli_query($conexao, $query)) return array('status' => 'error', 'mensagem' => ('ERRO: '.mysqli_error($conexao).PHP_EOL.$query.PHP_EOL.print_r(debug_backtrace(), true)));
         $id = mysqli_insert_id($conexao);
         $query2 = "update planilha_tabela set planilha_id = " . mysqliEscaparTexto($id) . " where planilha_id is null";
@@ -41,7 +41,12 @@ function enviarPlanilha(){
         foreach ($alunos as $aluno){
             $query3 = "insert into planilha_aluno (planilha_id, aluno_id) values (" . mysqliEscaparTexto($id) . ", " . mysqliEscaparTexto($aluno) . ")";
             if (!mysqli_query($conexao, $query3)) return array('status' => 'error', 'mensagem' => ('ERRO: '.mysqli_error($conexao).PHP_EOL.$query.PHP_EOL.print_r(debug_backtrace(), true)));
-            criarNotificacao("OK", "Uma planilha foi enviada à você.".PHP_EOL.'Acesse <a href="'.URL_SITE.'planilha_aluno.php?id='.$id.'">'.htmlspecialchars($titulo).'</a>', null, $aluno);
+            criarNotificacao("OK", "Uma planilha foi enviada à você.".PHP_EOL.'Acesse <a href="'.URL_SITE.'planilha_aluno.php?id='.$id.'">'.htmlspecialchars($titulo).'</a>', null, $aluno, [
+                'aluno_id' => $aluno,
+                'profissional_id' => $_SESSION['id'],
+                'destinatario' => $aluno,
+                'table' => 'planilha',
+            ]);
         }
     } else {
         $query = "update planilha set datahora = " . mysqliEscaparTexto(time(), 'datetime');
@@ -58,9 +63,14 @@ function enviarPlanilha(){
                 $query3 = "insert into planilha_aluno (planilha_id, aluno_id) values (" . mysqliEscaparTexto($id) . ", " . mysqliEscaparTexto($aluno) . ")";
                 if (!mysqli_query($conexao, $query3)) return array('status' => 'error', 'mensagem' => ('ERRO: '.mysqli_error($conexao).PHP_EOL.$query.PHP_EOL.print_r(debug_backtrace(), true)));
             }
-            criarNotificacao("OK", "Uma planilha foi enviada à você.".PHP_EOL.'Acesse <a href="'.URL_SITE.'planilha_aluno.php?id='.$id.'">'.htmlspecialchars($titulo).'</a>', null, $aluno);
+            criarNotificacao("OK", "Uma planilha foi enviada à você.".PHP_EOL.'Acesse <a href="'.URL_SITE.'planilha_aluno.php?id='.$id.'">'.htmlspecialchars($titulo).'</a>', null, $aluno, [
+                'aluno_id' => $aluno,
+                'profissional_id' => $_SESSION['id'],
+                'destinatario' => $aluno,
+                'table' => 'planilha',
+            ]);
         }
-   }
+    }
     return array('status' => 'ok');
 }
 

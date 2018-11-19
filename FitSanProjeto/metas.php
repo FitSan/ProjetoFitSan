@@ -318,6 +318,7 @@ if (mysqli_num_rows($resultado_all) === 0) {
             </div>
         <?php }
         ?>
+        <div class="clearfix"></div>
     </section>
 
     <?php

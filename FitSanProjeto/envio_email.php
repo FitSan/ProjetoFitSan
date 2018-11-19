@@ -34,7 +34,7 @@ if (!$existe) {
         //$mail->isMail();
         $mail->Host = EMAIL_HOST;
         $mail->SMTPAuth = EMAIL_AUTH;
-        $mail->SMTPDebug = 1;
+        $mail->SMTPDebug = (DEPURACAO ? 1 : 0);
         $mail->SMTPAutoTLS = EMAIL_AUTOTLS;
         $mail->SMTPSecure = EMAIL_SECURE;
         $mail->Username = EMAIL_USERNAME;
@@ -49,11 +49,14 @@ if (!$existe) {
         if (!$mail->send()) {
             $_SESSION['erroEmail'] = 'Não foi possível enviar a mensagem' . PHP_EOL;
             $_SESSION['erroEmail'] .= 'Erro: ' . $mail->ErrorInfo;
+            if (DEPURACAO && @ob_start()){
+                var_dump($email);
+                var_dump($mail);
+                $_SESSION['erroEmail'] .= ob_get_clean();
+            }
         } else {
             $_SESSION['sucesso'] = "Dados conferem!";
         }
-var_dump($email);
-var_dump($mail);
     }
     //header('Location:' . URL_SITE . 'form_recEmail.php');
 }

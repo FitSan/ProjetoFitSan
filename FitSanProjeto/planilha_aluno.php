@@ -9,7 +9,7 @@ if (!tipoLogado("aluno")) {
 }
 
 if (isset($_GET['notificacao'])){
-    echo leituraNotificacao($_GET['notificacao']);
+    leituraNotificacao($_GET['notificacao']);
     echo '<script>window.location = ' . json_encode(url_param_add(null, 'notificacao', null)). ';</script>';
     exit;
 }
@@ -53,6 +53,13 @@ if ($acao == 'checkin'){
     exit();
 }
 
+if ($profissional) leituraNotificacao(null, null, [
+    'aluno_id' => $_SESSION['id'],
+    'profissional_id' => $profissional,
+    'destinatario' => $_SESSION['id'],
+    'table' => 'planilha',
+]);
+
 $profissionais = dbquery("select
     u.*
 from
@@ -67,28 +74,45 @@ order by
 ");
 if (empty($profissionais)) $profissionais = array();
 
+// Último envio
+$datahora = dbquery("
+select
+    max(p.datahora)
+from
+    planilha p join
+    planilha_aluno a on p.id = a.planilha_id join
+    planilha_tabela t on p.id = t.planilha_id
+where
+    a.aluno_id = " . mysqliEscaparTexto($_SESSION['id']) . " and
+    t.profissional_id = " . mysqliEscaparTexto($profissional) . "
+", 'col');
+
 //monta o sql de consulta
 $query = array();
 $query['select'] = array(
     'a.id as planilha_aluno_id',
-    'p.*',
+    't.*',
     'g.nome grupomusc',
     'e.nome exercicio',
     'e.descricao exercicio_desc',
     'e.foto exercicio_foto'
 );
 $query['from'] = "
-    planilha_aluno a join
-    planilha_tabela p on p.planilha_id = a.planilha_id join
-    planilha_grupoMuscuCardio g on g.id = p.musculo_cardio_id join
-    planilha_exercicio e on e.id = p.exercicio_id and e.musculo_cardio_id = g.id
+    planilha p join
+    planilha_aluno a on p.id = a.planilha_id join
+    planilha_tabela t on p.id = t.planilha_id join
+    planilha_grupoMuscuCardio g on g.id = t.musculo_cardio_id join
+    planilha_exercicio e on e.id = t.exercicio_id and e.musculo_cardio_id = g.id
 ";
 $query['where'] = array(
     "a.aluno_id = " . mysqliEscaparTexto($_SESSION['id']),
-    "p.profissional_id = " . mysqliEscaparTexto($profissional),
+    "t.profissional_id = " . mysqliEscaparTexto($profissional),
+    "p.datahora = " . mysqliEscaparTexto($datahora, 'datetime'),
 );
 $query['order'] = "
-    p.grupo
+    t.grupo,
+    a.id,
+    e.nome
 ";
 
 //referente aos grupos
@@ -123,9 +147,9 @@ $resultado = dbquery($query);
             </ul>
             <div class="tab-content">          
 <?php
-$grupo_atual = ''; $grupo_id = 0;
+$grupo_atual = false; $grupo_id = 0;
 foreach ($resultado as $i => $linha) {
-    if ($grupo_atual != $linha['grupo']){
+    if ($grupo_atual !== $linha['grupo']){
         if ($grupo_id){
 ?>                               
                         </table></div>
@@ -270,13 +294,14 @@ $resultado = dbquery($query);
 <div class="tab-pane" id="timeline">
     <ul class="timeline timeline-inverse">
         <?php
-$dataanterior = $grupo_atual = $prof_atual = ''; $anterior = null;
+$dataanterior = $grupo_atual = $prof_atual = ''; $anterior = null; $planilha_id = 0;
 foreach ($resultado as $linha) {
     $dataatual = date('d/m/Y', dataParse($linha['datahora']));
     if ($grupo_atual && (
         ($dataanterior != $dataatual) ||
         ($prof_atual != $linha['profissional_id']) ||
-        ($grupo_atual != $linha['grupo'])
+        ($grupo_atual != $linha['grupo']) ||
+        ($planilha_id != $linha['planilha_id'])
     )){
 ?>
                     </table>
@@ -305,9 +330,14 @@ foreach ($resultado as $linha) {
         $dataanterior = $dataatual;
         $prof_atual = $grupo_atual = '';
     }
-    if (($prof_atual != $linha['profissional_id']) || ($grupo_atual != $linha['grupo'])){
+    if (
+        ($prof_atual != $linha['profissional_id']) ||
+        ($grupo_atual != $linha['grupo']) ||
+        ($planilha_id != $linha['planilha_id'])
+    ){
         $grupo_atual = $linha['grupo'];
         $prof_atual = $linha['profissional_id'];
+        $planilha_id = $linha['planilha_id'];
 ?>            
         <li>
             <i class="fa fa-thumbs-o-up bg-blue"></i>

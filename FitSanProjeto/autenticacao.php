@@ -5,7 +5,7 @@ session_start();
 
 error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING & ~E_STRICT & ~E_DEPRECATED); // Definindo para mostrar todos os erros exceto notificações, avisos, interoperabilidade e obsoletos. 
 
-ini_set('display_errors', true);
+ini_set('display_errors', DEPURACAO ? 'On' : 'Off');
 ini_set('default_charset', 'utf-8');
 ini_set('default_mimetype', 'text/html');
 

@@ -667,3 +667,9 @@ select * from `chat`;
 
 SELECT * FROM mysql.time_zone_name WHERE Name LIKE '%Brazil%';
 SET time_zone='America/Sao_Paulo';
+
+TRUNCATE `planilha`;
+TRUNCATE `planilha_aluno`;
+TRUNCATE `planilha_aluno_exercicio`;
+TRUNCATE `planilha_aluno_feito`;
+TRUNCATE `planilha_tabela`;
