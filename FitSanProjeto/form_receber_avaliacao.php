@@ -37,7 +37,7 @@ if (isset($_GET['notificacao'])) {
             }
             if ($usuarios == null) {
                 ?>
-                <div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12" align="center"><h3><b>Você não possui nenhuma avaliação!</b></h3></div>
+                <div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12" align="center"><h3><b>Você não possui nenhuma avaliação! Consulte seu histórico de avaliações.</b></h3></div>
                 <?php
             } else {
 
