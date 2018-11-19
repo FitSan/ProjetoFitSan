@@ -7,17 +7,10 @@ $titulo = (!empty($_POST['titulo']) ? $_POST['titulo'] : null);
 $link = (!empty($_POST['link_video']) ? $_POST['link_video'] : null);
 
 
-//if (!empty($_GET['erro'])) {
-//    $_SESSION['msg'] = 'Não altere a URL! Essa dica não corresponde a suas postagens!';
-//    header('Location: ' . URL_SITE . 'minhas_dicas.php');
-//} else {
 
-//$data_envio = $_POST['data_envio'];
     $now = new DateTime();
     $data_envio = $now->format('Y-m-d H:i:s');
-//if (isset($_POST['id_upload'][0])) {
-//    $id_upload[] = $_POST['id_upload'];
-//}
+
     $excluidos = 0;
     $diretorio = "uploads/dicas/";
     if (isset($_POST['id_upload'])) {
