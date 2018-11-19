@@ -998,8 +998,9 @@
                     frmupload.hide().find('.btn-primary').attr('disabled', true).toggleClass('disabled', true);
                     frmrecort.show().find('.btn-primary').attr('disabled', false).toggleClass('disabled', false);
                     img.attr('src', result.url);
-                    mnt.attr('src', result.url);
-                    crop_ativar();
+                    mnt.attr('src', result.url).on('load', function(){
+                        crop_ativar();
+                    });
                 }
             );
             return false;

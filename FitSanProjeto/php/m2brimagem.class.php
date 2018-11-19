@@ -2,22 +2,22 @@
 /**
  * m2brimagem.class.php
  *
- * Classe para manipulação de imagens
+ * Classe para manipulaï¿½ï¿½o de imagens
  *
  * @package    m2brnet admin v2 [www.m2brnet.com]
  * @author     Davi Ferreira <contato@daviferreira.com>
  * @version    0.8 $ 2010-02-26 20:22:13 $
 */
-
+if (!class_exists('m2brimagem')):
 class m2brimagem {
 
 	// arquivos
 	private $origem, $img, $img_temp;	
-	// dimensões
+	// dimensï¿½es
 	private $largura, $altura, $nova_largura, $nova_altura, $tamanho_html;
 	// dados do arquivo
 	private $formato, $extensao, $tamanho, $arquivo, $diretorio;
-	// extensões válidas
+	// extensï¿½es vï¿½lidas
 	private $extensoes_validas;
 	// cor de fundo para preenchimento
 	private $rgb;
@@ -54,27 +54,27 @@ class m2brimagem {
 	private function dados() 
 	{
 		
-		// mensagem padrão, sem erro
+		// mensagem padrï¿½o, sem erro
 		$this->erro = 'OK';
 		
 		// verifica se imagem existe
 		if ( !is_file( $this->origem ) ) 
 		{
-	   		$this->erro = 'Erro: Arquivo de imagem não encontrado!';
+	   		$this->erro = 'Erro: Arquivo de imagem nï¿½o encontrado!';
 		} 
 		else 
 		{
 			// dados do arquivo
 			$this->dadosArquivo();
 			
-			// verifica se é imagem
+			// verifica se ï¿½ imagem
 			if (!$this->eImagem()) 
 			{
-				$this->erro = 'Erro: Arquivo '.$this->origem.' não é uma imagem!';
+				$this->erro = 'Erro: Arquivo '.$this->origem.' nï¿½o ï¿½ uma imagem!';
 			} 
 			else 
 			{
-				// pega dimensões
+				// pega dimensï¿½es
 				$this->dimensoes();
 				
 				// cria imagem para php
@@ -85,9 +85,9 @@ class m2brimagem {
 	} // fim dadosImagem
 	
 	/**
-	 * Retorna validação da imagem
+	 * Retorna validaï¿½ï¿½o da imagem
 	 * @param
-	 * @return String string com erro de mensagem ou 'OK' para imagem válida
+	 * @return String string com erro de mensagem ou 'OK' para imagem vï¿½lida
 	*/	
 	public function valida() 
 	{
@@ -109,7 +109,7 @@ class m2brimagem {
 // dados da imagem
 
 	/**
-	 * Busca dimensões e formato real da imagem
+	 * Busca dimensï¿½es e formato real da imagem
 	 * @param
 	 * @return void
 	*/	
@@ -140,13 +140,13 @@ class m2brimagem {
 	} // fim dadosArquivo
 	
 	/**
-	 * Verifica se o arquivo indicado é uma imagem
+	 * Verifica se o arquivo indicado ï¿½ uma imagem
 	 * @param
 	 * @return Boolean true/false
 	*/	
 	private function eImagem() 
 	{
-		// filtra extensão
+		// filtra extensï¿½o
 		if ( !in_array( $this->extensao, $this->extensoes_validas ) )
 		{
 			return false;
@@ -158,10 +158,10 @@ class m2brimagem {
 	} // fim validaImagem	
 	
 //------------------------------------------------------------------------------
-// manipulação da imagem	
+// manipulaï¿½ï¿½o da imagem	
 
 	/**
-	 * Cria objeto de imagem para manipulação no GD
+	 * Cria objeto de imagem para manipulaï¿½ï¿½o no GD
 	 * @param
 	 * @return void
 	*/	
@@ -186,13 +186,13 @@ class m2brimagem {
 				$this->extensao = 'bmp'; 
 				break;
 			default:  
-				trigger_error( 'Arquivo inválido!', E_USER_WARNING );
+				trigger_error( 'Arquivo invï¿½lido!', E_USER_WARNING );
 				break;
 		}
 	} // fim criaImagem
 
 //------------------------------------------------------------------------------
-// funções para redimensionamento
+// funï¿½ï¿½es para redimensionamento
 	
 	/**
 	 * Armazena os valores RGB para redimensionamento com fill
@@ -205,7 +205,7 @@ class m2brimagem {
 	} // fim rgb
 	
 	/**
-	 * Armazena posições x e y para crop
+	 * Armazena posiï¿½ï¿½es x e y para crop
 	 * @param Array valores x e y
 	 * @return Void
 	*/
@@ -218,13 +218,13 @@ class m2brimagem {
 	 * Redimensiona imagem
 	 * @param Int $nova_largura valor em pixels da nova largura da imagem
 	 * @param Int $nova_altura valor em pixels da nova altura da imagem	 
-	 * @param String $tipo método para redimensionamento (padrão [vazio], 'fill' [preenchimento] ou 'crop')
+	 * @param String $tipo mï¿½todo para redimensionamento (padrï¿½o [vazio], 'fill' [preenchimento] ou 'crop')
 	 * @return Boolean/void
 	*/	
 	public function redimensiona( $nova_largura = 0, $nova_altura = 0, $tipo = '' ) 
 	{
 	
-		// seta variáveis passadas via parâmetro
+		// seta variï¿½veis passadas via parï¿½metro
 		$this->nova_largura		= $nova_largura;
 		$this->nova_altura		= $nova_altura;
 		
@@ -244,17 +244,17 @@ class m2brimagem {
 			$this->nova_altura		= $this->altura * $porcentagem;
 		}
 		
-		// define se só passou nova largura ou altura
+		// define se sï¿½ passou nova largura ou altura
 		if ( !$this->nova_largura && !$this->nova_altura ) 
 		{
 			return false;
 		} 
-		// só passou altura
+		// sï¿½ passou altura
 		elseif ( !$this->nova_largura ) 
 		{
 			$this->nova_largura = $this->largura / ( $this->altura/$this->nova_altura );
 		}
-		// só passou largura		
+		// sï¿½ passou largura		
 		elseif ( !$this->nova_altura ) 
 		{
 			$this->nova_altura = $this->altura / ( $this->largura/$this->nova_largura );
@@ -274,20 +274,20 @@ class m2brimagem {
 				break;
 		}
 
-		// atualiza dimensões da imagem
+		// atualiza dimensï¿½es da imagem
 		$this->altura 	= $this->nova_altura;
 		$this->largura	= $this->nova_largura;
 	
 	} // fim redimensiona
 	
 	/**
-	 * Redimensiona imagem, modo padrão, sem crop ou fill (distorcendo)
+	 * Redimensiona imagem, modo padrï¿½o, sem crop ou fill (distorcendo)
 	 * @param
 	 * @return void
 	*/	
 	private function resize() 
 	{	
-		// cria imagem de destino temporária
+		// cria imagem de destino temporï¿½ria
 		$this->img_temp	= imagecreatetruecolor( $this->nova_largura, $this->nova_altura );
 		
 		imagecopyresampled( $this->img_temp, $this->img, 0, 0, 0, 0, $this->nova_largura, $this->nova_altura, $this->largura, $this->altura );
@@ -295,7 +295,7 @@ class m2brimagem {
 	} // fim resize()
 	
 	/**
-	 * Adiciona cor de fundo à imagem
+	 * Adiciona cor de fundo ï¿½ imagem
 	 * @param
 	 * @return void
 	*/
@@ -307,19 +307,19 @@ class m2brimagem {
 	
 	/**
 	 * Redimensiona imagem sem cropar, proporcionalmente, 
-	 * preenchendo espaço vazio com cor rgb especificada
+	 * preenchendo espaï¿½o vazio com cor rgb especificada
 	 * @param
 	 * @return void
 	*/	
 	private function resizeFill() 
 	{
-		// cria imagem de destino temporária
+		// cria imagem de destino temporï¿½ria
 		$this->img_temp	= imagecreatetruecolor( $this->nova_largura, $this->nova_altura );
 		
-		// adiciona cor de fundo à nova imagem
+		// adiciona cor de fundo ï¿½ nova imagem
 		$this->preencheImagem();
 		
-		// salva variáveis para centralização
+		// salva variï¿½veis para centralizaï¿½ï¿½o
 		$dif_y = $this->nova_altura;
 		$dif_x = $this->nova_largura;
 		
@@ -341,19 +341,19 @@ class m2brimagem {
 	} // fim resizeFill()
 	
 	/**
-	 * Calcula a posição do crop
-	 * Os índices 0 e 1 correspondem à posição x e y do crop na imagem
-	 * Os índices 2 e 3 correspondem ao tamanho do crop
+	 * Calcula a posiï¿½ï¿½o do crop
+	 * Os ï¿½ndices 0 e 1 correspondem ï¿½ posiï¿½ï¿½o x e y do crop na imagem
+	 * Os ï¿½ndices 2 e 3 correspondem ao tamanho do crop
 	 * @param
 	 * @return void
 	*/
 	private function calculaPosicaoCrop()
 	{
-		// média altura/largura
+		// mï¿½dia altura/largura
 		$hm	= $this->altura / $this->nova_altura;
 		$wm	= $this->largura / $this->nova_largura;
 		
-		// 50% para cálculo do crop
+		// 50% para cï¿½lculo do crop
 		$h_height = $this->nova_altura / 2;
 		$h_width  = $this->nova_largura / 2;
 		
@@ -390,10 +390,10 @@ class m2brimagem {
 		// calcula posicionamento do crop
 		$this->calculaPosicaoCrop();
 		
-		// cria imagem de destino temporária
+		// cria imagem de destino temporï¿½ria
 		$this->img_temp	= imagecreatetruecolor( $this->nova_largura, $this->nova_altura );
 		
-		// adiciona cor de fundo à nova imagem
+		// adiciona cor de fundo ï¿½ nova imagem
 		$this->preencheImagem();
 	
 		imagecopyresampled( $this->img_temp, $this->img, -$this->posicao_crop[0], -$this->posicao_crop[1], 0, 0, $this->posicao_crop[2], $this->posicao_crop[3], $this->largura, $this->altura );
@@ -402,7 +402,7 @@ class m2brimagem {
 	} // fim resizeCrop
 
 //------------------------------------------------------------------------------
-// funções de manipulação da imagem
+// funï¿½ï¿½es de manipulaï¿½ï¿½o da imagem
 
 	/**
 	 * flipa/inverte imagem
@@ -453,11 +453,11 @@ class m2brimagem {
 	} // fim girar
 	
 	/**
-	 * adiciona texto à imagem
+	 * adiciona texto ï¿½ imagem
 	 * @param String $texto texto a ser inserido
 	 * @param Int $tamanho tamanho da fonte
-	 * @param Int $x posição x do texto na imagem
-	 * @param Int $y posição y do texto na imagem
+	 * @param Int $x posiï¿½ï¿½o x do texto na imagem
+	 * @param Int $y posiï¿½ï¿½o y do texto na imagem
 	 * @param Array $rgb cor do texto
 	 * @param Boolean $truetype true para utilizar fonte truetype, false para fonte do sistema
 	 * @param String $fonte nome da fonte truetype a ser utilizada
@@ -479,18 +479,18 @@ class m2brimagem {
 	} // fim legenda
 
 	/**
-	 * adiciona imagem de marca d'água
-	 * @param String $imagem caminho da imagem de marca d'água
-	 * @param Int $x posição x da marca na imagem
-	 * @param Int $y posição y da marca na imagem
-	 * @return Boolean true/false dependendo do resultado da operação 
-	 * @param Int $alfa valor para transparência (0-100)
-	 			  -> se utilizar alfa, a função imagecopymerge não preserva
+	 * adiciona imagem de marca d'ï¿½gua
+	 * @param String $imagem caminho da imagem de marca d'ï¿½gua
+	 * @param Int $x posiï¿½ï¿½o x da marca na imagem
+	 * @param Int $y posiï¿½ï¿½o y da marca na imagem
+	 * @return Boolean true/false dependendo do resultado da operaï¿½ï¿½o 
+	 * @param Int $alfa valor para transparï¿½ncia (0-100)
+	 			  -> se utilizar alfa, a funï¿½ï¿½o imagecopymerge nï¿½o preserva
 				  -> o alfa nativo do PNG
 	 */	
 	public function marca( $imagem, $x = 0, $y = 0, $alfa = 100 ) 
 	{
-		// cria imagem temporária para merge
+		// cria imagem temporï¿½ria para merge
 		if ( $imagem ) {
 			$pathinfo = pathinfo( $imagem );
 			switch( strtolower( $pathinfo['extension'] ) ) 
@@ -509,7 +509,7 @@ class m2brimagem {
 					$marcadagua = imagecreatefrombmp( $imagem );
 					break;
 				default:
-					$this->erro = 'Arquivo de marca d\'água inválido.';
+					$this->erro = 'Arquivo de marca d\'ï¿½gua invï¿½lido.';
 					return false;
 			}	
 		} 
@@ -517,10 +517,10 @@ class m2brimagem {
 		{
 			return false;
 		}
-		// dimensões
+		// dimensï¿½es
 		$marca_w	= imagesx( $marcadagua );
 		$marca_h	= imagesy( $marcadagua );
-		// retorna imagens com marca d'água
+		// retorna imagens com marca d'ï¿½gua
 		if ( is_numeric( $alfa ) && ( ( $alfa > 0 ) && ( $alfa < 100 ) ) ) {
 			imagecopymerge( $this->img, $marcadagua, $x, $y, 0, 0, $marca_w, $marca_h, $alfa );
 		} else {
@@ -530,19 +530,19 @@ class m2brimagem {
 	} // fim marca
 
 	/**
-	 * adiciona imagem de marca d'água, com valores fixos
+	 * adiciona imagem de marca d'ï¿½gua, com valores fixos
 	 * ex: topo_esquerda, topo_direita etc.
-	 * Implementação original por Giolvani <inavloig@gmail.com>
-	 * @param String $imagem caminho da imagem de marca d'água
-	 * @param String $posicao posição/orientação fixa da marca d'água
+	 * Implementaï¿½ï¿½o original por Giolvani <inavloig@gmail.com>
+	 * @param String $imagem caminho da imagem de marca d'ï¿½gua
+	 * @param String $posicao posiï¿½ï¿½o/orientaï¿½ï¿½o fixa da marca d'ï¿½gua
 	 *        [topo, meio, baixo] + [esquerda, centro, direita]
-	 * @param Int $alfa valor para transparência (0-100)
+	 * @param Int $alfa valor para transparï¿½ncia (0-100)
 	 * @return void
 	*/	
 	public function marcaFixa( $imagem, $posicao, $alfa = 100 ) 
 	{
 
-		// dimensões da marca d'água
+		// dimensï¿½es da marca d'ï¿½gua
 		list( $marca_w, $marca_h ) = getimagesize( $imagem );
 
 		// define X e Y para posicionamento
@@ -596,10 +596,10 @@ class m2brimagem {
 
 
 //------------------------------------------------------------------------------
-// gera imagem de saída
+// gera imagem de saï¿½da
 
 	/**
-	 * retorna saída para tela ou arquivo
+	 * retorna saï¿½da para tela ou arquivo
 	 * @param String $destino caminho e nome do arquivo a serem criados
 	 * @param Int $qualidade qualidade da imagem no caso de JPEG (0-100)
 	 * @return void
@@ -613,16 +613,16 @@ class m2brimagem {
 			$dir_destino		= $pathinfo['dirname'];
 			$extensao_destino 	= strtolower( $pathinfo['extension'] );
 			
-			// valida diretório
+			// valida diretï¿½rio
 			if ( !is_dir( $dir_destino ) ) 
 			{
-				$this->erro	= 'Diretório de destino inválido ou inexistente';
+				$this->erro	= 'Diretï¿½rio de destino invï¿½lido ou inexistente';
 				return false;
 			}
 			
 		}
 		
-		// valida extensão de destino
+		// valida extensï¿½o de destino
 		if ( !isset( $extensao_destino ) ) 
 		{
 			$extensao_destino = $this->extensao;
@@ -631,7 +631,7 @@ class m2brimagem {
 		{
 			if ( !in_array( $extensao_destino, $this->extensoes_validas ) )
 			{
-				$this->erro = 'Extensão inválida para o arquivo de destino';
+				$this->erro = 'Extensï¿½o invï¿½lida para o arquivo de destino';
 				return false;
 			}
 		}
@@ -689,9 +689,9 @@ class m2brimagem {
 //------------------------------------------------------------------------------
 // fim da classe    
 }
-
+endif;
 //------------------------------------------------------------------------------
-// suporte para a manipulação de arquivos BMP
+// suporte para a manipulaï¿½ï¿½o de arquivos BMP
 
 /*********************************************/
 /* Function: ImageCreateFromBMP              */
@@ -700,7 +700,7 @@ class m2brimagem {
 /* Date:     The 15th of June 2005           */
 /* Version:  2.0B                            */
 /*********************************************/
-
+if (!function_exists('imagecreatefrombmp')):
 function imagecreatefrombmp($filename) {
  //Ouverture du fichier en mode binaire
    if (! $f1 = fopen($filename,"rb")) return FALSE;
@@ -788,3 +788,4 @@ function imagecreatefrombmp($filename) {
  return $res;
  
 } // fim function image from BMP
+endif;
