@@ -24,6 +24,10 @@ mysqli_query($conexao, "SET time_zone = '".date_default_timezone_get()."'") or
     mysqli_query($conexao, "SET @@global.time_zone = '".date('P')."'")
 ;
 
+// Detectar se está no mobile
+require_once './php/Mobile_Detect.php';
+$mobiledet = new Mobile_Detect;
+
 /**
  * 
  * @param $username será o identificador da sessão

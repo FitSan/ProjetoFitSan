@@ -1,4 +1,4 @@
-<body class="hold-transition skin-blue sidebar-collapse sidebar-mini">
+<body class="hold-transition skin-blue sidebar-collapse sidebar-mini fixed">
     <?php
     if (!estaLogado()) {
         header('Location: ' . URL_SITE . 'form_login.php');

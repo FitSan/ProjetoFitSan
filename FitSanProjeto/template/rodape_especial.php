@@ -332,6 +332,7 @@
     </div>
 </div> 
 
+<?php if (!$mobiledet->isMobile() && !$mobiledet->isTablet()){ ?>
 <!--Modal upload imagem -->
 <div class="modal fade" id="modal-upload-imagem">
     <div class="modal-dialog">
@@ -371,6 +372,7 @@
     </div>
     <!-- /.modal-dialog -->
 </div>
+<?php } ?>
 
 <!-- jQuery 3 -->
 <script src="<?=URL_SITE?>bower_components/jquery/dist/jquery.min.js"></script>
@@ -904,6 +906,7 @@
 })
 </script>
 
+<?php if (!$mobiledet->isMobile() && !$mobiledet->isTablet()){ ?>
 <script src="<?= URL_SITE ?>js/jquery.Jcrop.js"></script>
 <script>
     $(function(){
@@ -1052,6 +1055,8 @@
 
     });
 </script>
+<?php } ?>
+
 <!--<script>
     function showCheckGrafico(meta_id){
         var atual_id = document.getElementById('id_atual').val();
