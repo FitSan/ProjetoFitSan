@@ -1,5 +1,5 @@
 <?php
-$pagina = "Alterar Informações adicionais";
+$pagina = "Avaliação";
 require_once './template/cabecalho.php';
 require_once './template/menu.php';
 
@@ -60,7 +60,7 @@ if (!tipoLogado("profissional")) {
                     
                                                             <?php if (!empty($_SESSION['mandou_avaliacao'])) {
                         ?> <div class="alert alert-success">
-                            <strong>Avalição enviada com sucesso.No histórico você pode exluir ou modificar sua avaliação.</strong>.
+                            <strong>Avalição enviada com sucesso. No histórico você pode excluir ou modificar suas avaliações.</strong>.
                         </div> <?php
                         unset($_SESSION['mandou_avaliacao']);
                     }
@@ -68,7 +68,7 @@ if (!tipoLogado("profissional")) {
 
                                                                                 <?php if (!empty($_SESSION['atualizacao_avaliacao'])) {
                         ?> <div class="alert alert-success">
-                            <strong>Avalição atualizada com sucesso.</strong>.
+                            <strong>Avaliação atualizada com sucesso.</strong>.
                         </div> <?php
                         unset($_SESSION['atualizacao_avaliacao']);
                     }
@@ -90,7 +90,7 @@ if (!tipoLogado("profissional")) {
                                         <option value="Excelente">Excelente</option>
                                         <option value="Médio">Médio</option>
                                         <option value="Mal">Mal</option>
-                                        <option value="Péssimo">péssimo</option>
+                                        <option value="Péssimo">Péssimo</option>
 
                                     </select> </div>
                                 <div class="col-lg-6">
@@ -100,7 +100,7 @@ if (!tipoLogado("profissional")) {
                                         <option value="Excelente">Excelente</option>
                                         <option value="Média">Média</option>
                                         <option value="Má">Má</option>
-                                        <option value="Péssima">péssima</option>
+                                        <option value="Péssima">Péssima</option>
                                     </select> </div>
 
                                 <div class="col-lg-6">

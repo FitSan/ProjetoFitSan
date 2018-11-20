@@ -1,5 +1,5 @@
 <?php
-$pagina = "Alterar Informações adicionais";
+$pagina = " Alterar Avaliação";
 require_once './template/cabecalho.php';
 require_once './template/menu.php';
 
@@ -81,7 +81,7 @@ $_SESSION['usuario_passado'] = $update_usuario[id];
                     ?>
                     <?php if (!empty($_SESSION['mandou_avaliacao'])) {
                         ?> <div class="alert alert-success">
-                            <strong>Avalição enviada com sucesso. No histórico você pode exluir ou modificar sua avaliação.</strong>.
+                            <strong>Avaliação enviada com sucesso. No histórico você pode excluir ou modificar suas avaliações.</strong>.
                         </div> <?php
                         unset($_SESSION['mandou_avaliacao']);
                     }
@@ -124,7 +124,7 @@ $_SESSION['usuario_passado'] = $update_usuario[id];
                                             <option value="Excelente">Excelente</option>
                                             <option value="Médio">Médio</option>
                                             <option value="Mal">Mal</option>
-                                            <option value="Péssimo">péssimo</option>
+                                            <option value="Péssimo">Péssimo</option>
                                             <?php
                                         }
                                         ?>
@@ -138,7 +138,7 @@ $_SESSION['usuario_passado'] = $update_usuario[id];
                                             <option value="Excelente">Excelente</option>
                                             <option value="Bom">Bom</option>
                                             <option value="Mal">Mal</option>
-                                            <option value="Péssimo">péssimo</option>
+                                            <option value="Péssimo">Péssimo</option>
                                             <?php
                                         }
                                         ?>
@@ -151,7 +151,7 @@ $_SESSION['usuario_passado'] = $update_usuario[id];
                                             <option value="Excelente">Excelente</option>
                                             <option value="Bom">Bom</option>
                                             <option value="Médio">Médio</option>
-                                            <option value="Péssimo">péssimo</option>
+                                            <option value="Péssimo">Péssimo</option>
                                             <?php
                                         }
                                         ?>
