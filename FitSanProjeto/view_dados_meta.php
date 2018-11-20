@@ -11,7 +11,7 @@ if(isset($_GET['pag'])){
 $offset = ($pagina-1)*$itens_por_pag;
 if(isset($_POST['meta_id'])){
     if($_POST['meta_id']!=''){
-        $query_meta_id = "select * from meta where id=$_POST[meta_id]";
+        $query_meta_id = "select * from meta where id=".mysqliEscaparTexto($_POST[meta_id]);
         $query_dados = "select * from dados_meta where meta_id='".$_POST['meta_id']."' order by data_add LIMIT $offset, $itens_por_pag";
         $query_dados_all = "select * from dados_meta where meta_id='".$_POST['meta_id']."' order by data_add";
         

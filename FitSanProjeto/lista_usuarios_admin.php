@@ -48,7 +48,7 @@ $resultado_pagina = mysqli_query($conexao, $query_pagina) or die_mysql($query_pa
 $pagina = ($resultado_pagina?mysqli_fetch_array($resultado_pagina):array());
 $pagina = array_merge(array(
     'total' => 0,
-    'quantidade' => (!empty($_GET['quantidade']) ? $_GET['quantidade'] : 2),
+    'quantidade' => (!empty($_GET['quantidade']) ? $_GET['quantidade'] : 10),
     'pagina' => (!empty($_GET['pagina']) ? $_GET['pagina'] : 1),
 ), array_map('intval', (array)$pagina));
 $pagina['offset'] = (($pagina['pagina'] - 1) * $pagina['quantidade']);

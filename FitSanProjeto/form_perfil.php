@@ -16,6 +16,16 @@ if ($linha = mysqli_fetch_array($resultado)) {
         </section>
 
         <section class="content">
+            <?php
+        if (!empty($_SESSION['erro'])) {
+            ?>
+            <div class="alert alert-danger alert-dismissible" >
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <?php echo htmlspecialchars($_SESSION['erro']) ?>
+            </div>
+            <?php
+            unset($_SESSION['erro']);
+        } ?>
             <div class="box box-primary">
                 <div class="box-header with-border">
                     <h3 class="box-title">Meu Perfil</h3>
@@ -57,7 +67,7 @@ if ($linha = mysqli_fetch_array($resultado)) {
                             <div class="pull-left ">
                                      <a class="btn btn-file btn-app">
                                          <i class="fa fa-mobile" ></i>
-                                         <input  type="file" name="foto" id="foto"> Celular </a>
+                                         <input  type="file" name="foto" id="foto" accept="image/png, image/jpeg, image/gif"> Celular </a>
 
                                      <a class="btn btn-file btn-app" data-toggle="modal" data-target="#modal-upload-imagem" id="modal-upload-imagem-button" title="Upload de imagem" data-input="foto-sel">
                                          <i class="fa fa-cloud-upload"></i> Upload </a>

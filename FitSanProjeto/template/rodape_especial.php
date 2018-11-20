@@ -343,7 +343,7 @@
             <div class="modal-body">
                 <form id="modal-upload-imagem-enviar" role="form" method="post" enctype="multipart/form-data" action="<?=URL_SITE?>upload-imagem.php?modo=upload">
                     <label for="modal-upload-imagem-input">Foto</label>
-                    <input type="file" class="form-control" id="modal-upload-imagem-input" name="imagem">
+                    <input type="file" class="form-control" id="modal-upload-imagem-input" name="imagem" accept="image/png, image/jpeg, image/gif">
                     <button type="submit" class="btn btn-primary">Upload</button>
                 </form>
                 <form id="modal-upload-imagem-recortar" role="form" method="post" action="<?=URL_SITE?>upload-imagem.php?modo=crop">
