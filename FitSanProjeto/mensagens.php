@@ -146,7 +146,7 @@ $paginacao = array(
 );
 $paginacao['offset'] = (($paginacao['pagina'] - 1) * $paginacao['quantidade']);
 $paginacao['paginas'] = ceil($paginacao['total'] / $paginacao['quantidade']);
-var_dump($paginacao);
+//var_dump($paginacao);
 //referente à consulta
 $query['select'] = array(
     'c.*',
