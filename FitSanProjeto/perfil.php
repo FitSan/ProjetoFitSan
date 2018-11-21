@@ -157,10 +157,10 @@ if ($linha = mysqli_fetch_array($resultado)) {
                                 </div>
 
                                 <div class="box-body no-padding">
-                                    <ul class="users-list clearfix">
+                                    <ul class="users-list clearfix perfil-meus-alunos">
                                         <?php while ($linha = mysqli_fetch_array($resultado)) { ?>
                                             <li>                          
-                                                <img class="img-responsive" src=" <?= htmlspecialchars(!empty($linha['foto']) ? $linha['foto'] : 'img/user-avatar-placeholder.png') ?>" style="width: 100px">
+                                                <img class="img-responsive" src=" <?= htmlspecialchars(!empty($linha['foto']) ? $linha['foto'] : 'img/user-avatar-placeholder.png') ?>">
                                                 <a href="<?= URL_SITE ?>perfil_externo.php?id=<?= $linha['aluno_id'] ?>"><?= htmlspecialchars($linha['nome']) ?></a>
                                             </li>
                                         <?php } ?>

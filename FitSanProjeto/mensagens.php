@@ -139,14 +139,14 @@ $query['where'] = array(
 $query['select'] = array(
     'count(*) as total',
 );
-$pagina = array(
+$paginacao = array(
     'total' => intval(dbquery($query, 'col', 'total')),
     'quantidade' => (!empty($_GET['quantidade']) ? $_GET['quantidade'] : 10),
     'pagina' => (!empty($_GET['pagina']) ? $_GET['pagina'] : 1),
 );
-$pagina['offset'] = (($pagina['pagina'] - 1) * $pagina['quantidade']);
-$pagina['paginas'] = ceil($pagina['total'] / $pagina['quantidade']);
-
+$paginacao['offset'] = (($paginacao['pagina'] - 1) * $paginacao['quantidade']);
+$paginacao['paginas'] = ceil($paginacao['total'] / $paginacao['quantidade']);
+var_dump($paginacao);
 //referente à consulta
 $query['select'] = array(
     'c.*',
@@ -158,13 +158,13 @@ $query['select'] = array(
     'p.foto as profissional_foto',
 );
 $query['order'] = array(
-    'c.datahora',
+    'c.datahora desc',
 );
 $query['outro'] = "
 limit
-    ". $pagina['quantidade'] . "
+    ". $paginacao['quantidade'] . "
 offset
-    " . $pagina['offset']
+    " . $paginacao['offset']
 ;
 $resultado = dbquery($query);
 
