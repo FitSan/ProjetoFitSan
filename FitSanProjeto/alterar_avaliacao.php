@@ -405,9 +405,7 @@ $_SESSION['usuario_passado'] = $update_usuario[id];
                                     </select> </div>
 
                                 <div class="col-lg-6">
-                                    <br> Caso sim, qual?<textarea name="caso_sim" class="form-control" rows="1" placeholder="Escreva aqui.">
-                                        <?= $update['caso_sim'] ?>
-                                    </textarea> 
+                                    <br> Caso sim, qual?<textarea name="caso_sim" class="form-control" rows="1" placeholder="Escreva aqui."><?= $update['caso_sim'] ?></textarea> 
 
                                 </div>
 
@@ -415,9 +413,7 @@ $_SESSION['usuario_passado'] = $update_usuario[id];
 
 
                                 <div class="col-lg-6">
-                                    <br> <strong>Considerações gerais</strong> <textarea name="consideracoes" class="form-control" rows="5" placeholder="Escreva aqui">
-                                        <?= $update['consideracoes'] ?>
-                                    </textarea> 
+                                    <br> <strong>Considerações gerais</strong> <textarea name="consideracoes" class="form-control" rows="5" placeholder="Escreva aqui"><?=$update['consideracoes']?></textarea> 
 
                                 </div>
 
@@ -616,9 +612,7 @@ $_SESSION['usuario_passado'] = $update_usuario[id];
 
 
                                 <div class="col-lg-6">
-                                    <br> <strong>Considerações gerais </strong> <textarea name="consideracoes_corporal" class="form-control" rows="5" placeholder="Escreva aqui">
-                                        <?= $update['consideracoes_corporal'] ?>
-                                    </textarea> 
+                                    <br> <strong>Considerações gerais </strong> <textarea name="consideracoes_corporal" class="form-control" rows="5" placeholder="Escreva aqui."><?=$update['consideracoes_corporal'] ?></textarea> 
 
                                 </div>
 
@@ -633,7 +627,7 @@ $_SESSION['usuario_passado'] = $update_usuario[id];
             </div>
 
 
-            <button type="submit" class="btn btn-primary btn-flat">Atalizar</button>
+            <button type="submit" class="btn btn-primary btn-flat">Atualizar</button>
 
         </form>
     </section>

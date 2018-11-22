@@ -17,29 +17,13 @@ if (!tipoLogado("profissional")) {
         <h1>Formulário de Avaliação </h1>
     </section>
     <section class="content">
-
-        <a href="<?= URL_SITE ?>form_historico_avaliacao_profissional.php">
-            <button type="button" class="btn btn-primary btn-flat">Histórico de avalições enviadas</button>
-        </a>
-
+        
+        <a href="<?=URL_SITE?>form_historico_avaliacao_profissional.php" class="btn btn-app"><span class="badge bg-aqua">Histórico</span><i class="fa fa-calendar"></i> Avaliações </a>               
+        
+         <a class="btn btn-app" type="button" data-toggle="modal" data-target="#modal-avaliacao" id="modal-lista-button"><i class="fa fa-users"></i> Enviar </a>
+        
         <form method="post" action="<?= URL_SITE ?>enviar_avaliacao.php">
-            <div class="col-lg-6">
-                <br><strong>SELECIONE O ALUNO PARA SER AVALIADO</strong><select class="form-control select2" name="aluno" style="width: 100%;" >                                  
-                    <option value="">(Selecione)</option>
-                    <?php
-                    $usuarios = array();
-                    $query = "select * from usuario join vinculo on usuario.id=vinculo.aluno_id  where profissional_id=$_SESSION[id] and vinculo.status='aprovado'";
-                    $retorno = mysqli_query($conexao, $query);
-                    while ($linha = mysqli_fetch_array($retorno)) {
-                        array_push($usuarios, $linha);
-                    }
-                    foreach ($usuarios as $usuario) {
-                        ?>
-                        <option value=<?= $usuario['id'] ?>><?= $usuario['nome'] ?> / <?= $usuario['email'] ?></option>
-                    <?php }
-                    ?>
-
-                </select> </div> 
+           
             <br>
             <div class="col-md-12">
                 <div class="nav-tabs-custom">
@@ -146,7 +130,7 @@ if (!tipoLogado("profissional")) {
                             </div>   
 
                         </div>
-                        <hr>
+                        
                         <div class="tab-pane" id="avaliacao_corporal">
 
                             <div class="box-body">           
@@ -202,12 +186,59 @@ if (!tipoLogado("profissional")) {
             </div>
 
 
-            <button type="submit" class="btn btn-primary btn-flat">Enviar</button>
 
+
+           
+        
+        
+
+        
+
+<div class="modal fade" id="modal-avaliacao">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Escolha o aluno</h4>
+            </div>
+            <div class="modal-body">
+               
+                <p>Selecione um aluno</p>          
+            <select class="form-control select2" name="aluno" style="width: 100%;" >                                  
+                    <option value="">(Selecione)</option>
+                    <?php
+                    $usuarios = array();
+                    $query = "select * from usuario join vinculo on usuario.id=vinculo.aluno_id  where profissional_id=$_SESSION[id] and vinculo.status='aprovado'";
+                    $retorno = mysqli_query($conexao, $query);
+                    while ($linha = mysqli_fetch_array($retorno)) {
+                        array_push($usuarios, $linha);
+                    }
+                    foreach ($usuarios as $usuario) {
+                        ?>
+                        <option value=<?= $usuario['id'] ?>><?= $usuario['nome'] ?> / <?= $usuario['email'] ?></option>
+                    <?php }
+                    ?>
+
+                </select>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Cancelar</button>
+             
+ <button type="submit" class="btn btn-primary" role="button">Enviar</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+
+        
+        
         </form>
     </section>
-
-
     <?php
     require_once './template/rodape_especial.php';
     

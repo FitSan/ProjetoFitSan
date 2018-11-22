@@ -34,6 +34,47 @@
 </div>
 
 
+<div class="modal fade" id="modal-avaliacao">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Escolha o aluno</h4>
+            </div>
+            <div class="modal-body">
+               
+                <p>Selecione um aluno</p>          
+            <select class="form-control select2" name="aluno" style="width: 100%;" >                                  
+                    <option value="">(Selecione)</option>
+                    <?php
+                    $usuarios = array();
+                    $query = "select * from usuario join vinculo on usuario.id=vinculo.aluno_id  where profissional_id=$_SESSION[id] and vinculo.status='aprovado'";
+                    $retorno = mysqli_query($conexao, $query);
+                    while ($linha = mysqli_fetch_array($retorno)) {
+                        array_push($usuarios, $linha);
+                    }
+                    foreach ($usuarios as $usuario) {
+                        ?>
+                        <option value=<?= $usuario['id'] ?>><?= $usuario['nome'] ?> / <?= $usuario['email'] ?></option>
+                    <?php }
+                    ?>
+
+                </select>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Cancelar</button>
+             
+ <button type="submit" class="btn btn-primary" role="button">Enviar</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+
 <!--Modal sair-->
 <div class="modal fade" id="modal-sair">
     <div class="modal-dialog">
