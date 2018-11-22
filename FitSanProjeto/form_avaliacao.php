@@ -50,13 +50,7 @@ if (!tipoLogado("profissional")) {
                     }
                     ?>
 
-                                                                                <?php if (!empty($_SESSION['atualizacao_avaliacao'])) {
-                        ?> <div class="alert alert-success">
-                            <strong>Avaliação atualizada com sucesso.</strong>.
-                        </div> <?php
-                        unset($_SESSION['atualizacao_avaliacao']);
-                    }
-                    ?>
+
                     <ul class="nav nav-tabs">
 
                         <li class="active" ><a href="#performance" data-toggle="tab"> Performance </a></li>

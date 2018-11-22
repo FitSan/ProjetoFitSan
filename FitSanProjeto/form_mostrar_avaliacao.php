@@ -115,9 +115,9 @@ echo $sobrenome_aluno; ?></strong></h1>
                                     <br>O aluno tira dúvida com o professor? <font color="red" ><h5><?= $linha[grupo_duvida] ?></h5></font> 
                                 <?php } ?>
                                 <?php
-                                if ($linha[grupo_dificuldade] == 'sim') {
+                                if ($linha[grupo_dificuldade] == 'Sim') {
                                     ?>
-                                    <br>Apresentou algum tipo de dificuldade em uma determinada atividade? <font color="red" ><h5><?= $linha[grupo_dificuldade] ?> , <?= $linha[caso_sim] ?></h5></font> 
+                                    <br>Dificuldade apresentada em uma determinada atividade. <font color="red" ><h5> <?= $linha[caso_sim] ?></h5></font> 
 
                                 <?php } ?>
 
