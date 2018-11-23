@@ -32,7 +32,7 @@ $_SESSION['usuario_passado'] = $update_usuario[id];
    
         <a href="<?=URL_SITE?>form_historico_avaliacao_profissional.php" class="btn btn-app"><span class="badge bg-aqua">Histórico</span><i class="fa fa-calendar"></i> Avaliações </a>               
         
-         <a class="btn btn-app" type="button" data-toggle="modal" data-target="#modal-avaliacao" id="modal-lista-button"><i class="fa fa-users"></i> Atualizar </a>
+         <a class="btn btn-app" type="button" data-toggle="modal" data-target="#modal-avaliacao" id="modal-lista-button"><i class="fa fa-upload"></i> Atualizar </a>
         
 
         <form method="post" action="<?= URL_SITE ?>atualizar_avaliacao.php">

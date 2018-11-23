@@ -408,9 +408,11 @@ where
                                         <h3 class="timeline-header">Avaliação do profissional <strong><?php echo htmlspecialchars($linha_usuario['nome']) ?> <?= htmlspecialchars($linha_usuario['sobrenome']); ?></strong></h3>
 
 
-                                        <a href="<?= URL_SITE ?>form_mostrar_avaliacao.php?id_avaliacao=<?php echo $id_avaliacao; ?>">  
-                                            <button type="button" class="btn btn-primary btn-flat"> Conferir </button>
-                                        </a>
+                            
+                                                  
+                                    <a class="btn btn-app" href="<?=URL_SITE?>form_mostrar_avaliacao.php?id_avaliacao='<?php echo$id_avaliacao;?>' & nome_aluno=<?php echo $nome_aluno; ?> & sobrenome_aluno=<?php echo $sobrenome_aluno; ?>"><i class="fa fa-eye"></i>Conferir</a> 
+   
+
                                         
                                     </table>
                                 </div>
