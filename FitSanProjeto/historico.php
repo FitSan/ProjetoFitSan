@@ -558,7 +558,7 @@ where
                                                 <th><i>Excluir</i></th>
                                             </tr>                                            
                                         <tr>
-                                            <td><?= (!empty($linha['descricao'])) ? htmlentities($linha_doc['descricao']) : '<i>Sem descrição</i>' ?></td>
+                                            <td><?= (!empty($linha_doc['descricao'])) ? htmlentities($linha_doc['descricao']) : '<i>Sem descrição</i>' ?></td>
                                             <td><a href="histDoc.php?acao=view&id=<?=$linha_doc['id']?>" target="_blank">
                                                     <?php 
                                                     if($linha_doc['tipo']=='pdf'){
