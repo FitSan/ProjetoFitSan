@@ -439,8 +439,15 @@ create table `dados_meta`(
 `meta_id` int references `meta`(`id`)
 );
 
-
-
+create table documentos_historico (
+ id int primary key auto_increment,
+titulo varchar(255) not null,
+descricao text,
+anexo varchar(255) not null,
+tipo char(4) not null,
+usuario_id int references usuario(id),
+data_add date
+);
 
 
 

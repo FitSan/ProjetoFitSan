@@ -27,9 +27,9 @@ $link = (!empty($_POST['link_video']) ? $_POST['link_video'] : null);
     $resultado_dica = mysqli_query($conexao, $query_dica);
     $quantUploads = mysqli_num_rows($resultado_dica);
 
-    if ($quantUploads < 0) {
-        $quantUploads = 0;
-    }
+//    if ($quantUploads < 0) {
+//        $quantUploads = 0;
+//    }
     if ($quantUploads == 0) {
         $query_dica_vid = "select * from upload_dica where dica_id=".mysqliEscaparTexto($id)." and tipo='vid' or tipo='url'";
         $resultado_dica_vid = mysqli_query($conexao, $query_dica_vid);

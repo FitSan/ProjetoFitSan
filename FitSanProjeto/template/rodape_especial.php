@@ -328,6 +328,29 @@
   </div>
 </div>
 
+
+<div class="modal" id="deleteDoc" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Confirmar Exclusão</h4>
+            </div>
+            <div class="modal-body">
+                <p> Você tem certeza que deseja continuar?</p>
+            </div>
+            <div class="modal-footer">                
+                <form method="post" action="<?=URL_SITE?>excluirDoc.php">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Não</button>
+                    <input type="hidden" id="doc_id" name="doc_id">
+                    <button type="submit" class="btn btn-primary">Sim</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div> 
+
 <div class="modal" id="deleteMeta" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -1226,5 +1249,27 @@
             };
         });
     </script>
+<script>
+    function descricaoAnexo(){
+        var check_desc = document.getElementById('check_desc_anexo');
+        if (check_desc.checked === true) {   
+        document.getElementById('desc_anexo').style.display = "inline";
+
+//        $(label' b').text('+');
+	}else{
+        document.getElementById('desc_anexo').style.display = "none";
+//            $(label' b').text('X');
+        }
+    }
+</script>
+
+<script type="text/javascript">
+    $('#deleteDoc').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget)
+        var doc_id = button.data('doc_id')  
+        var modal = $(this)
+        modal.find('.modal-footer #doc_id').val(doc_id)
+    });
+</script>
 </body>
 </html>

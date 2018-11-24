@@ -21,6 +21,7 @@ require_once './template/menu.php';
                 <li<?php if ($aba == 'pesosMedidas') echo ' class="active"'; ?>><a href="#pesosMedidas" data-toggle="tab">Pesos e Medidas</a></li>
                 <li<?php if ($aba == 'treinosPlanilha') echo ' class="active"'; ?>><a href="#treinosPlanilha" data-toggle="tab">Treinos da Planilha</a></li>
                 <li<?php if ($aba == 'avaliacoes') echo ' class="active"'; ?>><a href="#avaliacoes" data-toggle="tab">Avaliações</a></li>
+                <li<?php if ($aba == 'documentos') echo ' class="active"'; ?>><a href="#documentos" data-toggle="tab"><i class="fa fa-paperclip" style="font-size: 20px;"></i></a></li>
             </ul>
             <div class="tab-content">               
                 <div class="tab-pane<?php if ($aba == 'atividadesExtras') echo ' active'; ?>" id="atividadesExtras">
@@ -425,7 +426,181 @@ where
             ?>
 
         </div>
+         <div class="tab-pane<?php if ($aba == 'documentos') echo ' active'; ?>" id="documentos">
+            <?php
+        if (!empty($_SESSION['erro'])) {
+            ?>
+            <div class="alert alert-danger alert-dismissible" >
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <?php echo htmlspecialchars($_SESSION['erro']) ?>
+            </div>
+            <?php
+            unset($_SESSION['erro']);
+        }
+        if (!empty($_SESSION['info'])) {
+            ?>
+            <div class="alert alert-info alert-dismissible" >
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <?php echo htmlspecialchars($_SESSION['info']) ?>
+            </div>
+            <?php
+            unset($_SESSION['info']);
+        } ?>
+            <h3>Meus documentos</h3><hr>
+            <?php 
+            if(isset($_GET['alterar'])){
+                $query_alterar = 'select * from documentos_historico where id='.mysqliEscaparTexto($_GET['alterar']).' and usuario_id='.$_SESSION['id'];
+                $resultado_alt = mysqli_query($conexao, $query_alterar);
+                if(mysqli_num_rows($resultado_alt)==0){
+                    $_SESSION['erro'] = "Erro!";
+                    header('Location: ' . URL_SITE . 'historico.php?aba=documentos');
+                } else {
+                    $linha_alt = mysqli_fetch_array($resultado_alt);
+                }
+            }
+            if($linha_alt){
+                echo 'batata';
+            }
+            
+            ?>
+            <div class="box">
+                <form role="form" method="post" action="<?=URL_SITE?>addAnexo.php" enctype="multipart/form-data" style="padding: 5px;">                        
+                                                     
+                            <div class="form-inline">
+                                <div class="form-group" style="padding: 5px;">
+                                    <label for="titulo">Título</label>
+                                    <input name="titulo" class="form-control" id="titulo" type="text" maxlength="150" <?= ($linha_alt) ? 'value="'.$linha_alt['titulo'].'"' : '' ?>>
+                                </div>
+                                <?php if($linha_alt){ ?>
+                                <input type="hidden" name="alt_id" value="<?=$linha_alt['id']?>">
+                                    <a href="histDoc.php?acao=view&id=<?=$linha_alt['id']?>" target="_blank">
+                                                    <?php 
+                                                    if($linha_alt['tipo']=='pdf'){
+                                                       ?>
+                                                    <i class="fa fa-file-pdf-o"></i>
+                                                    <?php
+                                                    }else if($linha_alt['tipo']=='png'||$linha_alt['tipo']=='jpg'||$linha_alt['tipo']=='jpeg'){
+                                                        ?>
+                                                    <i class="fa fa-file-image-o"></i>
+                                                    <?php
+                                                    }else if ($linha_alt['tipo']=='doc'||$linha_alt['tipo']=='txt') {
+                                                        ?>
+                                                    <i class="fa fa-file-text-o"></i>
+                                                    <?php
+                                                    }else{
+                                                        ?>
+                                                    <i class="fa fa-file"></i>
+                                                    <?php
+                                                    }
+                                                    ?>
+                                                    </a>
+                                                    <?php
+                                } ?>
+                                <div class="form-group">
+                                    <a class="btn btn-file btn-app" style="margin-top: 6px;">
+                                         <i class="fa fa-file-o" ></i>
+                                         <input type="file" name="anexo" id="anexo" accept=".xlsx,.xls,image/*,.doc, .ppt, .docx,.txt,.pdf"> Anexo </a>
+                                </div>
+                                <div class="form-group"  style="padding: 5px;" id="active_desc_dado"> 
+                                    <input type="checkbox" id="check_desc_anexo" onclick="descricaoAnexo()" style="display: none;"><label for="check_desc_anexo" style="padding: 5px;"><b><i class="fa fa-angle-down" style="padding: 5px;"></i></b>Descrição</label>
+                                    <textarea name="descricao" class="form-control" id="desc_anexo" style="display: none;" rows="2" cols="50"><?= ($linha_alt) ? $linha_alt['descricao'] : '' ?></textarea>                                         
+                                </div><div class="form-group">
+                                <?php if($linha_alt){ ?>
+                                    <a href="historico.php?aba=documentos" style="padding: 10px" class="btn btn-block btn-google">Cancelar</a>
+                                <?php }else{ ?>                                
+                                    <input type="reset" style="padding: 10px" class="btn btn-block btn-google" value="Cancelar">
+                                <?php } ?>
+                                </div>
+                                <div class="form-group">
+                                    <input type="submit" style="padding: 10px" class="btn btn-block btn-info" <?= ($linha_alt) ? 'value="Alterar"' : 'value="Anexar"' ?>>
+                                </div>
+                            </div>
+                            
+                          
+                    </form>
+        </div>
+            <?php
+                $query_doc = "select * from documentos_historico where usuario_id=".$_SESSION['id']." order by data_add desc";
+                $resultado_doc = mysqli_query($conexao, $query_doc);
+                if(mysqli_num_rows($resultado_doc)==0){
+                    ?>
+                <div class="text-center"><h3><b>Nenhum documento anexado.</b></h3></div>
+                <?php
+                }else{
+                    echo '<ul class="timeline timeline-inverse">';
+                    $dataanterior = '';
+                while($linha_doc= mysqli_fetch_array($resultado_doc)){
+                    $dataatual = date('d/m/Y', dataParse($linha_doc['data_add']));
+                                if ($dataanterior != $dataatual) {
+                                    ?>
+                                    <li class="time-label">
+                                        <span class="bg-red">
+                                            <?= $dataatual ?>
+                                        </span>
+                                    </li>
 
+                                    <?php
+                                    $dataanterior = $dataatual;
+                                }
+            ?>  
+                        <li>
+                                <i class="fa fa-folder bg-teal"></i>
+
+                                <div class="timeline-item"> 
+                                    <div class="timeline-body">
+                                        <div class="table-responsive">
+                                        <table class="table table-striped planilha dataTable">
+                                            <tr>
+                                                <th style="width: 450px;"><?php echo htmlentities($linha_doc['titulo']) ?></th>
+                                                <th>Visualizar</th>
+                                                <th>Download</th> 
+                                                <th><i>Alterar</i></th>
+                                                <th><i>Excluir</i></th>
+                                            </tr>                                            
+                                        <tr>
+                                            <td><?= (!empty($linha['descricao'])) ? htmlentities($linha_doc['descricao']) : '<i>Sem descrição</i>' ?></td>
+                                            <td><a href="histDoc.php?acao=view&id=<?=$linha_doc['id']?>" target="_blank">
+                                                    <?php 
+                                                    if($linha_doc['tipo']=='pdf'){
+                                                       ?>
+                                                    <i class="fa fa-file-pdf-o"></i>
+                                                    <?php
+                                                    }else if($linha_doc['tipo']=='png'||$linha_doc['tipo']=='jpg'||$linha_doc['tipo']=='jpeg'){
+                                                        ?>
+                                                    <i class="fa fa-file-image-o"></i>
+                                                    <?php
+                                                    }else if ($linha_doc['tipo']=='doc'||$linha_doc['tipo']=='txt') {
+                                                        ?>
+                                                    <i class="fa fa-file-text-o"></i>
+                                                    <?php
+                                                    }else{
+                                                        ?>
+                                                    <i class="fa fa-file"></i>
+                                                    <?php
+                                                    }
+                                                    ?>
+                                                    </a></td>
+                                            <td><a href="histDoc.php?acao=download&id=<?=$linha_doc['id']?>" ><i class="fa fa-download"></i></a></td>     
+                                            <td><a href="historico.php?aba=documentos&alterar=<?=$linha_doc['id']?>"><i class="fa fa-edit"></i></a></td>
+                                            <td><a data-toggle="modal" data-target="#deleteDoc" data-doc_id="<?=$linha_doc['id']?>" ><i class="fa fa-trash" style="font-size: 16px;"></i></a></td>
+                                        </tr>                                       
+                                    </table>
+                                        </div>
+
+
+
+                                </div>
+
+                            </div>
+                        </li> 
+                        
+                    
+                <?php } ?>
+                <li>
+                            <i class="fa fa-clock-o bg-gray"></i>
+                        </li></ul>
+                <?php } ?>
+        </div>
     </div>
 </div>
 </div> 
