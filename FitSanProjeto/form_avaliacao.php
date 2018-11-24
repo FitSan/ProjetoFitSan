@@ -44,7 +44,7 @@ if (!tipoLogado("profissional")) {
                     
                                                             <?php if (!empty($_SESSION['mandou_avaliacao'])) {
                         ?> <div class="alert alert-success">
-                            <strong>Avalição enviada com sucesso. No histórico você pode excluir ou modificar suas avaliações.</strong>.
+                            <strong>Avaliação enviada com sucesso. No histórico você pode excluir ou modificar suas avaliações.</strong>.
                         </div> <?php
                         unset($_SESSION['mandou_avaliacao']);
                     }
@@ -236,3 +236,5 @@ if (!tipoLogado("profissional")) {
     <?php
     require_once './template/rodape_especial.php';
     
+
+
