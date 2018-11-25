@@ -550,8 +550,8 @@ function dbquery() {
     }
     if (!$saida) return $res;
 
+    $ret = array();
     if (is_resource($res) || ($res instanceof mysqli_result)){
-        $ret = array();
         while ($row = mysqli_fetch_array($res)) $ret[] = array_change_key_case($row, CASE_LOWER);
         mysqli_free_result($res);
     }

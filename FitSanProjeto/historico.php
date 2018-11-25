@@ -2,6 +2,13 @@
 $pagina = "Histórico";
 require_once './template/cabecalho.php';
 require_once './template/menu.php';
+
+
+if (!tipoLogado("aluno")) {
+    header('Location: '.URL_SITE.'pagina1.php');
+    exit;
+}
+
 ?>
 <div class="content-wrapper">
     <section class="content-header">
@@ -527,8 +534,25 @@ where
                 <div class="text-center"><h3><b>Nenhum documento anexado.</b></h3></div>
                 <?php
                 }else{
+                    ?>
+            <form role="form" method="post" action="<?=URL_SITE?>enviar_anexo.php" enctype="multipart/form-data" style="padding: 5px;"> 
+            <?php
+                $profissionais = dbquery("select
+                    u.*
+                from
+                    vinculo v join
+                    usuario u on u.id = v.profissional_id
+                where
+                    u.status = 'ativado' and
+                    v.status = 'aprovado' and
+                    v.aluno_id = " . mysqliEscaparTexto($_SESSION['id']) . "
+                order by
+                    u.nome
+                ");
+                if (empty($profissionais)) $profissionais = array();
                     echo '<ul class="timeline timeline-inverse">';
                     $dataanterior = '';
+                    $id_selecionado = 0;
                 while($linha_doc= mysqli_fetch_array($resultado_doc)){
                     $dataatual = date('d/m/Y', dataParse($linha_doc['data_add']));
                                 if ($dataanterior != $dataatual) {
@@ -551,13 +575,16 @@ where
                                         <div class="table-responsive">
                                         <table class="table table-striped planilha dataTable">
                                             <tr>
+                                                <th><i class="fa fa-check-square"></i></th>
                                                 <th style="width: 450px;"><?php echo htmlentities($linha_doc['titulo']) ?></th>
                                                 <th>Visualizar</th>
                                                 <th>Download</th> 
                                                 <th><i>Alterar</i></th>
                                                 <th><i>Excluir</i></th>
+                                                
                                             </tr>                                            
                                         <tr>
+                                            <td><input type="checkbox" id="enviar<?php echo ++$id_selecionado?>" name="enviar[]" value="<?=$linha_doc['id']?>"> </td>
                                             <td><?= (!empty($linha_doc['descricao'])) ? htmlentities($linha_doc['descricao']) : '<i>Sem descrição</i>' ?></td>
                                             <td><a href="histDoc.php?acao=view&id=<?=$linha_doc['id']?>" target="_blank">
                                                     <?php 
@@ -596,10 +623,51 @@ where
                         
                     
                 <?php } ?>
+                        
                 <li>
                             <i class="fa fa-clock-o bg-gray"></i>
                         </li></ul>
+            <div class="pull-right">
+                        <a class="btn btn-app" type="button" data-toggle="modal" data-target="#modal-enviar_prof" id="modal-enviar_prof-button"><i class="fa fa-users"></i> Enviar </a>
+                        </div>
                 <?php } ?>
+            
+            <div class="clearfix"></div>
+            <div class="modal fade" id="modal-enviar_prof">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title">Escolha o profissional</h4>
+                        </div>
+                        <div class="modal-body">
+                            
+                            <p><select class="form-control" name="profissional">
+                                    <option value="">(Selecione um profissional)</option>
+                                    <?php foreach ($profissionais as $value) { ?>
+                                        <option value="<?php echo htmlspecialchars($value['id']); ?>"<?php if ($value['id'] == $profissional) echo ' selected="selected"' ?>><?php echo htmlspecialchars($value['nome'] . ' ' . $value['sobrenome']); ?></option>
+                                    <?php } ?>
+                                </select></p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-primary" href="#" role="button">Enviar</button>
+
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+            
+            
+            
+            
+            
+            
+            
+            </form>
         </div>
     </div>
 </div>

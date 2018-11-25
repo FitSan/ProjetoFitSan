@@ -468,7 +468,7 @@ ALTER TABLE vinculo ADD solicitante enum('aluno', 'profissional') not null;
 select * from vinculo;
 select * from dados_metas;
 select * from metas;
-
+select * from documentos_historico;
 
 TRUNCATE TABLE vinculo;
 
