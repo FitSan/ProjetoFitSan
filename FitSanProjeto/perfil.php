@@ -149,7 +149,7 @@ if ($linha = mysqli_fetch_array($resultado)) {
                         <div class="box box-primary">
 
                             <?php
-                            $query = "select * from usuario join vinculo on usuario.id = vinculo.aluno_id where vinculo.status = 'aprovado' and usuario.status = 'ativado' and vinculo.profissional_id = " . $_SESSION[id];
+                            $query = "select * from usuario join vinculo on usuario.id = vinculo.aluno_id where vinculo.status = 'aprovado' and usuario.status = 'ativado' and vinculo.profissional_id = " . $_SESSION['id'];
                             if ($resultado = mysqli_query($conexao, $query)) {
                                 ?>
                                 <div class="box-header with-border">

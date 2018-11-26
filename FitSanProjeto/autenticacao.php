@@ -3,7 +3,9 @@
 ob_start(); //gravar todas as saídas de texto em um local temporário antes de jogar para o navegador.
 session_start();
 
-error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING & ~E_STRICT & ~E_DEPRECATED); // Definindo para mostrar todos os erros exceto notificações, avisos, interoperabilidade e obsoletos. 
+require_once './bancodedados/conectar.php';
+
+error_reporting(DEPURACAO ? E_ALL : (E_ALL & ~E_NOTICE & ~E_WARNING & ~E_STRICT & ~E_DEPRECATED)); // Definindo para mostrar todos os erros exceto notificações, avisos, interoperabilidade e obsoletos. 
 
 ini_set('display_errors', DEPURACAO ? 'On' : 'Off');
 ini_set('default_charset', 'utf-8');
@@ -15,14 +17,12 @@ date_default_timezone_set('America/Sao_Paulo') or
 ;
 setlocale(LC_ALL, 'pt_BR.iso-8859-1', 'pt_BR.utf-8', 'pt_BR', 'Portuguese_Brazil.1252', 'portuguese', 'ptb_ptb', 'ptb');
 
-require_once './bancodedados/conectar.php';
-
-$conexao = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_BASE, DB_PORT);
+$conexao = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_BASE, DB_PORT) or die_mysql($sql, __FILE__, __LINE__);
 mysqli_query($conexao, "SET NAMES 'utf8mb4' COLLATE 'utf8mb4_unicode_ci'");
-mysqli_query($conexao, "SET time_zone = '".date_default_timezone_get()."'") or
-    mysqli_query($conexao, "SET time_zone = '".date('e')."'") or
-    mysqli_query($conexao, "SET @@global.time_zone = '".date('P')."'")
-;
+//mysqli_query($conexao, "SET time_zone = '".date_default_timezone_get()."'") or
+//    mysqli_query($conexao, "SET time_zone = '".date('e')."'") or
+//    mysqli_query($conexao, "SET @@global.time_zone = '".date('P')."'")
+//;
 
 // Detectar se está no mobile
 require_once './php/Mobile_Detect.php';

@@ -1,4 +1,4 @@
- <?php
+<?php
 $pagina = "Login";
 require_once './template/cabecalho.php';
 ?>

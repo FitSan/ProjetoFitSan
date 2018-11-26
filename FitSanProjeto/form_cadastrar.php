@@ -81,13 +81,12 @@ require_once './template/cabecalho.php';
                     <div class="form-group">
                         <label class="sr-only" for="tipo">Tipo</label>
                         <?php
-                        include './bancodedados/conectar.php';
                         $query = "select * from tipo_usuario";
-                        $resultado = mysqli_query($conexao, $query);
+                        $resultado = dbquery($query);
                         ?>
                         <select name="tipo_id" class="tipo form-control" id="tipo">
                             <?php
-                            while ($linha = mysqli_fetch_array($resultado)) {
+                            foreach ($resultado as $linha) {
                                 ?>               
                                 <option value="<?= $linha['id'] ?>"><?= $linha['tipo'] ?></option>
 
